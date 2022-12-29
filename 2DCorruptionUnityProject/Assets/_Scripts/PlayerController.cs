@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Player.Enable();
         playerInputActions.Player.Jump.performed += Jump_Performed;
         playerInputActions.Player.Jump.canceled += Jump_canceled;
-
+        //playerInputActions.UI.Pause.performed += Pause_performed;
         jumpForce = 5.0f;
         moveSpeed = 5.0f;
     }
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         HorizontalMovement();
+
     }
 
     private void HorizontalMovement()
@@ -47,55 +48,14 @@ public class PlayerController : MonoBehaviour
     {
         if (context.canceled)
         {
-            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 0.0f);
+            playerRigidBody.velocity = Vector2.zero;
         }
     }
 
-    //private Gamepad connectedGamepad;
-    //private Keyboard connectedKeyboard;
-    //private Mouse connectedMouse;
-    //private float moveSpeed;
-
-    //// Start is called before the first frame update
-    //void Start()
+    //private void Pause_performed(InputAction.CallbackContext context)
     //{
-    //    connectedGamepad = Gamepad.current;
-    //    connectedKeyboard = Keyboard.current;
-    //    connectedMouse = Mouse.current;
-    //    moveSpeed = 5.0f;
-    //}
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    if (isGamepadConnected()){}
-
-    //    if (isKeyboardConnected())
-    //    {
-
-    //    }
-
-    //    if (isMouseConnected())
-    //    {
-
-    //    }
-
-    //    float translation = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-    //    transform.Translate(translation, 0.0f, 0.0f);
-    //}
-
-    //private bool isGamepadConnected()
-    //{
-    //    return connectedGamepad != null;
-    //}
-
-    //private bool isKeyboardConnected()
-    //{
-    //    return connectedKeyboard != null;
-    //}
-
-    //private bool isMouseConnected()
-    //{
-    //    return connectedMouse != null;
+    //    playerInputActions.Player.Disable();
+    //    playerInputActions.UI.Enable();
     //}
 }
+
