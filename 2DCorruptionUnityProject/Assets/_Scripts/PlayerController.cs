@@ -32,11 +32,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         HorizontalMovement();
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
-        {
-            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, transform.position, 2.0f * Time.deltaTime);
-        }
     }
 
     private void HorizontalMovement()
