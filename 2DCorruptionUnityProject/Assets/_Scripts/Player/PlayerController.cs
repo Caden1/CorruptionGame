@@ -7,81 +7,84 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D playerRigidBody;
     private PlayerInputActions playerInputActions;
+    private Rigidbody2D playerRigidBody;
+    private BoxCollider2D playerBoxCollider;
+    private LayerMask platformLayerMask;
     // private ParticleSystem aoeAttackParticles;
-    private float jumpSpeed;
+    private float jumpVelocity;
     private float moveSpeed;
-    private float aoeAttackRadius;
+    //private float aoeAttackRadius;
 
     private void Start()
     {
+        playerInputActions = new PlayerInputActions();
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerRigidBody.freezeRotation = true;
-        playerInputActions = new PlayerInputActions();
+        playerBoxCollider = GetComponent<BoxCollider2D>();
+        platformLayerMask = LayerMask.GetMask("Platform");
         // aoeAttackParticles = GetComponent<ParticleSystem>();
         playerInputActions.Player.Enable();
-        //playerInputActions.Player.Jump.performed += JumpPerformed;
+        playerInputActions.Player.Jump.performed += JumpPerformed;
         playerInputActions.Player.Jump.canceled += JumpCanceled;
-        playerInputActions.Player.SkillOne.performed += SkillOnePerformed;
+        //playerInputActions.Player.SkillOne.performed += SkillOnePerformed;
         //playerInputActions.UI.Pause.performed += Pause_performed;
-        jumpSpeed = 5f;
+        jumpVelocity = 5f;
         moveSpeed = 5f;
-        aoeAttackRadius = 4f;
+        //aoeAttackRadius = 4f;
     }
 
     private void Update()
     {
         HorizontalMovement();
-        JumpPerformed();
     }
 
     private void HorizontalMovement()
     {
         Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
-        transform.Translate(inputVector.x * moveSpeed * Time.deltaTime, 0f, 0f);
+        playerRigidBody.velocity = new Vector2(inputVector.x * moveSpeed, playerRigidBody.velocity.y);
     }
 
-    private void JumpPerformed()
+    private void JumpPerformed(InputAction.CallbackContext context)
     {
-        if (playerInputActions.Player.Jump.ReadValue<float>() > 0)
-        {
-            transform.Translate(0f, jumpSpeed * Time.deltaTime, 0f);
-        }
+        if (IsGrounded())
+            playerRigidBody.velocity = Vector2.up * jumpVelocity;
     }
-
-    //private void JumpPerformed(InputAction.CallbackContext context)
-    //{
-    //    playerRigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-    //}
 
     private void JumpCanceled(InputAction.CallbackContext context)
     {
-        // playerRigidBody.velocity = Vector2.zero;
+        if (playerRigidBody.velocity.y > 0)
+            playerRigidBody.velocity = Vector2.zero;
     }
 
-    private void SkillOnePerformed(InputAction.CallbackContext context)
+    private bool IsGrounded()
     {
-        DemoAoeAttack();
+        RaycastHit2D raycastHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, 0f, Vector2.down, 0.1f, platformLayerMask);
+        return raycastHit.collider != null;
     }
 
-    private void DemoAoeAttack()
-    {
-        // aoeAttackParticles.Play();
-        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(transform.position, aoeAttackRadius);
-        foreach (Collider2D collider in enemyColliders)
-        {
-            if (collider.tag.Equals("Enemy"))
-            {
-                Destroy(collider.gameObject);
-            }
-        }
-    }
+    //private void SkillOnePerformed(InputAction.CallbackContext context)
+    //{
+    //    DemoAoeAttack();
+    //}
 
-    private void Pause_performed(InputAction.CallbackContext context)
-    {
-        playerInputActions.Player.Disable();
-        playerInputActions.UI.Enable();
-    }
+    //private void DemoAoeAttack()
+    //{
+    //    // aoeAttackParticles.Play();
+    //    Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(transform.position, aoeAttackRadius);
+    //    foreach (Collider2D collider in enemyColliders)
+    //    {
+    //        if (collider.tag.Equals("Enemy"))
+    //        {
+    //            Destroy(collider.gameObject);
+    //        }
+    //    }
+    //}
+
+    //private void Pause_performed(InputAction.CallbackContext context)
+    //{
+    //    playerInputActions.Player.Disable();
+    //    playerInputActions.UI.Enable();
+    //}
 }
 
