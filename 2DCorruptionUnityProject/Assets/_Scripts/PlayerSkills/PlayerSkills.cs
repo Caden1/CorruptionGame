@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Skills
+public class PlayerSkills
 {
     private Rigidbody2D playerRigidBody;
 
-    public Skills(Rigidbody2D playerRigidBody)
+    public PlayerSkills(Rigidbody2D playerRigidBody)
     {
         this.playerRigidBody = playerRigidBody;
     }

@@ -3,62 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class State
+public class PlayerState
 {
-    public enum STATE
-    {
-        IDLE, JUMP, DASH, ATTACK, PURSUE, PATROL
-    };
+    public enum State {IDLE, JUMP, DASH, ATTACK};
 
-    public enum EVENT
-    {
-        ENTER, UPDATE, EXIT
-    };
+    public enum Event {ENTER, UPDATE, EXIT};
 
-    public STATE name;
-    protected EVENT stage;
-    protected GameObject enemy;
+    public State playerState;
+    protected Event playerEvent;
     protected Animator anim;
     protected PlayerInputActions playerInputActions;
-    protected Skills playerSkills;
-    protected State nextState;
+    protected PlayerSkills playerSkills;
+    protected PlayerState nextState;
 
-    float visionDistance = 10.0f;
-    float projectileDistance = 7.0f;
-
-    public State(Animator anim, PlayerInputActions playerInputActions, Skills playerSkills)
+    public PlayerState(Animator anim, PlayerInputActions playerInputActions, PlayerSkills playerSkills)
     {
         this.anim = anim;
         this.playerInputActions = playerInputActions;
         this.playerSkills = playerSkills;
-        this.stage = EVENT.ENTER;
+        this.playerEvent = Event.ENTER;
     }
 
-    public virtual void Enter() { stage = EVENT.UPDATE; }
-    public virtual void Update() { stage = EVENT.UPDATE; }
-    public virtual void Exit() { stage = EVENT.EXIT; }
+    public virtual void Enter() { playerEvent = Event.UPDATE; }
+    public virtual void Update() { playerEvent = Event.UPDATE; }
+    public virtual void Exit() { playerEvent = Event.EXIT; }
 
-    public State Process()
+    //public State Process()
+    public void Process()
     {
-        if (stage == EVENT.ENTER)
+        if (playerEvent == Event.ENTER)
             Enter();
-        if (stage == EVENT.UPDATE)
+        if (playerEvent == Event.UPDATE)
             Update();
-        if (stage == EVENT.EXIT)
+        if (playerEvent == Event.EXIT)
         {
             Exit();
-            return nextState;
+            //return nextState;
         }
-        return this;
+        //return this;
     }
 }
 
-public class Idle : State
+public class Idle : PlayerState
 {
-    public Idle(Animator anim, PlayerInputActions playerInputActions, Skills playerSkills)
+    public Idle(Animator anim, PlayerInputActions playerInputActions, PlayerSkills playerSkills)
         : base(anim, playerInputActions, playerSkills)
     {
-        name = STATE.IDLE;
+        playerState = State.IDLE;
     }
 
     public override void Enter()
@@ -72,7 +63,8 @@ public class Idle : State
         if (playerInputActions.Player.Jump.WasPressedThisFrame())
         {
             nextState = new Jump(anim, playerInputActions, playerSkills);
-            stage = EVENT.EXIT;
+            //stage = EVENT.EXIT;
+            base.Exit();
         }
     }
 
@@ -83,12 +75,12 @@ public class Idle : State
     }
 }
 
-public class Jump : State
+public class Jump : PlayerState
 {
-    public Jump(Animator anim, PlayerInputActions playerInputActions, Skills playerSkills)
+    public Jump(Animator anim, PlayerInputActions playerInputActions, PlayerSkills playerSkills)
         : base(anim, playerInputActions, playerSkills)
     {
-        name = STATE.JUMP;
+        playerState = State.JUMP;
         // What else goes here?
     }
 
