@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,50 +9,122 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRigidBody;
     private BoxCollider2D playerBoxCollider;
     private LayerMask platformLayerMask;
-    // private ParticleSystem aoeAttackParticles;
+    private float playerGravity;
+    private float zeroGravity;
     private float jumpVelocity;
-    private float moveSpeed;
-    //private float aoeAttackRadius;
+    private float moveVelocity;
+    private float dashVelocity;
+    private float secondsToDash;
+    private bool isFacingRight;
+    private bool isDashing;
 
-    private void Start()
+    private void Awake()
     {
         playerInputActions = new PlayerInputActions();
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerRigidBody.freezeRotation = true;
         playerBoxCollider = GetComponent<BoxCollider2D>();
         platformLayerMask = LayerMask.GetMask("Platform");
-        // aoeAttackParticles = GetComponent<ParticleSystem>();
         playerInputActions.Player.Enable();
-        playerInputActions.Player.Jump.performed += JumpPerformed;
-        playerInputActions.Player.Jump.canceled += JumpCanceled;
-        //playerInputActions.Player.SkillOne.performed += SkillOnePerformed;
-        //playerInputActions.UI.Pause.performed += Pause_performed;
+        playerGravity = 1f;
+        zeroGravity = 0f;
         jumpVelocity = 5f;
-        moveSpeed = 5f;
-        //aoeAttackRadius = 4f;
+        moveVelocity = 5f;
+        dashVelocity = 10f;
+        secondsToDash = 0.25f;
+        isFacingRight = true;
+        isDashing = false;
+
+        playerRigidBody.gravityScale = playerGravity;
+
+        //playerInputActions.Player.Jump.performed += JumpPerformed;
+        //playerInputActions.Player.Jump.canceled += JumpCanceled;
+        //playerInputActions.Player.Dash.performed += DashPerformed;
     }
 
     private void Update()
     {
-        HorizontalMovement();
+        if (!isDashing)
+        {
+            PlayerHorizontalMovement();
+
+            if (playerInputActions.Player.Jump.WasPressedThisFrame())
+            {
+                PlayerPerformJump();
+            }
+            if (playerInputActions.Player.Jump.WasReleasedThisFrame())
+            {
+                PlayerCancelJump();
+            }
+        }
+        
+        if (playerInputActions.Player.Dash.WasPressedThisFrame())
+        {
+            StartCoroutine(PlayerPerformDash());
+        }
     }
 
-    private void HorizontalMovement()
+    private void PlayerIdle()
     {
-        Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
-        playerRigidBody.velocity = new Vector2(inputVector.x * moveSpeed, playerRigidBody.velocity.y);
+        // Set Idle animation
     }
 
-    private void JumpPerformed(InputAction.CallbackContext context)
+    private void PlayerHorizontalMovement()
     {
+        // Set Move animation
+
+        Vector2 moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
+        if (moveDirection.x > 0)
+        {
+            // Face Right
+            isFacingRight = true;
+        }
+        else if (moveDirection.x < 0)
+        {
+            // Face Left
+            isFacingRight = false;
+        }
+        playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
+    }
+
+    private void PlayerPerformJump()
+    {
+        // Set Jump animation
+
         if (IsGrounded())
+        {
             playerRigidBody.velocity = Vector2.up * jumpVelocity;
+        }
     }
 
-    private void JumpCanceled(InputAction.CallbackContext context)
+    private void PlayerCancelJump()
     {
         if (playerRigidBody.velocity.y > 0)
             playerRigidBody.velocity = Vector2.zero;
+    }
+
+    private IEnumerator PlayerPerformDash()
+    {
+        // Set Dash animation
+
+        isDashing = true;
+
+        playerRigidBody.gravityScale = zeroGravity;
+
+        if (isFacingRight)
+        {
+            playerRigidBody.velocity = Vector2.right * dashVelocity;
+        }
+        else
+        {
+            playerRigidBody.velocity = Vector2.left * dashVelocity;
+        }
+
+        yield return new WaitForSeconds(secondsToDash);
+
+        playerRigidBody.gravityScale = playerGravity;
+
+        isDashing = false;
     }
 
     private bool IsGrounded()
@@ -62,29 +132,5 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D raycastHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, 0f, Vector2.down, 0.1f, platformLayerMask);
         return raycastHit.collider != null;
     }
-
-    //private void SkillOnePerformed(InputAction.CallbackContext context)
-    //{
-    //    DemoAoeAttack();
-    //}
-
-    //private void DemoAoeAttack()
-    //{
-    //    // aoeAttackParticles.Play();
-    //    Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(transform.position, aoeAttackRadius);
-    //    foreach (Collider2D collider in enemyColliders)
-    //    {
-    //        if (collider.tag.Equals("Enemy"))
-    //        {
-    //            Destroy(collider.gameObject);
-    //        }
-    //    }
-    //}
-
-    //private void Pause_performed(InputAction.CallbackContext context)
-    //{
-    //    playerInputActions.Player.Disable();
-    //    playerInputActions.UI.Enable();
-    //}
 }
 

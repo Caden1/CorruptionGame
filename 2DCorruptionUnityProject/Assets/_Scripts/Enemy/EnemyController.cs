@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     public GameObject playerObject;
-    private enum State { Roaming, ChaseTarget, AttackTarget }
+    private enum State { Roam, ChaseTarget, AttackTarget }
     private Vector2 startingPosition;
     private Vector2 raomPosition;
     private State state;
@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
     {
         startingPosition = transform.position;
         raomPosition = GetRoamingPosition();
-        state = State.Roaming;
+        state = State.Roam;
     }
 
     private void Update()
@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
         // Trigger and Reset animations in methods
         switch (state)
         {
-            case State.Roaming:
+            case State.Roam:
                 Roam();
                 LookForTarget();
                 break;
