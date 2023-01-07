@@ -4,26 +4,36 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
     private const float ZERO_GRAVITY = 0f;
     private enum State { Normal, Dash }
     private State state;
+    private float playerGravity = 1f;
+    private float jumpVelocity = 5f;
+    private float moveVelocity = 5f;
+    private float dashVelocity = 15f;
+    private float secondsToDash = 0.25f;
+    private float dashCooldownSeconds = 2f;
+    private float meleeAttackDistance = 1f;
+    private float meleeAngle = 0f;
+    private float meleeCooldownSeconds = 1f;
+    private bool isFacingRight = true;
+    private bool canJump = false;
+    private bool canJumpCancel = false;
+    private bool canMelee = false;
     private PlayerInputActions playerInputActions;
     private Rigidbody2D playerRigidBody;
     private BoxCollider2D playerBoxCollider;
     private LayerMask platformLayerMask;
+    private LayerMask enemyLayerMask;
+    private ContactFilter2D enemyContactFilter;
     private Vector2 moveDirection;
-    private float playerGravity;
-    private float jumpVelocity;
-    private float moveVelocity;
-    private float dashVelocity;
-    private float secondsToDash;
-    private float dashCooldownSeconds;
-    private bool isFacingRight;
-    private bool canJump;
-    private bool canJumpCancel;
+    private Vector2 meleeDirection;
+    private List<RaycastHit2D> enemiesHitByMelee;
+    private ParticleSystem meleeAttackParticles;
 
     private void Awake()
     {
@@ -34,17 +44,14 @@ public class PlayerController : MonoBehaviour
         playerRigidBody.freezeRotation = true;
         playerBoxCollider = GetComponent<BoxCollider2D>();
         platformLayerMask = LayerMask.GetMask("Platform");
+        enemyLayerMask = LayerMask.GetMask("Enemy");
+        enemyContactFilter = new ContactFilter2D();
+        enemyContactFilter.SetLayerMask(enemyLayerMask);
         moveDirection = new Vector2();
-        playerGravity = 1f;
-        jumpVelocity = 5f;
-        moveVelocity = 5f;
-        dashVelocity = 15f;
-        secondsToDash = 0.25f;
-        dashCooldownSeconds = 2f;
-        isFacingRight = true;
-        canJump = false;
-        canJumpCancel = false;
+        meleeDirection = Vector2.right;
+        enemiesHitByMelee = new List<RaycastHit2D>();
         playerRigidBody.gravityScale = playerGravity;
+        meleeAttackParticles = GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -63,6 +70,12 @@ public class PlayerController : MonoBehaviour
                     state = State.Dash;
                     StartCoroutine(DashCooldown());
                 }
+                if (playerInputActions.Player.Melee.WasPressedThisFrame())
+                {
+                    SetupMelee();
+                    canMelee = true;
+                    StartCoroutine(MeleeCooldown());
+                }
                 break;
             case State.Dash:
                 StartCoroutine(SetupDash());
@@ -80,11 +93,13 @@ public class PlayerController : MonoBehaviour
                     PerformJump();
                 if (canJumpCancel)
                     PerformCancelJump();
+                if (canMelee)
+                    PerformMelee();
                 break;
             case State.Dash:
                 if (isFacingRight)
                     PerformRightDash();
-                if (!isFacingRight)
+                else
                     PerformLeftDash();
                 break;
         }
@@ -102,6 +117,7 @@ public class PlayerController : MonoBehaviour
         if (moveDirection.x > 0)
         {
             isFacingRight = true;
+            
         }
         else if (moveDirection.x < 0)
         {
@@ -153,9 +169,39 @@ public class PlayerController : MonoBehaviour
         playerRigidBody.velocity = Vector2.left * dashVelocity;
     }
 
+    private IEnumerator MeleeCooldown()
+    {
+        playerInputActions.Player.Melee.Disable();
+        yield return new WaitForSeconds(meleeCooldownSeconds);
+        playerInputActions.Player.Melee.Enable();
+    }
+
+    private void SetupMelee()
+    {
+        // Set Melee animation
+        meleeAttackParticles.Play();
+        enemiesHitByMelee = new List<RaycastHit2D>();
+        if (isFacingRight)
+        {
+            meleeDirection = Vector2.right;
+        }
+        else
+        {
+            meleeDirection = Vector2.left;
+        }
+    }
+
     private void PerformMelee()
     {
-
+        int numEnemiesHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, meleeAngle, meleeDirection, enemyContactFilter, enemiesHitByMelee, meleeAttackDistance);
+        if (numEnemiesHit > 0)
+        {
+            foreach (RaycastHit2D hit in enemiesHitByMelee)
+            {
+                Destroy(hit.collider.gameObject);
+            }
+        }
+        canMelee = false;
     }
 
     private void PerformProjectile()
@@ -165,7 +211,9 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, 0f, Vector2.down, 0.1f, platformLayerMask);
+        float angle = 0f;
+        float raycastDistance = 0.1f;
+        RaycastHit2D raycastHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, angle, Vector2.down, raycastDistance, platformLayerMask);
         return raycastHit.collider != null;
     }
 }
