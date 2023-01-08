@@ -27,13 +27,14 @@ public class PlayerController : MonoBehaviour
     private PlayerInputActions playerInputActions;
     private Rigidbody2D playerRigidBody;
     private BoxCollider2D playerBoxCollider;
+    private Animator playerAnimator;
     private LayerMask platformLayerMask;
     private LayerMask enemyLayerMask;
     private ContactFilter2D enemyContactFilter;
     private Vector2 moveDirection;
     private Vector2 meleeDirection;
     private List<RaycastHit2D> enemiesHitByMelee;
-    private ParticleSystem meleeAttackParticles;
+    //private ParticleSystem meleeAttackParticles;
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerRigidBody.freezeRotation = true;
         playerBoxCollider = GetComponent<BoxCollider2D>();
+        playerAnimator = GetComponent<Animator>();
         platformLayerMask = LayerMask.GetMask("Platform");
         enemyLayerMask = LayerMask.GetMask("Enemy");
         enemyContactFilter = new ContactFilter2D();
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour
         meleeDirection = Vector2.right;
         enemiesHitByMelee = new List<RaycastHit2D>();
         playerRigidBody.gravityScale = playerGravity;
-        meleeAttackParticles = GetComponent<ParticleSystem>();
+        //meleeAttackParticles = GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -179,7 +181,7 @@ public class PlayerController : MonoBehaviour
     private void SetupMelee()
     {
         // Set Melee animation
-        meleeAttackParticles.Play();
+        //meleeAttackParticles.Play();
         enemiesHitByMelee = new List<RaycastHit2D>();
         if (isFacingRight)
         {
