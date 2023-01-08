@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRigidBody;
     private BoxCollider2D playerBoxCollider;
     private Animator playerAnimator;
+    private SpriteRenderer playerSpriteRenderer;
     private LayerMask platformLayerMask;
     private LayerMask enemyLayerMask;
     private ContactFilter2D enemyContactFilter;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
         playerRigidBody.freezeRotation = true;
         playerBoxCollider = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<Animator>();
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
         platformLayerMask = LayerMask.GetMask("Platform");
         enemyLayerMask = LayerMask.GetMask("Enemy");
         enemyContactFilter = new ContactFilter2D();
@@ -61,7 +63,7 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.Normal:
-                Idle();
+                //Idle();
                 SetupHorizontalMovement();
                 if (playerInputActions.Player.Jump.WasPressedThisFrame() && IsGrounded())
                     canJump = true;
@@ -107,23 +109,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Idle()
-    {
-        // Set Idle animation
-    }
+    //private void Idle()
+    //{
+    //    // Set Idle animation
+    //}
 
     private void SetupHorizontalMovement()
     {
         // Set Movement animation
         moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
-        if (moveDirection.x > 0)
+        if (moveDirection.x != 0f)
+            playerAnimator.SetBool("IsRunning", true);
+        else
+            playerAnimator.SetBool("IsRunning", false);
+        if (moveDirection.x > 0f)
         {
             isFacingRight = true;
-            
+            transform.localScale = new Vector2(1f, 1f);
+
         }
-        else if (moveDirection.x < 0)
+        else if (moveDirection.x < 0f)
         {
             isFacingRight = false;
+            transform.localScale = new Vector2(-1f, 1f);
         }
     }
 
