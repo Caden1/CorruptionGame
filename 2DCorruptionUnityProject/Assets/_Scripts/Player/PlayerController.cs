@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -10,7 +11,9 @@ public class PlayerController : MonoBehaviour
 {
     private const float ZERO_GRAVITY = 0f;
     private enum State { Normal, Dash }
+    private enum AnimationState { Idle, Run, Jump, Fall }
     private State state;
+    private AnimationState animationState;
     private float playerGravity = 1f;
     private float jumpVelocity = 5f;
     private float moveVelocity = 5f;
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         state = State.Normal;
+        animationState = AnimationState.Idle;
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         playerRigidBody = GetComponent<Rigidbody2D>();
@@ -66,7 +70,7 @@ public class PlayerController : MonoBehaviour
                 //Idle();
                 SetupHorizontalMovement();
                 if (playerInputActions.Player.Jump.WasPressedThisFrame() && IsGrounded())
-                    canJump = true;
+                    SetupJump();
                 if (playerInputActions.Player.Jump.WasReleasedThisFrame() && playerRigidBody.velocity.y > 0)
                     canJumpCancel = true;
                 if (playerInputActions.Player.Dash.WasPressedThisFrame())
@@ -80,9 +84,33 @@ public class PlayerController : MonoBehaviour
                     canMelee = true;
                     StartCoroutine(MeleeCooldown());
                 }
+                if (IsGrounded() && moveDirection.x != 0f)
+                    animationState = AnimationState.Run;
+                else if (!IsGrounded() && playerRigidBody.velocity.y < 0)
+                    animationState = AnimationState.Fall;
+                else if (!IsGrounded())
+                    animationState = AnimationState.Jump;
+                else
+                    animationState = AnimationState.Idle;
                 break;
             case State.Dash:
                 StartCoroutine(SetupDash());
+                break;
+        }
+
+        switch (animationState)
+        {
+            case AnimationState.Idle:
+                SetIdleAnimationState();
+                break;
+            case AnimationState.Run:
+                SetRunAnimationState();
+                break;
+            case AnimationState.Jump:
+                SetJumpAnimationState();
+                break;
+            case AnimationState.Fall:
+                SetFallAnimationState();
                 break;
         }
     }
@@ -114,30 +142,57 @@ public class PlayerController : MonoBehaviour
     //    // Set Idle animation
     //}
 
+    private void SetIdleAnimationState()
+    {
+        playerAnimator.SetBool("IsRunning", false);
+        playerAnimator.SetBool("IsJumping", false);
+        playerAnimator.SetBool("IsFalling", false);
+    }
+
+    private void SetRunAnimationState()
+    {
+        playerAnimator.SetBool("IsRunning", true);
+        playerAnimator.SetBool("IsJumping", false);
+        playerAnimator.SetBool("IsFalling", false);
+    }
+
+    private void SetJumpAnimationState()
+    {
+        playerAnimator.SetBool("IsRunning", false);
+        playerAnimator.SetBool("IsJumping", true);
+        playerAnimator.SetBool("IsFalling", false);
+    }
+
+    private void SetFallAnimationState()
+    {
+        playerAnimator.SetBool("IsRunning", false);
+        playerAnimator.SetBool("IsJumping", false);
+        playerAnimator.SetBool("IsFalling", true);
+    }
+
     private void SetupHorizontalMovement()
     {
-        // Set Movement animation
         moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
-        if (moveDirection.x != 0f)
-            playerAnimator.SetBool("IsRunning", true);
-        else
-            playerAnimator.SetBool("IsRunning", false);
         if (moveDirection.x > 0f)
         {
+            playerSpriteRenderer.flipX = false;
             isFacingRight = true;
-            transform.localScale = new Vector2(1f, 1f);
-
         }
         else if (moveDirection.x < 0f)
         {
+            playerSpriteRenderer.flipX = true;
             isFacingRight = false;
-            transform.localScale = new Vector2(-1f, 1f);
         }
     }
 
     private void PerformHorizontalMovement()
     {   
         playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
+    }
+
+    private void SetupJump()
+    {
+        canJump = true;
     }
 
     private void PerformJump()
