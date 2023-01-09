@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 {
     private const float ZERO_GRAVITY = 0f;
     private enum State { Normal, Dash }
-    private enum AnimationState { Idle, Run, Jump, Fall }
+    private enum AnimationState { Idle, Run, Jump, Fall, Melee }
     private State state;
     private AnimationState animationState;
     private float playerGravity = 1f;
@@ -84,14 +84,14 @@ public class PlayerController : MonoBehaviour
                     canMelee = true;
                     StartCoroutine(MeleeCooldown());
                 }
-                if (IsGrounded() && moveDirection.x != 0f)
-                    animationState = AnimationState.Run;
-                else if (!IsGrounded() && playerRigidBody.velocity.y < 0)
-                    animationState = AnimationState.Fall;
-                else if (!IsGrounded())
-                    animationState = AnimationState.Jump;
-                else
-                    animationState = AnimationState.Idle;
+                //if (IsGrounded() && moveDirection.x != 0f)
+                //    animationState = AnimationState.Run;
+                //else if (!IsGrounded() && playerRigidBody.velocity.y < 0)
+                //    animationState = AnimationState.Fall;
+                //else if (!IsGrounded())
+                //    animationState = AnimationState.Jump;
+                //else
+                //    animationState = AnimationState.Idle;
                 break;
             case State.Dash:
                 StartCoroutine(SetupDash());
@@ -111,6 +111,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case AnimationState.Fall:
                 SetFallAnimationState();
+                break;
+            case AnimationState.Melee:
+                SetMeleeAnimationState();
                 break;
         }
     }
@@ -147,6 +150,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("IsRunning", false);
         playerAnimator.SetBool("IsJumping", false);
         playerAnimator.SetBool("IsFalling", false);
+        playerAnimator.SetBool("IsMelee", false);
     }
 
     private void SetRunAnimationState()
@@ -154,6 +158,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("IsRunning", true);
         playerAnimator.SetBool("IsJumping", false);
         playerAnimator.SetBool("IsFalling", false);
+        playerAnimator.SetBool("IsMelee", false);
     }
 
     private void SetJumpAnimationState()
@@ -161,6 +166,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("IsRunning", false);
         playerAnimator.SetBool("IsJumping", true);
         playerAnimator.SetBool("IsFalling", false);
+        playerAnimator.SetBool("IsMelee", false);
     }
 
     private void SetFallAnimationState()
@@ -168,6 +174,15 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("IsRunning", false);
         playerAnimator.SetBool("IsJumping", false);
         playerAnimator.SetBool("IsFalling", true);
+        playerAnimator.SetBool("IsMelee", false);
+    }
+
+    private void SetMeleeAnimationState()
+    {
+        playerAnimator.SetBool("IsRunning", false);
+        playerAnimator.SetBool("IsJumping", false);
+        playerAnimator.SetBool("IsFalling", false);
+        playerAnimator.SetBool("IsMelee", true);
     }
 
     private void SetupHorizontalMovement()
@@ -183,21 +198,27 @@ public class PlayerController : MonoBehaviour
             playerSpriteRenderer.flipX = true;
             isFacingRight = false;
         }
+
+        if (moveDirection.x != 0f && moveDirection.y == 0f)
+        {
+            animationState = AnimationState.Run;
+        }
     }
 
     private void PerformHorizontalMovement()
-    {   
+    {            
         playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
     }
 
     private void SetupJump()
     {
         canJump = true;
+        if (moveDirection.y > 0f)
+            animationState = AnimationState.Jump;
     }
 
     private void PerformJump()
     {
-        // Set Jump animation
         playerRigidBody.velocity = Vector2.up * jumpVelocity;
         canJump = false;
     }
@@ -206,6 +227,8 @@ public class PlayerController : MonoBehaviour
     {
         playerRigidBody.velocity = Vector2.zero;
         canJumpCancel = false;
+        if (moveDirection.y < 0f)
+            animationState = AnimationState.Fall;
     }
 
     private IEnumerator DashCooldown()
@@ -243,7 +266,6 @@ public class PlayerController : MonoBehaviour
 
     private void SetupMelee()
     {
-        // Set Melee animation
         //meleeAttackParticles.Play();
         enemiesHitByMelee = new List<RaycastHit2D>();
         if (isFacingRight)
@@ -254,10 +276,12 @@ public class PlayerController : MonoBehaviour
         {
             meleeDirection = Vector2.left;
         }
+        animationState = AnimationState.Melee;
     }
 
     private void PerformMelee()
     {
+        animationState = AnimationState.Melee;
         int numEnemiesHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, meleeAngle, meleeDirection, enemyContactFilter, enemiesHitByMelee, meleeAttackDistance);
         if (numEnemiesHit > 0)
         {
