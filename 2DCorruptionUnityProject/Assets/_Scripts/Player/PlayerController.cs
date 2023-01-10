@@ -10,8 +10,14 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     private const float ZERO_GRAVITY = 0f;
+    private const string PLAYER_IDLE_ANIM = "PlayerIdleAnim";
+    private const string PLAYER_RUN_ANIM = "PlayerRunAnim";
+    private const string PLAYER_JUMP_ANIM = "PlayerJumpAnim";
+    private const string PLAYER_FALL_ANIM = "PlayerFallAnim";
+    private const string PLAYER_MELEE_ANIM = "PlayerMeleeAnim";
+    private const string PLAYER_RANGED_ATTACK_ANIM = "PlayerRangedAttackAnim";
     private enum State { Normal, Dash }
-    private enum AnimationState { Idle, Run, Jump, Fall, Melee }
+    private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
     private State state;
     private AnimationState animationState;
     private float playerGravity = 1f;
@@ -23,25 +29,34 @@ public class PlayerController : MonoBehaviour
     private float meleeAttackDistance = 1f;
     private float meleeAngle = 0f;
     private float meleeCooldownSeconds = 1f;
+    private float rangedAttackDistance = 10f;
+    private float rangedAngle = 0f;
+    private float rangedCooldownSeconds = 1f;
+    private bool isGrounded = true;
     private bool isFacingRight = true;
     private bool canJump = false;
     private bool canJumpCancel = false;
     private bool canMelee = false;
+    private bool isMeleeAttacking = false;
+    private bool canRanged = false;
+    private bool isRangedAttacking = false;
     private PlayerInputActions playerInputActions;
     private Rigidbody2D playerRigidBody;
     private BoxCollider2D playerBoxCollider;
     private Animator playerAnimator;
+    private AnimationManager animationManager;
     private SpriteRenderer playerSpriteRenderer;
     private LayerMask platformLayerMask;
     private LayerMask enemyLayerMask;
     private ContactFilter2D enemyContactFilter;
     private Vector2 moveDirection;
     private Vector2 meleeDirection;
+    private Vector2 rangedDirection;
     private List<RaycastHit2D> enemiesHitByMelee;
+    private List<RaycastHit2D> enemiesHitByRanged;
     //private ParticleSystem meleeAttackParticles;
 
-    private void Awake()
-    {
+    private void Awake() {
         state = State.Normal;
         animationState = AnimationState.Idle;
         playerInputActions = new PlayerInputActions();
@@ -50,6 +65,7 @@ public class PlayerController : MonoBehaviour
         playerRigidBody.freezeRotation = true;
         playerBoxCollider = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<Animator>();
+        animationManager = new AnimationManager(playerAnimator);
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         platformLayerMask = LayerMask.GetMask("Platform");
         enemyLayerMask = LayerMask.GetMask("Enemy");
@@ -57,204 +73,170 @@ public class PlayerController : MonoBehaviour
         enemyContactFilter.SetLayerMask(enemyLayerMask);
         moveDirection = new Vector2();
         meleeDirection = Vector2.right;
+        rangedDirection = Vector2.right;
         enemiesHitByMelee = new List<RaycastHit2D>();
+        enemiesHitByRanged = new List<RaycastHit2D>();
         playerRigidBody.gravityScale = playerGravity;
         //meleeAttackParticles = GetComponent<ParticleSystem>();
     }
 
-    private void Update()
-    {
-        switch (state)
-        {
+    private void Update() {
+        switch (state) {
             case State.Normal:
-                //Idle();
                 SetupHorizontalMovement();
-                if (playerInputActions.Player.Jump.WasPressedThisFrame() && IsGrounded())
+                if (playerInputActions.Player.Jump.WasPressedThisFrame())
                     SetupJump();
-                if (playerInputActions.Player.Jump.WasReleasedThisFrame() && playerRigidBody.velocity.y > 0)
-                    canJumpCancel = true;
+                if (playerInputActions.Player.Jump.WasReleasedThisFrame())
+                    SetupJumpCancel();
                 if (playerInputActions.Player.Dash.WasPressedThisFrame())
-                {
                     state = State.Dash;
-                    StartCoroutine(DashCooldown());
-                }
                 if (playerInputActions.Player.Melee.WasPressedThisFrame())
-                {
                     SetupMelee();
-                    canMelee = true;
-                    StartCoroutine(MeleeCooldown());
-                }
-                //if (IsGrounded() && moveDirection.x != 0f)
-                //    animationState = AnimationState.Run;
-                //else if (!IsGrounded() && playerRigidBody.velocity.y < 0)
-                //    animationState = AnimationState.Fall;
-                //else if (!IsGrounded())
-                //    animationState = AnimationState.Jump;
-                //else
-                //    animationState = AnimationState.Idle;
+                if (playerInputActions.Player.Ranged.WasPressedThisFrame())
+                    SetupRanged();
                 break;
             case State.Dash:
-                StartCoroutine(SetupDash());
+                SetupDash();
                 break;
         }
 
-        switch (animationState)
-        {
+        SetAnimationStates();
+
+        switch (animationState) {
             case AnimationState.Idle:
-                SetIdleAnimationState();
+                animationManager.ChangeState(PLAYER_IDLE_ANIM);
                 break;
             case AnimationState.Run:
-                SetRunAnimationState();
+                animationManager.ChangeState(PLAYER_RUN_ANIM);
                 break;
             case AnimationState.Jump:
-                SetJumpAnimationState();
+                animationManager.ChangeState(PLAYER_JUMP_ANIM);
                 break;
             case AnimationState.Fall:
-                SetFallAnimationState();
+                animationManager.ChangeState(PLAYER_FALL_ANIM);
                 break;
             case AnimationState.Melee:
-                SetMeleeAnimationState();
+                animationManager.ChangeState(PLAYER_MELEE_ANIM);
+                break;
+            case AnimationState.Ranged:
+                animationManager.ChangeState(PLAYER_RANGED_ATTACK_ANIM);
                 break;
         }
     }
 
-    private void FixedUpdate()
-    {
-        switch (state)
-        {
+    private void FixedUpdate() {
+        IsGrounded();
+        switch (state) {
             case State.Normal:
                 PerformHorizontalMovement();
                 if (canJump)
                     PerformJump();
                 if (canJumpCancel)
-                    PerformCancelJump();
+                    PerformJumpCancel();
                 if (canMelee)
                     PerformMelee();
+                if (canRanged)
+                    PerformRanged();
                 break;
             case State.Dash:
-                if (isFacingRight)
-                    PerformRightDash();
-                else
-                    PerformLeftDash();
+                StartCoroutine(PerformDash());
                 break;
         }
     }
 
-    //private void Idle()
-    //{
-    //    // Set Idle animation
-    //}
-
-    private void SetIdleAnimationState()
-    {
-        playerAnimator.SetBool("IsRunning", false);
-        playerAnimator.SetBool("IsJumping", false);
-        playerAnimator.SetBool("IsFalling", false);
-        playerAnimator.SetBool("IsMelee", false);
+    private void SetAnimationStates() {
+        if (isMeleeAttacking)
+            animationState = AnimationState.Melee;
+        else if (isRangedAttacking)
+            animationState = AnimationState.Ranged;
+        else if (isGrounded && moveDirection.x != 0f)
+            animationState = AnimationState.Run;
+        else if (playerRigidBody.velocity.y > 0f)
+            animationState = AnimationState.Jump;
+        else if (playerRigidBody.velocity.y < 0f)
+            animationState = AnimationState.Fall;
+        else
+            animationState = AnimationState.Idle;
     }
 
-    private void SetRunAnimationState()
-    {
-        playerAnimator.SetBool("IsRunning", true);
-        playerAnimator.SetBool("IsJumping", false);
-        playerAnimator.SetBool("IsFalling", false);
-        playerAnimator.SetBool("IsMelee", false);
-    }
-
-    private void SetJumpAnimationState()
-    {
-        playerAnimator.SetBool("IsRunning", false);
-        playerAnimator.SetBool("IsJumping", true);
-        playerAnimator.SetBool("IsFalling", false);
-        playerAnimator.SetBool("IsMelee", false);
-    }
-
-    private void SetFallAnimationState()
-    {
-        playerAnimator.SetBool("IsRunning", false);
-        playerAnimator.SetBool("IsJumping", false);
-        playerAnimator.SetBool("IsFalling", true);
-        playerAnimator.SetBool("IsMelee", false);
-    }
-
-    private void SetMeleeAnimationState()
-    {
-        playerAnimator.SetBool("IsRunning", false);
-        playerAnimator.SetBool("IsJumping", false);
-        playerAnimator.SetBool("IsFalling", false);
-        playerAnimator.SetBool("IsMelee", true);
-    }
-
-    private void SetupHorizontalMovement()
-    {
+    private void SetupHorizontalMovement() {
         moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
-        if (moveDirection.x > 0f)
-        {
+        if (moveDirection.x > 0f) {
             playerSpriteRenderer.flipX = false;
             isFacingRight = true;
         }
-        else if (moveDirection.x < 0f)
-        {
+        else if (moveDirection.x < 0f) {
             playerSpriteRenderer.flipX = true;
             isFacingRight = false;
         }
-
-        if (moveDirection.x != 0f && moveDirection.y == 0f)
-        {
-            animationState = AnimationState.Run;
-        }
     }
 
-    private void PerformHorizontalMovement()
-    {            
+    private void PerformHorizontalMovement() {            
         playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
     }
 
-    private void SetupJump()
-    {
-        canJump = true;
-        if (moveDirection.y > 0f)
-            animationState = AnimationState.Jump;
+    private void SetupJump() {
+        if (isGrounded)
+            canJump = true;
     }
 
-    private void PerformJump()
-    {
+    private void PerformJump() {
         playerRigidBody.velocity = Vector2.up * jumpVelocity;
         canJump = false;
     }
 
-    private void PerformCancelJump()
-    {
-        playerRigidBody.velocity = Vector2.zero;
-        canJumpCancel = false;
-        if (moveDirection.y < 0f)
-            animationState = AnimationState.Fall;
+    private void SetupJumpCancel() {
+        if (playerRigidBody.velocity.y > 0)
+            canJumpCancel = true;
     }
 
-    private IEnumerator DashCooldown()
-    {
+    private void PerformJumpCancel() {
+        playerRigidBody.velocity = Vector2.zero;
+        canJumpCancel = false;
+    }
+
+    private void SetupDash() {
+        StartCoroutine(DashCooldown());
+    }
+
+    private IEnumerator DashCooldown() {
         playerInputActions.Player.Dash.Disable();
         yield return new WaitForSeconds(dashCooldownSeconds);
         playerInputActions.Player.Dash.Enable();
     }
 
-    private IEnumerator SetupDash()
+    private IEnumerator PerformDash()
     {
-        // Set Dash animation
         playerRigidBody.gravityScale = ZERO_GRAVITY;
+        if (isFacingRight)
+            PerformRightDash();
+        else
+            PerformLeftDash();
         yield return new WaitForSeconds(secondsToDash);
         playerRigidBody.gravityScale = playerGravity;
         state = State.Normal;
     }
 
-    private void PerformRightDash()
-    {
+    private void PerformRightDash() {
         playerRigidBody.velocity = Vector2.right * dashVelocity;
     }
 
-    private void PerformLeftDash()
-    {
+    private void PerformLeftDash() {
         playerRigidBody.velocity = Vector2.left * dashVelocity;
+    }
+
+    private void SetupMelee() {
+        if (!isMeleeAttacking) {
+            //meleeAttackParticles.Play();
+            canMelee = true;
+            isMeleeAttacking = true;
+            enemiesHitByMelee = new List<RaycastHit2D>();
+            if (isFacingRight)
+                meleeDirection = Vector2.right;
+            else
+                meleeDirection = Vector2.left;
+            StartCoroutine(MeleeCooldown());
+        }
     }
 
     private IEnumerator MeleeCooldown()
@@ -264,46 +246,69 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Player.Melee.Enable();
     }
 
-    private void SetupMelee()
-    {
-        //meleeAttackParticles.Play();
-        enemiesHitByMelee = new List<RaycastHit2D>();
-        if (isFacingRight)
-        {
-            meleeDirection = Vector2.right;
-        }
-        else
-        {
-            meleeDirection = Vector2.left;
-        }
-        animationState = AnimationState.Melee;
-    }
-
-    private void PerformMelee()
-    {
-        animationState = AnimationState.Melee;
+    private void PerformMelee() {
+        //animationState = AnimationState.Melee;
         int numEnemiesHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, meleeAngle, meleeDirection, enemyContactFilter, enemiesHitByMelee, meleeAttackDistance);
-        if (numEnemiesHit > 0)
-        {
-            foreach (RaycastHit2D hit in enemiesHitByMelee)
-            {
+        if (numEnemiesHit > 0) {
+            foreach (RaycastHit2D hit in enemiesHitByMelee) {
                 Destroy(hit.collider.gameObject);
             }
         }
         canMelee = false;
+        float meleeAttackAnimTime = 0.3f;
+        Invoke("ResetMeleeAnimation", meleeAttackAnimTime);
     }
 
-    private void PerformProjectile()
-    {
-
+    private void ResetMeleeAnimation() {
+        isMeleeAttacking = false;
     }
 
-    private bool IsGrounded()
+    private void SetupRanged() {
+        canRanged = true;
+        isRangedAttacking = true;
+        enemiesHitByRanged = new List<RaycastHit2D>();
+        if (isFacingRight)
+            rangedDirection = Vector2.right;
+        else
+            rangedDirection = Vector2.left;
+        StartCoroutine(RangedCooldown());
+    }
+
+    private IEnumerator RangedCooldown()
     {
+        playerInputActions.Player.Ranged.Disable();
+        yield return new WaitForSeconds(rangedCooldownSeconds);
+        playerInputActions.Player.Ranged.Enable();
+    }
+
+    private void PerformRanged()
+    {
+        int numEnemiesHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, rangedAngle, rangedDirection, enemyContactFilter, enemiesHitByRanged, rangedAttackDistance);
+        if (numEnemiesHit > 0)
+        {
+            foreach (RaycastHit2D hit in enemiesHitByRanged)
+            {
+                Destroy(hit.collider.gameObject);
+            }
+        }
+        canRanged = false;
+        float rangedAttackAnimTime = 0.3f;
+        Invoke("ResetRangedAnimation", rangedAttackAnimTime);
+    }
+
+    private void ResetRangedAnimation()
+    {
+        isRangedAttacking = false;
+    }
+
+    private void IsGrounded() {
         float angle = 0f;
         float raycastDistance = 0.1f;
         RaycastHit2D raycastHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, angle, Vector2.down, raycastDistance, platformLayerMask);
-        return raycastHit.collider != null;
+        if (raycastHit.collider != null)
+            isGrounded = true;
+        else
+            isGrounded = false;
     }
 }
 

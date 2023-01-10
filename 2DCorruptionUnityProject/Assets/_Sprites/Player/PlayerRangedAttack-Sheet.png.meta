@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cf09db9a42aef48cb9a548d5946451b5
+guid: c3b4bdd30ab704b8b9661a0db78a6a7f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,12 +117,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerMelee-Sheet_0
+      name: PlayerRangedAttack-Sheet_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 24
-        width: 56
+        x: 40
+        y: 28
+        width: 68
         height: 148
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -131,19 +131,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f2aae05b7c5340c7a9f41958adea319
-      internalID: 1333128840
+      spriteID: 1cc1cde77854241a0b147c51b33aa817
+      internalID: 1539641969
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerMelee-Sheet_1
+      name: PlayerRangedAttack-Sheet_1
       rect:
         serializedVersion: 2
-        x: 176
-        y: 24
-        width: 52
+        x: 168
+        y: 28
+        width: 68
         height: 148
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -152,50 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb5a3a9200bb14df69e6369c9d667aa8
-      internalID: -492866092
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerMelee-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 304
-        y: 24
-        width: 52
-        height: 148
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 82b91273df7e74ec3b814178bf5d1ba9
-      internalID: 977060513
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerMelee-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 416
-        y: 24
-        width: 56
-        height: 148
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 735f0f674b7104645b7d9efc035019c8
-      internalID: 2137498430
+      spriteID: 0655a1af6446d404a9fb6728e5960414
+      internalID: 582491706
       vertices: []
       indices: 
       edges: []
@@ -211,10 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PlayerMelee-Sheet_1: -492866092
-      PlayerMelee-Sheet_2: 977060513
-      PlayerMelee-Sheet_3: 2137498430
-      PlayerMelee-Sheet_0: 1333128840
+      PlayerRangedAttack-Sheet_0: 1539641969
+      PlayerRangedAttack-Sheet_1: 582491706
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
