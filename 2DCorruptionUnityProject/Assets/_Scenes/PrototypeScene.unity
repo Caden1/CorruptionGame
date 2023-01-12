@@ -495,6 +495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51043e129809645a6b113eb4d9d7825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  corruptionProjectileSprites:
+  - {fileID: -510831846, guid: e2f130f2477b5470f9abe2b4a99241f8, type: 3}
+  - {fileID: -1404870552, guid: e2f130f2477b5470f9abe2b4a99241f8, type: 3}
   corruptionProjectile: {fileID: 8312910579903577420, guid: 5f97ce5c49330475ba1470ac222ada6a, type: 3}
 --- !u!61 &739429060
 BoxCollider2D:

@@ -5,10 +5,13 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+	[SerializeField] private Sprite[] corruptionProjectileSprites;
+	[SerializeField] private GameObject corruptionProjectile;
 	private const float ZERO_GRAVITY = 0f;
 	private const string PLAYER_IDLE_ANIM = "PlayerIdleAnim";
 	private const string PLAYER_RUN_ANIM = "PlayerRunAnim";
@@ -29,9 +32,8 @@ public class PlayerController : MonoBehaviour
 	private float meleeAttackDistance = 1f;
 	private float meleeAngle = 0f;
 	private float meleeCooldownSeconds = 1f;
-	private float rangedAttackDistance = 10f;
-	private float rangedAngle = 0f;
 	private float rangedCooldownSeconds = 1f;
+	private float projectileSpeed = 20f;
 	private bool isGrounded = true;
 	private bool isFacingRight = true;
 	private bool canJump = false;
@@ -44,22 +46,21 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D playerRigidBody;
 	private BoxCollider2D playerBoxCollider;
 	private Animator playerAnimator;
-	private AnimationManager animationManager;
+	private Animations playerAnimations;
+	private Animations playerCorruptionProjectileAnimation;
 	private SpriteRenderer playerSpriteRenderer;
 	private LayerMask platformLayerMask;
 	private LayerMask enemyLayerMask;
 	private ContactFilter2D enemyContactFilter;
 	private Vector2 moveDirection;
 	private Vector2 meleeDirection;
-	private Vector2 rangedDirection;
+	private Vector2 projectileDirection;
 	private List<RaycastHit2D> enemiesHitByMelee;
-	private List<RaycastHit2D> enemiesHitByRanged;
 	private Transform rangedAttackTransform;
 	private float rangedAttackLocalPositionX;
 	private float rangedAttackLocalPositionY;
 	private float rangedAttackLocalPositionXFlipped;
-	[SerializeField] private GameObject corruptionProjectile;
-	private PlayerCorruptionProjectile playerCorruptionProjectileScript;
+	private GameObject corruptionProjectileClone;
 
 	private void Awake() {
 		state = State.Normal;
@@ -70,7 +71,6 @@ public class PlayerController : MonoBehaviour
 		playerRigidBody.freezeRotation = true;
 		playerBoxCollider = GetComponent<BoxCollider2D>();
 		playerAnimator = GetComponent<Animator>();
-		animationManager = new AnimationManager(playerAnimator);
 		playerSpriteRenderer = GetComponent<SpriteRenderer>();
 		platformLayerMask = LayerMask.GetMask("Platform");
 		enemyLayerMask = LayerMask.GetMask("Enemy");
@@ -78,15 +78,16 @@ public class PlayerController : MonoBehaviour
 		enemyContactFilter.SetLayerMask(enemyLayerMask);
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
-		rangedDirection = Vector2.right;
+		projectileDirection = Vector2.right;
 		enemiesHitByMelee = new List<RaycastHit2D>();
-		enemiesHitByRanged = new List<RaycastHit2D>();
 		playerRigidBody.gravityScale = playerGravity;
 		rangedAttackTransform = transform.GetChild(0);
 		rangedAttackLocalPositionX = rangedAttackTransform.localPosition.x;
 		rangedAttackLocalPositionY = rangedAttackTransform.localPosition.y;
 		rangedAttackLocalPositionXFlipped = -rangedAttackLocalPositionX;
-		playerCorruptionProjectileScript = corruptionProjectile.GetComponent<PlayerCorruptionProjectile>();
+		playerAnimations = new Animations(playerAnimator);
+		playerCorruptionProjectileAnimation = new Animations();
+		corruptionProjectileClone = new GameObject();
 	}
 
 	private void Update() {
@@ -114,24 +115,26 @@ public class PlayerController : MonoBehaviour
 
 		switch (animationState) {
 			case AnimationState.Idle:
-				animationManager.ChangeState(PLAYER_IDLE_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_IDLE_ANIM);
 				break;
 			case AnimationState.Run:
-				animationManager.ChangeState(PLAYER_RUN_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RUN_ANIM);
 				break;
 			case AnimationState.Jump:
-				animationManager.ChangeState(PLAYER_JUMP_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_JUMP_ANIM);
 				break;
 			case AnimationState.Fall:
-				animationManager.ChangeState(PLAYER_FALL_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_FALL_ANIM);
 				break;
 			case AnimationState.Melee:
-				animationManager.ChangeState(PLAYER_MELEE_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_MELEE_ANIM);
 				break;
 			case AnimationState.Ranged:
-				animationManager.ChangeState(PLAYER_RANGED_ATTACK_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RANGED_ATTACK_ANIM);
 				break;
 		}
+
+		AnimateAndShootProjectile();
 	}
 
 	private void FixedUpdate() {
@@ -281,15 +284,12 @@ public class PlayerController : MonoBehaviour
 	private void SetupRanged() {
 		canRanged = true;
 		isRangedAttacking = true;
-		enemiesHitByRanged = new List<RaycastHit2D>();
 		if (isFacingRight) {
-			rangedDirection = Vector2.right;
+			projectileDirection = Vector2.right;
 		}
 		else {
-			rangedDirection = Vector2.left;
+			projectileDirection = Vector2.left;
 		}
-		playerCorruptionProjectileScript.SetIsFacingRight(isFacingRight);
-		Instantiate(corruptionProjectile, rangedAttackTransform.position, rangedAttackTransform.rotation);
 		StartCoroutine(RangedCooldown());
 	}
 
@@ -300,21 +300,28 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformRanged() {
-		int numEnemiesHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, rangedAngle, rangedDirection, enemyContactFilter, enemiesHitByRanged, rangedAttackDistance);
-		if (numEnemiesHit > 0)
-		{
-			foreach (RaycastHit2D hit in enemiesHitByRanged)
-			{
-				Destroy(hit.collider.gameObject);
-			}
-		}
+		corruptionProjectileClone = Instantiate(corruptionProjectile, rangedAttackTransform.position, rangedAttackTransform.rotation);
+		playerCorruptionProjectileAnimation = new Animations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
 		canRanged = false;
 		float rangedAttackAnimTime = 0.3f;
 		Invoke("ResetRangedAnimation", rangedAttackAnimTime);
+		float destroyProjectileAfterSeconds = 0.5f;
+		Invoke("DestroyProjectile", destroyProjectileAfterSeconds);
 	}
 
 	private void ResetRangedAnimation() {
 		isRangedAttacking = false;
+	}
+
+	private void DestroyProjectile() {
+		Destroy(corruptionProjectileClone);
+	}
+
+	private void AnimateAndShootProjectile() {
+		if (corruptionProjectileClone != null) {
+			playerCorruptionProjectileAnimation.PlayCreatedAnimation();
+			corruptionProjectileClone.transform.Translate(projectileDirection * Time.deltaTime * projectileSpeed);
+		}
 	}
 
 	private void IsGrounded() {
