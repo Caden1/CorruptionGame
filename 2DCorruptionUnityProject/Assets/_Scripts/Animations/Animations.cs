@@ -27,7 +27,6 @@ public class Animations
 		}
 	}
 
-
 	// Create Animations
 	public Sprite[] spritesToAnimate { get; }
 	public SpriteRenderer spriteRenderer { get; }

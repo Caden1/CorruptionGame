@@ -13,12 +13,18 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite[] corruptionProjectileSprites;
 	[SerializeField] private GameObject corruptionProjectile;
 	private const float ZERO_GRAVITY = 0f;
-	private const string PLAYER_IDLE_ANIM = "PlayerIdleAnim";
-	private const string PLAYER_RUN_ANIM = "PlayerRunAnim";
-	private const string PLAYER_JUMP_ANIM = "PlayerJumpAnim";
-	private const string PLAYER_FALL_ANIM = "PlayerFallAnim";
-	private const string PLAYER_MELEE_ANIM = "PlayerMeleeAnim";
-	private const string PLAYER_RANGED_ATTACK_ANIM = "PlayerRangedAttackAnim";
+	// Old Anims
+	//private const string PLAYER_IDLE_ANIM = "PlayerIdleAnim";
+	//private const string PLAYER_RUN_ANIM = "PlayerRunAnim";
+	//private const string PLAYER_JUMP_ANIM = "PlayerJumpAnim";
+	//private const string PLAYER_FALL_ANIM = "PlayerFallAnim";
+	//private const string PLAYER_MELEE_ANIM = "PlayerMeleeAnim";
+	//private const string PLAYER_RANGED_ATTACK_ANIM = "PlayerRangedAttackAnim";
+	// New Anims
+	private const string PLAYER_IDLE_ANIM = "PlayerIdle";
+	private const string PLAYER_RUN_ANIM = "PlayerRun";
+	private const string PLAYER_IDLE_TO_RUN_ANIM = "PlayerIdleToRun";
+	private const string PLAYER_RUN_TO_IDLE_ANIM = "PlayerRunToIdle";
 	private enum State { Normal, Dash }
 	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
 	private State state;
@@ -42,6 +48,8 @@ public class PlayerController : MonoBehaviour
 	private bool isMeleeAttacking = false;
 	private bool canRanged = false;
 	private bool isRangedAttacking = false;
+	private bool idleToRun = false;
+	private bool runToIdle = false;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
 	private BoxCollider2D playerBoxCollider;
@@ -111,14 +119,20 @@ public class PlayerController : MonoBehaviour
 				break;
 		}
 
-		SetAnimationStates();
+		SetAnimationState();
 
 		switch (animationState) {
 			case AnimationState.Idle:
-				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_IDLE_ANIM);
+				if (runToIdle)
+					StartCoroutine(PlayRunToIdleTransitionForSeconds(0.2f));
+				else
+					playerAnimations.PlayUnityAnimatorAnimation(PLAYER_IDLE_ANIM);
 				break;
 			case AnimationState.Run:
-				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RUN_ANIM);
+				if (idleToRun)
+					StartCoroutine(PlayIdleToRunTransitionForSeconds(0.2f));
+				else
+					playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RUN_ANIM);
 				break;
 			case AnimationState.Jump:
 				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_JUMP_ANIM);
@@ -157,19 +171,38 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void SetAnimationStates() {
-		if (isMeleeAttacking)
+	private void SetAnimationState() {
+		if (isMeleeAttacking) {
 			animationState = AnimationState.Melee;
-		else if (isRangedAttacking)
+		} else if (isRangedAttacking) {
 			animationState = AnimationState.Ranged;
-		else if (isGrounded && moveDirection.x != 0f)
+		} else if (isGrounded && moveDirection.x != 0f) {
+			if (animationState == AnimationState.Idle) {
+				idleToRun = true;
+			}
 			animationState = AnimationState.Run;
-		else if (playerRigidBody.velocity.y > 0f)
+		} else if (playerRigidBody.velocity.y > 0f) {
 			animationState = AnimationState.Jump;
-		else if (playerRigidBody.velocity.y < 0f)
+		} else if (playerRigidBody.velocity.y < 0f) {
 			animationState = AnimationState.Fall;
-		else
+		} else {
+			if (animationState == AnimationState.Run) {
+				runToIdle = true;
+			}
 			animationState = AnimationState.Idle;
+		}
+	}
+
+	private IEnumerator PlayRunToIdleTransitionForSeconds(float secondsToPlayTransition) {
+		playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RUN_TO_IDLE_ANIM);
+		yield return new WaitForSeconds(secondsToPlayTransition);
+		runToIdle = false;
+	}
+
+	private IEnumerator PlayIdleToRunTransitionForSeconds(float secondsToPlayTransition) {
+		playerAnimations.PlayUnityAnimatorAnimation(PLAYER_IDLE_TO_RUN_ANIM);
+		yield return new WaitForSeconds(secondsToPlayTransition);
+		idleToRun = false;
 	}
 
 	private void SetupHorizontalMovement() {
@@ -225,8 +258,7 @@ public class PlayerController : MonoBehaviour
 		playerInputActions.Player.Dash.Enable();
 	}
 
-	private IEnumerator PerformDash()
-	{
+	private IEnumerator PerformDash() {
 		playerRigidBody.gravityScale = ZERO_GRAVITY;
 		if (isFacingRight)
 			PerformRightDash();
@@ -258,8 +290,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private IEnumerator MeleeCooldown()
-	{
+	private IEnumerator MeleeCooldown() {
 		playerInputActions.Player.Melee.Disable();
 		yield return new WaitForSeconds(meleeCooldownSeconds);
 		playerInputActions.Player.Melee.Enable();
