@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private Sprite[] corruptionProjectileSprites;
 	[SerializeField] private GameObject corruptionProjectile;
+	private enum PlayerState { Normal, Dash }
+	private PlayerState playerState;
+	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
+	private AnimationState animationState;
 	private const float ZERO_GRAVITY = 0f;
 	// Old Anims
 	private const string PLAYER_IDLE_ANIM = "PlayerIdleAnim";
@@ -25,25 +29,8 @@ public class PlayerController : MonoBehaviour
 	//private const string PLAYER_RUN_ANIM = "PlayerRun";
 	//private const string PLAYER_IDLE_TO_RUN_ANIM = "PlayerIdleToRun";
 	//private const string PLAYER_RUN_TO_IDLE_ANIM = "PlayerRunToIdle";
-	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
-	private AnimationState animationState;
-	private float playerGravity = 1f;
-	private float jumpVelocity = 5f;
 	private float moveVelocity = 5f;
-	private float dashVelocity = 15f;
-	private float secondsToDash = 0.25f;
-	private float dashCooldownSeconds = 2f;
-	private float meleeAttackDistance = 1f;
-	private float meleeAngle = 0f;
-	private float meleeCooldownSeconds = 1f;
-	private float rangedCooldownSeconds = 1f;
-	private float projectileSpeed = 20f;
 	private bool isFacingRight = true;
-	private bool canJumpCancel = false;
-	//private bool canMelee = false;
-	//private bool isMeleeAttacking = false;
-	private bool canRanged = false;
-	private bool isRangedAttacking = false;
 	private bool idleToRun = false;
 	private bool runToIdle = false;
 	private PlayerInputActions playerInputActions;
@@ -59,15 +46,18 @@ public class PlayerController : MonoBehaviour
 	private Vector2 moveDirection;
 	private Vector2 meleeDirection;
 	private Vector2 projectileDirection;
-	private List<RaycastHit2D> enemiesHitByMelee;
 	private Transform rangedAttackTransform;
 	private float rangedAttackLocalPositionX;
 	private float rangedAttackLocalPositionY;
 	private float rangedAttackLocalPositionXFlipped;
 	private GameObject corruptionProjectileClone;
-	private Skills playerSkills;
+	private PlayerRightGloveSkills playerRightGloveSkills;
+	private PlayerLeftGloveSkills playerLeftGloveSkills;
+	private PlayerRightBootSkills playerRightBootSkills;
+	private PlayerLeftBootSkills playerLeftBootSkills;
 
 	private void Awake() {
+		playerState = PlayerState.Normal;
 		animationState = AnimationState.Idle;
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
@@ -83,8 +73,6 @@ public class PlayerController : MonoBehaviour
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
 		projectileDirection = Vector2.right;
-		enemiesHitByMelee = new List<RaycastHit2D>();
-		playerRigidBody.gravityScale = playerGravity;
 		rangedAttackTransform = transform.GetChild(0);
 		rangedAttackLocalPositionX = rangedAttackTransform.localPosition.x;
 		rangedAttackLocalPositionY = rangedAttackTransform.localPosition.y;
@@ -92,26 +80,31 @@ public class PlayerController : MonoBehaviour
 		playerAnimations = new Animations(playerAnimator);
 		playerCorruptionProjectileAnimation = new Animations();
 		corruptionProjectileClone = new GameObject();
-		playerSkills = new Skills(playerRigidBody);
+		playerRightGloveSkills = new PlayerRightGloveSkills(playerRigidBody, playerBoxCollider);
+		playerLeftGloveSkills = new PlayerLeftGloveSkills(playerRigidBody, playerBoxCollider);
+		playerRightBootSkills = new PlayerRightBootSkills(playerRigidBody, playerBoxCollider);
+		playerLeftBootSkills = new PlayerLeftBootSkills(playerRigidBody, playerBoxCollider);
 	}
 
 	private void Update() {
-		switch (playerSkills.state) {
-			case Skills.State.Normal:
+		switch (playerState) {
+			case PlayerState.Normal:
 				SetupHorizontalMovement();
 				SetRangedAttackPositionWithMovement();
-				if (playerInputActions.Player.Jump.WasPressedThisFrame() && playerSkills.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask))
-					playerSkills.canJump = true;
+				if (playerInputActions.Player.Jump.WasPressedThisFrame() && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask))
+					playerRightBootSkills.SetupPurityJump();
 				if (playerInputActions.Player.Jump.WasReleasedThisFrame())
-					SetupJumpCancel();
+					playerRightBootSkills.SetupJumpCancel();
 				if (playerInputActions.Player.Dash.WasPressedThisFrame())
-					playerSkills.state = Skills.State.Dash;
+					playerState = PlayerState.Dash;
 				if (playerInputActions.Player.Melee.WasPressedThisFrame())
 					SetupMelee();
-				if (playerInputActions.Player.Ranged.WasPressedThisFrame())
+				if (playerInputActions.Player.Ranged.WasPressedThisFrame()) {
 					SetupRanged();
+				}
 				break;
-			case Skills.State.Dash:
+			case PlayerState.Dash:
+				playerLeftBootSkills.SetupPurityDash();
 				StartCoroutine(SetDashCooldown());
 				break;
 		}
@@ -149,74 +142,31 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void FixedUpdate() {
-		switch (playerSkills.state) {
-			case Skills.State.Normal:
+		switch (playerState) {
+			case PlayerState.Normal:
 				PerformHorizontalMovement();
-				if (playerSkills.canJump)
-					playerSkills.PerformJump(jumpVelocity);
-				if (canJumpCancel)
-					PerformJumpCancel();
-				if (playerSkills.canMelee)
+				if (playerRightBootSkills.canJump)
+					playerRightBootSkills.PerformPurityJump();
+				if (playerRightBootSkills.canJumpCancel)
+					playerRightBootSkills.PerformJumpCancel();
+				if (playerRightGloveSkills.canMelee)
 					PerformMelee();
-				if (canRanged)
+				if (playerLeftGloveSkills.canRanged)
 					PerformRanged();
 				break;
-			case Skills.State.Dash:
-				StartCoroutine(playerSkills.PerformDash(isFacingRight, secondsToDash, dashVelocity));
+			case PlayerState.Dash:
+				StartCoroutine(playerLeftBootSkills.PerformPurityDash(isFacingRight));
+				StartCoroutine(SetStateAfterSeconds(PlayerState.Normal, playerLeftBootSkills.secondsToDash));
 				break;
 		}
 	}
 
-
-
-	private void SetupMelee()
-	{
-		if (!playerSkills.isMeleeAttacking)
-		{
-			playerSkills.canMelee = true;
-			playerSkills.isMeleeAttacking = true;
-			enemiesHitByMelee = new List<RaycastHit2D>();
-			if (isFacingRight)
-				playerSkills.meleeDirection = Vector2.right;
-			else
-				playerSkills.meleeDirection = Vector2.left;
-			StartCoroutine(MeleeCooldown());
-		}
-	}
-
-	private void PerformMelee()
-	{
-		int numEnemiesHit = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, meleeAngle, playerSkills.meleeDirection, enemyContactFilter, enemiesHitByMelee, meleeAttackDistance);
-		if (numEnemiesHit > 0)
-		{
-			foreach (RaycastHit2D hit in enemiesHitByMelee)
-			{
-				Destroy(hit.collider.gameObject);
-			}
-		}
-		playerSkills.canMelee = false;
-		float meleeAttackAnimTime = 0.3f;
-		Invoke("ResetMeleeAnimation", meleeAttackAnimTime);
-	}
-
-	private IEnumerator MeleeCooldown() {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(meleeCooldownSeconds);
-		playerInputActions.Player.Melee.Enable();
-	}
-
-	private void ResetMeleeAnimation() {
-		playerSkills.isMeleeAttacking = false;
-	}
-
-
-
 	private void SetAnimationState() {
-		if (playerSkills.isMeleeAttacking) {
+		if (playerRightGloveSkills.isMeleeAttacking) {
 			animationState = AnimationState.Melee;
-		} else if (isRangedAttacking) {
+		} else if (playerLeftGloveSkills.isRangedAttacking) {
 			animationState = AnimationState.Ranged;
-		} else if (playerSkills.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
+		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
 			if (animationState == AnimationState.Idle) {
 				idleToRun = true;
 			}
@@ -268,62 +218,98 @@ public class PlayerController : MonoBehaviour
 		playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
 	}
 
-	private void SetupJumpCancel() {
-		if (playerRigidBody.velocity.y > 0)
-			canJumpCancel = true;
-	}
-
-	private void PerformJumpCancel() {
-		playerRigidBody.velocity = Vector2.zero;
-		canJumpCancel = false;
+	private IEnumerator SetStateAfterSeconds(PlayerState state, float seconds) {
+		yield return new WaitForSeconds(seconds);
+		playerState = state;
 	}
 
 	private IEnumerator SetDashCooldown() {
 		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(dashCooldownSeconds);
+		yield return new WaitForSeconds(2f);
 		playerInputActions.Player.Dash.Enable();
 	}
 
+	private void SetupMelee() {
+		if (!playerRightGloveSkills.isMeleeAttacking) {
+			playerRightGloveSkills.canMelee = true;
+			playerRightGloveSkills.isMeleeAttacking = true;
+			playerRightGloveSkills.meleeHits = new List<RaycastHit2D>();
+			playerRightGloveSkills.meleeAngle = 0f;
+			playerRightGloveSkills.enemyContactFilter = enemyContactFilter;
+			playerRightGloveSkills.meleeAttackDistance = 1f;
+			if (isFacingRight)
+				playerRightGloveSkills.meleeDirection = Vector2.right;
+			else
+				playerRightGloveSkills.meleeDirection = Vector2.left;
+			StartCoroutine(MeleeCooldown());
+		}
+	}
+
+	private void PerformMelee() {
+		playerRightGloveSkills.PerformCorruptionMelee();
+		if (playerRightGloveSkills.meleeHits.Count > 0) {
+			foreach (RaycastHit2D hit in playerRightGloveSkills.meleeHits) {
+				Destroy(hit.collider.gameObject);
+			}
+		}
+		playerRightGloveSkills.canMelee = false;
+		float meleeAttackAnimTime = 0.3f;
+		Invoke("ResetMeleeAnimation", meleeAttackAnimTime);
+	}
+
+	private IEnumerator MeleeCooldown() {
+		playerInputActions.Player.Melee.Disable();
+		yield return new WaitForSeconds(1f);
+		playerInputActions.Player.Melee.Enable();
+	}
+
+	private void ResetMeleeAnimation() {
+		playerRightGloveSkills.isMeleeAttacking = false;
+	}
+
 	private void SetupRanged() {
-		canRanged = true;
-		isRangedAttacking = true;
+		playerLeftGloveSkills.canRanged = true;
+		playerLeftGloveSkills.isRangedAttacking = true;
 		if (isFacingRight) {
-			projectileDirection = Vector2.right;
+			playerLeftGloveSkills.projectileDirection = Vector2.right;
+		} else {
+			playerLeftGloveSkills.projectileDirection = Vector2.left;
 		}
-		else {
-			projectileDirection = Vector2.left;
-		}
+		playerLeftGloveSkills.projectileSpeed = 20f;
+		playerLeftGloveSkills.rangedCooldownSeconds = 2f;
 		StartCoroutine(RangedCooldown());
 	}
 
 	private IEnumerator RangedCooldown() {
 		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(rangedCooldownSeconds);
+		yield return new WaitForSeconds(playerLeftGloveSkills.rangedCooldownSeconds);
 		playerInputActions.Player.Ranged.Enable();
 	}
 
 	private void PerformRanged() {
 		corruptionProjectileClone = Instantiate(corruptionProjectile, rangedAttackTransform.position, rangedAttackTransform.rotation);
 		playerCorruptionProjectileAnimation = new Animations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
-		canRanged = false;
-		float rangedAttackAnimTime = 0.3f;
-		Invoke("ResetRangedAnimation", rangedAttackAnimTime);
-		float destroyProjectileAfterSeconds = 0.5f;
-		Invoke("DestroyProjectile", destroyProjectileAfterSeconds);
+		playerLeftGloveSkills.canRanged = false;
+		playerLeftGloveSkills.rangedAttackAnimSeconds = 0.3f;
+		StartCoroutine(ResetRangedAnimation());
+		playerLeftGloveSkills.destroyProjectileAfterSeconds = 0.5f;
+		StartCoroutine(DestroyProjectile());
 	}
 
-	private void ResetRangedAnimation() {
-		isRangedAttacking = false;
+	private IEnumerator ResetRangedAnimation() {
+		yield return new WaitForSeconds(playerLeftGloveSkills.rangedAttackAnimSeconds);
+		playerLeftGloveSkills.isRangedAttacking = false;
 	}
 
-	private void DestroyProjectile() {
+	private IEnumerator DestroyProjectile() {
+		yield return new WaitForSeconds(playerLeftGloveSkills.destroyProjectileAfterSeconds);
 		Destroy(corruptionProjectileClone);
 	}
 
 	private void AnimateAndShootProjectile() {
 		if (corruptionProjectileClone != null) {
 			playerCorruptionProjectileAnimation.PlayCreatedAnimation();
-			corruptionProjectileClone.transform.Translate(projectileDirection * Time.deltaTime * projectileSpeed);
+			corruptionProjectileClone.transform.Translate(projectileDirection * Time.deltaTime * playerLeftGloveSkills.projectileSpeed);
 		}
 	}
 }
