@@ -30,11 +30,6 @@ public class PlayerController : MonoBehaviour
 	//private const string PLAYER_IDLE_TO_RUN_ANIM = "PlayerIdleToRun";
 	//private const string PLAYER_RUN_TO_IDLE_ANIM = "PlayerRunToIdle";
 	private float moveVelocity = 5f;
-	//private float dashVelocity = 15f;
-	//private float secondsToDash = 0.25f;
-	//private float dashCooldownSeconds = 2f;
-	private float rangedCooldownSeconds = 1f;
-	private float projectileSpeed = 20f;
 	private bool isFacingRight = true;
 	private bool idleToRun = false;
 	private bool runToIdle = false;
@@ -56,8 +51,8 @@ public class PlayerController : MonoBehaviour
 	private float rangedAttackLocalPositionY;
 	private float rangedAttackLocalPositionXFlipped;
 	private GameObject corruptionProjectileClone;
-	private PlayerSkills playerSkills;
 	private PlayerRightGloveSkills playerRightGloveSkills;
+	private PlayerLeftGloveSkills playerLeftGloveSkills;
 	private PlayerRightBootSkills playerRightBootSkills;
 	private PlayerLeftBootSkills playerLeftBootSkills;
 
@@ -85,8 +80,8 @@ public class PlayerController : MonoBehaviour
 		playerAnimations = new Animations(playerAnimator);
 		playerCorruptionProjectileAnimation = new Animations();
 		corruptionProjectileClone = new GameObject();
-		playerSkills = new PlayerSkills(playerRigidBody, playerBoxCollider);
 		playerRightGloveSkills = new PlayerRightGloveSkills(playerRigidBody, playerBoxCollider);
+		playerLeftGloveSkills = new PlayerLeftGloveSkills(playerRigidBody, playerBoxCollider);
 		playerRightBootSkills = new PlayerRightBootSkills(playerRigidBody, playerBoxCollider);
 		playerLeftBootSkills = new PlayerLeftBootSkills(playerRigidBody, playerBoxCollider);
 	}
@@ -104,8 +99,9 @@ public class PlayerController : MonoBehaviour
 					playerState = PlayerState.Dash;
 				if (playerInputActions.Player.Melee.WasPressedThisFrame())
 					SetupMelee();
-				if (playerInputActions.Player.Ranged.WasPressedThisFrame())
+				if (playerInputActions.Player.Ranged.WasPressedThisFrame()) {
 					SetupRanged();
+				}
 				break;
 			case PlayerState.Dash:
 				playerLeftBootSkills.SetupPurityDash();
@@ -155,7 +151,7 @@ public class PlayerController : MonoBehaviour
 					playerRightBootSkills.PerformJumpCancel();
 				if (playerRightGloveSkills.canMelee)
 					PerformMelee();
-				if (playerSkills.canRanged)
+				if (playerLeftGloveSkills.canRanged)
 					PerformRanged();
 				break;
 			case PlayerState.Dash:
@@ -168,7 +164,7 @@ public class PlayerController : MonoBehaviour
 	private void SetAnimationState() {
 		if (playerRightGloveSkills.isMeleeAttacking) {
 			animationState = AnimationState.Melee;
-		} else if (playerSkills.isRangedAttacking) {
+		} else if (playerLeftGloveSkills.isRangedAttacking) {
 			animationState = AnimationState.Ranged;
 		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
 			if (animationState == AnimationState.Idle) {
@@ -227,25 +223,6 @@ public class PlayerController : MonoBehaviour
 		playerState = state;
 	}
 
-	//public IEnumerator PerformDash(bool isFacingRight, float secondsToDash, float dashVelocity) {
-	//	this.rigidbody.gravityScale = 0f;
-	//	if (isFacingRight)
-	//		PerformRightDash(dashVelocity);
-	//	else
-	//		PerformLeftDash(dashVelocity);
-	//	yield return new WaitForSeconds(secondsToDash);
-	//	this.rigidbody.gravityScale = this.initialGravity;
-	//	this.state = State.Normal;
-	//}
-
-	//private void PerformRightDash(float dashVelocity) {
-	//	this.rigidbody.velocity = Vector2.right * dashVelocity;
-	//}
-
-	//private void PerformLeftDash(float dashVelocity) {
-	//	this.rigidbody.velocity = Vector2.left * dashVelocity;
-	//}
-
 	private IEnumerator SetDashCooldown() {
 		playerInputActions.Player.Dash.Disable();
 		yield return new WaitForSeconds(2f);
@@ -291,45 +268,48 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetupRanged() {
-		playerSkills.canRanged = true;
-		playerSkills.isRangedAttacking = true;
+		playerLeftGloveSkills.canRanged = true;
+		playerLeftGloveSkills.isRangedAttacking = true;
 		if (isFacingRight) {
-			projectileDirection = Vector2.right;
+			playerLeftGloveSkills.projectileDirection = Vector2.right;
+		} else {
+			playerLeftGloveSkills.projectileDirection = Vector2.left;
 		}
-		else {
-			projectileDirection = Vector2.left;
-		}
+		playerLeftGloveSkills.projectileSpeed = 20f;
+		playerLeftGloveSkills.rangedCooldownSeconds = 2f;
 		StartCoroutine(RangedCooldown());
 	}
 
 	private IEnumerator RangedCooldown() {
 		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(rangedCooldownSeconds);
+		yield return new WaitForSeconds(playerLeftGloveSkills.rangedCooldownSeconds);
 		playerInputActions.Player.Ranged.Enable();
 	}
 
 	private void PerformRanged() {
 		corruptionProjectileClone = Instantiate(corruptionProjectile, rangedAttackTransform.position, rangedAttackTransform.rotation);
 		playerCorruptionProjectileAnimation = new Animations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
-		playerSkills.canRanged = false;
-		float rangedAttackAnimTime = 0.3f;
-		Invoke("ResetRangedAnimation", rangedAttackAnimTime);
-		float destroyProjectileAfterSeconds = 0.5f;
-		Invoke("DestroyProjectile", destroyProjectileAfterSeconds);
+		playerLeftGloveSkills.canRanged = false;
+		playerLeftGloveSkills.rangedAttackAnimSeconds = 0.3f;
+		StartCoroutine(ResetRangedAnimation());
+		playerLeftGloveSkills.destroyProjectileAfterSeconds = 0.5f;
+		StartCoroutine(DestroyProjectile());
 	}
 
-	private void ResetRangedAnimation() {
-		playerSkills.isRangedAttacking = false;
+	private IEnumerator ResetRangedAnimation() {
+		yield return new WaitForSeconds(playerLeftGloveSkills.rangedAttackAnimSeconds);
+		playerLeftGloveSkills.isRangedAttacking = false;
 	}
 
-	private void DestroyProjectile() {
+	private IEnumerator DestroyProjectile() {
+		yield return new WaitForSeconds(playerLeftGloveSkills.destroyProjectileAfterSeconds);
 		Destroy(corruptionProjectileClone);
 	}
 
 	private void AnimateAndShootProjectile() {
 		if (corruptionProjectileClone != null) {
 			playerCorruptionProjectileAnimation.PlayCreatedAnimation();
-			corruptionProjectileClone.transform.Translate(projectileDirection * Time.deltaTime * projectileSpeed);
+			corruptionProjectileClone.transform.Translate(projectileDirection * Time.deltaTime * playerLeftGloveSkills.projectileSpeed);
 		}
 	}
 }

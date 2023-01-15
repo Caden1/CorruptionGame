@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLeftGloveSkills : MonoBehaviour
+public class PlayerLeftGloveSkills : PlayerSkills
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	private Rigidbody2D rigidbody;
+	private BoxCollider2D boxCollider;
+	public Vector2 projectileDirection { get; set; }
+	public float projectileSpeed { get; set; }
+	public float rangedCooldownSeconds { get; set; }
+	public float rangedAttackAnimSeconds { get; set; }
+	public float destroyProjectileAfterSeconds { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public PlayerLeftGloveSkills(Rigidbody2D rigidbody, BoxCollider2D boxCollider) : base(rigidbody, boxCollider) {
+		this.rigidbody = rigidbody;
+		this.boxCollider = boxCollider;
+	}
 }
