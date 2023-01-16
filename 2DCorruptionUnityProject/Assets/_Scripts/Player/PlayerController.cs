@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
 	//private const string PLAYER_RUN_TO_IDLE_ANIM = "PlayerRunToIdle";
 	private float moveVelocity = 5f;
 	private bool isFacingRight = true;
-	private bool idleToRun = false;
-	private bool runToIdle = false;
+	//private bool idleToRun = false;
+	//private bool runToIdle = false;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
 	private BoxCollider2D playerBoxCollider;
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
 			animationState = AnimationState.Ranged;
 		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
 			if (animationState == AnimationState.Idle) {
-				idleToRun = true;
+				//idleToRun = true;
 			}
 			animationState = AnimationState.Run;
 		} else if (playerRigidBody.velocity.y > 0f) {
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
 			animationState = AnimationState.Fall;
 		} else {
 			if (animationState == AnimationState.Run) {
-				runToIdle = true;
+				//runToIdle = true;
 			}
 			animationState = AnimationState.Idle;
 		}
