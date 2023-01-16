@@ -51,10 +51,12 @@ public class PlayerController : MonoBehaviour
 	private float rangedAttackLocalPositionY;
 	private float rangedAttackLocalPositionXFlipped;
 	private GameObject corruptionProjectileClone;
-	private PlayerRightGloveSkills playerRightGloveSkills;
+	//private PlayerRightGloveSkills playerRightGloveSkills;
+	private CorruptionMeleeSkills corruptionMeleeSkills;
 	private PlayerLeftGloveSkills playerLeftGloveSkills;
 	private PlayerRightBootSkills playerRightBootSkills;
 	private PlayerLeftBootSkills playerLeftBootSkills;
+	private List<RaycastHit2D> meleeHits;
 
 	private void Awake() {
 		playerState = PlayerState.Normal;
@@ -80,10 +82,13 @@ public class PlayerController : MonoBehaviour
 		playerAnimations = new Animations(playerAnimator);
 		playerCorruptionProjectileAnimation = new Animations();
 		corruptionProjectileClone = new GameObject();
-		playerRightGloveSkills = new PlayerRightGloveSkills(playerRigidBody, playerBoxCollider);
+		//playerRightGloveSkills = new PlayerRightGloveSkills(playerRigidBody, playerBoxCollider);
+		corruptionMeleeSkills = new CorruptionMeleeSkills();
+		corruptionMeleeSkills.SetCorruptionDefault();
 		playerLeftGloveSkills = new PlayerLeftGloveSkills(playerRigidBody, playerBoxCollider);
 		playerRightBootSkills = new PlayerRightBootSkills(playerRigidBody, playerBoxCollider);
 		playerLeftBootSkills = new PlayerLeftBootSkills(playerRigidBody, playerBoxCollider);
+		meleeHits = new List<RaycastHit2D>();
 	}
 
 	private void Update() {
@@ -149,7 +154,7 @@ public class PlayerController : MonoBehaviour
 					playerRightBootSkills.PerformPurityJump();
 				if (playerRightBootSkills.canJumpCancel)
 					playerRightBootSkills.PerformJumpCancel();
-				if (playerRightGloveSkills.canMelee)
+				if (corruptionMeleeSkills.canAttack)
 					PerformMelee();
 				if (playerLeftGloveSkills.canRanged)
 					PerformRanged();
@@ -162,7 +167,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetAnimationState() {
-		if (playerRightGloveSkills.isMeleeAttacking) {
+		if (corruptionMeleeSkills.isAttacking) {
 			animationState = AnimationState.Melee;
 		} else if (playerLeftGloveSkills.isRangedAttacking) {
 			animationState = AnimationState.Ranged;
@@ -230,29 +235,30 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetupMelee() {
-		if (!playerRightGloveSkills.isMeleeAttacking) {
-			playerRightGloveSkills.canMelee = true;
-			playerRightGloveSkills.isMeleeAttacking = true;
-			playerRightGloveSkills.meleeHits = new List<RaycastHit2D>();
-			playerRightGloveSkills.meleeAngle = 0f;
-			playerRightGloveSkills.enemyContactFilter = enemyContactFilter;
-			playerRightGloveSkills.meleeAttackDistance = 1f;
+		if (!corruptionMeleeSkills.isAttacking) {
+			corruptionMeleeSkills.canAttack = true;
+			corruptionMeleeSkills.isAttacking = true;
+			meleeHits = new List<RaycastHit2D>();
 			if (isFacingRight)
-				playerRightGloveSkills.meleeDirection = Vector2.right;
+				corruptionMeleeSkills.attackDirection = Vector2.right;
 			else
-				playerRightGloveSkills.meleeDirection = Vector2.left;
+				corruptionMeleeSkills.attackDirection = Vector2.left;
+			corruptionMeleeSkills.attackOrigin = playerBoxCollider.bounds.center;
+			corruptionMeleeSkills.attackSize = playerBoxCollider.bounds.size;
 			StartCoroutine(MeleeCooldown());
 		}
 	}
 
 	private void PerformMelee() {
-		playerRightGloveSkills.PerformCorruptionMelee();
-		if (playerRightGloveSkills.meleeHits.Count > 0) {
-			foreach (RaycastHit2D hit in playerRightGloveSkills.meleeHits) {
+		//int numHits = Physics2D.BoxCast(playerBoxCollider.bounds.center, playerBoxCollider.bounds.size, 0f, Vector2.right, enemyContactFilter, meleeHits, 2f);
+		int numHits = Physics2D.BoxCast(corruptionMeleeSkills.attackOrigin, corruptionMeleeSkills.attackSize, corruptionMeleeSkills.attackAngle, corruptionMeleeSkills.attackDirection, enemyContactFilter, meleeHits, corruptionMeleeSkills.attackDistance);
+		Debug.Log("numHits=" + numHits);
+		if (numHits > 0) {
+			foreach (RaycastHit2D hit in meleeHits) {
 				Destroy(hit.collider.gameObject);
 			}
 		}
-		playerRightGloveSkills.canMelee = false;
+		corruptionMeleeSkills.canAttack = false;
 		float meleeAttackAnimTime = 0.3f;
 		Invoke("ResetMeleeAnimation", meleeAttackAnimTime);
 	}
@@ -264,7 +270,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void ResetMeleeAnimation() {
-		playerRightGloveSkills.isMeleeAttacking = false;
+		corruptionMeleeSkills.isAttacking = false;
 	}
 
 	private void SetupRanged() {

@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class CorruptionMeleeSkills : MeleeSkills
 {
-	public float damage { get; set; }
-
-	public CorruptionMeleeSkills(bool isMultiEnemy, bool canAttack, bool isAttacking, float cooldown, float duration, float distance, float angle, float height, Vector2 direction) :
-		base(isMultiEnemy, canAttack, isAttacking, cooldown, duration, distance, angle, height, direction) { }
+	public float damage { get; private set; }
 
 	public void SetCorruptionDefault() {
-		
-	}
+		isMultiEnemy = true;
+		canAttack = false;
+		isAttacking = false;
+		cooldown = 2f;
+		attackDuration = 0.1f;
+		attackDistance = 2f;
+		attackAngle = 0f;
+		damage = 5f;
+}
 
 	public override void SetAirModifiers() {
 		throw new System.NotImplementedException();

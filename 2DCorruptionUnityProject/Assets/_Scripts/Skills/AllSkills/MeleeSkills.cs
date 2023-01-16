@@ -5,26 +5,15 @@ using UnityEngine;
 public abstract class MeleeSkills
 {
 	protected bool isMultiEnemy;
-	protected bool canAttack;
-	protected bool isAttacking;
+	public bool canAttack;
+	public bool isAttacking;
 	protected float cooldown;
-	protected float duration;
-	protected float distance;
-	protected float angle;
-	protected float height;
-	protected Vector2 direction;
-
-	protected MeleeSkills(bool isMultiEnemy, bool canAttack, bool isAttacking, float cooldown, float duration, float distance, float angle, float height, Vector2 direction) {
-		this.isMultiEnemy = isMultiEnemy;
-		this.canAttack = canAttack;
-		this.isAttacking = isAttacking;
-		this.cooldown = cooldown;
-		this.duration = duration;
-		this.distance = distance;
-		this.angle = angle;
-		this.height = height;
-		this.direction = direction;
-	}
+	protected float attackDuration;
+	public float attackDistance { get; protected set; }
+	public float attackAngle { get; protected set; }
+	public Vector2 attackOrigin { get; set; }
+	public Vector2 attackSize { get; set; }
+	public Vector2 attackDirection;
 
 	public abstract void SetAirModifiers();
 

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PurityMeleeSkills : MeleeSkills
 {
-	public PurityMeleeSkills(bool isMultiEnemy, bool canAttack, bool isAttacking, float cooldown, float duration, float distance, float angle, float height, Vector2 direction) :
-		base(isMultiEnemy, canAttack, isAttacking, cooldown, duration, distance, angle, height, direction) { }
-
 	public void SetPurityDefault() {
 
 	}
