@@ -10,10 +10,11 @@ public class CorruptionMeleeSkills : MeleeSkills
 		isMultiEnemy = true;
 		canAttack = false;
 		isAttacking = false;
-		cooldown = 2f;
+		cooldown = 1f;
 		attackDuration = 0.1f;
 		attackDistance = 2f;
 		attackAngle = 0f;
+		animationDuration = 0.3f;
 		damage = 5f;
 }
 
