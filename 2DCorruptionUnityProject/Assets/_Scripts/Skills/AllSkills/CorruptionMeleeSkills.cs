@@ -7,14 +7,16 @@ public class CorruptionMeleeSkills : MeleeSkills
 	public float damage { get; private set; }
 
 	public void SetCorruptionDefault() {
+		isCorruption = true;
+		isPurity = false;
 		isMultiEnemy = true;
 		canAttack = false;
-		isAttacking = false;
+		isAnimating = false;
 		cooldown = 1f;
 		attackDuration = 0.1f;
+		animationDuration = 0.3f;		
 		attackDistance = 2f;
 		attackAngle = 0f;
-		animationDuration = 0.3f;
 		damage = 5f;
 }
 

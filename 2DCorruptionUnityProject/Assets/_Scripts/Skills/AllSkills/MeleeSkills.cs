@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MeleeSkills
+public abstract class MeleeSkills : Skills
 {
-	public bool isCorruption;
 	protected bool isMultiEnemy;
 	public bool canAttack;
-	public bool isAttacking;
+	public bool isAnimating;
 	public float cooldown { get; protected set; }
 	public float attackDuration { get; protected set; }
 	public float attackDistance { get; protected set; }

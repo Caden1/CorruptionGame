@@ -71,6 +71,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Swap"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2a10095-5730-4836-8381-8b40ef3cabbe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -176,7 +185,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2f37a4d3-d89a-416a-bda8-a3e354da6048"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -198,7 +207,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""232a82fa-b2e9-4729-a849-9add64f0b8b5"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -214,6 +223,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Ranged"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c89f8f98-ddd2-45f1-9842-1c35ba329f5a"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Ranged"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0af8a9d-271f-4d94-9b24-73d18df0cfba"",
+                    ""path"": ""<Keyboard>/semicolon"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Swap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e297a6a4-9fd9-4527-903c-c40e3af24f4d"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Swap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -280,6 +322,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Melee = m_Player.FindAction("Melee", throwIfNotFound: true);
         m_Player_Ranged = m_Player.FindAction("Ranged", throwIfNotFound: true);
+        m_Player_Swap = m_Player.FindAction("Swap", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -347,6 +390,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Melee;
     private readonly InputAction m_Player_Ranged;
+    private readonly InputAction m_Player_Swap;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -356,6 +400,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Melee => m_Wrapper.m_Player_Melee;
         public InputAction @Ranged => m_Wrapper.m_Player_Ranged;
+        public InputAction @Swap => m_Wrapper.m_Player_Swap;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -380,6 +425,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Ranged.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRanged;
                 @Ranged.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRanged;
                 @Ranged.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRanged;
+                @Swap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwap;
+                @Swap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwap;
+                @Swap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwap;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -399,6 +447,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Ranged.started += instance.OnRanged;
                 @Ranged.performed += instance.OnRanged;
                 @Ranged.canceled += instance.OnRanged;
+                @Swap.started += instance.OnSwap;
+                @Swap.performed += instance.OnSwap;
+                @Swap.canceled += instance.OnSwap;
             }
         }
     }
@@ -461,6 +512,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnMelee(InputAction.CallbackContext context);
         void OnRanged(InputAction.CallbackContext context);
+        void OnSwap(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

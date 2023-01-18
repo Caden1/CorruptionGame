@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private Sprite[] corruptionProjectileSprites;
 	[SerializeField] private GameObject corruptionProjectile;
-	private enum PlayerState { Normal, Dash }
+	private enum PlayerState { Normal, Dash, PurityMelee }
 	private PlayerState playerState;
 	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
 	private AnimationState animationState;
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
 	private void Awake() {
 		playerState = PlayerState.Normal;
 		animationState = AnimationState.Idle;
-		gemState = GemState.Purity;
+		gemState = GemState.Corruption;
 		modifierGemState = ModifierGemState.None;
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
 		corruptionProjectileClone = new GameObject();
 		//playerRightGloveSkills = new PlayerRightGloveSkills(playerRigidBody, playerBoxCollider);
 		corruptionMeleeSkills = new CorruptionMeleeSkills();
+		corruptionMeleeSkills.SetCorruptionDefault();
 		purityMeleeSkills = new PurityMeleeSkills();
 		playerLeftGloveSkills = new PlayerLeftGloveSkills(playerRigidBody, playerBoxCollider);
 		playerRightBootSkills = new PlayerRightBootSkills(playerRigidBody, playerBoxCollider);
@@ -120,9 +121,10 @@ public class PlayerController : MonoBehaviour
 					playerState = PlayerState.Dash;
 				if (playerInputActions.Player.Melee.WasPressedThisFrame())
 					SetupMelee();
-				if (playerInputActions.Player.Ranged.WasPressedThisFrame()) {
+				if (playerInputActions.Player.Ranged.WasPressedThisFrame())
 					SetupRanged();
-				}
+				if (playerInputActions.Player.Swap.WasPressedThisFrame())
+					SwapLoadout();
 				break;
 			case PlayerState.Dash:
 				playerLeftBootSkills.SetupPurityDash();
@@ -160,6 +162,8 @@ public class PlayerController : MonoBehaviour
 		}
 
 		AnimateAndShootProjectile();
+
+		Debug.Log(gemState);
 	}
 
 	private void FixedUpdate() {
@@ -182,8 +186,48 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	private void SwapLoadout() {
+		if (Skills.isCorruption && !Skills.isPurity) {
+			gemState = GemState.Purity;
+		} else if (!Skills.isCorruption && Skills.isPurity) {
+			gemState = GemState.Corruption;
+		}
+	}
+
+	private void SetupMelee() {
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionMeleeSkills.SetCorruptionDefault();
+				meleeHits = new List<RaycastHit2D>();
+				PlayerControllerHelper.SetupCorruptionMelee(corruptionMeleeSkills, isFacingRight, playerBoxCollider);
+				StartCoroutine(MeleeCooldown(corruptionMeleeSkills.cooldown));
+				break;
+			case GemState.Purity:
+				purityMeleeSkills.SetPurityDefault();
+				meleeHits = new List<RaycastHit2D>();
+				PlayerControllerHelper.SetupPurityMelee(purityMeleeSkills, isFacingRight, playerBoxCollider, pullAttackTransform.position);
+				StartCoroutine(MeleeCooldown(purityMeleeSkills.cooldown));
+				break;
+		}
+	}
+
+	private void PerformMelee() {
+		switch (gemState) {
+			case GemState.Corruption:
+				PlayerControllerHelper.PerformCorruptionMelee(corruptionMeleeSkills, enemyContactFilter, meleeHits);
+				StartCoroutine(ResetMeleeAnimation(corruptionMeleeSkills.animationDuration));
+				StartCoroutine(MeleeDuration(corruptionMeleeSkills.attackDuration));
+				break;
+			case GemState.Purity:
+				PlayerControllerHelper.PerformPurityMelee(purityMeleeSkills, enemyContactFilter, meleeHits);
+				StartCoroutine(ResetMeleeAnimation(purityMeleeSkills.animationDuration));
+				StartCoroutine(MeleeDuration(purityMeleeSkills.attackDuration));
+				break;
+		}
+	}
+
 	private void SetAnimationState() {
-		if (corruptionMeleeSkills.isAttacking || purityMeleeSkills.isAttacking) {
+		if (corruptionMeleeSkills.isAnimating || purityMeleeSkills.isAnimating) {
 			animationState = AnimationState.Melee;
 		} else if (playerLeftGloveSkills.isRangedAttacking) {
 			animationState = AnimationState.Ranged;
@@ -251,64 +295,8 @@ public class PlayerController : MonoBehaviour
 		playerState = state;
 	}
 
-	private IEnumerator SetDashCooldown() {
-		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(2f);
-		playerInputActions.Player.Dash.Enable();
-	}
-
-	private void SetupMelee() {
-		switch (gemState) {
-			case GemState.Corruption:
-				corruptionMeleeSkills.SetCorruptionDefault();
-				meleeHits = new List<RaycastHit2D>();
-				PlayerControllerHelper.SetupCorruptionMelee(corruptionMeleeSkills, isFacingRight, playerBoxCollider);
-				StartCoroutine(MeleeCooldown(corruptionMeleeSkills.cooldown));
-				break;
-			case GemState.Purity:
-				purityMeleeSkills.SetPurityDefault();
-				meleeHits = new List<RaycastHit2D>();
-				PlayerControllerHelper.SetupPurityMelee(purityMeleeSkills, isFacingRight, playerBoxCollider, pullAttackTransform.position);
-				StartCoroutine(MeleeCooldown(purityMeleeSkills.cooldown));
-				break;
-		}
-	}
-
-	private void PerformMelee() {
-		switch (gemState) {
-			case GemState.Corruption:
-				PlayerControllerHelper.PerformCorruptionMelee(corruptionMeleeSkills, enemyContactFilter, meleeHits);
-				StartCoroutine(ResetMeleeAnimation(corruptionMeleeSkills.animationDuration));
-				StartCoroutine(MeleeDuration(corruptionMeleeSkills.attackDuration));
-				break;
-			case GemState.Purity:
-				PlayerControllerHelper.PerformPurityMelee(purityMeleeSkills, enemyContactFilter, meleeHits);
-				StartCoroutine(ResetMeleeAnimation(purityMeleeSkills.animationDuration));
-				StartCoroutine(MeleeDuration(purityMeleeSkills.attackDuration));
-				break;
-		}
-	}
-
-	private IEnumerator MeleeCooldown(float cooldownSeconds) {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(cooldownSeconds);
-		playerInputActions.Player.Melee.Enable();
-	}
-
-	private IEnumerator ResetMeleeAnimation(float animSeconds) {
-		yield return new WaitForSeconds(animSeconds);
-		switch (gemState) {
-			case GemState.Corruption:
-				corruptionMeleeSkills.isAttacking = false;
-				break;
-			case GemState.Purity:
-				purityMeleeSkills.isAttacking = false;
-				break;
-		}
-	}
-
-	private IEnumerator MeleeDuration(float meleeSeconds) {
-		yield return new WaitForSeconds(meleeSeconds);
+	private IEnumerator MeleeDuration(float attackDuration) {
+		yield return new WaitForSeconds(attackDuration);
 		switch (gemState) {
 			case GemState.Corruption:
 				corruptionMeleeSkills.canAttack = false;
@@ -332,12 +320,6 @@ public class PlayerController : MonoBehaviour
 		StartCoroutine(RangedCooldown());
 	}
 
-	private IEnumerator RangedCooldown() {
-		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(playerLeftGloveSkills.rangedCooldownSeconds);
-		playerInputActions.Player.Ranged.Enable();
-	}
-
 	private void PerformRanged() {
 		corruptionProjectileClone = Instantiate(corruptionProjectile, projectileAttackTransform.position, projectileAttackTransform.rotation);
 		playerCorruptionProjectileAnimation = new Animations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
@@ -346,11 +328,6 @@ public class PlayerController : MonoBehaviour
 		StartCoroutine(ResetRangedAnimation());
 		playerLeftGloveSkills.destroyProjectileAfterSeconds = 0.5f;
 		StartCoroutine(DestroyProjectile());
-	}
-
-	private IEnumerator ResetRangedAnimation() {
-		yield return new WaitForSeconds(playerLeftGloveSkills.rangedAttackAnimSeconds);
-		playerLeftGloveSkills.isRangedAttacking = false;
 	}
 
 	private IEnumerator DestroyProjectile() {
@@ -363,6 +340,41 @@ public class PlayerController : MonoBehaviour
 			playerCorruptionProjectileAnimation.PlayCreatedAnimation();
 			corruptionProjectileClone.transform.Translate(projectileDirection * Time.deltaTime * playerLeftGloveSkills.projectileSpeed);
 		}
+	}
+
+	private IEnumerator ResetMeleeAnimation(float animSeconds) {
+		yield return new WaitForSeconds(animSeconds);
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionMeleeSkills.isAnimating = false;
+				break;
+			case GemState.Purity:
+				purityMeleeSkills.isAnimating = false;
+				break;
+		}
+	}
+
+	private IEnumerator ResetRangedAnimation() {
+		yield return new WaitForSeconds(playerLeftGloveSkills.rangedAttackAnimSeconds);
+		playerLeftGloveSkills.isRangedAttacking = false;
+	}
+
+	private IEnumerator SetDashCooldown() {
+		playerInputActions.Player.Dash.Disable();
+		yield return new WaitForSeconds(2f);
+		playerInputActions.Player.Dash.Enable();
+	}
+
+	private IEnumerator MeleeCooldown(float cooldownSeconds) {
+		playerInputActions.Player.Melee.Disable();
+		yield return new WaitForSeconds(cooldownSeconds);
+		playerInputActions.Player.Melee.Enable();
+	}
+
+	private IEnumerator RangedCooldown() {
+		playerInputActions.Player.Ranged.Disable();
+		yield return new WaitForSeconds(playerLeftGloveSkills.rangedCooldownSeconds);
+		playerInputActions.Player.Ranged.Enable();
 	}
 }
 

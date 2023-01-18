@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerControllerHelper : MonoBehaviour
 {
 	public static void SetupCorruptionMelee(CorruptionMeleeSkills corruptionMeleeSkills, bool isFacingRight, BoxCollider2D playerBoxCollider) {
-		if (!corruptionMeleeSkills.isAttacking) {
+		if (!corruptionMeleeSkills.canAttack) {
 			corruptionMeleeSkills.canAttack = true;
-			corruptionMeleeSkills.isAttacking = true;
+			corruptionMeleeSkills.isAnimating = true;
 			if (isFacingRight)
 				corruptionMeleeSkills.attackDirection = Vector2.right;
 			else
@@ -27,9 +27,9 @@ public class PlayerControllerHelper : MonoBehaviour
 	}
 
 	public static void SetupPurityMelee(PurityMeleeSkills purityMeleeSkills, bool isFacingRight, BoxCollider2D playerBoxCollider, Vector2 pullPosition) {
-		if (!purityMeleeSkills.isAttacking) {
+		if (!purityMeleeSkills.canAttack) {
 			purityMeleeSkills.canAttack = true;
-			purityMeleeSkills.isAttacking = true;
+			purityMeleeSkills.isAnimating = true;
 			if (isFacingRight)
 				purityMeleeSkills.attackDirection = Vector2.right;
 			else
@@ -44,8 +44,7 @@ public class PlayerControllerHelper : MonoBehaviour
 		int numHits = Physics2D.BoxCast(purityMeleeSkills.attackOrigin, purityMeleeSkills.attackSize, purityMeleeSkills.attackAngle, purityMeleeSkills.attackDirection, enemyContactFilter, meleeHits, purityMeleeSkills.attackDistance);
 		if (numHits > 0) {
 			foreach (RaycastHit2D hit in meleeHits) {
-				hit.transform.position = Vector2.MoveTowards(hit.transform.position, purityMeleeSkills.pullPosition, 2f * Time.deltaTime);
-				//hit.collider.gameObject.transform.Translate(purityMeleeSkills.pullPosition * Time.deltaTime);
+				hit.transform.position = Vector2.MoveTowards(hit.transform.position, purityMeleeSkills.pullPosition, purityMeleeSkills.pullSpeed * Time.deltaTime);
 			}
 		}
 	}

@@ -5,16 +5,20 @@ using UnityEngine;
 public class PurityMeleeSkills : MeleeSkills
 {
 	public Vector2 pullPosition;
+	public float pullSpeed { get; private set; }
 
 	public void SetPurityDefault() {
+		isCorruption = false;
+		isPurity = true;
 		isMultiEnemy = true;
 		canAttack = false;
-		isAttacking = false;
+		isAnimating = false;
 		cooldown = 3f;
-		attackDuration = 4f;
-		attackDistance = 4f;
+		attackDuration = 2f;
+		animationDuration = 2f;
+		attackDistance = 10f;
 		attackAngle = 0f;
-		animationDuration = 4f;
+		pullSpeed = 5f;
 	}
 
 	public override void SetAirModifiers() {
