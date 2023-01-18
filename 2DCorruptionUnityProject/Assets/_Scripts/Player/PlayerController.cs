@@ -12,10 +12,14 @@ public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private Sprite[] corruptionProjectileSprites;
 	[SerializeField] private GameObject corruptionProjectile;
-	private enum PlayerState { Normal, Dash }
+	private enum PlayerState { Normal, Dash, PurityMelee }
 	private PlayerState playerState;
 	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
 	private AnimationState animationState;
+	private enum GemState { Corruption, Purity }
+	private GemState gemState;
+	private enum ModifierGemState { None, Air, Fire, Water, Earth }
+	private ModifierGemState modifierGemState;
 	private const float ZERO_GRAVITY = 0f;
 	// Old Anims
 	private const string PLAYER_IDLE_ANIM = "PlayerIdleAnim";
@@ -31,8 +35,8 @@ public class PlayerController : MonoBehaviour
 	//private const string PLAYER_RUN_TO_IDLE_ANIM = "PlayerRunToIdle";
 	private float moveVelocity = 5f;
 	private bool isFacingRight = true;
-	private bool idleToRun = false;
-	private bool runToIdle = false;
+	//private bool idleToRun = false;
+	//private bool runToIdle = false;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
 	private BoxCollider2D playerBoxCollider;
@@ -46,19 +50,28 @@ public class PlayerController : MonoBehaviour
 	private Vector2 moveDirection;
 	private Vector2 meleeDirection;
 	private Vector2 projectileDirection;
-	private Transform rangedAttackTransform;
-	private float rangedAttackLocalPositionX;
-	private float rangedAttackLocalPositionY;
-	private float rangedAttackLocalPositionXFlipped;
+	private Transform projectileAttackTransform;
+	private float projectileAttackLocalPositionX;
+	private float projectileAttackLocalPositionY;
+	private float projectileAttackLocalPositionXFlipped;
+	private Transform pullAttackTransform;
+	private float pullAttackLocalPositionX;
+	private float pullAttackLocalPositionY;
+	private float pullAttackLocalPositionXFlipped;
 	private GameObject corruptionProjectileClone;
-	private PlayerRightGloveSkills playerRightGloveSkills;
+	//private PlayerRightGloveSkills playerRightGloveSkills;
+	private CorruptionMeleeSkills corruptionMeleeSkills;
+	private PurityMeleeSkills purityMeleeSkills;
 	private PlayerLeftGloveSkills playerLeftGloveSkills;
 	private PlayerRightBootSkills playerRightBootSkills;
 	private PlayerLeftBootSkills playerLeftBootSkills;
+	private List<RaycastHit2D> meleeHits;
 
 	private void Awake() {
 		playerState = PlayerState.Normal;
 		animationState = AnimationState.Idle;
+		gemState = GemState.Corruption;
+		modifierGemState = ModifierGemState.None;
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
 		playerRigidBody = GetComponent<Rigidbody2D>();
@@ -73,24 +86,33 @@ public class PlayerController : MonoBehaviour
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
 		projectileDirection = Vector2.right;
-		rangedAttackTransform = transform.GetChild(0);
-		rangedAttackLocalPositionX = rangedAttackTransform.localPosition.x;
-		rangedAttackLocalPositionY = rangedAttackTransform.localPosition.y;
-		rangedAttackLocalPositionXFlipped = -rangedAttackLocalPositionX;
+		projectileAttackTransform = transform.GetChild(0);
+		projectileAttackLocalPositionX = projectileAttackTransform.localPosition.x;
+		projectileAttackLocalPositionY = projectileAttackTransform.localPosition.y;
+		projectileAttackLocalPositionXFlipped = -projectileAttackLocalPositionX;
+		pullAttackTransform = transform.GetChild(1);
+		pullAttackLocalPositionX = pullAttackTransform.localPosition.x;
+		pullAttackLocalPositionY = pullAttackTransform.localPosition.y;
+		pullAttackLocalPositionXFlipped = -pullAttackLocalPositionX;
 		playerAnimations = new Animations(playerAnimator);
 		playerCorruptionProjectileAnimation = new Animations();
 		corruptionProjectileClone = new GameObject();
-		playerRightGloveSkills = new PlayerRightGloveSkills(playerRigidBody, playerBoxCollider);
+		//playerRightGloveSkills = new PlayerRightGloveSkills(playerRigidBody, playerBoxCollider);
+		corruptionMeleeSkills = new CorruptionMeleeSkills();
+		corruptionMeleeSkills.SetCorruptionDefault();
+		purityMeleeSkills = new PurityMeleeSkills();
 		playerLeftGloveSkills = new PlayerLeftGloveSkills(playerRigidBody, playerBoxCollider);
 		playerRightBootSkills = new PlayerRightBootSkills(playerRigidBody, playerBoxCollider);
 		playerLeftBootSkills = new PlayerLeftBootSkills(playerRigidBody, playerBoxCollider);
+		meleeHits = new List<RaycastHit2D>();
 	}
 
 	private void Update() {
 		switch (playerState) {
 			case PlayerState.Normal:
 				SetupHorizontalMovement();
-				SetRangedAttackPositionWithMovement();
+				SetProjectileAttackPositionWithMovement();
+				SetPullAttackPositionWithMovement();
 				if (playerInputActions.Player.Jump.WasPressedThisFrame() && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask))
 					playerRightBootSkills.SetupPurityJump();
 				if (playerInputActions.Player.Jump.WasReleasedThisFrame())
@@ -99,9 +121,10 @@ public class PlayerController : MonoBehaviour
 					playerState = PlayerState.Dash;
 				if (playerInputActions.Player.Melee.WasPressedThisFrame())
 					SetupMelee();
-				if (playerInputActions.Player.Ranged.WasPressedThisFrame()) {
+				if (playerInputActions.Player.Ranged.WasPressedThisFrame())
 					SetupRanged();
-				}
+				if (playerInputActions.Player.Swap.WasPressedThisFrame())
+					SwapLoadout();
 				break;
 			case PlayerState.Dash:
 				playerLeftBootSkills.SetupPurityDash();
@@ -139,6 +162,8 @@ public class PlayerController : MonoBehaviour
 		}
 
 		AnimateAndShootProjectile();
+
+		Debug.Log(gemState);
 	}
 
 	private void FixedUpdate() {
@@ -149,7 +174,7 @@ public class PlayerController : MonoBehaviour
 					playerRightBootSkills.PerformPurityJump();
 				if (playerRightBootSkills.canJumpCancel)
 					playerRightBootSkills.PerformJumpCancel();
-				if (playerRightGloveSkills.canMelee)
+				if (corruptionMeleeSkills.canAttack || purityMeleeSkills.canAttack)
 					PerformMelee();
 				if (playerLeftGloveSkills.canRanged)
 					PerformRanged();
@@ -161,14 +186,54 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	private void SwapLoadout() {
+		if (Skills.isCorruption && !Skills.isPurity) {
+			gemState = GemState.Purity;
+		} else if (!Skills.isCorruption && Skills.isPurity) {
+			gemState = GemState.Corruption;
+		}
+	}
+
+	private void SetupMelee() {
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionMeleeSkills.SetCorruptionDefault();
+				meleeHits = new List<RaycastHit2D>();
+				PlayerControllerHelper.SetupCorruptionMelee(corruptionMeleeSkills, isFacingRight, playerBoxCollider);
+				StartCoroutine(MeleeCooldown(corruptionMeleeSkills.cooldown));
+				break;
+			case GemState.Purity:
+				purityMeleeSkills.SetPurityDefault();
+				meleeHits = new List<RaycastHit2D>();
+				PlayerControllerHelper.SetupPurityMelee(purityMeleeSkills, isFacingRight, playerBoxCollider, pullAttackTransform.position);
+				StartCoroutine(MeleeCooldown(purityMeleeSkills.cooldown));
+				break;
+		}
+	}
+
+	private void PerformMelee() {
+		switch (gemState) {
+			case GemState.Corruption:
+				PlayerControllerHelper.PerformCorruptionMelee(corruptionMeleeSkills, enemyContactFilter, meleeHits);
+				StartCoroutine(ResetMeleeAnimation(corruptionMeleeSkills.animationDuration));
+				StartCoroutine(MeleeDuration(corruptionMeleeSkills.attackDuration));
+				break;
+			case GemState.Purity:
+				PlayerControllerHelper.PerformPurityMelee(purityMeleeSkills, enemyContactFilter, meleeHits);
+				StartCoroutine(ResetMeleeAnimation(purityMeleeSkills.animationDuration));
+				StartCoroutine(MeleeDuration(purityMeleeSkills.attackDuration));
+				break;
+		}
+	}
+
 	private void SetAnimationState() {
-		if (playerRightGloveSkills.isMeleeAttacking) {
+		if (corruptionMeleeSkills.isAnimating || purityMeleeSkills.isAnimating) {
 			animationState = AnimationState.Melee;
 		} else if (playerLeftGloveSkills.isRangedAttacking) {
 			animationState = AnimationState.Ranged;
 		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
 			if (animationState == AnimationState.Idle) {
-				idleToRun = true;
+				//idleToRun = true;
 			}
 			animationState = AnimationState.Run;
 		} else if (playerRigidBody.velocity.y > 0f) {
@@ -177,7 +242,7 @@ public class PlayerController : MonoBehaviour
 			animationState = AnimationState.Fall;
 		} else {
 			if (animationState == AnimationState.Run) {
-				runToIdle = true;
+				//runToIdle = true;
 			}
 			animationState = AnimationState.Idle;
 		}
@@ -207,11 +272,18 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void SetRangedAttackPositionWithMovement() {
+	private void SetProjectileAttackPositionWithMovement() {
 		if (isFacingRight)
-			rangedAttackTransform.localPosition = new Vector2(rangedAttackLocalPositionX, rangedAttackLocalPositionY);
+			projectileAttackTransform.localPosition = new Vector2(projectileAttackLocalPositionX, projectileAttackLocalPositionY);
 		else
-			rangedAttackTransform.localPosition = new Vector2(rangedAttackLocalPositionXFlipped, rangedAttackLocalPositionY);
+			projectileAttackTransform.localPosition = new Vector2(projectileAttackLocalPositionXFlipped, projectileAttackLocalPositionY);
+	}
+
+	private void SetPullAttackPositionWithMovement() {
+		if (isFacingRight)
+			pullAttackTransform.localPosition = new Vector2(pullAttackLocalPositionX, pullAttackLocalPositionY);
+		else
+			pullAttackTransform.localPosition = new Vector2(pullAttackLocalPositionXFlipped, pullAttackLocalPositionY);
 	}
 
 	private void PerformHorizontalMovement() {
@@ -223,48 +295,16 @@ public class PlayerController : MonoBehaviour
 		playerState = state;
 	}
 
-	private IEnumerator SetDashCooldown() {
-		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(2f);
-		playerInputActions.Player.Dash.Enable();
-	}
-
-	private void SetupMelee() {
-		if (!playerRightGloveSkills.isMeleeAttacking) {
-			playerRightGloveSkills.canMelee = true;
-			playerRightGloveSkills.isMeleeAttacking = true;
-			playerRightGloveSkills.meleeHits = new List<RaycastHit2D>();
-			playerRightGloveSkills.meleeAngle = 0f;
-			playerRightGloveSkills.enemyContactFilter = enemyContactFilter;
-			playerRightGloveSkills.meleeAttackDistance = 1f;
-			if (isFacingRight)
-				playerRightGloveSkills.meleeDirection = Vector2.right;
-			else
-				playerRightGloveSkills.meleeDirection = Vector2.left;
-			StartCoroutine(MeleeCooldown());
+	private IEnumerator MeleeDuration(float attackDuration) {
+		yield return new WaitForSeconds(attackDuration);
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionMeleeSkills.canAttack = false;
+				break;
+			case GemState.Purity:
+				purityMeleeSkills.canAttack = false;
+				break;
 		}
-	}
-
-	private void PerformMelee() {
-		playerRightGloveSkills.PerformCorruptionMelee();
-		if (playerRightGloveSkills.meleeHits.Count > 0) {
-			foreach (RaycastHit2D hit in playerRightGloveSkills.meleeHits) {
-				Destroy(hit.collider.gameObject);
-			}
-		}
-		playerRightGloveSkills.canMelee = false;
-		float meleeAttackAnimTime = 0.3f;
-		Invoke("ResetMeleeAnimation", meleeAttackAnimTime);
-	}
-
-	private IEnumerator MeleeCooldown() {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(1f);
-		playerInputActions.Player.Melee.Enable();
-	}
-
-	private void ResetMeleeAnimation() {
-		playerRightGloveSkills.isMeleeAttacking = false;
 	}
 
 	private void SetupRanged() {
@@ -280,25 +320,14 @@ public class PlayerController : MonoBehaviour
 		StartCoroutine(RangedCooldown());
 	}
 
-	private IEnumerator RangedCooldown() {
-		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(playerLeftGloveSkills.rangedCooldownSeconds);
-		playerInputActions.Player.Ranged.Enable();
-	}
-
 	private void PerformRanged() {
-		corruptionProjectileClone = Instantiate(corruptionProjectile, rangedAttackTransform.position, rangedAttackTransform.rotation);
+		corruptionProjectileClone = Instantiate(corruptionProjectile, projectileAttackTransform.position, projectileAttackTransform.rotation);
 		playerCorruptionProjectileAnimation = new Animations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
 		playerLeftGloveSkills.canRanged = false;
 		playerLeftGloveSkills.rangedAttackAnimSeconds = 0.3f;
 		StartCoroutine(ResetRangedAnimation());
 		playerLeftGloveSkills.destroyProjectileAfterSeconds = 0.5f;
 		StartCoroutine(DestroyProjectile());
-	}
-
-	private IEnumerator ResetRangedAnimation() {
-		yield return new WaitForSeconds(playerLeftGloveSkills.rangedAttackAnimSeconds);
-		playerLeftGloveSkills.isRangedAttacking = false;
 	}
 
 	private IEnumerator DestroyProjectile() {
@@ -311,6 +340,41 @@ public class PlayerController : MonoBehaviour
 			playerCorruptionProjectileAnimation.PlayCreatedAnimation();
 			corruptionProjectileClone.transform.Translate(projectileDirection * Time.deltaTime * playerLeftGloveSkills.projectileSpeed);
 		}
+	}
+
+	private IEnumerator ResetMeleeAnimation(float animSeconds) {
+		yield return new WaitForSeconds(animSeconds);
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionMeleeSkills.isAnimating = false;
+				break;
+			case GemState.Purity:
+				purityMeleeSkills.isAnimating = false;
+				break;
+		}
+	}
+
+	private IEnumerator ResetRangedAnimation() {
+		yield return new WaitForSeconds(playerLeftGloveSkills.rangedAttackAnimSeconds);
+		playerLeftGloveSkills.isRangedAttacking = false;
+	}
+
+	private IEnumerator SetDashCooldown() {
+		playerInputActions.Player.Dash.Disable();
+		yield return new WaitForSeconds(2f);
+		playerInputActions.Player.Dash.Enable();
+	}
+
+	private IEnumerator MeleeCooldown(float cooldownSeconds) {
+		playerInputActions.Player.Melee.Disable();
+		yield return new WaitForSeconds(cooldownSeconds);
+		playerInputActions.Player.Melee.Enable();
+	}
+
+	private IEnumerator RangedCooldown() {
+		playerInputActions.Player.Ranged.Disable();
+		yield return new WaitForSeconds(playerLeftGloveSkills.rangedCooldownSeconds);
+		playerInputActions.Player.Ranged.Enable();
 	}
 }
 
