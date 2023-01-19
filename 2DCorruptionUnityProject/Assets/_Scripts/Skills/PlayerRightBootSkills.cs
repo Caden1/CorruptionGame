@@ -34,44 +34,4 @@ public class PlayerRightBootSkills : PlayerSkills
 		rigidbody.velocity = Vector2.zero;
 		canJumpCancel = false;
 	}
-
-	//public void SetupFireJump() {
-	//	canJump = true;
-	//	this.jumpVelocity = 5f;
-	//}
-
-	//public void PerformFireJump() {
-	//	rigidbody.velocity = Vector2.up * jumpVelocity;
-	//	canJump = false;
-	//}
-
-	//public void SetupWaterJump() {
-	//	canJump = true;
-	//	this.jumpVelocity = 5f;
-	//}
-
-	//public void PerformWaterJump() {
-	//	rigidbody.velocity = Vector2.up * jumpVelocity;
-	//	canJump = false;
-	//}
-
-	//public void SetupAirJump() {
-	//	canJump = true;
-	//	this.jumpVelocity = 5f;
-	//}
-
-	//public void PerformAirJump() {
-	//	rigidbody.velocity = Vector2.up * jumpVelocity;
-	//	canJump = false;
-	//}
-
-	//public void SetupEarthJump() {
-	//	canJump = true;
-	//	this.jumpVelocity = 5f;
-	//}
-
-	//public void PerformEarthJump() {
-	//	rigidbody.velocity = Vector2.up * jumpVelocity;
-	//	canJump = false;
-	//}
 }

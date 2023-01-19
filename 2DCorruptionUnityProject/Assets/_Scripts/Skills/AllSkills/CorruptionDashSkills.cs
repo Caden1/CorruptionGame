@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CorruptionDashSkills : DashSkills
 {
-	public float damage { get; set; }
-
-	public CorruptionDashSkills(float numDashes, float velocity, float cooldown) :
-		base(numDashes, velocity, cooldown) { }
+	public float damage { get; protected set; }
 
 	public void SetCorruptionDefault() {
-
+		numDashes = 1f;
+		velocity = 15f;
+		secondsToDash = 0.25f;
+		cooldown = 2f;
+		damage = 2f;
 	}
 
 	public override void SetAirModifiers() {

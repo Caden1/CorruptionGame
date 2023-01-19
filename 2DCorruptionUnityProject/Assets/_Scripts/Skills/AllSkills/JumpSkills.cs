@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class JumpSkills
+public abstract class JumpSkills : Skills
 {
-	protected float numJumps;
-	protected float velocity;
-
-	protected JumpSkills(float numJumps, float velocity) {
-		this.numJumps = numJumps;
-		this.velocity = velocity;
-	}
+	public bool canJump;
+	public bool canJumpCancel;
+	public float numJumps { get; protected set; }
+	public float velocity { get; protected set; }
+	public float jumpGravity { get; protected set; }
+	public float fallGravity { get; protected set; }
+	public float archVelocityThreshold { get; protected set; }
+	public float archGravity { get; protected set; }
 
 	public abstract void SetAirModifiers();
 

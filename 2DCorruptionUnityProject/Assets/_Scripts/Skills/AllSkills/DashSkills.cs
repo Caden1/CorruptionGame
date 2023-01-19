@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class DashSkills
+public abstract class DashSkills : Skills
 {
-	protected float numDashes;
-	protected float velocity;
-	protected float cooldown;
-	//damage
-
-	protected DashSkills(float numDashes, float velocity, float cooldown) {
-		this.numDashes = numDashes;
-		this.velocity = velocity;
-		this.cooldown = cooldown;
-	}
+	public float numDashes { get; protected set; }
+	public float velocity { get; protected set; }
+	public float secondsToDash { get; protected set; }
+	public float cooldown { get; protected set; }
 
 	public abstract void SetAirModifiers();
 

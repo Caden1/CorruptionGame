@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PurityDashSkills : DashSkills
 {
-	public PurityDashSkills(float numDashes, float velocity, float cooldown) :
-		base(numDashes, velocity, cooldown) { }
-
 	public void SetPurityDefault() {
-
+		numDashes = 2f;
+		velocity = 15f;
+		secondsToDash = 0.25f;
+		cooldown = 2f;
 	}
 
 	public override void SetAirModifiers() {

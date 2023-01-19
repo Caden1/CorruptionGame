@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PurityProjectileSkills : ProjectileSkills
 {
-	public PurityProjectileSkills(bool isMultiEnemy, bool canAttack, bool isAttacking, float cooldown, float duration, float distance, float velocity) :
-		base(isMultiEnemy, canAttack, isAttacking, cooldown, duration, distance, velocity) { }
-
 	public void SetPurityDefault() {
-		
+		isMultiEnemy = false;
+		canAttack = false;
+		isAttacking = false;
+		cooldown = 1f;
+		duration = 0.1f;
+		velocity = 15f;
+		animSeconds = 0.3f;
 	}
 
 	public override void SetAirModifiers() {

@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PurityJumpSkills : JumpSkills
 {
-	public PurityJumpSkills(float numJumps, float velocity) :
-		base(numJumps, velocity) { }
-
 	public void SetPurityDefault() {
-
+		canJump = false;
+		canJumpCancel = false;
+		numJumps = 2;
+		velocity = 12f;
+		jumpGravity = 1f;
+		fallGravity = 2f;
+		archVelocityThreshold = 2f;
+		archGravity = 3f;
 	}
 
 	public override void SetAirModifiers() {
