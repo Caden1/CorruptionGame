@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Hub.unity
     guid: 7b0a68ebe8f7c4e31ab31d9b5372260b
+  - enabled: 1
+    path: Assets/_Scenes/CorruptionRealm.unity
+    guid: 6a67383f0b0bf4f019f9066e3b1c38a3
   m_configObjects: {}
