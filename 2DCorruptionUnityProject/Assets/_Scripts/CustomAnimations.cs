@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Animations
+public class CustomAnimations
 {
 	public bool animationsCreated { get; }
 
-	public Animations() {
+	public CustomAnimations() {
 		this.animationsCreated = false;
 	}
 
@@ -15,7 +15,7 @@ public class Animations
 	private Animator animator;
 	private string currentAnimationName;
 
-	public Animations(Animator animator) {
+	public CustomAnimations(Animator animator) {
 		this.animator = animator;
 		this.animationsCreated = true;
 	}
@@ -33,7 +33,7 @@ public class Animations
 	public float framesPerSecond { get; }
 	public int spriteIndex { get; set; }
 
-	public Animations(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer) {
+	public CustomAnimations(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
 		this.framesPerSecond = 0.1f; // Default to 10 FPS
@@ -41,7 +41,7 @@ public class Animations
 		this.animationsCreated = true;
 	}
 
-	public Animations(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer, float framesPerSecond, int startingSpriteIndex) {
+	public CustomAnimations(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer, float framesPerSecond, int startingSpriteIndex) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
 		this.framesPerSecond = framesPerSecond / 100; // Miliseconds

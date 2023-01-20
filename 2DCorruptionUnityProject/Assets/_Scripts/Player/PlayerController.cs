@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -19,7 +18,7 @@ public class PlayerController : MonoBehaviour
 	private enum GemState { Corruption, Purity }
 	private GemState gemState;
 	private enum ModifierGemState { None, Air, Fire, Water, Earth }
-	private ModifierGemState modifierGemState;
+	//private ModifierGemState modifierGemState;
 	// Old Anims
 	private const string PLAYER_IDLE_ANIM = "PlayerIdleAnim";
 	private const string PLAYER_RUN_ANIM = "PlayerRunAnim";
@@ -40,8 +39,8 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D playerRigidBody;
 	private BoxCollider2D playerBoxCollider;
 	private Animator playerAnimator;
-	private Animations playerAnimations;
-	private Animations playerCorruptionProjectileAnimation;
+	private CustomAnimations playerAnimations;
+	private CustomAnimations playerCorruptionProjectileAnimation;
 	private SpriteRenderer playerSpriteRenderer;
 	private LayerMask platformLayerMask;
 	private LayerMask enemyLayerMask;
@@ -64,7 +63,7 @@ public class PlayerController : MonoBehaviour
 		playerState = PlayerState.Normal;
 		animationState = AnimationState.Idle;
 		gemState = GemState.Corruption;
-		modifierGemState = ModifierGemState.None;
+		//modifierGemState = ModifierGemState.None;
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
 		playerRigidBody = GetComponent<Rigidbody2D>();
@@ -78,8 +77,8 @@ public class PlayerController : MonoBehaviour
 		enemyContactFilter.SetLayerMask(enemyLayerMask);
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
-		playerAnimations = new Animations(playerAnimator);
-		playerCorruptionProjectileAnimation = new Animations();
+		playerAnimations = new CustomAnimations(playerAnimator);
+		playerCorruptionProjectileAnimation = new CustomAnimations();
 		corruptionProjectileClone = new GameObject();
 		meleeHits = new List<RaycastHit2D>();
 
@@ -98,6 +97,10 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void Update() {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Application.Quit();
+		}
+
 		switch (playerState) {
 			case PlayerState.Normal:
 				SetupHorizontalMovement();
@@ -301,7 +304,7 @@ public class PlayerController : MonoBehaviour
 		switch (gemState) {
 			case GemState.Corruption:
 				corruptionProjectileClone = Instantiate(corruptionProjectile, transform.position, transform.rotation);
-				playerCorruptionProjectileAnimation = new Animations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
+				playerCorruptionProjectileAnimation = new CustomAnimations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
 				corruptionProjectileSkills.canAttack = false;
 				StartCoroutine(PlayerControllerHelper.ResetCorruptionRangedAnimation(corruptionProjectileSkills));
 				StartCoroutine(PlayerControllerHelper.DestroyCorruptionProjectile(corruptionProjectileSkills, corruptionProjectileClone));
