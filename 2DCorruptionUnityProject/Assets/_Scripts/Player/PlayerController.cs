@@ -19,19 +19,11 @@ public class PlayerController : MonoBehaviour
 	private GemState gemState;
 	private enum ModifierGemState { None, Air, Fire, Water, Earth }
 	//private ModifierGemState modifierGemState;
-	// Old Anims
-	private const string PLAYER_IDLE_ANIM = "PlayerIdleAnim";
-	private const string PLAYER_RUN_ANIM = "PlayerRunAnim";
-	private const string PLAYER_JUMP_ANIM = "PlayerJumpAnim";
-	private const string PLAYER_FALL_ANIM = "PlayerFallAnim";
-	private const string PLAYER_MELEE_ANIM = "PlayerMeleeAnim";
-	private const string PLAYER_RANGED_ATTACK_ANIM = "PlayerRangedAttackAnim";
-	// New Anims
-	//private const string PLAYER_IDLE_ANIM = "PlayerIdle";
-	//private const string PLAYER_RUN_ANIM = "PlayerRun";
-	//private const string PLAYER_IDLE_TO_RUN_ANIM = "PlayerIdleToRun";
-	//private const string PLAYER_RUN_TO_IDLE_ANIM = "PlayerRunToIdle";
-	private float moveVelocity = 5f;
+	private const string IDLE_ANIM = "IdleTest2";
+	private const string RUN_ANIM = "RunTest2";
+	private const string MELEE1_ANIM = "PunchTest2";
+	private const string MELEE2_ANIM = "PunchUpTest2";
+	private float moveVelocity = 7f;
 	private bool isFacingRight = true;
 	//private bool idleToRun = false;
 	//private bool runToIdle = false;
@@ -127,25 +119,26 @@ public class PlayerController : MonoBehaviour
 				//if (runToIdle)
 				//	StartCoroutine(PlayRunToIdleTransitionForSeconds(0.2f));
 				//else
-					playerAnimations.PlayUnityAnimatorAnimation(PLAYER_IDLE_ANIM);
+					playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
 				break;
 			case AnimationState.Run:
 				//if (idleToRun)
 				//	StartCoroutine(PlayIdleToRunTransitionForSeconds(0.2f));
 				//else
-					playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RUN_ANIM);
+					playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
 				break;
 			case AnimationState.Jump:
-				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_JUMP_ANIM);
+				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_JUMP_ANIM);
 				break;
 			case AnimationState.Fall:
-				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_FALL_ANIM);
+				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_FALL_ANIM);
 				break;
 			case AnimationState.Melee:
-				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_MELEE_ANIM);
+				//playerAnimations.PlayUnityAnimatorAnimation(MELEE1_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(MELEE2_ANIM);
 				break;
 			case AnimationState.Ranged:
-				playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RANGED_ATTACK_ANIM);
+				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RANGED_ATTACK_ANIM);
 				break;
 		}
 		SetAnimationState();
