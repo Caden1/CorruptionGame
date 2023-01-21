@@ -7,14 +7,14 @@ public class EnemyController : MonoBehaviour
     public GameObject playerObject;
     private enum State { Roam, ChaseTarget, AttackTarget }
     private Vector2 startingPosition;
-    private Vector2 raomPosition;
+    private Vector2 raomToPosition;
     private State state;
     private float moveSpeed = 0.1f;
 
     private void Start()
     {
         startingPosition = transform.position;
-        raomPosition = GetRoamingPosition();
+        raomToPosition = GetRoamingPosition();
         state = State.Roam;
     }
 
@@ -38,11 +38,11 @@ public class EnemyController : MonoBehaviour
 
     private void Roam()
     {
-        transform.Translate(raomPosition * moveSpeed * Time.deltaTime);
+        transform.Translate(raomToPosition * moveSpeed * Time.deltaTime);
         float reachedPositionDistance = 1f;
-        if (Vector2.Distance(transform.position, raomPosition) < reachedPositionDistance)
+        if (Vector2.Distance(transform.position, raomToPosition) < reachedPositionDistance)
         {
-            raomPosition = GetRoamingPosition();
+            raomToPosition = GetRoamingPosition();
         }
     }
 

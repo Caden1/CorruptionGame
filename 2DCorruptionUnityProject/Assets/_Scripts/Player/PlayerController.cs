@@ -19,10 +19,7 @@ public class PlayerController : MonoBehaviour
 	private GemState gemState;
 	private enum ModifierGemState { None, Air, Fire, Water, Earth }
 	//private ModifierGemState modifierGemState;
-	private const string IDLE_ANIM = "IdleTest2";
-	private const string RUN_ANIM = "RunTest2";
-	private const string MELEE1_ANIM = "PunchTest2";
-	private const string MELEE2_ANIM = "PunchUpTest2";
+	private const string IDLE_ANIM = "IdleTest2Moded";
 	private float moveVelocity = 7f;
 	private bool isFacingRight = true;
 	//private bool idleToRun = false;
@@ -125,7 +122,7 @@ public class PlayerController : MonoBehaviour
 				//if (idleToRun)
 				//	StartCoroutine(PlayIdleToRunTransitionForSeconds(0.2f));
 				//else
-					playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
+					//playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
 				break;
 			case AnimationState.Jump:
 				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_JUMP_ANIM);
@@ -135,7 +132,7 @@ public class PlayerController : MonoBehaviour
 				break;
 			case AnimationState.Melee:
 				//playerAnimations.PlayUnityAnimatorAnimation(MELEE1_ANIM);
-				playerAnimations.PlayUnityAnimatorAnimation(MELEE2_ANIM);
+				//playerAnimations.PlayUnityAnimatorAnimation(MELEE2_ANIM);
 				break;
 			case AnimationState.Ranged:
 				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RANGED_ATTACK_ANIM);
