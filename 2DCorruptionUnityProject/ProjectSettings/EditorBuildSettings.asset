@@ -6,9 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Scenes/PrototypeScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/_Scenes/Hub.unity
+    guid: 7b0a68ebe8f7c4e31ab31d9b5372260b
   - enabled: 1
-    path: Assets/_Scenes/Managers.unity
-    guid: da37aad8788f44f1baac8922288f7cb9
+    path: Assets/_Scenes/CorruptionRealm.unity
+    guid: 6a67383f0b0bf4f019f9066e3b1c38a3
+  - enabled: 1
+    path: Assets/_Scenes/AirRealm.unity
+    guid: 8afb61f70fdea406cbdb1ae283961866
+  - enabled: 1
+    path: Assets/_Scenes/FireRealm.unity
+    guid: b0e5bbf5ed0324c88a5bd6ec4dd12953
+  - enabled: 1
+    path: Assets/_Scenes/WaterRealm.unity
+    guid: d831c68a670204cef80861c30c8db09c
+  - enabled: 1
+    path: Assets/_Scenes/EarthRealm.unity
+    guid: 304aef544330d42c094fe003c720f51b
+  - enabled: 1
+    path: Assets/_Scenes/PurityRealm.unity
+    guid: dffd3bd599730478293b30d948d0fb2d
   m_configObjects: {}
