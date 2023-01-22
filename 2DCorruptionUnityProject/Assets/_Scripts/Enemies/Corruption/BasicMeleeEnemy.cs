@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class BasicMeleeEnemy : MonoBehaviour
 {
+	private const string IDLE_ANIM = "Idle";
+	private const string ATTACK_ANIM = "Attack";
 	public GameObject playerObject;
 	private enum State { Roam, ChaseTarget, AttackTarget }
 	private State state;
+	private enum AnimationState { Idle, Attack }
+	private AnimationState animationState;
+	private Animator enemyAnimator;
+	private CustomAnimations enemyAnimations;
 	private Rigidbody2D enemyRigidbody;
 	private Vector2 roamToPosition;
 	private bool isMovingRight;
-	private bool canAttack;
+	private float startingGravity;
 	private float xRaomToPosition;
+	private float attackPosition;
+	private float attackJumpHeight = 2f;
 	private float roamSpeed = 2f;
-	private float roamDistance = 4f;
+	private float roamDistance = 5f;
 	private float chaseRange = 10f;
-	private float chaseSpeed = 8f;
-	private float attackRange = 2f;
+	private float chaseSpeed = 10f;
+	private float attackRange = 1.5f;
 	private float attackSpeed = 4f;
 
 	private void Start() {
 		// Starts enemy off moving left
-		enemyRigidbody = GetComponent<Rigidbody2D>();
-		canAttack = false;
 		if (transform.position.x >= 0f) {
 			xRaomToPosition = transform.position.x - roamDistance;
 			isMovingRight = false;
@@ -30,21 +36,39 @@ public class BasicMeleeEnemy : MonoBehaviour
 			xRaomToPosition = transform.position.x + roamDistance;
 			isMovingRight = true;
 		}
+		enemyRigidbody = GetComponent<Rigidbody2D>();
+		startingGravity = enemyRigidbody.gravityScale;
+		attackPosition = transform.position.y + attackJumpHeight;
 		roamToPosition = new Vector2(xRaomToPosition, transform.position.y);
 		state = State.Roam;
+		animationState = AnimationState.Idle;
+		enemyAnimator = GetComponent<Animator>();
+		enemyAnimations = new CustomAnimations(enemyAnimator);
 	}
 
 	private void Update() {
 		switch (state) {
 			case State.Roam:
+				animationState = AnimationState.Idle;
 				HorizontalRoam();
 				LookForTarget();
 				break;
 			case State.ChaseTarget:
+				animationState = AnimationState.Idle;
 				ChaseTarget();
 				break;
 			case State.AttackTarget:
+				animationState = AnimationState.Attack;
 				AttackTarget();
+				break;
+		}
+
+		switch (animationState) {
+			case AnimationState.Idle:
+				enemyAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
+				break;
+			case AnimationState.Attack:
+				enemyAnimations.PlayUnityAnimatorAnimation(ATTACK_ANIM);
 				break;
 		}
 	}
@@ -63,8 +87,9 @@ public class BasicMeleeEnemy : MonoBehaviour
 	}
 
 	private void LookForTarget() {
-		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= chaseRange)
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= chaseRange) {
 			state = State.ChaseTarget;
+		}
 	}
 
 	private void ChaseTarget() {
@@ -78,9 +103,9 @@ public class BasicMeleeEnemy : MonoBehaviour
 
 	private void AttackTarget() {
 		enemyRigidbody.gravityScale = 0f;
-		transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, playerObject.transform.position.y), attackSpeed * Time.deltaTime);
+		transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, attackPosition), attackSpeed * Time.deltaTime);
 		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > attackRange) {
-			enemyRigidbody.gravityScale = 1f;
+			enemyRigidbody.gravityScale = startingGravity;
 			state = State.ChaseTarget;
 		}
 	}

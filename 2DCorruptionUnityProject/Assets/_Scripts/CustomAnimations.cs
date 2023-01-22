@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomAnimations
@@ -7,7 +5,7 @@ public class CustomAnimations
 	public bool animationsCreated { get; }
 
 	public CustomAnimations() {
-		this.animationsCreated = false;
+		animationsCreated = false;
 	}
 
 
@@ -17,7 +15,7 @@ public class CustomAnimations
 
 	public CustomAnimations(Animator animator) {
 		this.animator = animator;
-		this.animationsCreated = true;
+		animationsCreated = true;
 	}
 
 	public void PlayUnityAnimatorAnimation(string newAnimationName) {
@@ -36,17 +34,17 @@ public class CustomAnimations
 	public CustomAnimations(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
-		this.framesPerSecond = 0.1f; // Default to 10 FPS
-		this.spriteIndex = 0; // Default to index 0
-		this.animationsCreated = true;
+		framesPerSecond = 0.1f; // Default to 10 FPS
+		spriteIndex = 0; // Default to index 0
+		animationsCreated = true;
 	}
 
 	public CustomAnimations(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer, float framesPerSecond, int startingSpriteIndex) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
 		this.framesPerSecond = framesPerSecond / 100; // Miliseconds
-		this.spriteIndex = startingSpriteIndex;
-		this.animationsCreated = true;
+		spriteIndex = startingSpriteIndex;
+		animationsCreated = true;
 	}
 
 
