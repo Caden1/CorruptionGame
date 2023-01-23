@@ -30,7 +30,11 @@ public abstract class JumpSkills : Skills
 
 	public abstract void SetGravity();
 
+	public abstract void SetupJump();
+
 	public abstract void PerformJump();
+
+	public abstract void SetupJumpCancel();
 
 	public abstract void PerformJumpCancel();
 }

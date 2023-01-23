@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
 	private enum ModifierGemState { None, Air, Fire, Water, Earth }
 	//private ModifierGemState modifierGemState;
 	private const string IDLE_ANIM = "IdleTest2Moded";
-	private float moveVelocity = 7f;
 	private bool isFacingRight = true;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
@@ -39,6 +38,8 @@ public class PlayerController : MonoBehaviour
 	private GameObject corruptionProjectileClone;
 	private CustomAnimations purityProjectileAnimation;
 	private GameObject purityProjectileClone;
+	private CorruptionMovementSkills corruptionMovementSkills;
+	private PurityMovementSkills purityMovementSkills;
 	private CorruptionMeleeSkills corruptionMeleeSkills;
 	private PurityMeleeSkills purityMeleeSkills;
 	private CorruptionJumpSkills corruptionJumpSkills;
@@ -71,17 +72,15 @@ public class PlayerController : MonoBehaviour
 		corruptionProjectileClone = new GameObject();
 		purityProjectileAnimation = new CustomAnimations();
 		purityProjectileClone = new GameObject();
+		corruptionMovementSkills = new CorruptionMovementSkills(playerRigidBody);
+		purityMovementSkills = new PurityMovementSkills(playerRigidBody);
 		corruptionMeleeSkills = new CorruptionMeleeSkills(playerBoxCollider);
-		corruptionMeleeSkills.SetCorruptionDefault();
 		purityMeleeSkills = new PurityMeleeSkills(playerBoxCollider);
 		corruptionJumpSkills = new CorruptionJumpSkills(playerRigidBody);
-		corruptionJumpSkills.SetCorruptionDefault();
 		purityJumpSkills = new PurityJumpSkills(playerRigidBody);
 		corruptionDashSkills = new CorruptionDashSkills(playerRigidBody);
-		corruptionDashSkills.SetCorruptionDefault();
 		purityDashSkills = new PurityDashSkills(playerRigidBody);
 		corruptionProjectileSkills = new CorruptionProjectileSkills();
-		corruptionProjectileSkills.SetCorruptionDefault();
 		purityProjectileSkills = new PurityProjectileSkills();
 	}
 
@@ -94,18 +93,17 @@ public class PlayerController : MonoBehaviour
 			case PlayerState.Normal:
 				SetupHorizontalMovement();
 				if (playerInputActions.Player.Jump.WasPressedThisFrame() && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask))
-					corruptionJumpSkills.canJump = true;
+					SetupJump();
 				if (playerInputActions.Player.Jump.WasReleasedThisFrame())
-					if (playerRigidBody.velocity.y > 0)
-						corruptionJumpSkills.canJumpCancel = true;
+					SetupJumpCancel();
 				if (playerInputActions.Player.Dash.WasPressedThisFrame())
 					playerState = PlayerState.Dash;
 				if (playerInputActions.Player.Melee.WasPressedThisFrame())
 					SetupMelee();
 				if (playerInputActions.Player.Ranged.WasPressedThisFrame())
 					SetupRanged();
-				//if (playerInputActions.Player.Swap.WasPressedThisFrame())
-					//SwapLoadout();
+				if (playerInputActions.Player.Swap.WasPressedThisFrame())
+					SwapLoadout();
 				break;
 			case PlayerState.Dash:
 				SetupDash();
@@ -117,19 +115,14 @@ public class PlayerController : MonoBehaviour
 				playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
 				break;
 			case AnimationState.Run:
-				//playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
 				break;
 			case AnimationState.Jump:
-				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_JUMP_ANIM);
 				break;
 			case AnimationState.Fall:
-				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_FALL_ANIM);
 				break;
 			case AnimationState.Melee:
-				//playerAnimations.PlayUnityAnimatorAnimation(MELEE_ANIM);
 				break;
 			case AnimationState.Ranged:
-				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RANGED_ATTACK_ANIM);
 				break;
 		}
 
@@ -138,14 +131,13 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void FixedUpdate() {
-		corruptionJumpSkills.SetGravity();
 		switch (playerState) {
 			case PlayerState.Normal:
 				PerformHorizontalMovement();
 				if (corruptionJumpSkills.canJump || purityJumpSkills.canJump)
-					corruptionJumpSkills.PerformJump();
+					PerformJump();
 				if (corruptionJumpSkills.canJumpCancel || purityJumpSkills.canJumpCancel)
-					corruptionJumpSkills.PerformJumpCancel();
+					PerformJumpCancel();
 				if (corruptionMeleeSkills.canAttack || purityMeleeSkills.canAttack)
 					PerformMelee();
 				if (corruptionProjectileSkills.canAttack || purityProjectileSkills.canAttack)
@@ -155,15 +147,17 @@ public class PlayerController : MonoBehaviour
 				PerformDash();
 				break;
 		}
+
+		SetGravity();
 	}
 
-	//private void SwapLoadout() {
-	//	if (Skills.isCorruption && !Skills.isPurity) {
-	//		gemState = GemState.Purity;
-	//	} else if (!Skills.isCorruption && Skills.isPurity) {
-	//		gemState = GemState.Corruption;
-	//	}
-	//}
+	private void SwapLoadout() {
+		if (Skills.isCorruption && !Skills.isPurity) {
+			gemState = GemState.Purity;
+		} else if (!Skills.isCorruption && Skills.isPurity) {
+			gemState = GemState.Corruption;
+		}
+	}
 
 	private void SetAnimationState() {
 		if (corruptionMeleeSkills.isAnimating || purityMeleeSkills.isAnimating) {
@@ -181,6 +175,28 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	private void AnimateAndShootProjectile() {
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionProjectileSkills.AnimateAndShootProjectile(corruptionProjectileClone, corruptionProjectileAnimation);
+				break;
+			case GemState.Purity:
+				purityProjectileSkills.AnimateAndShootProjectile(purityProjectileClone, purityProjectileAnimation);
+				break;
+		}
+	}
+
+	private void SetGravity() {
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionJumpSkills.SetGravity();
+				break;
+			case GemState.Purity:
+				purityJumpSkills.SetGravity();
+				break;
+		}
+	}
+
 	private void SetupHorizontalMovement() {
 		moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
 		if (moveDirection.x > 0f) {
@@ -193,7 +209,60 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformHorizontalMovement() {
-		playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionMovementSkills.PerformHorizontalMovement(moveDirection.x);
+				break;
+			case GemState.Purity:
+				purityMovementSkills.PerformHorizontalMovement(moveDirection.x);
+				break;
+		}
+	}
+
+	private void SetupJump() {
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionJumpSkills.SetupJump();
+				break;
+			case GemState.Purity:
+				purityJumpSkills.SetupJump();
+				break;
+		}
+	}
+
+	private void PerformJump() {
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionJumpSkills.PerformJump();
+				break;
+			case GemState.Purity:
+				purityJumpSkills.PerformJump();
+				break;
+		}
+	}
+
+	private void SetupJumpCancel() {
+		if (playerRigidBody.velocity.y > 0) {
+			switch (gemState) {
+				case GemState.Corruption:
+					corruptionJumpSkills.SetupJumpCancel();
+					break;
+				case GemState.Purity:
+					purityJumpSkills.SetupJumpCancel();
+					break;
+			}
+		}
+	}
+
+	private void PerformJumpCancel() {
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionJumpSkills.PerformJumpCancel();
+				break;
+			case GemState.Purity:
+				purityJumpSkills.PerformJumpCancel();
+				break;
+		}
 	}
 
 	private void SetupDash() {
@@ -281,17 +350,6 @@ public class PlayerController : MonoBehaviour
 				purityProjectileAnimation = new CustomAnimations(purityProjectileSprites, purityProjectileClone.GetComponent<SpriteRenderer>());
 				StartCoroutine(purityProjectileSkills.ResetProjectileAnimation());
 				purityProjectileSkills.DestroyProjectile(purityProjectileClone);
-				break;
-		}
-	}
-
-	private void AnimateAndShootProjectile() {
-		switch (gemState) {
-			case GemState.Corruption:
-				corruptionProjectileSkills.AnimateAndShootProjectile(corruptionProjectileClone, corruptionProjectileAnimation);
-				break;
-			case GemState.Purity:
-				purityProjectileSkills.AnimateAndShootProjectile(purityProjectileClone, purityProjectileAnimation);
 				break;
 		}
 	}

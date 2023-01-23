@@ -2,22 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CorruptionJumpSkills : JumpSkills
+public class PurityJumpSkills : JumpSkills
 {
-	public float damage { get; protected set; }
+	public PurityJumpSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
-	public CorruptionJumpSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
-
-	public void SetCorruptionDefault() {
+	public void SetPurityDefault() {
 		canJump = false;
 		canJumpCancel = false;
-		numJumps = 1;
+		numJumps = 2;
 		velocity = 12f;
 		jumpGravity = 1f;
 		fallGravity = 2f;
 		archVelocityThreshold = 2f;
 		archGravity = 3f;
-		damage = 2f;
 	}
 
 	public override void SetAirModifiers() {
@@ -47,9 +44,17 @@ public class CorruptionJumpSkills : JumpSkills
 			rigidbody.gravityScale = fallGravity;
 	}
 
+	public override void SetupJump() {
+		canJump = true;
+	}
+
 	public override void PerformJump() {
 		rigidbody.velocity = Vector2.up * velocity;
 		canJump = false;
+	}
+
+	public override void SetupJumpCancel() {
+		canJumpCancel = true;
 	}
 
 	public override void PerformJumpCancel() {
