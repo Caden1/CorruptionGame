@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private Sprite[] corruptionProjectileSprites;
 	[SerializeField] private GameObject corruptionProjectile;
+	[SerializeField] private Sprite[] purityProjectileSprites;
+	[SerializeField] private GameObject purityProjectile;
 	private enum PlayerState { Normal, Dash, PurityMelee }
 	private PlayerState playerState;
 	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
@@ -22,23 +24,21 @@ public class PlayerController : MonoBehaviour
 	private const string IDLE_ANIM = "IdleTest2Moded";
 	private float moveVelocity = 7f;
 	private bool isFacingRight = true;
-	//private bool idleToRun = false;
-	//private bool runToIdle = false;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
 	private BoxCollider2D playerBoxCollider;
 	private Animator playerAnimator;
 	private CustomAnimations playerAnimations;
-	private CustomAnimations playerCorruptionProjectileAnimation;
 	private SpriteRenderer playerSpriteRenderer;
 	private LayerMask platformLayerMask;
 	private LayerMask enemyLayerMask;
 	private ContactFilter2D enemyContactFilter;
 	private Vector2 moveDirection;
 	private Vector2 meleeDirection;
+	private CustomAnimations corruptionProjectileAnimation;
 	private GameObject corruptionProjectileClone;
-	private List<RaycastHit2D> meleeHits;
-
+	private CustomAnimations purityProjectileAnimation;
+	private GameObject purityProjectileClone;
 	private CorruptionMeleeSkills corruptionMeleeSkills;
 	private PurityMeleeSkills purityMeleeSkills;
 	private CorruptionJumpSkills corruptionJumpSkills;
@@ -67,19 +67,19 @@ public class PlayerController : MonoBehaviour
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
 		playerAnimations = new CustomAnimations(playerAnimator);
-		playerCorruptionProjectileAnimation = new CustomAnimations();
+		corruptionProjectileAnimation = new CustomAnimations();
 		corruptionProjectileClone = new GameObject();
-		meleeHits = new List<RaycastHit2D>();
-
-		corruptionMeleeSkills = new CorruptionMeleeSkills();
+		purityProjectileAnimation = new CustomAnimations();
+		purityProjectileClone = new GameObject();
+		corruptionMeleeSkills = new CorruptionMeleeSkills(playerBoxCollider);
 		corruptionMeleeSkills.SetCorruptionDefault();
-		purityMeleeSkills = new PurityMeleeSkills();
-		corruptionJumpSkills = new CorruptionJumpSkills();
+		purityMeleeSkills = new PurityMeleeSkills(playerBoxCollider);
+		corruptionJumpSkills = new CorruptionJumpSkills(playerRigidBody);
 		corruptionJumpSkills.SetCorruptionDefault();
-		purityJumpSkills = new PurityJumpSkills();
-		corruptionDashSkills = new CorruptionDashSkills();
+		purityJumpSkills = new PurityJumpSkills(playerRigidBody);
+		corruptionDashSkills = new CorruptionDashSkills(playerRigidBody);
 		corruptionDashSkills.SetCorruptionDefault();
-		purityDashSkills = new PurityDashSkills();
+		purityDashSkills = new PurityDashSkills(playerRigidBody);
 		corruptionProjectileSkills = new CorruptionProjectileSkills();
 		corruptionProjectileSkills.SetCorruptionDefault();
 		purityProjectileSkills = new PurityProjectileSkills();
@@ -111,18 +111,13 @@ public class PlayerController : MonoBehaviour
 				SetupDash();
 				break;
 		}
+
 		switch (animationState) {
 			case AnimationState.Idle:
-				//if (runToIdle)
-				//	StartCoroutine(PlayRunToIdleTransitionForSeconds(0.2f));
-				//else
-					playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
 				break;
 			case AnimationState.Run:
-				//if (idleToRun)
-				//	StartCoroutine(PlayIdleToRunTransitionForSeconds(0.2f));
-				//else
-					//playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
+				//playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
 				break;
 			case AnimationState.Jump:
 				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_JUMP_ANIM);
@@ -131,34 +126,33 @@ public class PlayerController : MonoBehaviour
 				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_FALL_ANIM);
 				break;
 			case AnimationState.Melee:
-				//playerAnimations.PlayUnityAnimatorAnimation(MELEE1_ANIM);
-				//playerAnimations.PlayUnityAnimatorAnimation(MELEE2_ANIM);
+				//playerAnimations.PlayUnityAnimatorAnimation(MELEE_ANIM);
 				break;
 			case AnimationState.Ranged:
 				//playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RANGED_ATTACK_ANIM);
 				break;
 		}
+
 		SetAnimationState();
 		AnimateAndShootProjectile();
 	}
 
 	private void FixedUpdate() {
-		PlayerControllerHelper.SetCorruptionGravity(corruptionJumpSkills, playerRigidBody);
+		corruptionJumpSkills.SetGravity();
 		switch (playerState) {
 			case PlayerState.Normal:
 				PerformHorizontalMovement();
 				if (corruptionJumpSkills.canJump || purityJumpSkills.canJump)
-					PlayerControllerHelper.PerformCorruptionJump(corruptionJumpSkills, playerRigidBody);
+					corruptionJumpSkills.PerformJump();
 				if (corruptionJumpSkills.canJumpCancel || purityJumpSkills.canJumpCancel)
-					PlayerControllerHelper.PerformJumpCancel(corruptionJumpSkills, playerRigidBody);
+					corruptionJumpSkills.PerformJumpCancel();
 				if (corruptionMeleeSkills.canAttack || purityMeleeSkills.canAttack)
 					PerformMelee();
 				if (corruptionProjectileSkills.canAttack || purityProjectileSkills.canAttack)
 					PerformRanged();
 				break;
 			case PlayerState.Dash:
-				StartCoroutine(PlayerControllerHelper.PerformCorruptionDash(corruptionDashSkills, playerRigidBody, isFacingRight));
-				ResetStateAfterDash();
+				PerformDash();
 				break;
 		}
 	}
@@ -170,6 +164,22 @@ public class PlayerController : MonoBehaviour
 	//		gemState = GemState.Corruption;
 	//	}
 	//}
+
+	private void SetAnimationState() {
+		if (corruptionMeleeSkills.isAnimating || purityMeleeSkills.isAnimating) {
+			animationState = AnimationState.Melee;
+		} else if (corruptionProjectileSkills.isAttacking || purityProjectileSkills.isAttacking) {
+			animationState = AnimationState.Ranged;
+		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
+			animationState = AnimationState.Run;
+		} else if (playerRigidBody.velocity.y > 0f) {
+			animationState = AnimationState.Jump;
+		} else if (playerRigidBody.velocity.y < 0f) {
+			animationState = AnimationState.Fall;
+		} else {
+			animationState = AnimationState.Idle;
+		}
+	}
 
 	private void SetupHorizontalMovement() {
 		moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
@@ -189,26 +199,30 @@ public class PlayerController : MonoBehaviour
 	private void SetupDash() {
 		switch (gemState) {
 			case GemState.Corruption:
-				StartCoroutine(SetDashCooldown(corruptionDashSkills.cooldown));
+				corruptionDashSkills.SetupDash(isFacingRight);
+				StartCoroutine(corruptionDashSkills.StartDashCooldown(playerInputActions));
 				break;
 			case GemState.Purity:
-				StartCoroutine(SetDashCooldown(purityDashSkills.cooldown));
+				purityDashSkills.SetupDash(isFacingRight);
+				StartCoroutine(purityDashSkills.StartDashCooldown(playerInputActions));
 				break;
 		}
 	}
 
-	private void ResetStateAfterDash() {
+	private void PerformDash() {
 		switch (gemState) {
 			case GemState.Corruption:
-				StartCoroutine(ResetState(corruptionDashSkills.secondsToDash));
+				StartCoroutine(corruptionDashSkills.PerformDash());
+				StartCoroutine(SetNormalStateAfterSeconds(corruptionDashSkills.secondsToDash));
 				break;
 			case GemState.Purity:
-				StartCoroutine(ResetState(purityDashSkills.secondsToDash));
+				StartCoroutine(purityDashSkills.PerformDash());
+				StartCoroutine(SetNormalStateAfterSeconds(purityDashSkills.secondsToDash));
 				break;
 		}
 	}
 
-	private IEnumerator ResetState(float seconds) {
+	private IEnumerator SetNormalStateAfterSeconds(float seconds) {
 		yield return new WaitForSeconds(seconds);
 		playerState = PlayerState.Normal;
 	}
@@ -216,14 +230,12 @@ public class PlayerController : MonoBehaviour
 	private void SetupMelee() {
 		switch (gemState) {
 			case GemState.Corruption:
-				meleeHits = new List<RaycastHit2D>();
-				PlayerControllerHelper.SetupCorruptionMelee(corruptionMeleeSkills, isFacingRight, playerBoxCollider);
-				StartCoroutine(MeleeCooldown(corruptionMeleeSkills.cooldown));
+				corruptionMeleeSkills.SetupMelee(isFacingRight);
+				StartCoroutine(corruptionMeleeSkills.StartMeleeCooldown(playerInputActions));
 				break;
 			case GemState.Purity:
-				meleeHits = new List<RaycastHit2D>();
-				PlayerControllerHelper.SetupPurityMelee(purityMeleeSkills, isFacingRight, playerBoxCollider);
-				StartCoroutine(MeleeCooldown(purityMeleeSkills.cooldown));
+				purityMeleeSkills.SetupMelee(isFacingRight);
+				StartCoroutine(purityMeleeSkills.StartMeleeCooldown(playerInputActions));
 				break;
 		}
 	}
@@ -231,61 +243,27 @@ public class PlayerController : MonoBehaviour
 	private void PerformMelee() {
 		switch (gemState) {
 			case GemState.Corruption:
-				PlayerControllerHelper.PerformCorruptionMelee(corruptionMeleeSkills, enemyContactFilter, meleeHits);
-				StartCoroutine(PlayerControllerHelper.ResetCorruptionMeleeAnimation(corruptionMeleeSkills));
-				StartCoroutine(PlayerControllerHelper.CorruptionMeleeDuration(corruptionMeleeSkills));
+				corruptionMeleeSkills.PerformMelee(enemyContactFilter);
+				StartCoroutine(corruptionMeleeSkills.ResetMeleeAnimation());
+				StartCoroutine(corruptionMeleeSkills.MeleeDuration());
 				break;
 			case GemState.Purity:
-				PlayerControllerHelper.PerformPurityMelee(purityMeleeSkills, enemyContactFilter, meleeHits);
-				StartCoroutine(PlayerControllerHelper.ResetPurityMeleeAnimation(purityMeleeSkills));
-				StartCoroutine(PlayerControllerHelper.PurityMeleeDuration(purityMeleeSkills));
+				purityMeleeSkills.PerformMelee(enemyContactFilter);
+				StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
+				StartCoroutine(purityMeleeSkills.MeleeDuration());
 				break;
 		}
 	}
-
-	private void SetAnimationState() {
-		if (corruptionMeleeSkills.isAnimating || purityMeleeSkills.isAnimating) {
-			animationState = AnimationState.Melee;
-		} else if (corruptionProjectileSkills.isAttacking || purityProjectileSkills.isAttacking) {
-			animationState = AnimationState.Ranged;
-		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
-			if (animationState == AnimationState.Idle) {
-				//idleToRun = true;
-			}
-			animationState = AnimationState.Run;
-		} else if (playerRigidBody.velocity.y > 0f) {
-			animationState = AnimationState.Jump;
-		} else if (playerRigidBody.velocity.y < 0f) {
-			animationState = AnimationState.Fall;
-		} else {
-			if (animationState == AnimationState.Run) {
-				//runToIdle = true;
-			}
-			animationState = AnimationState.Idle;
-		}
-	}
-
-	//private IEnumerator PlayRunToIdleTransitionForSeconds(float secondsToPlayTransition) {
-	//	playerAnimations.PlayUnityAnimatorAnimation(PLAYER_RUN_TO_IDLE_ANIM);
-	//	yield return new WaitForSeconds(secondsToPlayTransition);
-	//	runToIdle = false;
-	//}
-
-	//private IEnumerator PlayIdleToRunTransitionForSeconds(float secondsToPlayTransition) {
-	//	playerAnimations.PlayUnityAnimatorAnimation(PLAYER_IDLE_TO_RUN_ANIM);
-	//	yield return new WaitForSeconds(secondsToPlayTransition);
-	//	idleToRun = false;
-	//}
 
 	private void SetupRanged() {
 		switch (gemState) {
 			case GemState.Corruption:
-				PlayerControllerHelper.SetupCorruptionRanged(corruptionProjectileSkills, isFacingRight);
-				StartCoroutine(RangedCooldown(corruptionProjectileSkills.cooldown));
+				corruptionProjectileSkills.SetupProjectile(isFacingRight);
+				StartCoroutine(corruptionProjectileSkills.StartProjectileCooldown(playerInputActions));
 				break;
 			case GemState.Purity:
-				PlayerControllerHelper.SetupPurityRanged(purityProjectileSkills, isFacingRight);
-				StartCoroutine(RangedCooldown(purityProjectileSkills.cooldown));
+				purityProjectileSkills.SetupProjectile(isFacingRight);
+				StartCoroutine(purityProjectileSkills.StartProjectileCooldown(playerInputActions));
 				break;
 		}
 	}
@@ -293,47 +271,29 @@ public class PlayerController : MonoBehaviour
 	private void PerformRanged() {
 		switch (gemState) {
 			case GemState.Corruption:
-				corruptionProjectileClone = Instantiate(corruptionProjectile, transform.position, transform.rotation);
-				playerCorruptionProjectileAnimation = new CustomAnimations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
-				corruptionProjectileSkills.canAttack = false;
-				StartCoroutine(PlayerControllerHelper.ResetCorruptionRangedAnimation(corruptionProjectileSkills));
-				StartCoroutine(PlayerControllerHelper.DestroyCorruptionProjectile(corruptionProjectileSkills, corruptionProjectileClone));
+				corruptionProjectileClone = corruptionProjectileSkills.PerformProjectile(corruptionProjectile, transform);
+				corruptionProjectileAnimation = new CustomAnimations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
+				StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
+				corruptionProjectileSkills.DestroyProjectile(corruptionProjectileClone);
 				break;
 			case GemState.Purity:
-				/* Complete this when I have a purity projectile
-				purityProjectileClone = Instantiate(purityProjectile, transform.position, transform.rotation);
-				playerPurityProjectileAnimation = new Animations(purityProjectileSprites, purityProjectileClone.GetComponent<SpriteRenderer>());
-				purityProjectileSkills.canAttack = false;
-				StartCoroutine(PlayerControllerHelper.ResetPurityRangedAnimation(purityProjectileSkills));
-				StartCoroutine(PlayerControllerHelper.DestroyPurityProjectile(purityProjectileSkills, purityProjectileClone));
-				*/
+				purityProjectileClone = purityProjectileSkills.PerformProjectile(purityProjectile, transform);
+				purityProjectileAnimation = new CustomAnimations(purityProjectileSprites, purityProjectileClone.GetComponent<SpriteRenderer>());
+				StartCoroutine(purityProjectileSkills.ResetProjectileAnimation());
+				purityProjectileSkills.DestroyProjectile(purityProjectileClone);
 				break;
 		}
 	}
 
 	private void AnimateAndShootProjectile() {
-		if (corruptionProjectileClone != null) {
-			playerCorruptionProjectileAnimation.PlayCreatedAnimation();
-			corruptionProjectileClone.transform.Translate(corruptionProjectileSkills.attackDirection * Time.deltaTime * corruptionProjectileSkills.velocity);
+		switch (gemState) {
+			case GemState.Corruption:
+				corruptionProjectileSkills.AnimateAndShootProjectile(corruptionProjectileClone, corruptionProjectileAnimation);
+				break;
+			case GemState.Purity:
+				purityProjectileSkills.AnimateAndShootProjectile(purityProjectileClone, purityProjectileAnimation);
+				break;
 		}
-	}
-
-	private IEnumerator SetDashCooldown(float cooldownSeconds) {
-		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(cooldownSeconds);
-		playerInputActions.Player.Dash.Enable();
-	}
-
-	private IEnumerator MeleeCooldown(float cooldownSeconds) {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(cooldownSeconds);
-		playerInputActions.Player.Melee.Enable();
-	}
-
-	private IEnumerator RangedCooldown(float seconds) {
-		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(seconds);
-		playerInputActions.Player.Ranged.Enable();
 	}
 }
 

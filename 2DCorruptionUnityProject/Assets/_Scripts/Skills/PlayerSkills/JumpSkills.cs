@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class JumpSkills : Skills
 {
+	protected Rigidbody2D rigidbody;
+	protected float startingGravity;
 	public bool canJump;
 	public bool canJumpCancel;
 	public float numJumps { get; protected set; }
@@ -13,6 +15,11 @@ public abstract class JumpSkills : Skills
 	public float archVelocityThreshold { get; protected set; }
 	public float archGravity { get; protected set; }
 
+	public JumpSkills(Rigidbody2D rigidbody) {
+		this.rigidbody = rigidbody;
+		startingGravity = rigidbody.gravityScale;
+	}
+
 	public abstract void SetAirModifiers();
 
 	public abstract void SetFireModifiers();
@@ -20,4 +27,10 @@ public abstract class JumpSkills : Skills
 	public abstract void SetWaterModifiers();
 
 	public abstract void SetEarthModifiers();
+
+	public abstract void SetGravity();
+
+	public abstract void PerformJump();
+
+	public abstract void PerformJumpCancel();
 }

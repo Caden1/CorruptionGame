@@ -249,9 +249,9 @@ GameObject:
   - component: {fileID: 374537276}
   - component: {fileID: 374537277}
   - component: {fileID: 374537278}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BasicMeleeEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1059346029}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 15
+    OrthographicSize: 20
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -975,7 +975,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 20
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1122,6 +1122,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: purityProjectile
+      value: 
+      objectReference: {fileID: 8312910579903577420, guid: 5f97ce5c49330475ba1470ac222ada6a, type: 3}
+    - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: purityProjectileSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: purityProjectileSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: -510831846, guid: e2f130f2477b5470f9abe2b4a99241f8, type: 3}
+    - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: purityProjectileSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -1404870552, guid: e2f130f2477b5470f9abe2b4a99241f8, type: 3}
     - target: {fileID: 5616622494000804068, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: m_RootOrder
       value: 2

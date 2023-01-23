@@ -20,4 +20,16 @@ public abstract class ProjectileSkills : Skills
 	public abstract void SetWaterModifiers();
 
 	public abstract void SetEarthModifiers();
+
+	public abstract void SetupProjectile(bool isFacingRight);
+
+	public abstract GameObject PerformProjectile(GameObject projectile, Transform transform);
+
+	public abstract IEnumerator ResetProjectileAnimation();
+
+	public abstract void DestroyProjectile(GameObject projectileClone);
+
+	public abstract IEnumerator StartProjectileCooldown(PlayerInputActions playerInputActions);
+
+	public abstract void AnimateAndShootProjectile(GameObject projectileClone, CustomAnimations customAnimations);
 }

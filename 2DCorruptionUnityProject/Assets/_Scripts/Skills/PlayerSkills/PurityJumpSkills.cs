@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PurityJumpSkills : JumpSkills
 {
+	public PurityJumpSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
+
 	public void SetPurityDefault() {
 		canJump = false;
 		canJumpCancel = false;
@@ -29,5 +31,26 @@ public class PurityJumpSkills : JumpSkills
 
 	public override void SetEarthModifiers() {
 		throw new System.NotImplementedException();
+	}
+
+	public override void SetGravity() {
+		if (rigidbody.velocity.y == 0f)
+			rigidbody.gravityScale = startingGravity;
+		else if (rigidbody.velocity.y < archVelocityThreshold && rigidbody.velocity.y > -archVelocityThreshold)
+			rigidbody.gravityScale = archGravity;
+		else if (rigidbody.velocity.y > 0f)
+			rigidbody.gravityScale = jumpGravity;
+		else if (rigidbody.velocity.y < 0f)
+			rigidbody.gravityScale = fallGravity;
+	}
+
+	public override void PerformJump() {
+		rigidbody.velocity = Vector2.up * velocity;
+		canJump = false;
+	}
+
+	public override void PerformJumpCancel() {
+		rigidbody.velocity = Vector2.zero;
+		canJumpCancel = false;
 	}
 }
