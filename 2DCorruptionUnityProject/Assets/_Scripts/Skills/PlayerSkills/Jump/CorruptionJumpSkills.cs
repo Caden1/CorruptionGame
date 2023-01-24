@@ -5,13 +5,15 @@ using UnityEngine;
 public class CorruptionJumpSkills : JumpSkills
 {
 	public float damage { get; protected set; }
+	private int numJumpsPerformed = 0;
 
 	public CorruptionJumpSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetCorruptionDefault() {
 		canJump = false;
 		canJumpCancel = false;
-		numJumps = 1;
+		multiJumpReady = false;
+		numjumps = 1;
 		velocity = 12f;
 		jumpGravity = 1f;
 		fallGravity = 2f;
@@ -47,8 +49,9 @@ public class CorruptionJumpSkills : JumpSkills
 			rigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump() {
-		canJump = true;
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask))
+			canJump = true;
 	}
 
 	public override void PerformJump() {

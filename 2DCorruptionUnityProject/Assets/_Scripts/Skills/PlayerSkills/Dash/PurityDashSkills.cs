@@ -8,7 +8,8 @@ public class PurityDashSkills : DashSkills
 
 	public void SetPurityDefault() {
 		numDashes = 2f;
-		velocity = 15f;
+		dashVelocity = 15f;
+		moveVelocity = 10f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
 	}
@@ -38,7 +39,7 @@ public class PurityDashSkills : DashSkills
 
 	public override IEnumerator PerformDash() {
 		rigidbody.gravityScale = 0f;
-		rigidbody.velocity = dashDirection * velocity;
+		rigidbody.velocity = dashDirection * dashVelocity;
 		yield return new WaitForSeconds(secondsToDash);
 		rigidbody.gravityScale = startingGravity;
 	}
@@ -47,5 +48,9 @@ public class PurityDashSkills : DashSkills
 		playerInputActions.Player.Dash.Disable();
 		yield return new WaitForSeconds(cooldown);
 		playerInputActions.Player.Dash.Enable();
+	}
+
+	public override void PerformHorizontalMovement(float xMoveDirection) {
+		rigidbody.velocity = new Vector2(xMoveDirection * moveVelocity, rigidbody.velocity.y);
 	}
 }

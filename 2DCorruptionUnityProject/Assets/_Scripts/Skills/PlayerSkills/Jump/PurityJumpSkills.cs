@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class PurityJumpSkills : JumpSkills
 {
+	private int numJumpsPerformed = 0;
+
 	public PurityJumpSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetPurityDefault() {
 		canJump = false;
 		canJumpCancel = false;
-		numJumps = 2;
-		velocity = 12f;
+		multiJumpReady = false;
+		numjumps = 2;
+		velocity = 5f;
 		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 2f;
-		archGravity = 3f;
+		fallGravity = 1.5f;
+		archVelocityThreshold = 1f;
+		archGravity = 2f;
 	}
 
 	public override void SetAirModifiers() {
@@ -44,13 +47,32 @@ public class PurityJumpSkills : JumpSkills
 			rigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump() {
-		canJump = true;
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
+			numJumpsPerformed++;
+			canJump = true;
+			if (numjumps > numJumpsPerformed) {
+				multiJumpReady = true;
+			}
+		} else if (multiJumpReady) {
+			numJumpsPerformed++;
+			canJump = true;
+		}
 	}
 
 	public override void PerformJump() {
-		rigidbody.velocity = Vector2.up * velocity;
-		canJump = false;
+		if (numjumps == 1) {
+			numJumpsPerformed = 0;
+			canJump = false;
+			rigidbody.velocity = Vector2.up * velocity;
+		} else if (numjumps >= numJumpsPerformed) {
+			rigidbody.velocity = Vector2.up * velocity;
+			canJump = false;
+		} else {
+			numJumpsPerformed = 0;
+			canJump = false;
+			multiJumpReady = false;
+		}
 	}
 
 	public override void SetupJumpCancel() {

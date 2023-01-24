@@ -9,7 +9,8 @@ public abstract class DashSkills
 	protected Vector2 dashDirection;
 	protected float startingGravity;
 	public float numDashes { get; protected set; }
-	public float velocity { get; protected set; }
+	public float dashVelocity { get; protected set; }
+	public float moveVelocity { get; protected set; }
 	public float secondsToDash { get; protected set; }
 	public float cooldown { get; protected set; }
 
@@ -31,4 +32,6 @@ public abstract class DashSkills
 	public abstract IEnumerator PerformDash();
 
 	public abstract IEnumerator StartDashCooldown(PlayerInputActions playerInputActions);
+
+	public abstract void PerformHorizontalMovement(float xMoveDirection);
 }

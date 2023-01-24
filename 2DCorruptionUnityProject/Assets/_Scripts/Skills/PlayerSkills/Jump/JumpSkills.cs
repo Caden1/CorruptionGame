@@ -4,16 +4,17 @@ using UnityEngine;
 
 public abstract class JumpSkills
 {
+	public bool canJump { get; protected set; }
+	public bool canJumpCancel { get; protected set; }
 	protected Rigidbody2D rigidbody;
 	protected float startingGravity;
-	public bool canJump;
-	public bool canJumpCancel;
-	public float numJumps { get; protected set; }
-	public float velocity { get; protected set; }
-	public float jumpGravity { get; protected set; }
-	public float fallGravity { get; protected set; }
-	public float archVelocityThreshold { get; protected set; }
-	public float archGravity { get; protected set; }
+	protected bool multiJumpReady;
+	protected int numjumps;
+	protected float velocity;
+	protected float jumpGravity;
+	protected float fallGravity;
+	protected float archVelocityThreshold;
+	protected float archGravity;
 
 	public JumpSkills(Rigidbody2D rigidbody) {
 		this.rigidbody = rigidbody;
@@ -30,7 +31,7 @@ public abstract class JumpSkills
 
 	public abstract void SetGravity();
 
-	public abstract void SetupJump();
+	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask);
 
 	public abstract void PerformJump();
 
