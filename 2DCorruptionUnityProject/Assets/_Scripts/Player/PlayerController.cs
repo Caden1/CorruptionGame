@@ -17,8 +17,10 @@ public class PlayerController : MonoBehaviour
 	private PlayerState playerState;
 	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
 	private AnimationState animationState;
-	private enum GemState { Corruption, Purity }
-	private GemState gemState;
+	private enum GlovesGemState { Corruption, Purity }
+	private GlovesGemState glovesGemState;
+	private enum BootsGemState { Corruption, Purity }
+	private BootsGemState bootsGemState;
 	private enum ModifierGemState { None, Air, Fire, Water, Earth }
 	//private ModifierGemState modifierGemState;
 	private const string IDLE_ANIM = "IdleTest2Moded";
@@ -52,7 +54,6 @@ public class PlayerController : MonoBehaviour
 	private void Awake() {
 		playerState = PlayerState.Normal;
 		animationState = AnimationState.Idle;
-		gemState = GemState.Corruption;
 		//modifierGemState = ModifierGemState.None;
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour
 		purityDashSkills = new PurityDashSkills(playerRigidBody);
 		corruptionProjectileSkills = new CorruptionProjectileSkills();
 		purityProjectileSkills = new PurityProjectileSkills();
+		SetDefaultSkills();
 	}
 
 	private void Update() {
@@ -151,11 +153,37 @@ public class PlayerController : MonoBehaviour
 		SetGravity();
 	}
 
+	private void SetDefaultSkills() {
+		corruptionMovementSkills.SetCorruptionDefault();
+		purityMovementSkills.SetPurityDefault();
+		corruptionJumpSkills.SetCorruptionDefault();
+		purityJumpSkills.SetPurityDefault();
+		corruptionDashSkills.SetCorruptionDefault();
+		purityDashSkills.SetPurityDefault();
+		corruptionMeleeSkills.SetCorruptionDefault();
+		purityMeleeSkills.SetPurityDefault();
+		corruptionProjectileSkills.SetCorruptionDefault();
+		purityProjectileSkills.SetPurityDefault();
+		glovesGemState = GlovesGemState.Corruption;
+		bootsGemState = BootsGemState.Purity;
+	}
+
 	private void SwapLoadout() {
-		if (Skills.isCorruption && !Skills.isPurity) {
-			gemState = GemState.Purity;
-		} else if (!Skills.isCorruption && Skills.isPurity) {
-			gemState = GemState.Corruption;
+		switch (glovesGemState) {
+			case GlovesGemState.Corruption:
+				glovesGemState = GlovesGemState.Purity;
+				break;
+			case GlovesGemState.Purity:
+				glovesGemState = GlovesGemState.Corruption;
+				break;
+		}
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
+				bootsGemState = BootsGemState.Purity;
+				break;
+			case BootsGemState.Purity:
+				bootsGemState = BootsGemState.Corruption;
+				break;
 		}
 	}
 
@@ -176,22 +204,22 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void AnimateAndShootProjectile() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (glovesGemState) {
+			case GlovesGemState.Corruption:
 				corruptionProjectileSkills.AnimateAndShootProjectile(corruptionProjectileClone, corruptionProjectileAnimation);
 				break;
-			case GemState.Purity:
+			case GlovesGemState.Purity:
 				purityProjectileSkills.AnimateAndShootProjectile(purityProjectileClone, purityProjectileAnimation);
 				break;
 		}
 	}
 
 	private void SetGravity() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
 				corruptionJumpSkills.SetGravity();
 				break;
-			case GemState.Purity:
+			case BootsGemState.Purity:
 				purityJumpSkills.SetGravity();
 				break;
 		}
@@ -209,33 +237,33 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformHorizontalMovement() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
 				corruptionMovementSkills.PerformHorizontalMovement(moveDirection.x);
 				break;
-			case GemState.Purity:
+			case BootsGemState.Purity:
 				purityMovementSkills.PerformHorizontalMovement(moveDirection.x);
 				break;
 		}
 	}
 
 	private void SetupJump() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
 				corruptionJumpSkills.SetupJump();
 				break;
-			case GemState.Purity:
+			case BootsGemState.Purity:
 				purityJumpSkills.SetupJump();
 				break;
 		}
 	}
 
 	private void PerformJump() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
 				corruptionJumpSkills.PerformJump();
 				break;
-			case GemState.Purity:
+			case BootsGemState.Purity:
 				purityJumpSkills.PerformJump();
 				break;
 		}
@@ -243,11 +271,11 @@ public class PlayerController : MonoBehaviour
 
 	private void SetupJumpCancel() {
 		if (playerRigidBody.velocity.y > 0) {
-			switch (gemState) {
-				case GemState.Corruption:
+			switch (bootsGemState) {
+				case BootsGemState.Corruption:
 					corruptionJumpSkills.SetupJumpCancel();
 					break;
-				case GemState.Purity:
+				case BootsGemState.Purity:
 					purityJumpSkills.SetupJumpCancel();
 					break;
 			}
@@ -255,23 +283,23 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformJumpCancel() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
 				corruptionJumpSkills.PerformJumpCancel();
 				break;
-			case GemState.Purity:
+			case BootsGemState.Purity:
 				purityJumpSkills.PerformJumpCancel();
 				break;
 		}
 	}
 
 	private void SetupDash() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
 				corruptionDashSkills.SetupDash(isFacingRight);
 				StartCoroutine(corruptionDashSkills.StartDashCooldown(playerInputActions));
 				break;
-			case GemState.Purity:
+			case BootsGemState.Purity:
 				purityDashSkills.SetupDash(isFacingRight);
 				StartCoroutine(purityDashSkills.StartDashCooldown(playerInputActions));
 				break;
@@ -279,12 +307,12 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformDash() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
 				StartCoroutine(corruptionDashSkills.PerformDash());
 				StartCoroutine(SetNormalStateAfterSeconds(corruptionDashSkills.secondsToDash));
 				break;
-			case GemState.Purity:
+			case BootsGemState.Purity:
 				StartCoroutine(purityDashSkills.PerformDash());
 				StartCoroutine(SetNormalStateAfterSeconds(purityDashSkills.secondsToDash));
 				break;
@@ -297,12 +325,12 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetupMelee() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (glovesGemState) {
+			case GlovesGemState.Corruption:
 				corruptionMeleeSkills.SetupMelee(isFacingRight);
 				StartCoroutine(corruptionMeleeSkills.StartMeleeCooldown(playerInputActions));
 				break;
-			case GemState.Purity:
+			case GlovesGemState.Purity:
 				purityMeleeSkills.SetupMelee(isFacingRight);
 				StartCoroutine(purityMeleeSkills.StartMeleeCooldown(playerInputActions));
 				break;
@@ -310,13 +338,13 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformMelee() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (glovesGemState) {
+			case GlovesGemState.Corruption:
 				corruptionMeleeSkills.PerformMelee(enemyContactFilter);
 				StartCoroutine(corruptionMeleeSkills.ResetMeleeAnimation());
 				StartCoroutine(corruptionMeleeSkills.MeleeDuration());
 				break;
-			case GemState.Purity:
+			case GlovesGemState.Purity:
 				purityMeleeSkills.PerformMelee(enemyContactFilter);
 				StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
 				StartCoroutine(purityMeleeSkills.MeleeDuration());
@@ -325,12 +353,12 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetupRanged() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (glovesGemState) {
+			case GlovesGemState.Corruption:
 				corruptionProjectileSkills.SetupProjectile(isFacingRight);
 				StartCoroutine(corruptionProjectileSkills.StartProjectileCooldown(playerInputActions));
 				break;
-			case GemState.Purity:
+			case GlovesGemState.Purity:
 				purityProjectileSkills.SetupProjectile(isFacingRight);
 				StartCoroutine(purityProjectileSkills.StartProjectileCooldown(playerInputActions));
 				break;
@@ -338,14 +366,14 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformRanged() {
-		switch (gemState) {
-			case GemState.Corruption:
+		switch (glovesGemState) {
+			case GlovesGemState.Corruption:
 				corruptionProjectileClone = corruptionProjectileSkills.PerformProjectile(corruptionProjectile, transform);
 				corruptionProjectileAnimation = new CustomAnimations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
 				StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
 				corruptionProjectileSkills.DestroyProjectile(corruptionProjectileClone);
 				break;
-			case GemState.Purity:
+			case GlovesGemState.Purity:
 				purityProjectileClone = purityProjectileSkills.PerformProjectile(purityProjectile, transform);
 				purityProjectileAnimation = new CustomAnimations(purityProjectileSprites, purityProjectileClone.GetComponent<SpriteRenderer>());
 				StartCoroutine(purityProjectileSkills.ResetProjectileAnimation());

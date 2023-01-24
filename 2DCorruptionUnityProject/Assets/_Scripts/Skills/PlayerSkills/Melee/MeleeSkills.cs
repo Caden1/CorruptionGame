@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MeleeSkills : Skills
+public abstract class MeleeSkills
 {
 	public Vector2 attackDirection;
 	protected bool isMultiEnemy;

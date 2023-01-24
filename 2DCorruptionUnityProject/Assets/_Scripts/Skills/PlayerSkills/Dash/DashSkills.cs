@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class DashSkills : Skills
+public abstract class DashSkills
 {
 	protected Rigidbody2D rigidbody;
 	protected Vector2 dashDirection;

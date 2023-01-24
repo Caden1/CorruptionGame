@@ -10,8 +10,6 @@ public class PurityMeleeSkills : MeleeSkills
 	public PurityMeleeSkills(BoxCollider2D boxCollider) : base(boxCollider) { }
 
 	public void SetPurityDefault() {
-		isCorruption = false;
-		isPurity = true;
 		isMultiEnemy = true;
 		canAttack = false;
 		isAnimating = false;

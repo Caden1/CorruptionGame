@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ProjectileSkills : Skills
+public abstract class ProjectileSkills
 {
 	public bool canAttack;
 	public bool isAttacking;

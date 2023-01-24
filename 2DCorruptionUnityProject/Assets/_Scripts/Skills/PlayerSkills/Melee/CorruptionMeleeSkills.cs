@@ -9,8 +9,6 @@ public class CorruptionMeleeSkills : MeleeSkills
 	public CorruptionMeleeSkills(BoxCollider2D boxCollider) : base(boxCollider) { }
 
 	public void SetCorruptionDefault() {
-		isCorruption = true;
-		isPurity = false;
 		isMultiEnemy = true;
 		canAttack = false;
 		isAnimating = false;

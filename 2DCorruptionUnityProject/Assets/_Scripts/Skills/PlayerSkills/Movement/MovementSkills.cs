@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MovementSkills : Skills
+public abstract class MovementSkills
 {
 	protected Rigidbody2D rigidbody;
 	protected float velocity;

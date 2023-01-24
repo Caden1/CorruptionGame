@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class JumpSkills : Skills
+public abstract class JumpSkills
 {
 	protected Rigidbody2D rigidbody;
 	protected float startingGravity;
