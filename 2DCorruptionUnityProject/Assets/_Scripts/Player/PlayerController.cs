@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
 		purityProjectileClone = new GameObject();
 		corruptionMeleeSkills = new CorruptionMeleeSkills(playerBoxCollider);
 		purityMeleeSkills = new PurityMeleeSkills(playerBoxCollider);
-		corruptionJumpSkills = new CorruptionJumpSkills(playerRigidBody);
+		corruptionJumpSkills = new CorruptionJumpSkills(playerRigidBody, playerBoxCollider, enemyContactFilter);
 		purityJumpSkills = new PurityJumpSkills(playerRigidBody);
 		corruptionDashSkills = new CorruptionDashSkills(playerRigidBody);
 		purityDashSkills = new PurityDashSkills(playerRigidBody);
