@@ -8,7 +8,6 @@ public abstract class JumpSkills
 	public bool canJumpCancel { get; protected set; }
 	protected Rigidbody2D rigidbody;
 	protected float startingGravity;
-	protected bool multiJumpReady;
 	protected int numjumps;
 	protected float velocity;
 	protected float jumpGravity;

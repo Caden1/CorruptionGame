@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PurityJumpSkills : JumpSkills
 {
-	private int numJumpsPerformed = 0;
+	private int jumpCount = 0;
 
 	public PurityJumpSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetPurityDefault() {
 		canJump = false;
 		canJumpCancel = false;
-		multiJumpReady = false;
 		numjumps = 2;
-		velocity = 5f;
+		velocity = 10f;
 		jumpGravity = 1f;
 		fallGravity = 1.5f;
 		archVelocityThreshold = 1f;
@@ -49,30 +48,17 @@ public class PurityJumpSkills : JumpSkills
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
-			numJumpsPerformed++;
+			jumpCount = 1;
 			canJump = true;
-			if (numjumps > numJumpsPerformed) {
-				multiJumpReady = true;
-			}
-		} else if (multiJumpReady) {
-			numJumpsPerformed++;
+		} else if (numjumps > jumpCount) {
+			jumpCount++;
 			canJump = true;
 		}
 	}
 
 	public override void PerformJump() {
-		if (numjumps == 1) {
-			numJumpsPerformed = 0;
-			canJump = false;
-			rigidbody.velocity = Vector2.up * velocity;
-		} else if (numjumps >= numJumpsPerformed) {
-			rigidbody.velocity = Vector2.up * velocity;
-			canJump = false;
-		} else {
-			numJumpsPerformed = 0;
-			canJump = false;
-			multiJumpReady = false;
-		}
+		rigidbody.velocity = Vector2.up * velocity;
+		canJump = false;
 	}
 
 	public override void SetupJumpCancel() {
