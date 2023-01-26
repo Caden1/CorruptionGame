@@ -245,12 +245,12 @@ GameObject:
   - component: {fileID: 362028131}
   - component: {fileID: 362028132}
   m_Layer: 0
-  m_Name: PlayerParticleSystems
+  m_Name: OFF-PlayerSkillEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &362028131
 Transform:
   m_ObjectHideFlags: 0
@@ -517,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590086548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.12, y: -8.04, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1044,7 +1044,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1499626247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.12, y: -8.04, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1097,7 +1097,7 @@ GameObject:
   - component: {fileID: 1564427240}
   - component: {fileID: 1564427239}
   m_Layer: 0
-  m_Name: CorruptionJump
+  m_Name: OFF-CorruptionJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6034,6 +6034,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5616622494000803994, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c227a7c75a36c4d61a0b9346f881d1b0, type: 2}
     - target: {fileID: 5616622494000803995, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6060,11 +6064,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5616622494000804068, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5616622494000804068, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5616622494000804068, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6097,6 +6101,14 @@ PrefabInstance:
     - target: {fileID: 5616622494000804068, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5616622494000804069, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1447828132, guid: 95cdeb8ecc9f14239a521dc17f905dc4, type: 3}
+    - target: {fileID: 5616622494000804069, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff2beec9aead246e494213da33cbba50, type: 3}

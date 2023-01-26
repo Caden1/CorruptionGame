@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 	private RightGloveMeleeModGemState rightGloveMeleeModGemState;
 	private enum LeftGloveProjectileModGemState { None, Air, Fire, Water, Earth }
 	private LeftGloveProjectileModGemState leftGloveProjectileModGemState;
-	private const string IDLE_ANIM = "IdleTest2Moded";
+	private const string IDLE_ANIM = "Idle";
 	private bool isFacingRight = true;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 	private PurityDashSkills purityDashSkills;
 	private CorruptionProjectileSkills corruptionProjectileSkills;
 	private PurityProjectileSkills purityProjectileSkills;
-	private PlayerParticleSystems playerParticleSystems;
+	//private PlayerParticleSystems playerParticleSystems;
 
 	private void Awake() {
 		playerState = PlayerState.Normal;
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 		corruptionProjectileSkills = new CorruptionProjectileSkills();
 		purityProjectileSkills = new PurityProjectileSkills();
 		SetDefaultSkillsAndGemStates();
-		playerParticleSystems = transform.GetChild(0).GetComponent<PlayerParticleSystems>();
+		//playerParticleSystems = transform.GetChild(0).GetComponent<PlayerParticleSystems>();
 	}
 
 	private void Update() {
@@ -403,7 +403,7 @@ public class PlayerController : MonoBehaviour
 		switch (bootsGemState) {
 			case BootsGemState.Corruption:
 				corruptionJumpSkills.PerformJump();
-				playerParticleSystems.PlayCorruptionJumpParticle();
+				//playerParticleSystems.PlayCorruptionJumpParticle();
 				break;
 			case BootsGemState.Purity:
 				purityJumpSkills.PerformJump();
