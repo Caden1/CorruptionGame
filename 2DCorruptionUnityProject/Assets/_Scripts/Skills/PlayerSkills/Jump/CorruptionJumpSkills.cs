@@ -6,7 +6,8 @@ public class CorruptionJumpSkills : JumpSkills
 {
 	protected BoxCollider2D boxCollider;
 	protected ContactFilter2D contactFilter;
-	private Vector2 attackOrigin;
+	private Vector2 attackOriginRight;
+	private Vector2 attackOriginLeft;
 	private float damage;
 	private float attackDistance;
 	private bool isMultiEnemyAttack;
@@ -66,7 +67,8 @@ public class CorruptionJumpSkills : JumpSkills
 			jumpCount++;
 			canJump = true;
 		}
-		attackOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
+		attackOriginRight = new Vector2(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
+		attackOriginLeft = boxCollider.bounds.min;
 	}
 
 	public override void PerformJump() {
@@ -74,8 +76,8 @@ public class CorruptionJumpSkills : JumpSkills
 		canJump = false;
 		List<RaycastHit2D> rightHits = new List<RaycastHit2D>();
 		List<RaycastHit2D> leftHits = new List<RaycastHit2D>();
-		int numRightHits = Physics2D.Raycast(attackOrigin, Vector2.right, contactFilter, rightHits, attackDistance);
-		int numLeftHits = Physics2D.Raycast(attackOrigin, Vector2.left, contactFilter, leftHits, attackDistance);
+		int numRightHits = Physics2D.Raycast(attackOriginRight, Vector2.right, contactFilter, rightHits, attackDistance);
+		int numLeftHits = Physics2D.Raycast(attackOriginLeft, Vector2.left, contactFilter, leftHits, attackDistance);
 		if (numRightHits > 0) {
 			foreach (RaycastHit2D hit in rightHits) {
 				Object.Destroy(hit.collider.gameObject);

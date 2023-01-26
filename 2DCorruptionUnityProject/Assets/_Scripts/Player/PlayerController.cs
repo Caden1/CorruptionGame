@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
 	private PurityDashSkills purityDashSkills;
 	private CorruptionProjectileSkills corruptionProjectileSkills;
 	private PurityProjectileSkills purityProjectileSkills;
+	private PlayerParticleSystems playerParticleSystems;
 
 	private void Awake() {
 		playerState = PlayerState.Normal;
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour
 		corruptionProjectileSkills = new CorruptionProjectileSkills();
 		purityProjectileSkills = new PurityProjectileSkills();
 		SetDefaultSkillsAndGemStates();
+		playerParticleSystems = transform.GetChild(0).GetComponent<PlayerParticleSystems>();
 	}
 
 	private void Update() {
@@ -401,6 +403,7 @@ public class PlayerController : MonoBehaviour
 		switch (bootsGemState) {
 			case BootsGemState.Corruption:
 				corruptionJumpSkills.PerformJump();
+				playerParticleSystems.PlayCorruptionJumpParticle();
 				break;
 			case BootsGemState.Purity:
 				purityJumpSkills.PerformJump();
