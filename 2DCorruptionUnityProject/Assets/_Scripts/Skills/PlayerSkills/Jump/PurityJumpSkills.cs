@@ -17,6 +17,7 @@ public class PurityJumpSkills : JumpSkills
 		fallGravity = 1.5f;
 		archVelocityThreshold = 1f;
 		archGravity = 2f;
+		effectCleanupSeconds = 1f;
 	}
 
 	public override void SetAirModifiers() {
@@ -56,9 +57,13 @@ public class PurityJumpSkills : JumpSkills
 		}
 	}
 
-	public override void PerformJump() {
+	public override void PerformJump(GameObject effect, Transform transform) {
 		rigidbody.velocity = Vector2.up * velocity;
 		canJump = false;
+	}
+
+	public override void AnimateEffect(CustomAnimation customAnimation) {
+		
 	}
 
 	public override void SetupJumpCancel() {

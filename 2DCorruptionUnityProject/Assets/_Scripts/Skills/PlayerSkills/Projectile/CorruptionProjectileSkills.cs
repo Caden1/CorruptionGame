@@ -63,9 +63,9 @@ public class CorruptionProjectileSkills : ProjectileSkills
 		playerInputActions.Player.Ranged.Enable();
 	}
 
-	public override void AnimateAndShootProjectile(GameObject projectileClone, CustomAnimations customAnimations) {
+	public override void AnimateAndShootProjectile(GameObject projectileClone, CustomAnimation customAnimation) {
 		if (projectileClone != null) {
-			customAnimations.PlayCreatedAnimation();
+			customAnimation.PlayCreatedAnimation();
 			projectileClone.transform.Translate(attackDirection * Time.deltaTime * velocity);
 		}
 	}

@@ -9,10 +9,18 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private Sprite[] corruptionProjectileSprites;
-	[SerializeField] private GameObject corruptionProjectile;
-	[SerializeField] private Sprite[] purityProjectileSprites;
-	[SerializeField] private GameObject purityProjectile;
+	[SerializeField] private Sprite[] corruptionJumpAttackSprites;
+	[SerializeField] private GameObject corruptionJumpAttack;
+	private List<GameObject> corruptionJumpAttackClones;
+	private CustomAnimation corruptionJumpAttackAnimation;
+	//[SerializeField] private Sprite[] corruptionProjectileSprites;
+	//[SerializeField] private GameObject corruptionProjectile;
+	//private CustomAnimation corruptionProjectileAnimation;
+	//private GameObject corruptionProjectileClone;
+	//[SerializeField] private Sprite[] purityProjectileSprites;
+	//[SerializeField] private GameObject purityProjectile;
+	//private CustomAnimation purityProjectileAnimation;
+	//private GameObject purityProjectileClone;
 	private enum PlayerState { Normal, Dash, PurityMelee }
 	private PlayerState playerState;
 	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
@@ -35,17 +43,13 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D playerRigidBody;
 	private BoxCollider2D playerBoxCollider;
 	private Animator playerAnimator;
-	private CustomAnimations playerAnimations;
+	private CustomAnimation playerAnimations;
 	private SpriteRenderer playerSpriteRenderer;
 	private LayerMask platformLayerMask;
 	private LayerMask enemyLayerMask;
 	private ContactFilter2D enemyContactFilter;
 	private Vector2 moveDirection;
 	private Vector2 meleeDirection;
-	private CustomAnimations corruptionProjectileAnimation;
-	private GameObject corruptionProjectileClone;
-	private CustomAnimations purityProjectileAnimation;
-	private GameObject purityProjectileClone;
 	private CorruptionMeleeSkills corruptionMeleeSkills;
 	private PurityMeleeSkills purityMeleeSkills;
 	private CorruptionJumpSkills corruptionJumpSkills;
@@ -55,8 +59,17 @@ public class PlayerController : MonoBehaviour
 	private CorruptionProjectileSkills corruptionProjectileSkills;
 	private PurityProjectileSkills purityProjectileSkills;
 	//private PlayerParticleSystems playerParticleSystems;
+	private Animator jumpEffectAnimator;
+	private Transform jumpEffectTransform;
+	private CustomAnimation JumpEffectAnimation;
 
 	private void Awake() {
+		corruptionJumpAttackClones = new List<GameObject>();
+		corruptionJumpAttackAnimation = new CustomAnimation();
+		//corruptionProjectileAnimation = new CustomAnimation();
+		//corruptionProjectileClone = new GameObject();
+		//purityProjectileAnimation = new CustomAnimation();
+		//purityProjectileClone = new GameObject();
 		playerState = PlayerState.Normal;
 		animationState = AnimationState.Idle;
 		playerInputActions = new PlayerInputActions();
@@ -72,21 +85,20 @@ public class PlayerController : MonoBehaviour
 		enemyContactFilter.SetLayerMask(enemyLayerMask);
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
-		playerAnimations = new CustomAnimations(playerAnimator);
-		corruptionProjectileAnimation = new CustomAnimations();
-		corruptionProjectileClone = new GameObject();
-		purityProjectileAnimation = new CustomAnimations();
-		purityProjectileClone = new GameObject();
+		playerAnimations = new CustomAnimation(playerAnimator);
+		jumpEffectAnimator = transform.GetChild(0).GetComponent<Animator>();
+		jumpEffectTransform = transform.GetChild(0);
+		JumpEffectAnimation = new CustomAnimation(jumpEffectAnimator);
 		corruptionMeleeSkills = new CorruptionMeleeSkills(playerBoxCollider);
 		purityMeleeSkills = new PurityMeleeSkills(playerBoxCollider);
-		corruptionJumpSkills = new CorruptionJumpSkills(playerRigidBody, playerBoxCollider, enemyContactFilter);
+		corruptionJumpSkills = new CorruptionJumpSkills(playerRigidBody, enemyContactFilter);
 		purityJumpSkills = new PurityJumpSkills(playerRigidBody);
 		corruptionDashSkills = new CorruptionDashSkills(playerRigidBody);
 		purityDashSkills = new PurityDashSkills(playerRigidBody);
 		corruptionProjectileSkills = new CorruptionProjectileSkills();
 		purityProjectileSkills = new PurityProjectileSkills();
 		SetDefaultSkillsAndGemStates();
-		//playerParticleSystems = transform.GetChild(0).GetComponent<PlayerParticleSystems>();
+		//playerParticleSystems = transform.GetChild(1).GetComponent<PlayerParticleSystems>();
 	}
 
 	private void Update() {
@@ -347,10 +359,17 @@ public class PlayerController : MonoBehaviour
 	private void AnimateAndShootProjectile() {
 		switch (glovesGemState) {
 			case GlovesGemState.Corruption:
-				corruptionProjectileSkills.AnimateAndShootProjectile(corruptionProjectileClone, corruptionProjectileAnimation);
+				//corruptionProjectileSkills.AnimateAndShootProjectile(corruptionProjectileClone, corruptionProjectileAnimation);
 				break;
 			case GlovesGemState.Purity:
-				purityProjectileSkills.AnimateAndShootProjectile(purityProjectileClone, purityProjectileAnimation);
+				//purityProjectileSkills.AnimateAndShootProjectile(purityProjectileClone, purityProjectileAnimation);
+				break;
+		}
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
+				corruptionJumpSkills.AnimateEffect(corruptionJumpAttackAnimation);
+				break;
+			case BootsGemState.Purity:
 				break;
 		}
 	}
@@ -402,11 +421,16 @@ public class PlayerController : MonoBehaviour
 	private void PerformJump() {
 		switch (bootsGemState) {
 			case BootsGemState.Corruption:
-				corruptionJumpSkills.PerformJump();
+				corruptionJumpSkills.PerformJump(corruptionJumpAttack, transform);
+				corruptionJumpAttackAnimation = new CustomAnimation(corruptionJumpAttackSprites);
+
+				//StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
+				//corruptionProjectileSkills.DestroyProjectile(corruptionProjectileClone);
+
 				//playerParticleSystems.PlayCorruptionJumpParticle();
 				break;
 			case BootsGemState.Purity:
-				purityJumpSkills.PerformJump();
+				purityJumpSkills.PerformJump(corruptionJumpAttack, transform);
 				break;
 		}
 	}
@@ -510,16 +534,16 @@ public class PlayerController : MonoBehaviour
 	private void PerformRanged() {
 		switch (glovesGemState) {
 			case GlovesGemState.Corruption:
-				corruptionProjectileClone = corruptionProjectileSkills.PerformProjectile(corruptionProjectile, transform);
-				corruptionProjectileAnimation = new CustomAnimations(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
-				StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
-				corruptionProjectileSkills.DestroyProjectile(corruptionProjectileClone);
+				//corruptionProjectileClone = corruptionProjectileSkills.PerformProjectile(corruptionProjectile, transform);
+				//corruptionProjectileAnimation = new CustomAnimation(corruptionProjectileSprites, corruptionProjectileClone.GetComponent<SpriteRenderer>());
+				//StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
+				//corruptionProjectileSkills.DestroyProjectile(corruptionProjectileClone);
 				break;
 			case GlovesGemState.Purity:
-				purityProjectileClone = purityProjectileSkills.PerformProjectile(purityProjectile, transform);
-				purityProjectileAnimation = new CustomAnimations(purityProjectileSprites, purityProjectileClone.GetComponent<SpriteRenderer>());
-				StartCoroutine(purityProjectileSkills.ResetProjectileAnimation());
-				purityProjectileSkills.DestroyProjectile(purityProjectileClone);
+				//purityProjectileClone = purityProjectileSkills.PerformProjectile(purityProjectile, transform);
+				//purityProjectileAnimation = new CustomAnimation(purityProjectileSprites, purityProjectileClone.GetComponent<SpriteRenderer>());
+				//StartCoroutine(purityProjectileSkills.ResetProjectileAnimation());
+				//purityProjectileSkills.DestroyProjectile(purityProjectileClone);
 				break;
 		}
 	}

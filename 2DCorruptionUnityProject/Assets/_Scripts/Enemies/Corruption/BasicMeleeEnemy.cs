@@ -12,7 +12,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private enum AnimationState { Idle, Attack }
 	private AnimationState animationState;
 	private Animator enemyAnimator;
-	private CustomAnimations enemyAnimations;
+	private CustomAnimation enemyAnimations;
 	private Rigidbody2D enemyRigidbody;
 	private Vector2 roamToPosition;
 	private bool isMovingRight;
@@ -43,7 +43,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 		state = State.Roam;
 		animationState = AnimationState.Idle;
 		enemyAnimator = GetComponent<Animator>();
-		enemyAnimations = new CustomAnimations(enemyAnimator);
+		enemyAnimations = new CustomAnimation(enemyAnimator);
 	}
 
 	private void Update() {

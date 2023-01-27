@@ -14,6 +14,7 @@ public abstract class JumpSkills
 	protected float fallGravity;
 	protected float archVelocityThreshold;
 	protected float archGravity;
+	protected float effectCleanupSeconds;
 
 	public JumpSkills(Rigidbody2D rigidbody) {
 		this.rigidbody = rigidbody;
@@ -32,7 +33,9 @@ public abstract class JumpSkills
 
 	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask);
 
-	public abstract void PerformJump();
+	public abstract void PerformJump(GameObject effect, Transform transform);
+
+	public abstract void AnimateEffect(CustomAnimation customAnimation);
 
 	public abstract void SetupJumpCancel();
 

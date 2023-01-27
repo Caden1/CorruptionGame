@@ -60,7 +60,7 @@ public class PurityProjectileSkills : ProjectileSkills
 		playerInputActions.Player.Ranged.Enable();
 	}
 
-	public override void AnimateAndShootProjectile(GameObject projectileClone, CustomAnimations customAnimations) {
+	public override void AnimateAndShootProjectile(GameObject projectileClone, CustomAnimation customAnimations) {
 		if (projectileClone != null) {
 			customAnimations.PlayCreatedAnimation();
 			projectileClone.transform.Translate(attackDirection * Time.deltaTime * velocity);

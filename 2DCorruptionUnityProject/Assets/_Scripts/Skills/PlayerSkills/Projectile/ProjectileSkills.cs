@@ -31,5 +31,5 @@ public abstract class ProjectileSkills
 
 	public abstract IEnumerator StartProjectileCooldown(PlayerInputActions playerInputActions);
 
-	public abstract void AnimateAndShootProjectile(GameObject projectileClone, CustomAnimations customAnimations);
+	public abstract void AnimateAndShootProjectile(GameObject projectileClone, CustomAnimation customAnimations);
 }

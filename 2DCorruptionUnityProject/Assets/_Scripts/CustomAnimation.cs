@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class CustomAnimations
+public class CustomAnimation
 {
-	public bool animationsCreated { get; }
+	private bool animationsCreated;
 
-	public CustomAnimations() {
+	public CustomAnimation() {
 		animationsCreated = false;
 	}
 
@@ -13,7 +13,7 @@ public class CustomAnimations
 	private Animator animator;
 	private string currentAnimationName;
 
-	public CustomAnimations(Animator animator) {
+	public CustomAnimation(Animator animator) {
 		this.animator = animator;
 		animationsCreated = true;
 	}
@@ -25,13 +25,21 @@ public class CustomAnimations
 		}
 	}
 
+
 	// Create Animations
 	public Sprite[] spritesToAnimate { get; }
 	public SpriteRenderer spriteRenderer { get; }
 	public float framesPerSecond { get; }
 	public int spriteIndex { get; set; }
 
-	public CustomAnimations(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer) {
+	public CustomAnimation(Sprite[] spritesToAnimate) {
+		this.spritesToAnimate = spritesToAnimate;
+		framesPerSecond = 0.1f; // Default to 10 FPS
+		spriteIndex = 0; // Default to index 0
+		animationsCreated = true;
+	}
+
+	public CustomAnimation(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
 		framesPerSecond = 0.1f; // Default to 10 FPS
@@ -39,7 +47,7 @@ public class CustomAnimations
 		animationsCreated = true;
 	}
 
-	public CustomAnimations(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer, float framesPerSecond, int startingSpriteIndex) {
+	public CustomAnimation(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer, float framesPerSecond, int startingSpriteIndex) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
 		this.framesPerSecond = framesPerSecond / 100; // Miliseconds
@@ -57,6 +65,17 @@ public class CustomAnimations
 			if (timerForCreatedAnimation >= (framesPerSecond + Time.deltaTime)) {
 				timerForCreatedAnimation -= (framesPerSecond + Time.deltaTime);
 				spriteRenderer.sprite = spritesToAnimate[spriteIndex];
+				spriteIndex = (spriteIndex + 1) % spritesToAnimate.Length;
+			}
+		}
+	}
+
+	public void PlayCreatedAnimation(SpriteRenderer localSpriteRenderer) {
+		timerForCreatedAnimation += Time.deltaTime;
+		if (animationsCreated) {
+			if (timerForCreatedAnimation >= (framesPerSecond + Time.deltaTime)) {
+				timerForCreatedAnimation -= (framesPerSecond + Time.deltaTime);
+				localSpriteRenderer.sprite = spritesToAnimate[spriteIndex];
 				spriteIndex = (spriteIndex + 1) % spritesToAnimate.Length;
 			}
 		}
