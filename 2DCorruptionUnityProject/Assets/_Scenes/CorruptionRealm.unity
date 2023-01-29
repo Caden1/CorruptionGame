@@ -279,6 +279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849a7127b80304dcdb8405a7338a1ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  corruptionJumpParticle: {fileID: 0}
 --- !u!1 &374537270
 GameObject:
   m_ObjectHideFlags: 0
@@ -6047,9 +6048,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8312910579903577420, guid: 5f97ce5c49330475ba1470ac222ada6a, type: 3}
     - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: corJumpProjectile
+      value: 
+      objectReference: {fileID: 5159305043778119252, guid: 96f699a7f55e540ee91f3fae80f60a8e, type: 3}
+    - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: corruptionJumpAttack
       value: 
-      objectReference: {fileID: 7885974259050965921, guid: ddbe4183357e44988a8941f6317a1a37, type: 3}
+      objectReference: {fileID: 5159305043778119252, guid: 96f699a7f55e540ee91f3fae80f60a8e, type: 3}
     - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: purityProjectileSprites.Array.size
       value: 2
@@ -6064,7 +6069,7 @@ PrefabInstance:
       objectReference: {fileID: -1404870552, guid: e2f130f2477b5470f9abe2b4a99241f8, type: 3}
     - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: corruptionJumpAttackSprites.Array.size
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: corruptionJumpEffectSprites.Array.size

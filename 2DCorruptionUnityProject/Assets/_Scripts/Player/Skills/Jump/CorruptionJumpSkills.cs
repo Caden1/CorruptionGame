@@ -11,6 +11,7 @@ public class CorruptionJumpSkills : JumpSkills
 	private float damage;
 	private float attackDistance;
 	private float attackVelocity;
+	private float attackAngle;
 	private bool isMultiEnemyAttack;
 	private int jumpCount = 0;
 	private List<GameObject> attackClonesRight;
@@ -33,6 +34,7 @@ public class CorruptionJumpSkills : JumpSkills
 		attackDistance = 3f;
 		effectCleanupSeconds = 1f;
 		attackVelocity = 10f;
+		attackAngle = 0.25f;
 		isMultiEnemyAttack = true;
 		attackClonesRight = new List<GameObject>();
 		attackClonesLeft = new List<GameObject>();
@@ -77,26 +79,27 @@ public class CorruptionJumpSkills : JumpSkills
 		attackOriginLeft = boxCollider.bounds.min;
 	}
 
-	public override void PerformJump(GameObject effect, Transform transform) {
+	public override void PerformJump(GameObject effect) {
 		rigidbody.velocity = Vector2.up * velocity;
 		canJump = false;
-		//List<RaycastHit2D> rightHits = new List<RaycastHit2D>();
-		//List<RaycastHit2D> leftHits = new List<RaycastHit2D>();
-		//int numRightHits = Physics2D.Raycast(attackOriginRight, Vector2.right, contactFilter, rightHits, attackDistance);
-		//int numLeftHits = Physics2D.Raycast(attackOriginLeft, Vector2.left, contactFilter, leftHits, attackDistance);
-		//if (numRightHits > 0) {
-		//	foreach (RaycastHit2D hit in rightHits) {
-		//		Object.Destroy(hit.collider.gameObject);
-		//	}
-		//}
-		//if (numLeftHits > 0) {
-		//	foreach (RaycastHit2D hit in leftHits) {
-		//		Object.Destroy(hit.collider.gameObject);
-		//	}
-		//}
+		
+		InstantiateRightProjectile(effect, attackOriginRight);
+		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(0.65f, 0f));
+		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(0.35f, 0.5f));
+		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(1f, 0.5f));
 
-		attackClonesRight.Add(Object.Instantiate(effect, attackOriginRight, transform.rotation));
-		attackClonesLeft.Add(Object.Instantiate(effect, attackOriginLeft, transform.rotation));
+		InstantiateLeftProjectile(effect, attackOriginLeft);
+		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.65f, 0f));
+		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.35f, 0.5f));
+		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-1f, 0.5f));
+	}
+
+	private void InstantiateRightProjectile(GameObject effect, Vector2 attackOrigin) {
+		attackClonesRight.Add(Object.Instantiate(effect, attackOrigin, new Quaternion(effect.transform.rotation.x, effect.transform.rotation.y, attackAngle, effect.transform.rotation.w)));
+	}
+
+	private void InstantiateLeftProjectile(GameObject effect, Vector2 attackOrigin) {
+		attackClonesLeft.Add(Object.Instantiate(effect, attackOrigin, new Quaternion(effect.transform.rotation.x, effect.transform.rotation.y, -attackAngle, effect.transform.rotation.w)));
 	}
 
 	public override void AnimateEffect(CustomAnimation customAnimation) {

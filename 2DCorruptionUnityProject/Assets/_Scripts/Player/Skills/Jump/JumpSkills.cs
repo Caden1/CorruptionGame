@@ -33,7 +33,7 @@ public abstract class JumpSkills
 
 	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask);
 
-	public abstract void PerformJump(GameObject effect, Transform transform);
+	public abstract void PerformJump(GameObject effect);
 
 	public abstract void AnimateEffect(CustomAnimation customAnimation);
 

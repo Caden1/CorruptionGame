@@ -57,7 +57,7 @@ public class PurityJumpSkills : JumpSkills
 		}
 	}
 
-	public override void PerformJump(GameObject effect, Transform transform) {
+	public override void PerformJump(GameObject effect) {
 		rigidbody.velocity = Vector2.up * velocity;
 		canJump = false;
 	}

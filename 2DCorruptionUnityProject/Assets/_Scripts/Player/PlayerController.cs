@@ -9,8 +9,8 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private Sprite[] corruptionJumpAttackSprites;
-	[SerializeField] private GameObject corruptionJumpAttack;
+	//[SerializeField] private Sprite[] corruptionJumpAttackSprites;
+	[SerializeField] private GameObject corJumpProjectile;
 	private List<GameObject> corruptionJumpAttackClones;
 	private CustomAnimation corruptionJumpAttackAnimation;
 	//[SerializeField] private Sprite[] corruptionProjectileSprites;
@@ -421,8 +421,8 @@ public class PlayerController : MonoBehaviour
 	private void PerformJump() {
 		switch (bootsGemState) {
 			case BootsGemState.Corruption:
-				corruptionJumpSkills.PerformJump(corruptionJumpAttack, transform);
-				corruptionJumpAttackAnimation = new CustomAnimation(corruptionJumpAttackSprites);
+				corruptionJumpSkills.PerformJump(corJumpProjectile);
+				//corruptionJumpAttackAnimation = new CustomAnimation(corruptionJumpAttackSprites);
 
 				//StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
 				//corruptionProjectileSkills.DestroyProjectile(corruptionProjectileClone);
@@ -430,7 +430,7 @@ public class PlayerController : MonoBehaviour
 				//playerParticleSystems.PlayCorruptionJumpParticle();
 				break;
 			case BootsGemState.Purity:
-				purityJumpSkills.PerformJump(corruptionJumpAttack, transform);
+				purityJumpSkills.PerformJump(corJumpProjectile);
 				break;
 		}
 	}
