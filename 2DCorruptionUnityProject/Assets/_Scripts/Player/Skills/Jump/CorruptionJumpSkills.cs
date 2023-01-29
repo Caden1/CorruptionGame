@@ -38,6 +38,8 @@ public class CorruptionJumpSkills : JumpSkills
 		isMultiEnemyAttack = true;
 		attackClonesRight = new List<GameObject>();
 		attackClonesLeft = new List<GameObject>();
+		attackOriginRight = new Vector2();
+		attackOriginLeft = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
@@ -102,11 +104,10 @@ public class CorruptionJumpSkills : JumpSkills
 		attackClonesLeft.Add(Object.Instantiate(effect, attackOrigin, new Quaternion(effect.transform.rotation.x, effect.transform.rotation.y, -attackAngle, effect.transform.rotation.w)));
 	}
 
-	public override void AnimateEffect(CustomAnimation customAnimation) {
+	public override void ShootProjectile() {
 		if (attackClonesRight.Count > 0) {
 			for (int i = 0; i < attackClonesRight.Count; i++) {
 				if (attackClonesRight[i] != null) {
-					customAnimation.PlayCreatedAnimation(attackClonesRight[i].GetComponent<SpriteRenderer>());
 					attackClonesRight[i].transform.Translate(Vector2.right * Time.deltaTime * attackVelocity);
 					if (Vector2.Distance(attackOriginRight, attackClonesRight[i].transform.position) > attackDistance)
 						Object.Destroy(attackClonesRight[i]);
@@ -116,7 +117,6 @@ public class CorruptionJumpSkills : JumpSkills
 		if (attackClonesLeft.Count > 0) {
 			for (int i = 0; i < attackClonesLeft.Count; i++) {
 				if (attackClonesLeft[i] != null) {
-					customAnimation.PlayCreatedAnimation(attackClonesLeft[i].GetComponent<SpriteRenderer>());
 					attackClonesLeft[i].transform.Translate(Vector2.left * Time.deltaTime * attackVelocity);
 					if (Vector2.Distance(attackOriginLeft, attackClonesLeft[i].transform.position) > attackDistance)
 						Object.Destroy(attackClonesLeft[i]);
@@ -124,6 +124,27 @@ public class CorruptionJumpSkills : JumpSkills
 			}
 		}
 	}
+
+	//public override void AnimateEffectAndShootProjectile(CustomAnimation customAnimation) {
+	//	if (attackClonesRight.Count > 0) {
+	//		for (int i = 0; i < attackClonesRight.Count; i++) {
+	//			if (attackClonesRight[i] != null) {
+	//				attackClonesRight[i].transform.Translate(Vector2.right * Time.deltaTime * attackVelocity);
+	//				if (Vector2.Distance(attackOriginRight, attackClonesRight[i].transform.position) > attackDistance)
+	//					Object.Destroy(attackClonesRight[i]);
+	//			}
+	//		}
+	//	}
+	//	if (attackClonesLeft.Count > 0) {
+	//		for (int i = 0; i < attackClonesLeft.Count; i++) {
+	//			if (attackClonesLeft[i] != null) {
+	//				attackClonesLeft[i].transform.Translate(Vector2.left * Time.deltaTime * attackVelocity);
+	//				if (Vector2.Distance(attackOriginLeft, attackClonesLeft[i].transform.position) > attackDistance)
+	//					Object.Destroy(attackClonesLeft[i]);
+	//			}
+	//		}
+	//	}
+	//}
 
 	public override void SetupJumpCancel() {
 		canJumpCancel = true;

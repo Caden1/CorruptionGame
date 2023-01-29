@@ -35,7 +35,7 @@ public abstract class JumpSkills
 
 	public abstract void PerformJump(GameObject effect);
 
-	public abstract void AnimateEffect(CustomAnimation customAnimation);
+	public abstract void ShootProjectile();
 
 	public abstract void SetupJumpCancel();
 

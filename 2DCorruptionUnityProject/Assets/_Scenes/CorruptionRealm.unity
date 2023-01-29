@@ -6056,6 +6056,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5159305043778119252, guid: 96f699a7f55e540ee91f3fae80f60a8e, type: 3}
     - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: corruptionProjectile
+      value: 
+      objectReference: {fileID: 237391479799162352, guid: 2dabfbbb4b8374943a4df4c5112431ed, type: 3}
+    - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
+      propertyPath: corruptionJumpProjectile
+      value: 
+      objectReference: {fileID: 5159305043778119252, guid: 96f699a7f55e540ee91f3fae80f60a8e, type: 3}
+    - target: {fileID: 5616622494000804065, guid: ff2beec9aead246e494213da33cbba50, type: 3}
       propertyPath: purityProjectileSprites.Array.size
       value: 2
       objectReference: {fileID: 0}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ProjectileSkills
+public abstract class RangedSkills
 {
 	public bool canAttack;
 	public bool isAttacking;
@@ -21,15 +21,13 @@ public abstract class ProjectileSkills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupProjectile(bool isFacingRight);
+	public abstract void SetupRanged(BoxCollider2D boxCollider);
 
-	public abstract GameObject PerformProjectile(GameObject projectile, Transform transform);
+	public abstract void PerformRanged(GameObject projectile, bool isFacingRight);
 
-	public abstract IEnumerator ResetProjectileAnimation();
+	public abstract void ShootProjectile();
 
-	public abstract void DestroyProjectile(GameObject projectileClone);
+	public abstract IEnumerator ResetRangedAnimation();
 
-	public abstract IEnumerator StartProjectileCooldown(PlayerInputActions playerInputActions);
-
-	public abstract void AnimateAndShootProjectile(GameObject projectileClone, CustomAnimation customAnimations);
+	public abstract IEnumerator StartRangedCooldown(PlayerInputActions playerInputActions);
 }

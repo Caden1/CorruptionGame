@@ -62,7 +62,7 @@ public class PurityJumpSkills : JumpSkills
 		canJump = false;
 	}
 
-	public override void AnimateEffect(CustomAnimation customAnimation) {
+	public override void ShootProjectile() {
 		
 	}
 
