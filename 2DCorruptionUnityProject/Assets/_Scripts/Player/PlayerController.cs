@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 	private enum LeftGloveProjectileModGemState { None, Air, Fire, Water, Earth }
 	private LeftGloveProjectileModGemState leftGloveProjectileModGemState;
 	private const string IDLE_ANIM = "Idle";
+	private const string RUN_ANIM = "Run";
 	private bool isFacingRight = true;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
@@ -48,9 +49,6 @@ public class PlayerController : MonoBehaviour
 	private PurityDashSkills purityDashSkills;
 	private CorruptionRangedSkills corruptionRangedSkills;
 	private PurityRangedSkills purityProjectileSkills;
-	private Animator jumpEffectAnimator;
-	private Transform jumpEffectTransform;
-	private CustomAnimation JumpEffectAnimation;
 
 	private void Awake() {
 		playerState = PlayerState.Normal;
@@ -69,9 +67,6 @@ public class PlayerController : MonoBehaviour
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
 		playerAnimations = new CustomAnimation(playerAnimator);
-		jumpEffectAnimator = transform.GetChild(0).GetComponent<Animator>();
-		jumpEffectTransform = transform.GetChild(0);
-		JumpEffectAnimation = new CustomAnimation(jumpEffectAnimator);
 		corruptionMeleeSkills = new CorruptionMeleeSkills(playerBoxCollider);
 		purityMeleeSkills = new PurityMeleeSkills(playerBoxCollider);
 		corruptionJumpSkills = new CorruptionJumpSkills(playerRigidBody, enemyContactFilter);
@@ -114,6 +109,7 @@ public class PlayerController : MonoBehaviour
 				playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
 				break;
 			case AnimationState.Run:
+				playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
 				break;
 			case AnimationState.Jump:
 				break;
