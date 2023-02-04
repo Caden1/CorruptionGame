@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 	private LeftGloveProjectileModGemState leftGloveProjectileModGemState;
 	private const string IDLE_ANIM = "Idle";
 	private const string RUN_ANIM = "Run";
+	private const string MELEE_ANIM = "Melee";
 	private bool isFacingRight = true;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
@@ -116,6 +117,7 @@ public class PlayerController : MonoBehaviour
 			case AnimationState.Fall:
 				break;
 			case AnimationState.Melee:
+				playerAnimations.PlayUnityAnimatorAnimation(MELEE_ANIM);
 				break;
 			case AnimationState.Ranged:
 				break;
