@@ -7,12 +7,12 @@ public abstract class DashSkills
 {
 	protected Rigidbody2D rigidbody;
 	protected Vector2 dashDirection;
+	protected float moveVelocity;
 	protected float startingGravity;
-	public float numDashes { get; protected set; }
-	public float dashVelocity { get; protected set; }
-	public float moveVelocity { get; protected set; }
+	protected float numDashes;
+	protected float dashVelocity;
 	public float secondsToDash { get; protected set; }
-	public float cooldown { get; protected set; }
+	protected float cooldown;
 
 	public DashSkills(Rigidbody2D rigidbody) {
 		this.rigidbody = rigidbody;
@@ -27,11 +27,11 @@ public abstract class DashSkills
 
 	public abstract void SetEarthModifiers();
 
+	public abstract void PerformHorizontalMovement(float xMoveDirection);
+
 	public abstract void SetupDash(bool isFacingRight);
 
 	public abstract IEnumerator PerformDash();
 
 	public abstract IEnumerator StartDashCooldown(PlayerInputActions playerInputActions);
-
-	public abstract void PerformHorizontalMovement(float xMoveDirection);
 }

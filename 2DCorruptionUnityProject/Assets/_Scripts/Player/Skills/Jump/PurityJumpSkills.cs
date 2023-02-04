@@ -12,12 +12,11 @@ public class PurityJumpSkills : JumpSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 2;
-		velocity = 10f;
+		velocity = 5f;
 		jumpGravity = 1f;
 		fallGravity = 1.5f;
 		archVelocityThreshold = 1f;
 		archGravity = 2f;
-		effectCleanupSeconds = 1f;
 	}
 
 	public override void SetAirModifiers() {

@@ -14,7 +14,6 @@ public abstract class JumpSkills
 	protected float fallGravity;
 	protected float archVelocityThreshold;
 	protected float archGravity;
-	protected float effectCleanupSeconds;
 
 	public JumpSkills(Rigidbody2D rigidbody) {
 		this.rigidbody = rigidbody;

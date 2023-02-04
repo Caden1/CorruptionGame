@@ -25,14 +25,13 @@ public class CorruptionJumpSkills : JumpSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 8f;
+		velocity = 7f;
 		jumpGravity = 1f;
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
 		archGravity = 3f;
 		damage = 2f;
 		attackDistance = 3f;
-		effectCleanupSeconds = 1f;
 		attackVelocity = 10f;
 		attackAngle = 0.25f;
 		isMultiEnemyAttack = true;

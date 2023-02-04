@@ -7,9 +7,9 @@ public class PurityDashSkills : DashSkills
 	public PurityDashSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetPurityDefault() {
+		moveVelocity = 5f;
 		numDashes = 2f;
-		dashVelocity = 15f;
-		moveVelocity = 10f;
+		dashVelocity = 10f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
 	}
@@ -30,6 +30,10 @@ public class PurityDashSkills : DashSkills
 		throw new System.NotImplementedException();
 	}
 
+	public override void PerformHorizontalMovement(float xMoveDirection) {
+		rigidbody.velocity = new Vector2(xMoveDirection * moveVelocity, rigidbody.velocity.y);
+	}
+
 	public override void SetupDash(bool isFacingRight) {
 		if (isFacingRight)
 			dashDirection = Vector2.right;
@@ -48,9 +52,5 @@ public class PurityDashSkills : DashSkills
 		playerInputActions.Player.Dash.Disable();
 		yield return new WaitForSeconds(cooldown);
 		playerInputActions.Player.Dash.Enable();
-	}
-
-	public override void PerformHorizontalMovement(float xMoveDirection) {
-		rigidbody.velocity = new Vector2(xMoveDirection * moveVelocity, rigidbody.velocity.y);
 	}
 }
