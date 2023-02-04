@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c76efac2ff4634bde8e836e5356a355b
+guid: 2c94a268b4d724eaea36174c683e8fb1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,12 +117,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle-Sheet_0
+      name: PureDash-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -131,19 +131,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d01e35d1d59a34008a61483894821531
-      internalID: 645600917
+      spriteID: 146819508d182475282acfa9b529b6ed
+      internalID: -1845543892
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_1
+      name: PureDash-Sheet_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 544
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -152,19 +152,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c0d6ba068cc242ecbddec4cf0c245cd
-      internalID: -1696691186
+      spriteID: aa672214dbcec4b0bbf86240e96ad883
+      internalID: 145235990
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_2
+      name: PureDash-Sheet_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 1088
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -173,19 +173,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5bd9357aab3a4658b8fb4e2c8ee4f5b
-      internalID: 2060671221
+      spriteID: 22fd6b7c815454943b34e4fe0d887f89
+      internalID: -1823507803
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_3
+      name: PureDash-Sheet_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 1632
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -194,19 +194,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97116857058a3412fbf55ff502e42b7a
-      internalID: 548164310
+      spriteID: 7e083a202f064401f81c4575229f58d1
+      internalID: -724650800
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_4
+      name: PureDash-Sheet_4
       rect:
         serializedVersion: 2
-        x: 512
+        x: 2176
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -215,19 +215,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35e3957f12d6049eaa177e14e900f42b
-      internalID: -390242758
+      spriteID: 5a2bba958d1bd4c0880a79af5f557924
+      internalID: -389256580
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_5
+      name: PureDash-Sheet_5
       rect:
         serializedVersion: 2
-        x: 640
+        x: 2720
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -236,19 +236,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fdb19bcb9d16c49faa66246f764995a8
-      internalID: -1110664081
+      spriteID: 7c9ccbddc7f084f1387ea5e5e46fbb89
+      internalID: -1429601770
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_6
+      name: PureDash-Sheet_6
       rect:
         serializedVersion: 2
-        x: 768
+        x: 3264
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -257,19 +257,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34cea5ab8ea7e4ef19702460483754a8
-      internalID: 425695022
+      spriteID: c3de33fecae9a4257bbdb74cff33bb7e
+      internalID: 420252372
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_7
+      name: PureDash-Sheet_7
       rect:
         serializedVersion: 2
-        x: 896
+        x: 3808
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -278,19 +278,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1463c6b39d0024b708b5f857e94b94a3
-      internalID: -1955671510
+      spriteID: b4a76b2e5f80b40edafcd61dfd0ee8fa
+      internalID: 400449036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_8
+      name: PureDash-Sheet_8
       rect:
         serializedVersion: 2
-        x: 1024
+        x: 4352
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -299,19 +299,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7873ca43512a540329088abb5bd0353c
-      internalID: -2110477151
+      spriteID: 1b370e192435e4ea0b2e4e3ca229c5d4
+      internalID: -1665068147
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_9
+      name: PureDash-Sheet_9
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 4896
         y: 0
-        width: 128
+        width: 544
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -320,50 +320,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 569a26212117d4e76ad01bc543c0797a
-      internalID: 2023641033
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle-Sheet_10
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fcd131538cfbc4b04b2a11d239744377
-      internalID: -1766456276
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle-Sheet_11
-      rect:
-        serializedVersion: 2
-        x: 1408
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 015e3680e51f0423f8088dbaf68a96ce
-      internalID: -718046582
+      spriteID: 1f8d40043d1db4db9a288aa216b8895a
+      internalID: -2126377262
       vertices: []
       indices: 
       edges: []
@@ -379,18 +337,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Idle-Sheet_1: -1696691186
-      Idle-Sheet_8: -2110477151
-      Idle-Sheet_7: -1955671510
-      Idle-Sheet_0: 645600917
-      Idle-Sheet_6: 425695022
-      Idle-Sheet_3: 548164310
-      Idle-Sheet_11: -718046582
-      Idle-Sheet_4: -390242758
-      Idle-Sheet_10: -1766456276
-      Idle-Sheet_5: -1110664081
-      Idle-Sheet_9: 2023641033
-      Idle-Sheet_2: 2060671221
+      PureDash-Sheet_7: 400449036
+      PureDash-Sheet_9: -2126377262
+      PureDash-Sheet_5: -1429601770
+      PureDash-Sheet_1: 145235990
+      PureDash-Sheet_0: -1845543892
+      PureDash-Sheet_2: -1823507803
+      PureDash-Sheet_4: -389256580
+      PureDash-Sheet_6: 420252372
+      PureDash-Sheet_8: -1665068147
+      PureDash-Sheet_3: -724650800
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

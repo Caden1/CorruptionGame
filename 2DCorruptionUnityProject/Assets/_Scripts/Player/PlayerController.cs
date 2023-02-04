@@ -13,7 +13,15 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject corruptionProjectile;
 	private enum PlayerState { Normal, Dash, PurityMelee }
 	private PlayerState playerState;
-	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
+	private enum AnimationState {
+		IdleCorGlovePureBoot, IdlePureGloveCorBoot,
+		CorRun, PureRun,
+		CorJump, PureJump,
+		FallCorGlovePureBoot, FallPureGloveCorBoot,
+		CorDash, PureDash,
+		CorMelee, PureMelee,
+		CorRanged, PureRanged
+	}
 	private AnimationState animationState;
 	private enum GlovesGemState { Corruption, Purity }
 	private GlovesGemState glovesGemState;
@@ -27,9 +35,10 @@ public class PlayerController : MonoBehaviour
 	private RightGloveMeleeModGemState rightGloveMeleeModGemState;
 	private enum LeftGloveProjectileModGemState { None, Air, Fire, Water, Earth }
 	private LeftGloveProjectileModGemState leftGloveProjectileModGemState;
-	private const string IDLE_ANIM = "Idle";
-	private const string RUN_ANIM = "Run";
-	private const string MELEE_ANIM = "Melee";
+	private const string IDLE_COR_GLOVE_PURE_BOOT_ANIM = "IdleCorGlovePureBoot";
+	private const string PURE_RUN_ANIM = "PureRun";
+	private const string PURE_DASH_ANIM = "PureDash";
+	private const string CORE_MELEE_ANIM = "CorMelee";
 	private bool isFacingRight = true;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
@@ -53,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake() {
 		playerState = PlayerState.Normal;
-		animationState = AnimationState.Idle;
+		animationState = AnimationState.IdleCorGlovePureBoot;
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
 		playerRigidBody = GetComponent<Rigidbody2D>();
@@ -106,20 +115,37 @@ public class PlayerController : MonoBehaviour
 		}
 
 		switch (animationState) {
-			case AnimationState.Idle:
-				playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
+			case AnimationState.IdleCorGlovePureBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(IDLE_COR_GLOVE_PURE_BOOT_ANIM);
 				break;
-			case AnimationState.Run:
-				playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
+			case AnimationState.IdlePureGloveCorBoot:
 				break;
-			case AnimationState.Jump:
+			case AnimationState.CorRun:
 				break;
-			case AnimationState.Fall:
+			case AnimationState.PureRun:
+				playerAnimations.PlayUnityAnimatorAnimation(PURE_RUN_ANIM);
 				break;
-			case AnimationState.Melee:
-				playerAnimations.PlayUnityAnimatorAnimation(MELEE_ANIM);
+			case AnimationState.CorJump:
 				break;
-			case AnimationState.Ranged:
+			case AnimationState.PureJump:
+				break;
+			case AnimationState.FallCorGlovePureBoot:
+				break;
+			case AnimationState.FallPureGloveCorBoot:
+				break;
+			case AnimationState.CorDash:
+				break;
+			case AnimationState.PureDash:
+				playerAnimations.PlayUnityAnimatorAnimation(PURE_DASH_ANIM);
+				break;
+			case AnimationState.CorMelee:
+				playerAnimations.PlayUnityAnimatorAnimation(CORE_MELEE_ANIM);
+				break;
+			case AnimationState.PureMelee:
+				break;
+			case AnimationState.CorRanged:
+				break;
+			case AnimationState.PureRanged:
 				break;
 		}
 
@@ -321,18 +347,24 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetAnimationState() {
-		if (corruptionMeleeSkills.isAnimating || purityMeleeSkills.isAnimating) {
-			animationState = AnimationState.Melee;
-		} else if (corruptionRangedSkills.isAttacking || purityProjectileSkills.isAttacking) {
-			animationState = AnimationState.Ranged;
-		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
-			animationState = AnimationState.Run;
-		} else if (playerRigidBody.velocity.y > 0f) {
-			animationState = AnimationState.Jump;
-		} else if (playerRigidBody.velocity.y < 0f) {
-			animationState = AnimationState.Fall;
-		} else {
-			animationState = AnimationState.Idle;
+		if (playerState == PlayerState.Dash) { // Need a way to separate CorDash and PureDash
+			animationState = AnimationState.PureDash;
+		} else if (corruptionMeleeSkills.isAnimating) {
+			animationState = AnimationState.CorMelee;
+		} else if (purityMeleeSkills.isAnimating) {
+			animationState = AnimationState.PureMelee;
+		} else if (corruptionRangedSkills.isAttacking) {
+			animationState = AnimationState.CorRanged;
+		} else if (purityProjectileSkills.isAttacking) {
+			animationState = AnimationState.PureRanged;
+		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) { // Need a way to separate CorRun and PureRun
+			animationState = AnimationState.PureRun;
+		} else if (playerRigidBody.velocity.y > 0f) { // Need a way to separate CorJump and PureJump
+			animationState = AnimationState.PureJump;
+		} else if (playerRigidBody.velocity.y < 0f) { // Need a way to separate FallCorGlovePureBoot and FallPureGloveCorBoot
+			animationState = AnimationState.FallCorGlovePureBoot;
+		} else { // Need a way to separate IdleCorGlovePureBoot and IdlePureGloveCorBoot
+			animationState = AnimationState.IdleCorGlovePureBoot;
 		}
 	}
 
