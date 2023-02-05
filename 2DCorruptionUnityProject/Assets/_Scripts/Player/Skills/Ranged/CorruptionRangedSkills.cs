@@ -19,7 +19,7 @@ public class CorruptionRangedSkills : RangedSkills
 		cooldown = 1f;
 		duration = 0.1f;
 		velocity = 15f;
-		animSeconds = 0.3f;
+		animSeconds = 0.2f;
 		projectileClonesRight = new List<GameObject>();
 		projectileClonesLeft = new List<GameObject>();
 		attackOriginRight = new Vector2();
@@ -46,10 +46,11 @@ public class CorruptionRangedSkills : RangedSkills
 	}
 
 	public override void SetupRanged(BoxCollider2D boxCollider) {
+		float attackOriginOffset = 0.25f;
 		canAttack = true;
 		isAttacking = true;
-		attackOriginRight = new Vector2(boxCollider.bounds.max.x, boxCollider.bounds.center.y);
-		attackOriginLeft = new Vector2(boxCollider.bounds.min.x, boxCollider.bounds.center.y);
+		attackOriginRight = new Vector2(boxCollider.bounds.max.x + attackOriginOffset, boxCollider.bounds.center.y + attackOriginOffset);
+		attackOriginLeft = new Vector2(boxCollider.bounds.min.x - attackOriginOffset, boxCollider.bounds.center.y + attackOriginOffset);
 	}
 
 	public override void PerformRanged(GameObject projectile, bool isFacingRight) {

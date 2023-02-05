@@ -40,7 +40,8 @@ public class PlayerController : MonoBehaviour
 	private const string PURE_JUMP_ANIM = "PureJump";
 	private const string FALL_COR_GLOVE_PURE_BOOT_ANIM = "FallCorGlovePureBoot";
 	private const string PURE_DASH_ANIM = "PureDash";
-	private const string CORE_MELEE_ANIM = "CorMelee";
+	private const string COR_MELEE_ANIM = "CorMelee";
+	private const string COR_RANGED_ANIM = "CorRanged";
 	private bool isFacingRight = true;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
@@ -143,11 +144,12 @@ public class PlayerController : MonoBehaviour
 				playerAnimations.PlayUnityAnimatorAnimation(PURE_DASH_ANIM);
 				break;
 			case AnimationState.CorMelee:
-				playerAnimations.PlayUnityAnimatorAnimation(CORE_MELEE_ANIM);
+				playerAnimations.PlayUnityAnimatorAnimation(COR_MELEE_ANIM);
 				break;
 			case AnimationState.PureMelee:
 				break;
 			case AnimationState.CorRanged:
+				playerAnimations.PlayUnityAnimatorAnimation(COR_RANGED_ANIM);
 				break;
 			case AnimationState.PureRanged:
 				break;
@@ -533,6 +535,7 @@ public class PlayerController : MonoBehaviour
 			case GlovesGemState.Corruption:
 				corruptionRangedSkills.SetupRanged(playerBoxCollider);
 				StartCoroutine(corruptionRangedSkills.StartRangedCooldown(playerInputActions));
+				StartCoroutine(corruptionRangedSkills.ResetRangedAnimation());
 				break;
 			case GlovesGemState.Purity:
 				purityProjectileSkills.SetupRanged(playerBoxCollider);
