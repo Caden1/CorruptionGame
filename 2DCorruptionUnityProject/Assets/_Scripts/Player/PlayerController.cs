@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
 	private LeftGloveProjectileModGemState leftGloveProjectileModGemState;
 	private const string IDLE_COR_GLOVE_PURE_BOOT_ANIM = "IdleCorGlovePureBoot";
 	private const string PURE_RUN_ANIM = "PureRun";
+	private const string PURE_JUMP_ANIM = "PureJump";
+	private const string FALL_COR_GLOVE_PURE_BOOT_ANIM = "FallCorGlovePureBoot";
 	private const string PURE_DASH_ANIM = "PureDash";
 	private const string CORE_MELEE_ANIM = "CorMelee";
 	private bool isFacingRight = true;
@@ -128,8 +130,10 @@ public class PlayerController : MonoBehaviour
 			case AnimationState.CorJump:
 				break;
 			case AnimationState.PureJump:
+				playerAnimations.PlayUnityAnimatorAnimation(PURE_JUMP_ANIM);
 				break;
 			case AnimationState.FallCorGlovePureBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(FALL_COR_GLOVE_PURE_BOOT_ANIM);
 				break;
 			case AnimationState.FallPureGloveCorBoot:
 				break;
