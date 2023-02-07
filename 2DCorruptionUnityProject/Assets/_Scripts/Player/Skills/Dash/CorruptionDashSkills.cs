@@ -9,9 +9,9 @@ public class CorruptionDashSkills : DashSkills
 	public CorruptionDashSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetCorruptionDefault() {
+		moveVelocity = 3f;
 		numDashes = 1f;
-		dashVelocity = 15f;
-		moveVelocity = 5f;
+		dashVelocity = 6f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
 		damage = 2f;
@@ -33,6 +33,10 @@ public class CorruptionDashSkills : DashSkills
 		throw new System.NotImplementedException();
 	}
 
+	public override void PerformHorizontalMovement(float xMoveDirection) {
+		rigidbody.velocity = new Vector2(xMoveDirection * moveVelocity, rigidbody.velocity.y);
+	}
+
 	public override void SetupDash(bool isFacingRight) {
 		if (isFacingRight)
 			dashDirection = Vector2.right;
@@ -51,9 +55,5 @@ public class CorruptionDashSkills : DashSkills
 		playerInputActions.Player.Dash.Disable();
 		yield return new WaitForSeconds(cooldown);
 		playerInputActions.Player.Dash.Enable();
-	}
-
-	public override void PerformHorizontalMovement(float xMoveDirection) {
-		rigidbody.velocity = new Vector2(xMoveDirection * moveVelocity, rigidbody.velocity.y);
 	}
 }

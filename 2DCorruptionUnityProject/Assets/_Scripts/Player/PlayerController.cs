@@ -13,7 +13,15 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject corruptionProjectile;
 	private enum PlayerState { Normal, Dash, PurityMelee }
 	private PlayerState playerState;
-	private enum AnimationState { Idle, Run, Jump, Fall, Melee, Ranged }
+	private enum AnimationState {
+		IdleCorGlovePureBoot, IdlePureGloveCorBoot,
+		CorRun, PureRun,
+		CorJump, PureJump,
+		FallCorGlovePureBoot, FallPureGloveCorBoot,
+		CorDash, PureDash,
+		CorMelee, PureMelee,
+		CorRanged, PureRanged
+	}
 	private AnimationState animationState;
 	private enum GlovesGemState { Corruption, Purity }
 	private GlovesGemState glovesGemState;
@@ -27,7 +35,14 @@ public class PlayerController : MonoBehaviour
 	private RightGloveMeleeModGemState rightGloveMeleeModGemState;
 	private enum LeftGloveProjectileModGemState { None, Air, Fire, Water, Earth }
 	private LeftGloveProjectileModGemState leftGloveProjectileModGemState;
-	private const string IDLE_ANIM = "Idle";
+	private const string IDLE_COR_GLOVE_PURE_BOOT_ANIM = "IdleCorGlovePureBoot";
+	private const string IDLE_PURE_GLOVE_COR_BOOT_ANIM = "IdlePureGloveCorBoot";
+	private const string PURE_RUN_ANIM = "PureRun";
+	private const string PURE_JUMP_ANIM = "PureJump";
+	private const string FALL_COR_GLOVE_PURE_BOOT_ANIM = "FallCorGlovePureBoot";
+	private const string PURE_DASH_ANIM = "PureDash";
+	private const string COR_MELEE_ANIM = "CorMelee";
+	private const string COR_RANGED_ANIM = "CorRanged";
 	private bool isFacingRight = true;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
@@ -48,13 +63,10 @@ public class PlayerController : MonoBehaviour
 	private PurityDashSkills purityDashSkills;
 	private CorruptionRangedSkills corruptionRangedSkills;
 	private PurityRangedSkills purityProjectileSkills;
-	private Animator jumpEffectAnimator;
-	private Transform jumpEffectTransform;
-	private CustomAnimation JumpEffectAnimation;
 
 	private void Awake() {
 		playerState = PlayerState.Normal;
-		animationState = AnimationState.Idle;
+		animationState = AnimationState.IdleCorGlovePureBoot;
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
 		playerRigidBody = GetComponent<Rigidbody2D>();
@@ -69,9 +81,6 @@ public class PlayerController : MonoBehaviour
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
 		playerAnimations = new CustomAnimation(playerAnimator);
-		jumpEffectAnimator = transform.GetChild(0).GetComponent<Animator>();
-		jumpEffectTransform = transform.GetChild(0);
-		JumpEffectAnimation = new CustomAnimation(jumpEffectAnimator);
 		corruptionMeleeSkills = new CorruptionMeleeSkills(playerBoxCollider);
 		purityMeleeSkills = new PurityMeleeSkills(playerBoxCollider);
 		corruptionJumpSkills = new CorruptionJumpSkills(playerRigidBody, enemyContactFilter);
@@ -110,18 +119,35 @@ public class PlayerController : MonoBehaviour
 		}
 
 		switch (animationState) {
-			case AnimationState.Idle:
-				playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
+			case AnimationState.IdleCorGlovePureBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(IDLE_COR_GLOVE_PURE_BOOT_ANIM);
 				break;
-			case AnimationState.Run:
+			case AnimationState.IdlePureGloveCorBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(IDLE_PURE_GLOVE_COR_BOOT_ANIM);
 				break;
-			case AnimationState.Jump:
+			case AnimationState.CorRun:
 				break;
-			case AnimationState.Fall:
+			case AnimationState.PureRun:
 				break;
-			case AnimationState.Melee:
+			case AnimationState.CorJump:
 				break;
-			case AnimationState.Ranged:
+			case AnimationState.PureJump:
+				break;
+			case AnimationState.FallCorGlovePureBoot:
+				break;
+			case AnimationState.FallPureGloveCorBoot:
+				break;
+			case AnimationState.CorDash:
+				break;
+			case AnimationState.PureDash:
+				break;
+			case AnimationState.CorMelee:
+				break;
+			case AnimationState.PureMelee:
+				break;
+			case AnimationState.CorRanged:
+				break;
+			case AnimationState.PureRanged:
 				break;
 		}
 
@@ -323,18 +349,27 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetAnimationState() {
-		if (corruptionMeleeSkills.isAnimating || purityMeleeSkills.isAnimating) {
-			animationState = AnimationState.Melee;
-		} else if (corruptionRangedSkills.isAttacking || purityProjectileSkills.isAttacking) {
-			animationState = AnimationState.Ranged;
-		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) {
-			animationState = AnimationState.Run;
-		} else if (playerRigidBody.velocity.y > 0f) {
-			animationState = AnimationState.Jump;
-		} else if (playerRigidBody.velocity.y < 0f) {
-			animationState = AnimationState.Fall;
-		} else {
-			animationState = AnimationState.Idle;
+		if (playerState == PlayerState.Dash) // Need a way to separate CorDash and PureDash
+			animationState = AnimationState.PureDash;
+		else if (corruptionMeleeSkills.isAnimating)
+			animationState = AnimationState.CorMelee;
+		else if (purityMeleeSkills.isAnimating)
+			animationState = AnimationState.PureMelee;
+		else if (corruptionRangedSkills.isAttacking)
+			animationState = AnimationState.CorRanged;
+		else if (purityProjectileSkills.isAttacking)
+			animationState = AnimationState.PureRanged;
+		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) // Need a way to separate CorRun and PureRun
+			animationState = AnimationState.PureRun;
+		else if (playerRigidBody.velocity.y > 0f) // Need a way to separate CorJump and PureJump
+			animationState = AnimationState.PureJump;
+		else if (playerRigidBody.velocity.y < 0f) // Need a way to separate FallCorGlovePureBoot and FallPureGloveCorBoot
+			animationState = AnimationState.FallCorGlovePureBoot;
+		else {
+			if (glovesGemState == GlovesGemState.Corruption && bootsGemState == BootsGemState.Purity)
+				animationState = AnimationState.IdleCorGlovePureBoot;
+			else if (glovesGemState == GlovesGemState.Purity && bootsGemState == BootsGemState.Corruption)
+				animationState = AnimationState.IdlePureGloveCorBoot;
 		}
 	}
 
@@ -499,6 +534,7 @@ public class PlayerController : MonoBehaviour
 			case GlovesGemState.Corruption:
 				corruptionRangedSkills.SetupRanged(playerBoxCollider);
 				StartCoroutine(corruptionRangedSkills.StartRangedCooldown(playerInputActions));
+				StartCoroutine(corruptionRangedSkills.ResetRangedAnimation());
 				break;
 			case GlovesGemState.Purity:
 				purityProjectileSkills.SetupRanged(playerBoxCollider);
