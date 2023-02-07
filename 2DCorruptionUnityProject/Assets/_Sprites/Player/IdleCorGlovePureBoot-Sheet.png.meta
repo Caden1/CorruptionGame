@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle-Sheet_0
+      name: IdleCorGlovePureBoot-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 128
-        height: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1465869ade17648a58e39426004899e9
-      internalID: -476105887
+      spriteID: 0a1005430142d4dfa80400cf8129c020
+      internalID: -235545430
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_1
+      name: IdleCorGlovePureBoot-Sheet_1
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 128
-        height: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0408bb110142461a9ad600ebe56a3ce
-      internalID: -1491216853
+      spriteID: ee3cffe0ca4d54c28927653829f56147
+      internalID: 1835974512
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_2
+      name: IdleCorGlovePureBoot-Sheet_2
       rect:
         serializedVersion: 2
         x: 256
         y: 0
         width: 128
-        height: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d7345796d59b4a3eb562e20a2b82adf
-      internalID: -1500070
+      spriteID: 442123aec1b374f4f91188ba56599ae8
+      internalID: 644247566
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_3
+      name: IdleCorGlovePureBoot-Sheet_3
       rect:
         serializedVersion: 2
         x: 384
         y: 0
         width: 128
-        height: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15df0fbc2df4243d3a44d34d8512a80d
-      internalID: 1798656504
+      spriteID: b604510c1902c4dd185e34dd0c228ccd
+      internalID: 1182282235
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_4
+      name: IdleCorGlovePureBoot-Sheet_4
       rect:
         serializedVersion: 2
         x: 512
         y: 0
         width: 128
-        height: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c62331fbd193046fea809eb038e284d4
-      internalID: 127566564
+      spriteID: 2cdcd8b50ff5543dfb048a6870f410b3
+      internalID: -1586653826
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_5
+      name: IdleCorGlovePureBoot-Sheet_5
       rect:
         serializedVersion: 2
         x: 640
         y: 0
         width: 128
-        height: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c3b26433496744118416e4c5615f7f6
-      internalID: 1653069997
+      spriteID: 1dbc1795fb5274b279acbdc986de21b7
+      internalID: -680358367
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_6
+      name: IdleCorGlovePureBoot-Sheet_6
       rect:
         serializedVersion: 2
         x: 768
         y: 0
         width: 128
-        height: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,20 +257,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 795e9628979f9444eba9e7ed2423e747
-      internalID: 1241034438
+      spriteID: 1f11128112ce54aae9fb76fd134996ef
+      internalID: -387470085
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle-Sheet_7
+      name: IdleCorGlovePureBoot-Sheet_7
       rect:
         serializedVersion: 2
         x: 896
         y: 0
         width: 128
-        height: 128
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,92 +278,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5833057bd06e1412a939c5c9cf394571
-      internalID: 421379186
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle-Sheet_8
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 91885fede48094af788c249224a3ea44
-      internalID: -1836929238
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle-Sheet_9
-      rect:
-        serializedVersion: 2
-        x: 1152
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3dd0ce330bfc14288bba14a6ef41e2fc
-      internalID: -1979262983
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle-Sheet_10
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 717f08913b4744b94a0128088b39fe73
-      internalID: 1099202388
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle-Sheet_11
-      rect:
-        serializedVersion: 2
-        x: 1408
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c4f62d55c00e41a19e804acc9d5f617
-      internalID: -1633747060
+      spriteID: 8146539f598364d2fb60b6a42606ae7f
+      internalID: -1863225316
       vertices: []
       indices: 
       edges: []
@@ -379,18 +295,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Idle-Sheet_1: -1491216853
-      Idle-Sheet_8: -1836929238
-      Idle-Sheet_7: 421379186
-      Idle-Sheet_0: -476105887
-      Idle-Sheet_6: 1241034438
-      Idle-Sheet_3: 1798656504
-      Idle-Sheet_11: -1633747060
-      Idle-Sheet_4: 127566564
-      Idle-Sheet_10: 1099202388
-      Idle-Sheet_5: 1653069997
-      Idle-Sheet_9: -1979262983
-      Idle-Sheet_2: -1500070
+      IdleCorGlovePureBoot-Sheet_1: 1835974512
+      IdleCorGlovePureBoot-Sheet_2: 644247566
+      IdleCorGlovePureBoot-Sheet_5: -680358367
+      IdleCorGlovePureBoot-Sheet_6: -387470085
+      IdleCorGlovePureBoot-Sheet_7: -1863225316
+      IdleCorGlovePureBoot-Sheet_3: 1182282235
+      IdleCorGlovePureBoot-Sheet_0: -235545430
+      IdleCorGlovePureBoot-Sheet_4: -1586653826
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
