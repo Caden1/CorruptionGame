@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 	private enum LeftGloveProjectileModGemState { None, Air, Fire, Water, Earth }
 	private LeftGloveProjectileModGemState leftGloveProjectileModGemState;
 	private const string IDLE_COR_GLOVE_PURE_BOOT_ANIM = "IdleCorGlovePureBoot";
+	private const string IDLE_PURE_GLOVE_COR_BOOT_ANIM = "IdlePureGloveCorBoot";
 	private const string PURE_RUN_ANIM = "PureRun";
 	private const string PURE_JUMP_ANIM = "PureJump";
 	private const string FALL_COR_GLOVE_PURE_BOOT_ANIM = "FallCorGlovePureBoot";
@@ -122,34 +123,29 @@ public class PlayerController : MonoBehaviour
 				playerAnimations.PlayUnityAnimatorAnimation(IDLE_COR_GLOVE_PURE_BOOT_ANIM);
 				break;
 			case AnimationState.IdlePureGloveCorBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(IDLE_PURE_GLOVE_COR_BOOT_ANIM);
 				break;
 			case AnimationState.CorRun:
 				break;
 			case AnimationState.PureRun:
-				playerAnimations.PlayUnityAnimatorAnimation(PURE_RUN_ANIM);
 				break;
 			case AnimationState.CorJump:
 				break;
 			case AnimationState.PureJump:
-				playerAnimations.PlayUnityAnimatorAnimation(PURE_JUMP_ANIM);
 				break;
 			case AnimationState.FallCorGlovePureBoot:
-				playerAnimations.PlayUnityAnimatorAnimation(FALL_COR_GLOVE_PURE_BOOT_ANIM);
 				break;
 			case AnimationState.FallPureGloveCorBoot:
 				break;
 			case AnimationState.CorDash:
 				break;
 			case AnimationState.PureDash:
-				playerAnimations.PlayUnityAnimatorAnimation(PURE_DASH_ANIM);
 				break;
 			case AnimationState.CorMelee:
-				playerAnimations.PlayUnityAnimatorAnimation(COR_MELEE_ANIM);
 				break;
 			case AnimationState.PureMelee:
 				break;
 			case AnimationState.CorRanged:
-				playerAnimations.PlayUnityAnimatorAnimation(COR_RANGED_ANIM);
 				break;
 			case AnimationState.PureRanged:
 				break;
@@ -353,24 +349,27 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetAnimationState() {
-		if (playerState == PlayerState.Dash) { // Need a way to separate CorDash and PureDash
+		if (playerState == PlayerState.Dash) // Need a way to separate CorDash and PureDash
 			animationState = AnimationState.PureDash;
-		} else if (corruptionMeleeSkills.isAnimating) {
+		else if (corruptionMeleeSkills.isAnimating)
 			animationState = AnimationState.CorMelee;
-		} else if (purityMeleeSkills.isAnimating) {
+		else if (purityMeleeSkills.isAnimating)
 			animationState = AnimationState.PureMelee;
-		} else if (corruptionRangedSkills.isAttacking) {
+		else if (corruptionRangedSkills.isAttacking)
 			animationState = AnimationState.CorRanged;
-		} else if (purityProjectileSkills.isAttacking) {
+		else if (purityProjectileSkills.isAttacking)
 			animationState = AnimationState.PureRanged;
-		} else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) { // Need a way to separate CorRun and PureRun
+		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) // Need a way to separate CorRun and PureRun
 			animationState = AnimationState.PureRun;
-		} else if (playerRigidBody.velocity.y > 0f) { // Need a way to separate CorJump and PureJump
+		else if (playerRigidBody.velocity.y > 0f) // Need a way to separate CorJump and PureJump
 			animationState = AnimationState.PureJump;
-		} else if (playerRigidBody.velocity.y < 0f) { // Need a way to separate FallCorGlovePureBoot and FallPureGloveCorBoot
+		else if (playerRigidBody.velocity.y < 0f) // Need a way to separate FallCorGlovePureBoot and FallPureGloveCorBoot
 			animationState = AnimationState.FallCorGlovePureBoot;
-		} else { // Need a way to separate IdleCorGlovePureBoot and IdlePureGloveCorBoot
-			animationState = AnimationState.IdleCorGlovePureBoot;
+		else {
+			if (glovesGemState == GlovesGemState.Corruption && bootsGemState == BootsGemState.Purity)
+				animationState = AnimationState.IdleCorGlovePureBoot;
+			else if (glovesGemState == GlovesGemState.Purity && bootsGemState == BootsGemState.Corruption)
+				animationState = AnimationState.IdlePureGloveCorBoot;
 		}
 	}
 
