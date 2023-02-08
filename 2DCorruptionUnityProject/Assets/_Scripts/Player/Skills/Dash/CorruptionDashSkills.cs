@@ -9,7 +9,7 @@ public class CorruptionDashSkills : DashSkills
 	public CorruptionDashSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetCorruptionDefault() {
-		moveVelocity = 3f;
+		moveVelocity = 4f;
 		numDashes = 1f;
 		dashVelocity = 6f;
 		secondsToDash = 0.25f;

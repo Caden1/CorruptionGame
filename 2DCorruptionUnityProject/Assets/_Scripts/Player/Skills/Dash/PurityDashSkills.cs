@@ -7,7 +7,7 @@ public class PurityDashSkills : DashSkills
 	public PurityDashSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetPurityDefault() {
-		moveVelocity = 5f;
+		moveVelocity = 4f;
 		numDashes = 2f;
 		dashVelocity = 10f;
 		secondsToDash = 0.25f;
