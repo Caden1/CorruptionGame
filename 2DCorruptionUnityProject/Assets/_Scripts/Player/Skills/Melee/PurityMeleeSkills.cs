@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class PurityMeleeSkills : MeleeSkills
 {
-	public Vector2 pullPosition;
-	public float pullSpeed { get; private set; }
-
 	public PurityMeleeSkills(BoxCollider2D boxCollider) : base(boxCollider) { }
 
 	public void SetPurityDefault() {
-		isMultiEnemy = true;
-		canAttack = false;
+		canMelee = false;
 		isAnimating = false;
-		cooldown = 3f;
-		attackDuration = 2f;
+		cooldown = 1f;
+		meleeEffectClone = new GameObject();
+		meleeDuration = 0.5f;
 		animationDuration = 2f;
-		attackDistance = 10f;
-		attackAngle = 0f;
-		pullSpeed = 5f;
 	}
 
 	public override void SetAirModifiers() {
@@ -37,38 +31,37 @@ public class PurityMeleeSkills : MeleeSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override void SetupMelee(bool isFacingRight) {
-		if (!canAttack) {
-			canAttack = true;
+	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight) {
+		if (!canMelee) {
+			canMelee = true;
 			isAnimating = true;
-			if (isFacingRight)
-				attackDirection = Vector2.right;
-			else
-				attackDirection = Vector2.left;
-			attackOrigin = boxCollider.bounds.center;
-			attackSize = boxCollider.bounds.size;
-			pullPosition = boxCollider.bounds.center;
-		}
-	}
-
-	public override void PerformMelee(ContactFilter2D enemyContactFilter) {
-		List<RaycastHit2D> hits = new List<RaycastHit2D>();
-		int numHits = Physics2D.BoxCast(attackOrigin, attackSize, attackAngle, attackDirection, enemyContactFilter, hits, attackDistance);
-		if (numHits > 0) {
-			foreach (RaycastHit2D hit in hits) {
-				hit.transform.position = Vector2.MoveTowards(hit.transform.position, pullPosition, pullSpeed * Time.deltaTime);
+			float attackOriginOffset = 0.25f;
+			BoxCollider2D meleeEffectBoxCol = meleeEffect.GetComponent<BoxCollider2D>();
+			float meleeEffectOffset = meleeEffectBoxCol.size.x / 2f;
+			if (isFacingRight) {
+				meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
+				attackOrigin = new Vector2(boxCollider.bounds.max.x + attackOriginOffset + meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
+			} else {
+				meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
+				attackOrigin = new Vector2(boxCollider.bounds.min.x - attackOriginOffset - meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
 			}
 		}
 	}
 
+	public override void PerformMelee(GameObject meleeEffect, bool isFacingRight) {
+		meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
+		canMelee = false;
+		isAnimating = false;
+	}
+
 	public override IEnumerator MeleeDuration() {
-		yield return new WaitForSeconds(attackDuration);
-		canAttack = false;
+		yield return new WaitForSeconds(meleeDuration);
+		Object.Destroy(meleeEffectClone);
 	}
 
 	public override IEnumerator ResetMeleeAnimation() {
 		yield return new WaitForSeconds(animationDuration);
-		isAnimating = false;
+	//	isAnimating = false;
 	}
 
 	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {

@@ -66,7 +66,6 @@ public class CorruptionRangedSkills : RangedSkills
 			for (int i = 0; i < projectileClonesRight.Count; i++) {
 				if (projectileClonesRight[i] != null) {
 					projectileClonesRight[i].transform.Translate(Vector2.right * Time.deltaTime * attackVelocity);
-					Debug.Log(i);
 					if (i == 0) {
 						if (Vector2.Distance(attackOriginRight, projectileClonesRight[i].transform.position) > attackDistance) {
 							Object.Destroy(projectileClonesRight[i]);

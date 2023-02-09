@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+	[SerializeField] private GameObject PureMeleeEffect;
 	[SerializeField] private GameObject corruptionJumpProjectile;
 	[SerializeField] private GameObject corruptionProjectile;
 	private enum PlayerState { Normal, Dash, PurityMelee }
@@ -163,7 +164,7 @@ public class PlayerController : MonoBehaviour
 					PerformJump();
 				if (corruptionJumpSkills.canJumpCancel || purityJumpSkills.canJumpCancel)
 					PerformJumpCancel();
-				if (corruptionMeleeSkills.canAttack || purityMeleeSkills.canAttack)
+				if (corruptionMeleeSkills.canMelee || purityMeleeSkills.canMelee)
 					PerformMelee();
 				if (corruptionRangedSkills.canAttack || purityProjectileSkills.canAttack)
 					PerformRanged();
@@ -504,12 +505,11 @@ public class PlayerController : MonoBehaviour
 	private void SetupMelee() {
 		switch (glovesGemState) {
 			case GlovesGemState.Corruption:
-				corruptionMeleeSkills.SetupMelee(isFacingRight);
-				StartCoroutine(corruptionMeleeSkills.StartMeleeCooldown(playerInputActions));
 				break;
 			case GlovesGemState.Purity:
-				purityMeleeSkills.SetupMelee(isFacingRight);
+				purityMeleeSkills.SetupMelee(PureMeleeEffect, isFacingRight);
 				StartCoroutine(purityMeleeSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(purityMeleeSkills.MeleeDuration());
 				break;
 		}
 	}
@@ -517,14 +517,10 @@ public class PlayerController : MonoBehaviour
 	private void PerformMelee() {
 		switch (glovesGemState) {
 			case GlovesGemState.Corruption:
-				corruptionMeleeSkills.PerformMelee(enemyContactFilter);
-				StartCoroutine(corruptionMeleeSkills.ResetMeleeAnimation());
-				StartCoroutine(corruptionMeleeSkills.MeleeDuration());
 				break;
 			case GlovesGemState.Purity:
-				purityMeleeSkills.PerformMelee(enemyContactFilter);
-				StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
-				StartCoroutine(purityMeleeSkills.MeleeDuration());
+				purityMeleeSkills.PerformMelee(PureMeleeEffect, isFacingRight);
+				//StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
 				break;
 		}
 	}
