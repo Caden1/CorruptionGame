@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CustomAnimation
 {
-	private bool animationsCreated;
+	private bool animationCreated;
 
 	public CustomAnimation() {
-		animationsCreated = false;
+		animationCreated = false;
 	}
 
 
@@ -15,7 +15,7 @@ public class CustomAnimation
 
 	public CustomAnimation(Animator animator) {
 		this.animator = animator;
-		animationsCreated = true;
+		animationCreated = true;
 	}
 
 	public void PlayUnityAnimatorAnimation(string newAnimationName) {
@@ -27,41 +27,30 @@ public class CustomAnimation
 
 
 	// Create Animations
-	public Sprite[] spritesToAnimate { get; }
-	public SpriteRenderer spriteRenderer { get; }
-	public float framesPerSecond { get; }
-	public int spriteIndex { get; set; }
+	private Sprite[] spritesToAnimate;
+	private SpriteRenderer spriteRenderer;
+	private float framesPerSecond;
+	private int spriteIndex = 0;
 
 	public CustomAnimation(Sprite[] spritesToAnimate) {
 		this.spritesToAnimate = spritesToAnimate;
-		framesPerSecond = 0.1f; // Default to 10 FPS
-		spriteIndex = 0; // Default to index 0
-		animationsCreated = true;
+		framesPerSecond = 0.05f; // 20 FPS
+		animationCreated = true;
 	}
 
 	public CustomAnimation(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
-		framesPerSecond = 0.1f; // Default to 10 FPS
-		spriteIndex = 0; // Default to index 0
-		animationsCreated = true;
+		framesPerSecond = 0.05f; // 20 FPS
+		animationCreated = true;
 	}
-
-	public CustomAnimation(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer, float framesPerSecond, int startingSpriteIndex) {
-		this.spritesToAnimate = spritesToAnimate;
-		this.spriteRenderer = spriteRenderer;
-		this.framesPerSecond = framesPerSecond / 100; // Miliseconds
-		spriteIndex = startingSpriteIndex;
-		animationsCreated = true;
-	}
-
 
 	// Play the Animation you Created
 	private float timerForCreatedAnimation;
 
 	public void PlayCreatedAnimation() {
 		timerForCreatedAnimation += Time.deltaTime;
-		if (animationsCreated) {
+		if (animationCreated) {
 			if (timerForCreatedAnimation >= (framesPerSecond + Time.deltaTime)) {
 				timerForCreatedAnimation -= (framesPerSecond + Time.deltaTime);
 				spriteRenderer.sprite = spritesToAnimate[spriteIndex];
@@ -72,7 +61,7 @@ public class CustomAnimation
 
 	public void PlayCreatedAnimation(SpriteRenderer localSpriteRenderer) {
 		timerForCreatedAnimation += Time.deltaTime;
-		if (animationsCreated) {
+		if (animationCreated) {
 			if (timerForCreatedAnimation >= (framesPerSecond + Time.deltaTime)) {
 				timerForCreatedAnimation -= (framesPerSecond + Time.deltaTime);
 				localSpriteRenderer.sprite = spritesToAnimate[spriteIndex];

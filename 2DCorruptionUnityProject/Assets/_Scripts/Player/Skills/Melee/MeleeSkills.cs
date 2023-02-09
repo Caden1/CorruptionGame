@@ -29,7 +29,9 @@ public abstract class MeleeSkills
 
 	public abstract void PerformMelee(GameObject meleeEffect, bool isFacingRight);
 
-	public abstract IEnumerator MeleeDuration();
+	public abstract GameObject GetMeleeEffectClone();
+
+	public abstract IEnumerator DestroyCloneAfterMeleeDuration();
 
 	public abstract IEnumerator ResetMeleeAnimation();
 

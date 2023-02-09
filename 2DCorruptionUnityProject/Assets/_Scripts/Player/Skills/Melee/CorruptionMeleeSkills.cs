@@ -56,7 +56,11 @@ public class CorruptionMeleeSkills : MeleeSkills
 		//}
 	}
 
-	public override IEnumerator MeleeDuration() {
+	public override GameObject GetMeleeEffectClone() {
+		return null;
+	}
+
+	public override IEnumerator DestroyCloneAfterMeleeDuration() {
 		yield return new WaitForSeconds(meleeDuration);
 		canMelee = false;
 	}

@@ -9,9 +9,8 @@ public class PurityMeleeSkills : MeleeSkills
 	public void SetPurityDefault() {
 		canMelee = false;
 		isAnimating = false;
-		cooldown = 1f;
-		meleeEffectClone = new GameObject();
-		meleeDuration = 0.5f;
+		cooldown = 0.5f;
+		meleeDuration = 0.3f;
 		animationDuration = 2f;
 	}
 
@@ -54,7 +53,11 @@ public class PurityMeleeSkills : MeleeSkills
 		isAnimating = false;
 	}
 
-	public override IEnumerator MeleeDuration() {
+	public override GameObject GetMeleeEffectClone() {
+		return meleeEffectClone;
+	}
+
+	public override IEnumerator DestroyCloneAfterMeleeDuration() {
 		yield return new WaitForSeconds(meleeDuration);
 		Object.Destroy(meleeEffectClone);
 	}

@@ -9,7 +9,9 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private GameObject PureMeleeEffect;
+	[SerializeField] private GameObject pureMeleeEffect;
+	[SerializeField] private Sprite[] pureMeleeEffectSprites;
+	private CustomAnimation pureMeleeEffectAnim;
 	[SerializeField] private GameObject corruptionJumpProjectile;
 	[SerializeField] private GameObject corruptionProjectile;
 	private enum PlayerState { Normal, Dash, PurityMelee }
@@ -66,6 +68,7 @@ public class PlayerController : MonoBehaviour
 	private PurityRangedSkills purityProjectileSkills;
 
 	private void Awake() {
+		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
 		playerState = PlayerState.Normal;
 		animationState = AnimationState.IdleCorGlovePureBoot;
 		playerInputActions = new PlayerInputActions();
@@ -153,6 +156,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		SetAnimationState();
+		PlayActiveAnimationEffects();
 		ShootProjectile();
 	}
 
@@ -175,6 +179,23 @@ public class PlayerController : MonoBehaviour
 		}
 
 		SetGravity();
+	}
+
+	private void PlayActiveAnimationEffects() {
+		switch (glovesGemState) {
+			case GlovesGemState.Corruption:
+				break;
+			case GlovesGemState.Purity:
+				if (purityMeleeSkills.GetMeleeEffectClone() != null)
+					pureMeleeEffectAnim.PlayCreatedAnimation(purityMeleeSkills.GetMeleeEffectClone().GetComponent<SpriteRenderer>());
+				break;
+		}
+		switch (bootsGemState) {
+			case BootsGemState.Corruption:
+				break;
+			case BootsGemState.Purity:
+				break;
+		}
 	}
 
 	private void SetDefaultSkillsAndGemStates() {
@@ -507,9 +528,9 @@ public class PlayerController : MonoBehaviour
 			case GlovesGemState.Corruption:
 				break;
 			case GlovesGemState.Purity:
-				purityMeleeSkills.SetupMelee(PureMeleeEffect, isFacingRight);
+				purityMeleeSkills.SetupMelee(pureMeleeEffect, isFacingRight);
 				StartCoroutine(purityMeleeSkills.StartMeleeCooldown(playerInputActions));
-				StartCoroutine(purityMeleeSkills.MeleeDuration());
+				StartCoroutine(purityMeleeSkills.DestroyCloneAfterMeleeDuration());
 				break;
 		}
 	}
@@ -519,7 +540,7 @@ public class PlayerController : MonoBehaviour
 			case GlovesGemState.Corruption:
 				break;
 			case GlovesGemState.Purity:
-				purityMeleeSkills.PerformMelee(PureMeleeEffect, isFacingRight);
+				purityMeleeSkills.PerformMelee(pureMeleeEffect, isFacingRight);
 				//StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
 				break;
 		}
