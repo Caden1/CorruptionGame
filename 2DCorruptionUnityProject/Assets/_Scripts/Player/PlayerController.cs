@@ -363,211 +363,227 @@ public class PlayerController : MonoBehaviour
 
 	private void RotateModGemsCounterclockwiseWithPureAndCor() {
 		if (glovesGemState == GlovesGemState.Corruption && bootsGemState == BootsGemState.Purity) {
-			if (rightGloveModGemState == RightGloveModGemState.None) {
-				leftGloveModGemState = LeftGloveModGemState.None;
-				corruptionRangedSkills.SetCorruptionDefault();
-			} else if (rightGloveModGemState == RightGloveModGemState.Air) {
-				leftGloveModGemState = LeftGloveModGemState.Air;
-				corruptionRangedSkills.SetAirModifiers();
-			} else if (rightGloveModGemState == RightGloveModGemState.Fire) {
-				leftGloveModGemState = LeftGloveModGemState.Fire;
-				corruptionRangedSkills.SetFireModifiers();
-			} else if (rightGloveModGemState == RightGloveModGemState.Water) {
-				leftGloveModGemState = LeftGloveModGemState.Water;
-				corruptionRangedSkills.SetWaterModifiers();
-			} else if (rightGloveModGemState == RightGloveModGemState.Earth) {
-				leftGloveModGemState = LeftGloveModGemState.Earth;
-				corruptionRangedSkills.SetEarthModifiers();
+			string leftGloveModGemCurrentState = "";
+			switch (leftGloveModGemState) {
+				case (LeftGloveModGemState.None):
+					leftGloveModGemCurrentState = "None";
+					break;
+				case (LeftGloveModGemState.Air):
+					leftGloveModGemCurrentState = "Air";
+					break;
+				case (LeftGloveModGemState.Fire):
+					leftGloveModGemCurrentState = "Fire";
+					break;
+				case (LeftGloveModGemState.Water):
+					leftGloveModGemCurrentState = "Water";
+					break;
+				case (LeftGloveModGemState.Earth):
+					leftGloveModGemCurrentState = "Earth";
+					break;
 			}
 
-			if (rightBootModGemState == RightBootModGemState.None) {
-				rightGloveModGemState = RightGloveModGemState.None;
-				corruptionMeleeSkills.SetCorruptionDefault();
-			} else if (rightBootModGemState == RightBootModGemState.Air) {
-				rightGloveModGemState = RightGloveModGemState.Air;
-				corruptionMeleeSkills.SetAirModifiers();
-			} else if (rightBootModGemState == RightBootModGemState.Fire) {
-				rightGloveModGemState = RightGloveModGemState.Fire;
-				corruptionMeleeSkills.SetFireModifiers();
-			} else if (rightBootModGemState == RightBootModGemState.Water) {
-				rightGloveModGemState = RightGloveModGemState.Water;
-				corruptionMeleeSkills.SetWaterModifiers();
-			} else if (rightBootModGemState == RightBootModGemState.Earth) {
-				rightGloveModGemState = RightGloveModGemState.Earth;
-				corruptionMeleeSkills.SetEarthModifiers();
+			switch (rightGloveModGemState) {
+				case (RightGloveModGemState.None):
+					leftGloveModGemState = LeftGloveModGemState.None;
+					corruptionRangedSkills.SetCorruptionDefault();
+					break;
+				case (RightGloveModGemState.Air):
+					leftGloveModGemState = LeftGloveModGemState.Air;
+					corruptionRangedSkills.SetAirModifiers();
+					break;
+				case (RightGloveModGemState.Fire):
+					leftGloveModGemState = LeftGloveModGemState.Fire;
+					corruptionRangedSkills.SetFireModifiers();
+					break;
+				case (RightGloveModGemState.Water):
+					leftGloveModGemState = LeftGloveModGemState.Water;
+					corruptionRangedSkills.SetWaterModifiers();
+					break;
+				case (RightGloveModGemState.Earth):
+					leftGloveModGemState = LeftGloveModGemState.Earth;
+					corruptionRangedSkills.SetEarthModifiers();
+					break;
 			}
 
-			if (leftBootModGemState == LeftBootModGemState.None) {
-				rightBootModGemState = RightBootModGemState.None;
-				purityJumpSkills.SetPurityDefault();
-			} else if (leftBootModGemState == LeftBootModGemState.Air) {
-				rightBootModGemState = RightBootModGemState.Air;
-				purityJumpSkills.SetAirModifiers();
-			} else if (leftBootModGemState == LeftBootModGemState.Fire) {
-				rightBootModGemState = RightBootModGemState.Fire;
-				purityJumpSkills.SetFireModifiers();
-			} else if (leftBootModGemState == LeftBootModGemState.Water) {
-				rightBootModGemState = RightBootModGemState.Water;
-				purityJumpSkills.SetWaterModifiers();
-			} else if (leftBootModGemState == LeftBootModGemState.Earth) {
-				rightBootModGemState = RightBootModGemState.Earth;
-				purityJumpSkills.SetEarthModifiers();
+			switch (rightBootModGemState) {
+				case RightBootModGemState.None:
+					rightGloveModGemState = RightGloveModGemState.None;
+					corruptionMeleeSkills.SetCorruptionDefault();
+					break;
+				case RightBootModGemState.Air:
+					rightGloveModGemState = RightGloveModGemState.Air;
+					corruptionMeleeSkills.SetAirModifiers();
+					break;
+				case RightBootModGemState.Fire:
+					rightGloveModGemState = RightGloveModGemState.Fire;
+					corruptionMeleeSkills.SetFireModifiers();
+					break;
+				case RightBootModGemState.Water:
+					rightGloveModGemState = RightGloveModGemState.Water;
+					corruptionMeleeSkills.SetWaterModifiers();
+					break;
+				case RightBootModGemState.Earth:
+					rightGloveModGemState = RightGloveModGemState.Earth;
+					corruptionMeleeSkills.SetEarthModifiers();
+					break;
 			}
 
-			if (leftGloveModGemState == LeftGloveModGemState.None) {
-				leftBootModGemState = LeftBootModGemState.None;
-				purityDashSkills.SetPurityDefault();
-			} else if (leftGloveModGemState == LeftGloveModGemState.Air) {
-				leftBootModGemState = LeftBootModGemState.Air;
-				purityDashSkills.SetAirModifiers();
-			} else if (leftGloveModGemState == LeftGloveModGemState.Fire) {
-				leftBootModGemState = LeftBootModGemState.Fire;
-				purityDashSkills.SetFireModifiers();
-			} else if (leftGloveModGemState == LeftGloveModGemState.Water) {
-				leftBootModGemState = LeftBootModGemState.Water;
-				purityDashSkills.SetWaterModifiers();
-			} else if (leftGloveModGemState == LeftGloveModGemState.Earth) {
-				leftBootModGemState = LeftBootModGemState.Earth;
-				purityDashSkills.SetEarthModifiers();
+			switch (leftBootModGemState) {
+				case LeftBootModGemState.None:
+					rightBootModGemState = RightBootModGemState.None;
+					purityJumpSkills.SetPurityDefault();
+					break;
+				case LeftBootModGemState.Air:
+					rightBootModGemState = RightBootModGemState.Air;
+					purityJumpSkills.SetAirModifiers();
+					break;
+				case LeftBootModGemState.Fire:
+					rightBootModGemState = RightBootModGemState.Fire;
+					purityJumpSkills.SetFireModifiers();
+					break;
+				case LeftBootModGemState.Water:
+					rightBootModGemState = RightBootModGemState.Water;
+					purityJumpSkills.SetWaterModifiers();
+					break;
+				case LeftBootModGemState.Earth:
+					rightBootModGemState = RightBootModGemState.Earth;
+					purityJumpSkills.SetEarthModifiers();
+					break;
+			}
+
+			switch (leftGloveModGemCurrentState) {
+				case "None":
+					leftBootModGemState = LeftBootModGemState.None;
+					purityDashSkills.SetPurityDefault();
+					break;
+				case "Air":
+					leftBootModGemState = LeftBootModGemState.Air;
+					purityDashSkills.SetAirModifiers();
+					break;
+				case "Fire":
+					leftBootModGemState = LeftBootModGemState.Fire;
+					purityDashSkills.SetFireModifiers();
+					break;
+				case "Water":
+					leftBootModGemState = LeftBootModGemState.Water;
+					purityDashSkills.SetWaterModifiers();
+					break;
+				case "Earth":
+					leftBootModGemState = LeftBootModGemState.Earth;
+					purityDashSkills.SetEarthModifiers();
+					break;
 			}
 		} else if (glovesGemState == GlovesGemState.Purity && bootsGemState == BootsGemState.Corruption) {
-			if (rightGloveModGemState == RightGloveModGemState.None) {
-				leftGloveModGemState = LeftGloveModGemState.None;
-				purityRangedSkills.SetPurityDefault();
-			} else if (rightGloveModGemState == RightGloveModGemState.Air) {
-				leftGloveModGemState = LeftGloveModGemState.Air;
-				purityRangedSkills.SetAirModifiers();
-			} else if (rightGloveModGemState == RightGloveModGemState.Fire) {
-				leftGloveModGemState = LeftGloveModGemState.Fire;
-				purityRangedSkills.SetFireModifiers();
-			} else if (rightGloveModGemState == RightGloveModGemState.Water) {
-				leftGloveModGemState = LeftGloveModGemState.Water;
-				purityRangedSkills.SetWaterModifiers();
-			} else if (rightGloveModGemState == RightGloveModGemState.Earth) {
-				leftGloveModGemState = LeftGloveModGemState.Earth;
-				purityRangedSkills.SetEarthModifiers();
+			string leftGloveModGemCurrentState = "";
+			switch (leftGloveModGemState) {
+				case (LeftGloveModGemState.None):
+					leftGloveModGemCurrentState = "None";
+					break;
+				case (LeftGloveModGemState.Air):
+					leftGloveModGemCurrentState = "Air";
+					break;
+				case (LeftGloveModGemState.Fire):
+					leftGloveModGemCurrentState = "Fire";
+					break;
+				case (LeftGloveModGemState.Water):
+					leftGloveModGemCurrentState = "Water";
+					break;
+				case (LeftGloveModGemState.Earth):
+					leftGloveModGemCurrentState = "Earth";
+					break;
 			}
 
-			if (rightBootModGemState == RightBootModGemState.None) {
-				rightGloveModGemState = RightGloveModGemState.None;
-				purityMeleeSkills.SetPurityDefault();
-			} else if (rightBootModGemState == RightBootModGemState.Air) {
-				rightGloveModGemState = RightGloveModGemState.Air;
-				purityMeleeSkills.SetAirModifiers();
-			} else if (rightBootModGemState == RightBootModGemState.Fire) {
-				rightGloveModGemState = RightGloveModGemState.Fire;
-				purityMeleeSkills.SetFireModifiers();
-			} else if (rightBootModGemState == RightBootModGemState.Water) {
-				rightGloveModGemState = RightGloveModGemState.Water;
-				purityMeleeSkills.SetWaterModifiers();
-			} else if (rightBootModGemState == RightBootModGemState.Earth) {
-				rightGloveModGemState = RightGloveModGemState.Earth;
-				purityMeleeSkills.SetEarthModifiers();
+			switch (rightGloveModGemState) {
+				case (RightGloveModGemState.None):
+					leftGloveModGemState = LeftGloveModGemState.None;
+					purityRangedSkills.SetPurityDefault();
+					break;
+				case (RightGloveModGemState.Air):
+					leftGloveModGemState = LeftGloveModGemState.Air;
+					purityRangedSkills.SetAirModifiers();
+					break;
+				case (RightGloveModGemState.Fire):
+					leftGloveModGemState = LeftGloveModGemState.Fire;
+					purityRangedSkills.SetFireModifiers();
+					break;
+				case (RightGloveModGemState.Water):
+					leftGloveModGemState = LeftGloveModGemState.Water;
+					purityRangedSkills.SetWaterModifiers();
+					break;
+				case (RightGloveModGemState.Earth):
+					leftGloveModGemState = LeftGloveModGemState.Earth;
+					purityRangedSkills.SetEarthModifiers();
+					break;
 			}
 
-			if (leftBootModGemState == LeftBootModGemState.None) {
-				rightBootModGemState = RightBootModGemState.None;
-				corruptionJumpSkills.SetCorruptionDefault();
-			} else if (leftBootModGemState == LeftBootModGemState.Air) {
-				rightBootModGemState = RightBootModGemState.Air;
-				corruptionJumpSkills.SetAirModifiers();
-			} else if (leftBootModGemState == LeftBootModGemState.Fire) {
-				rightBootModGemState = RightBootModGemState.Fire;
-				corruptionJumpSkills.SetFireModifiers();
-			} else if (leftBootModGemState == LeftBootModGemState.Water) {
-				rightBootModGemState = RightBootModGemState.Water;
-				corruptionJumpSkills.SetWaterModifiers();
-			} else if (leftBootModGemState == LeftBootModGemState.Earth) {
-				rightBootModGemState = RightBootModGemState.Earth;
-				corruptionJumpSkills.SetEarthModifiers();
+			switch (rightBootModGemState) {
+				case RightBootModGemState.None:
+					rightGloveModGemState = RightGloveModGemState.None;
+					purityMeleeSkills.SetPurityDefault();
+					break;
+				case RightBootModGemState.Air:
+					rightGloveModGemState = RightGloveModGemState.Air;
+					purityMeleeSkills.SetAirModifiers();
+					break;
+				case RightBootModGemState.Fire:
+					rightGloveModGemState = RightGloveModGemState.Fire;
+					purityMeleeSkills.SetFireModifiers();
+					break;
+				case RightBootModGemState.Water:
+					rightGloveModGemState = RightGloveModGemState.Water;
+					purityMeleeSkills.SetWaterModifiers();
+					break;
+				case RightBootModGemState.Earth:
+					rightGloveModGemState = RightGloveModGemState.Earth;
+					purityMeleeSkills.SetEarthModifiers();
+					break;
 			}
 
-			if (leftGloveModGemState == LeftGloveModGemState.None) {
-				leftBootModGemState = LeftBootModGemState.None;
-				corruptionDashSkills.SetCorruptionDefault();
-			} else if (leftGloveModGemState == LeftGloveModGemState.Air) {
-				leftBootModGemState = LeftBootModGemState.Air;
-				corruptionDashSkills.SetAirModifiers();
-			} else if (leftGloveModGemState == LeftGloveModGemState.Fire) {
-				leftBootModGemState = LeftBootModGemState.Fire;
-				corruptionDashSkills.SetFireModifiers();
-			} else if (leftGloveModGemState == LeftGloveModGemState.Water) {
-				leftBootModGemState = LeftBootModGemState.Water;
-				corruptionDashSkills.SetWaterModifiers();
-			} else if (leftGloveModGemState == LeftGloveModGemState.Earth) {
-				leftBootModGemState = LeftBootModGemState.Earth;
-				corruptionDashSkills.SetEarthModifiers();
+			switch (leftBootModGemState) {
+				case LeftBootModGemState.None:
+					rightBootModGemState = RightBootModGemState.None;
+					corruptionJumpSkills.SetCorruptionDefault();
+					break;
+				case LeftBootModGemState.Air:
+					rightBootModGemState = RightBootModGemState.Air;
+					corruptionJumpSkills.SetAirModifiers();
+					break;
+				case LeftBootModGemState.Fire:
+					rightBootModGemState = RightBootModGemState.Fire;
+					corruptionJumpSkills.SetFireModifiers();
+					break;
+				case LeftBootModGemState.Water:
+					rightBootModGemState = RightBootModGemState.Water;
+					corruptionJumpSkills.SetWaterModifiers();
+					break;
+				case LeftBootModGemState.Earth:
+					rightBootModGemState = RightBootModGemState.Earth;
+					corruptionJumpSkills.SetEarthModifiers();
+					break;
 			}
 
-		}
-		if (bootsGemState == BootsGemState.Corruption) {
-			//if (rightBootModGemState == RightBootModGemState.None) {
-			//	rightGloveModGemState = RightGloveModGemState.None;
-			//	purityMeleeSkills.SetPurityDefault();
-			//} else if (rightBootModGemState == RightBootModGemState.Air) {
-			//	rightGloveModGemState = RightGloveModGemState.Air;
-			//	purityMeleeSkills.SetAirModifiers();
-			//} else if (rightBootModGemState == RightBootModGemState.Fire) {
-			//	rightGloveModGemState = RightGloveModGemState.Fire;
-			//	purityMeleeSkills.SetFireModifiers();
-			//} else if (rightBootModGemState == RightBootModGemState.Water) {
-			//	rightGloveModGemState = RightGloveModGemState.Water;
-			//	purityMeleeSkills.SetWaterModifiers();
-			//} else if (rightBootModGemState == RightBootModGemState.Earth) {
-			//	rightGloveModGemState = RightGloveModGemState.Earth;
-			//	purityMeleeSkills.SetEarthModifiers();
-			//}
-
-			//if (leftBootModGemState == LeftBootModGemState.None) {
-			//	rightBootModGemState = RightBootModGemState.None;
-			//	corruptionJumpSkills.SetCorruptionDefault();
-			//} else if (leftBootModGemState == LeftBootModGemState.Air) {
-			//	rightBootModGemState = RightBootModGemState.Air;
-			//	corruptionJumpSkills.SetAirModifiers();
-			//} else if (leftBootModGemState == LeftBootModGemState.Fire) {
-			//	rightBootModGemState = RightBootModGemState.Fire;
-			//	corruptionJumpSkills.SetFireModifiers();
-			//} else if (leftBootModGemState == LeftBootModGemState.Water) {
-			//	rightBootModGemState = RightBootModGemState.Water;
-			//	corruptionJumpSkills.SetWaterModifiers();
-			//} else if (leftBootModGemState == LeftBootModGemState.Earth) {
-			//	rightBootModGemState = RightBootModGemState.Earth;
-			//	corruptionJumpSkills.SetEarthModifiers();
-			//}
-		} else if (bootsGemState == BootsGemState.Purity) {
-			//if (rightBootModGemState == RightBootModGemState.None) {
-			//	rightGloveModGemState = RightGloveModGemState.None;
-			//	corruptionMeleeSkills.SetCorruptionDefault();
-			//} else if (rightBootModGemState == RightBootModGemState.Air) {
-			//	rightGloveModGemState = RightGloveModGemState.Air;
-			//	corruptionMeleeSkills.SetAirModifiers();
-			//} else if (rightBootModGemState == RightBootModGemState.Fire) {
-			//	rightGloveModGemState = RightGloveModGemState.Fire;
-			//	corruptionMeleeSkills.SetFireModifiers();
-			//} else if (rightBootModGemState == RightBootModGemState.Water) {
-			//	rightGloveModGemState = RightGloveModGemState.Water;
-			//	corruptionMeleeSkills.SetWaterModifiers();
-			//} else if (rightBootModGemState == RightBootModGemState.Earth) {
-			//	rightGloveModGemState = RightGloveModGemState.Earth;
-			//	corruptionMeleeSkills.SetEarthModifiers();
-			//}
-
-			//if (leftBootModGemState == LeftBootModGemState.None) {
-			//	rightBootModGemState = RightBootModGemState.None;
-			//	purityJumpSkills.SetPurityDefault();
-			//} else if (leftBootModGemState == LeftBootModGemState.Air) {
-			//	rightBootModGemState = RightBootModGemState.Air;
-			//	purityJumpSkills.SetAirModifiers();
-			//} else if (leftBootModGemState == LeftBootModGemState.Fire) {
-			//	rightBootModGemState = RightBootModGemState.Fire;
-			//	purityJumpSkills.SetFireModifiers();
-			//} else if (leftBootModGemState == LeftBootModGemState.Water) {
-			//	rightBootModGemState = RightBootModGemState.Water;
-			//	purityJumpSkills.SetWaterModifiers();
-			//} else if (leftBootModGemState == LeftBootModGemState.Earth) {
-			//	rightBootModGemState = RightBootModGemState.Earth;
-			//	purityJumpSkills.SetEarthModifiers();
-			//}
+			switch (leftGloveModGemCurrentState) {
+				case "None":
+					leftBootModGemState = LeftBootModGemState.None;
+					corruptionDashSkills.SetCorruptionDefault();
+					break;
+				case "Air":
+					leftBootModGemState = LeftBootModGemState.Air;
+					corruptionDashSkills.SetAirModifiers();
+					break;
+				case "Fire":
+					leftBootModGemState = LeftBootModGemState.Fire;
+					corruptionDashSkills.SetFireModifiers();
+					break;
+				case "Water":
+					leftBootModGemState = LeftBootModGemState.Water;
+					corruptionDashSkills.SetWaterModifiers();
+					break;
+				case "Earth":
+					leftBootModGemState = LeftBootModGemState.Earth;
+					corruptionDashSkills.SetEarthModifiers();
+					break;
+			}
 		}
 	}
 
