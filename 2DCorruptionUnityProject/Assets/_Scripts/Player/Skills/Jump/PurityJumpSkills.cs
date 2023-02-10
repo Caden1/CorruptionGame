@@ -20,7 +20,14 @@ public class PurityJumpSkills : JumpSkills
 	}
 
 	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 3;
+		velocity = 7f;
+		jumpGravity = 1f;
+		fallGravity = 1.5f;
+		archVelocityThreshold = 1f;
+		archGravity = 2f;
 	}
 
 	public override void SetFireModifiers() {

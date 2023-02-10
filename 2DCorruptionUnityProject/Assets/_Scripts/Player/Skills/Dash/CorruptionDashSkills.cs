@@ -18,7 +18,12 @@ public class CorruptionDashSkills : DashSkills
 	}
 
 	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
+		moveVelocity = 4f;
+		numDashes = 1f;
+		dashVelocity = 12f;
+		secondsToDash = 0.25f;
+		cooldown = 2f;
+		damage = 2f;
 	}
 
 	public override void SetFireModifiers() {

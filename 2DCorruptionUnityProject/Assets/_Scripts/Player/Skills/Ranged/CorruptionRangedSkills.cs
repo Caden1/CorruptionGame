@@ -30,7 +30,20 @@ public class CorruptionRangedSkills : RangedSkills
 	}
 
 	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
+		isMultiEnemy = false;
+		canAttack = false;
+		isAttacking = false;
+		cooldown = 1f;
+		duration = 0.1f;
+		velocity = 15f;
+		animSeconds = 0.2f;
+		projectileClonesRight = new List<GameObject>();
+		projectileClonesLeft = new List<GameObject>();
+		attackOriginRight = new Vector2();
+		attackOriginLeft = new Vector2();
+		damage = 10f;
+		attackVelocity = 5f;
+		attackDistance = 10f;
 	}
 
 	public override void SetFireModifiers() {

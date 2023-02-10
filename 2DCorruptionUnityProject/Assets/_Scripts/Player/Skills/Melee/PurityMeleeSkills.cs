@@ -11,11 +11,15 @@ public class PurityMeleeSkills : MeleeSkills
 		isAnimating = false;
 		cooldown = 0.5f;
 		meleeDuration = 0.3f;
-		animationDuration = 2f;
+		animationDuration = 0.1f;
 	}
 
 	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
+		canMelee = false;
+		isAnimating = false;
+		cooldown = 1.5f;
+		meleeDuration = 1f;
+		animationDuration = 0.5f;
 	}
 
 	public override void SetFireModifiers() {
