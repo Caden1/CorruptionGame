@@ -9,19 +9,20 @@ public class CorruptionMeleeSkills : MeleeSkills
 	public CorruptionMeleeSkills(BoxCollider2D boxCollider) : base(boxCollider) { }
 
 	public void SetCorruptionDefault() {
-		isMultiEnemy = true;
-		canAttack = false;
+		canMelee = false;
 		isAnimating = false;
 		cooldown = 0.3f;
-		attackDuration = 0.1f;
+		meleeDuration = 0.1f;
 		animationDuration = 0.2f;
-		attackDistance = 2f;
-		attackAngle = 0f;
 		damage = 5f;
 }
 
 	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
+		canMelee = false;
+		isAnimating = false;
+		cooldown = 1.5f;
+		meleeDuration = 1f;
+		animationDuration = 0.5f;
 	}
 
 	public override void SetFireModifiers() {
@@ -36,32 +37,36 @@ public class CorruptionMeleeSkills : MeleeSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override void SetupMelee(bool isFacingRight) {
-		if (!canAttack) {
-			canAttack = true;
-			isAnimating = true;
-			if (isFacingRight)
-				attackDirection = Vector2.right;
-			else
-				attackDirection = Vector2.left;
-			attackOrigin = boxCollider.bounds.center;
-			attackSize = boxCollider.bounds.size;
-		}
+	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight) {
+		//if (!canAttack) {
+		//	canAttack = true;
+		//	isAnimating = true;
+		//	if (isFacingRight)
+		//		attackDirection = Vector2.right;
+		//	else
+		//		attackDirection = Vector2.left;
+		//	attackOrigin = boxCollider.bounds.center;
+		//	attackSize = boxCollider.bounds.size;
+		//}
 	}
 
-	public override void PerformMelee(ContactFilter2D enemyContactFilter) {
-		List<RaycastHit2D> hits = new List<RaycastHit2D>();
-		int numHits = Physics2D.BoxCast(attackOrigin, attackSize, attackAngle, attackDirection, enemyContactFilter, hits, attackDistance);
-		if (numHits > 0) {
-			foreach (RaycastHit2D hit in hits) {
-				Object.Destroy(hit.collider.gameObject);
-			}
-		}
+	public override void PerformMelee(GameObject meleeEffect, bool isFacingRight) {
+		//List<RaycastHit2D> hits = new List<RaycastHit2D>();
+		//int numHits = Physics2D.BoxCast(attackOrigin, attackSize, attackAngle, attackDirection, enemyContactFilter, hits, attackDistance);
+		//if (numHits > 0) {
+		//	foreach (RaycastHit2D hit in hits) {
+		//		Object.Destroy(hit.collider.gameObject);
+		//	}
+		//}
 	}
 
-	public override IEnumerator MeleeDuration() {
-		yield return new WaitForSeconds(attackDuration);
-		canAttack = false;
+	public override GameObject GetMeleeEffectClone() {
+		return null;
+	}
+
+	public override IEnumerator DestroyCloneAfterMeleeDuration() {
+		yield return new WaitForSeconds(meleeDuration);
+		canMelee = false;
 	}
 
 	public override IEnumerator ResetMeleeAnimation() {

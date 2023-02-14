@@ -7,7 +7,7 @@ public class PurityDashSkills : DashSkills
 	public PurityDashSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetPurityDefault() {
-		moveVelocity = 5f;
+		moveVelocity = 4f;
 		numDashes = 2f;
 		dashVelocity = 10f;
 		secondsToDash = 0.25f;
@@ -15,7 +15,11 @@ public class PurityDashSkills : DashSkills
 	}
 
 	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
+		moveVelocity = 4f;
+		numDashes = 2f;
+		dashVelocity = 20f;
+		secondsToDash = 0.25f;
+		cooldown = 2f;
 	}
 
 	public override void SetFireModifiers() {

@@ -15,7 +15,13 @@ public class PurityRangedSkills : RangedSkills
 	}
 
 	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
+		isMultiEnemy = false;
+		canAttack = false;
+		isAttacking = false;
+		cooldown = 1f;
+		duration = 0.1f;
+		velocity = 15f;
+		animSeconds = 0.3f;
 	}
 
 	public override void SetFireModifiers() {

@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_UI/ModGemSwapStylesheet.uss?fileID=7433441132597879392&amp;guid=658f1d547c7a74ef28fa4c27d96e417b&amp;type=3#ModGemSwapStylesheet" />
+    <ui:VisualElement name="MainContainer" style="height: 100%; width: 100%;">
+        <ui:VisualElement name="GlovesContainer" style="transform-origin: top; height: 50%; width: 100%; align-items: flex-start; flex-direction: row; justify-content: space-between;">
+            <ui:VisualElement name="LeftGlove" style="width: 128px; height: 128px; background-image: url(&apos;project://database/Assets/_Sprites/Player/Corruption/SwapUI/GloveAndGlowCorOnly.png?fileID=21300000&amp;guid=1fd73b33cae7b47b8b2802fd77f2c36b&amp;type=3#GloveAndGlowCorOnly&apos;); left: auto; justify-content: center; transform-origin: center; align-items: center; flex-direction: column;" />
+            <ui:VisualElement name="RightGlove" style="height: 128px; width: 128px; background-image: url(&apos;project://database/Assets/_Sprites/Player/Corruption/SwapUI/GloveAndGlowCorOnly.png?fileID=21300000&amp;guid=1fd73b33cae7b47b8b2802fd77f2c36b&amp;type=3#GloveAndGlowCorOnly&apos;); flex-direction: column; transform-origin: center; align-items: center; justify-content: center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="BootsContainer" style="flex-direction: row; height: 50%; justify-content: space-between; width: 100%; align-items: flex-end;">
+            <ui:VisualElement name="LeftBoot" style="width: 128px; transform-origin: left top; height: 128px; background-image: url(&apos;project://database/Assets/_Sprites/Player/Purity/SwapUI/BootAndGlowPureOnly.png?fileID=21300000&amp;guid=9e8ce3c9ff90a490f90abf46d34a48fa&amp;type=3#BootAndGlowPureOnly&apos;);" />
+            <ui:VisualElement name="RightBoot" style="width: 128px; transform-origin: right top; height: 128px; background-image: url(&apos;project://database/Assets/_Sprites/Player/Purity/SwapUI/BootAndGlowPureOnly.png?fileID=21300000&amp;guid=9e8ce3c9ff90a490f90abf46d34a48fa&amp;type=3#BootAndGlowPureOnly&apos;);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
