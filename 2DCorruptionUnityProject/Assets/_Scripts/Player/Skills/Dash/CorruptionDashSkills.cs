@@ -27,15 +27,30 @@ public class CorruptionDashSkills : DashSkills
 	}
 
 	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
+		moveVelocity = 4f;
+		numDashes = 1f;
+		dashVelocity = 12f;
+		secondsToDash = 0.25f;
+		cooldown = 2f;
+		damage = 2f;
 	}
 
 	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
+		moveVelocity = 4f;
+		numDashes = 1f;
+		dashVelocity = 12f;
+		secondsToDash = 0.25f;
+		cooldown = 2f;
+		damage = 2f;
 	}
 
 	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
+		moveVelocity = 4f;
+		numDashes = 1f;
+		dashVelocity = 12f;
+		secondsToDash = 0.25f;
+		cooldown = 2f;
+		damage = 2f;
 	}
 
 	public override void PerformHorizontalMovement(float xMoveDirection) {

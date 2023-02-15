@@ -31,15 +31,36 @@ public class PurityJumpSkills : JumpSkills
 	}
 
 	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 3;
+		velocity = 7f;
+		jumpGravity = 1f;
+		fallGravity = 1.5f;
+		archVelocityThreshold = 1f;
+		archGravity = 2f;
 	}
 
 	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 3;
+		velocity = 7f;
+		jumpGravity = 1f;
+		fallGravity = 1.5f;
+		archVelocityThreshold = 1f;
+		archGravity = 2f;
 	}
 
 	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 3;
+		velocity = 7f;
+		jumpGravity = 1f;
+		fallGravity = 1.5f;
+		archVelocityThreshold = 1f;
+		archGravity = 2f;
 	}
 
 	public override void SetGravity() {

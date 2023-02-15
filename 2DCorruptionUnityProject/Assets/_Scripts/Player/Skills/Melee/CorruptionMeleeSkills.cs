@@ -26,15 +26,27 @@ public class CorruptionMeleeSkills : MeleeSkills
 	}
 
 	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
+		canMelee = false;
+		isAnimating = false;
+		cooldown = 1.5f;
+		meleeDuration = 1f;
+		animationDuration = 0.5f;
 	}
 
 	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
+		canMelee = false;
+		isAnimating = false;
+		cooldown = 1.5f;
+		meleeDuration = 1f;
+		animationDuration = 0.5f;
 	}
 
 	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
+		canMelee = false;
+		isAnimating = false;
+		cooldown = 1.5f;
+		meleeDuration = 1f;
+		animationDuration = 0.5f;
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight) {

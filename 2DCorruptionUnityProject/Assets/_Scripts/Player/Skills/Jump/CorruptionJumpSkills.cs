@@ -62,15 +62,63 @@ public class CorruptionJumpSkills : JumpSkills
 	}
 
 	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 1;
+		velocity = 7f;
+		jumpGravity = 1f;
+		fallGravity = 2f;
+		archVelocityThreshold = 3f;
+		archGravity = 3f;
+		damage = 2f;
+		attackDistance = 3f;
+		attackVelocity = 10f;
+		attackAngle = 0.25f;
+		isMultiEnemyAttack = true;
+		attackClonesRight = new List<GameObject>();
+		attackClonesLeft = new List<GameObject>();
+		attackOriginRight = new Vector2();
+		attackOriginLeft = new Vector2();
 	}
 
 	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 1;
+		velocity = 7f;
+		jumpGravity = 1f;
+		fallGravity = 2f;
+		archVelocityThreshold = 3f;
+		archGravity = 3f;
+		damage = 2f;
+		attackDistance = 3f;
+		attackVelocity = 10f;
+		attackAngle = 0.25f;
+		isMultiEnemyAttack = true;
+		attackClonesRight = new List<GameObject>();
+		attackClonesLeft = new List<GameObject>();
+		attackOriginRight = new Vector2();
+		attackOriginLeft = new Vector2();
 	}
 
 	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 1;
+		velocity = 7f;
+		jumpGravity = 1f;
+		fallGravity = 2f;
+		archVelocityThreshold = 3f;
+		archGravity = 3f;
+		damage = 2f;
+		attackDistance = 3f;
+		attackVelocity = 10f;
+		attackAngle = 0.25f;
+		isMultiEnemyAttack = true;
+		attackClonesRight = new List<GameObject>();
+		attackClonesLeft = new List<GameObject>();
+		attackOriginRight = new Vector2();
+		attackOriginLeft = new Vector2();
 	}
 
 	public override void SetGravity() {

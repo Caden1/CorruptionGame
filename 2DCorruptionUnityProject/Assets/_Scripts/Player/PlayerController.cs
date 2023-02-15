@@ -240,9 +240,9 @@ public class PlayerController : MonoBehaviour
 		glovesGemState = GlovesGemState.Corruption;
 		bootsGemState = BootsGemState.Purity;
 		rightGloveModGemState = RightGloveModGemState.Air;
-		leftGloveModGemState = LeftGloveModGemState.None;
-		rightBootModGemState = RightBootModGemState.None;
-		leftBootModGemState = LeftBootModGemState.None;
+		leftGloveModGemState = LeftGloveModGemState.Earth;
+		rightBootModGemState = RightBootModGemState.Water;
+		leftBootModGemState = LeftBootModGemState.Fire;
 
 		if (glovesGemState == GlovesGemState.Corruption) {
 			switch (rightGloveModGemState) {
@@ -256,12 +256,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case (RightGloveModGemState.Fire):
 					corruptionMeleeSkills.SetFireModifiers();
+					swapUI.SetRightGloveGem(corFireGlove);
 					break;
 				case (RightGloveModGemState.Water):
 					corruptionMeleeSkills.SetWaterModifiers();
+					swapUI.SetRightGloveGem(corWaterGlove);
 					break;
 				case (RightGloveModGemState.Earth):
 					corruptionMeleeSkills.SetEarthModifiers();
+					swapUI.SetRightGloveGem(corEarthGlove);
 					break;
 			}
 			switch (leftGloveModGemState) {
@@ -275,12 +278,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case (LeftGloveModGemState.Fire):
 					corruptionRangedSkills.SetFireModifiers();
+					swapUI.SetLeftGloveGem(corFireGlove);
 					break;
 				case (LeftGloveModGemState.Water):
 					corruptionRangedSkills.SetWaterModifiers();
+					swapUI.SetLeftGloveGem(corWaterGlove);
 					break;
 				case (LeftGloveModGemState.Earth):
 					corruptionRangedSkills.SetEarthModifiers();
+					swapUI.SetLeftGloveGem(corEarthGlove);
 					break;
 			}
 		} else if (glovesGemState == GlovesGemState.Purity) {
@@ -295,12 +301,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case (RightGloveModGemState.Fire):
 					purityMeleeSkills.SetFireModifiers();
+					swapUI.SetRightGloveGem(pureFireGlove);
 					break;
 				case (RightGloveModGemState.Water):
 					purityMeleeSkills.SetWaterModifiers();
+					swapUI.SetRightGloveGem(pureWaterGlove);
 					break;
 				case (RightGloveModGemState.Earth):
 					purityMeleeSkills.SetEarthModifiers();
+					swapUI.SetRightGloveGem(pureEarthGlove);
 					break;
 			}
 			switch (leftGloveModGemState) {
@@ -314,12 +323,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case (LeftGloveModGemState.Fire):
 					purityRangedSkills.SetFireModifiers();
+					swapUI.SetLeftGloveGem(pureFireGlove);
 					break;
 				case (LeftGloveModGemState.Water):
 					purityRangedSkills.SetWaterModifiers();
+					swapUI.SetLeftGloveGem(pureWaterGlove);
 					break;
 				case (LeftGloveModGemState.Earth):
 					purityRangedSkills.SetEarthModifiers();
+					swapUI.SetLeftGloveGem(pureEarthGlove);
 					break;
 			}
 		}
@@ -335,12 +347,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case RightBootModGemState.Fire:
 					corruptionJumpSkills.SetFireModifiers();
+					swapUI.SetRightBootGem(corFireBoot);
 					break;
 				case RightBootModGemState.Water:
 					corruptionJumpSkills.SetWaterModifiers();
+					swapUI.SetRightBootGem(corWaterBoot);
 					break;
 				case RightBootModGemState.Earth:
 					corruptionJumpSkills.SetEarthModifiers();
+					swapUI.SetRightBootGem(corEarthBoot);
 					break;
 			}
 			switch (leftBootModGemState) {
@@ -354,12 +369,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case LeftBootModGemState.Fire:
 					corruptionDashSkills.SetFireModifiers();
+					swapUI.SetLeftBootGem(corFireBoot);
 					break;
 				case LeftBootModGemState.Water:
 					corruptionDashSkills.SetWaterModifiers();
+					swapUI.SetLeftBootGem(corWaterBoot);
 					break;
 				case LeftBootModGemState.Earth:
 					corruptionDashSkills.SetEarthModifiers();
+					swapUI.SetLeftBootGem(corEarthBoot);
 					break;
 			}
 		} else if (bootsGemState == BootsGemState.Purity) {
@@ -374,12 +392,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case RightBootModGemState.Fire:
 					purityJumpSkills.SetFireModifiers();
+					swapUI.SetRightBootGem(pureFireBoot);
 					break;
 				case RightBootModGemState.Water:
 					purityJumpSkills.SetWaterModifiers();
+					swapUI.SetRightBootGem(pureWaterBoot);
 					break;
 				case RightBootModGemState.Earth:
 					purityJumpSkills.SetEarthModifiers();
+					swapUI.SetRightBootGem(pureEarthBoot);
 					break;
 			}
 			switch (leftBootModGemState) {
@@ -393,12 +414,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case LeftBootModGemState.Fire:
 					purityDashSkills.SetFireModifiers();
+					swapUI.SetLeftBootGem(pureFireBoot);
 					break;
 				case LeftBootModGemState.Water:
 					purityDashSkills.SetWaterModifiers();
+					swapUI.SetLeftBootGem(pureWaterBoot);
 					break;
 				case LeftBootModGemState.Earth:
 					purityDashSkills.SetEarthModifiers();
+					swapUI.SetLeftBootGem(pureEarthBoot);
 					break;
 			}
 		}
@@ -439,14 +463,17 @@ public class PlayerController : MonoBehaviour
 				case (RightGloveModGemState.Fire):
 					leftGloveModGemState = LeftGloveModGemState.Fire;
 					corruptionRangedSkills.SetFireModifiers();
+					swapUI.SetLeftGloveGem(corFireGlove);
 					break;
 				case (RightGloveModGemState.Water):
 					leftGloveModGemState = LeftGloveModGemState.Water;
 					corruptionRangedSkills.SetWaterModifiers();
+					swapUI.SetLeftGloveGem(corWaterGlove);
 					break;
 				case (RightGloveModGemState.Earth):
 					leftGloveModGemState = LeftGloveModGemState.Earth;
 					corruptionRangedSkills.SetEarthModifiers();
+					swapUI.SetLeftGloveGem(corEarthGlove);
 					break;
 			}
 
@@ -464,14 +491,17 @@ public class PlayerController : MonoBehaviour
 				case RightBootModGemState.Fire:
 					rightGloveModGemState = RightGloveModGemState.Fire;
 					corruptionMeleeSkills.SetFireModifiers();
+					swapUI.SetRightGloveGem(corFireGlove);
 					break;
 				case RightBootModGemState.Water:
 					rightGloveModGemState = RightGloveModGemState.Water;
 					corruptionMeleeSkills.SetWaterModifiers();
+					swapUI.SetRightGloveGem(corWaterGlove);
 					break;
 				case RightBootModGemState.Earth:
 					rightGloveModGemState = RightGloveModGemState.Earth;
 					corruptionMeleeSkills.SetEarthModifiers();
+					swapUI.SetRightGloveGem(corEarthGlove);
 					break;
 			}
 
@@ -489,14 +519,17 @@ public class PlayerController : MonoBehaviour
 				case LeftBootModGemState.Fire:
 					rightBootModGemState = RightBootModGemState.Fire;
 					purityJumpSkills.SetFireModifiers();
+					swapUI.SetRightBootGem(pureFireBoot);
 					break;
 				case LeftBootModGemState.Water:
 					rightBootModGemState = RightBootModGemState.Water;
 					purityJumpSkills.SetWaterModifiers();
+					swapUI.SetRightBootGem(pureWaterBoot);
 					break;
 				case LeftBootModGemState.Earth:
 					rightBootModGemState = RightBootModGemState.Earth;
 					purityJumpSkills.SetEarthModifiers();
+					swapUI.SetRightBootGem(pureEarthBoot);
 					break;
 			}
 
@@ -514,14 +547,17 @@ public class PlayerController : MonoBehaviour
 				case "Fire":
 					leftBootModGemState = LeftBootModGemState.Fire;
 					purityDashSkills.SetFireModifiers();
+					swapUI.SetLeftBootGem(pureFireBoot);
 					break;
 				case "Water":
 					leftBootModGemState = LeftBootModGemState.Water;
 					purityDashSkills.SetWaterModifiers();
+					swapUI.SetLeftBootGem(pureWaterBoot);
 					break;
 				case "Earth":
 					leftBootModGemState = LeftBootModGemState.Earth;
 					purityDashSkills.SetEarthModifiers();
+					swapUI.SetLeftBootGem(pureEarthBoot);
 					break;
 			}
 		} else if (glovesGemState == GlovesGemState.Purity && bootsGemState == BootsGemState.Corruption) {
@@ -558,14 +594,17 @@ public class PlayerController : MonoBehaviour
 				case (RightGloveModGemState.Fire):
 					leftGloveModGemState = LeftGloveModGemState.Fire;
 					purityRangedSkills.SetFireModifiers();
+					swapUI.SetLeftGloveGem(pureFireGlove);
 					break;
 				case (RightGloveModGemState.Water):
 					leftGloveModGemState = LeftGloveModGemState.Water;
 					purityRangedSkills.SetWaterModifiers();
+					swapUI.SetLeftGloveGem(pureWaterGlove);
 					break;
 				case (RightGloveModGemState.Earth):
 					leftGloveModGemState = LeftGloveModGemState.Earth;
 					purityRangedSkills.SetEarthModifiers();
+					swapUI.SetLeftGloveGem(pureEarthGlove);
 					break;
 			}
 
@@ -583,14 +622,17 @@ public class PlayerController : MonoBehaviour
 				case RightBootModGemState.Fire:
 					rightGloveModGemState = RightGloveModGemState.Fire;
 					purityMeleeSkills.SetFireModifiers();
+					swapUI.SetRightGloveGem(pureFireGlove);
 					break;
 				case RightBootModGemState.Water:
 					rightGloveModGemState = RightGloveModGemState.Water;
 					purityMeleeSkills.SetWaterModifiers();
+					swapUI.SetRightGloveGem(pureWaterGlove);
 					break;
 				case RightBootModGemState.Earth:
 					rightGloveModGemState = RightGloveModGemState.Earth;
 					purityMeleeSkills.SetEarthModifiers();
+					swapUI.SetRightGloveGem(pureEarthGlove);
 					break;
 			}
 
@@ -608,14 +650,17 @@ public class PlayerController : MonoBehaviour
 				case LeftBootModGemState.Fire:
 					rightBootModGemState = RightBootModGemState.Fire;
 					corruptionJumpSkills.SetFireModifiers();
+					swapUI.SetRightBootGem(corFireBoot);
 					break;
 				case LeftBootModGemState.Water:
 					rightBootModGemState = RightBootModGemState.Water;
 					corruptionJumpSkills.SetWaterModifiers();
+					swapUI.SetRightBootGem(corWaterBoot);
 					break;
 				case LeftBootModGemState.Earth:
 					rightBootModGemState = RightBootModGemState.Earth;
 					corruptionJumpSkills.SetEarthModifiers();
+					swapUI.SetRightBootGem(corEarthBoot);
 					break;
 			}
 
@@ -633,14 +678,17 @@ public class PlayerController : MonoBehaviour
 				case "Fire":
 					leftBootModGemState = LeftBootModGemState.Fire;
 					corruptionDashSkills.SetFireModifiers();
+					swapUI.SetLeftBootGem(corFireBoot);
 					break;
 				case "Water":
 					leftBootModGemState = LeftBootModGemState.Water;
 					corruptionDashSkills.SetWaterModifiers();
+					swapUI.SetLeftBootGem(corWaterBoot);
 					break;
 				case "Earth":
 					leftBootModGemState = LeftBootModGemState.Earth;
 					corruptionDashSkills.SetEarthModifiers();
+					swapUI.SetLeftBootGem(corEarthBoot);
 					break;
 			}
 		}
@@ -672,12 +720,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case (RightGloveModGemState.Fire):
 					purityMeleeSkills.SetFireModifiers();
+					swapUI.SetRightGloveGem(pureFireGlove);
 					break;
 				case (RightGloveModGemState.Water):
 					purityMeleeSkills.SetWaterModifiers();
+					swapUI.SetRightGloveGem(pureWaterGlove);
 					break;
 				case (RightGloveModGemState.Earth):
 					purityMeleeSkills.SetEarthModifiers();
+					swapUI.SetRightGloveGem(pureEarthGlove);
 					break;
 			}
 			switch (leftGloveModGemState) {
@@ -691,12 +742,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case (LeftGloveModGemState.Fire):
 					purityRangedSkills.SetFireModifiers();
+					swapUI.SetLeftGloveGem(pureFireGlove);
 					break;
 				case (LeftGloveModGemState.Water):
 					purityRangedSkills.SetWaterModifiers();
+					swapUI.SetLeftGloveGem(pureWaterGlove);
 					break;
 				case (LeftGloveModGemState.Earth):
 					purityRangedSkills.SetEarthModifiers();
+					swapUI.SetLeftGloveGem(pureEarthGlove);
 					break;
 			}
 		} else if (glovesGemState == GlovesGemState.Purity) {
@@ -712,12 +766,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case (RightGloveModGemState.Fire):
 					corruptionMeleeSkills.SetFireModifiers();
+					swapUI.SetRightGloveGem(corFireGlove);
 					break;
 				case (RightGloveModGemState.Water):
 					corruptionMeleeSkills.SetWaterModifiers();
+					swapUI.SetRightGloveGem(corWaterGlove);
 					break;
 				case (RightGloveModGemState.Earth):
 					corruptionMeleeSkills.SetEarthModifiers();
+					swapUI.SetRightGloveGem(corEarthGlove);
 					break;
 			}
 			switch (leftGloveModGemState) {
@@ -731,12 +788,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case (LeftGloveModGemState.Fire):
 					corruptionRangedSkills.SetFireModifiers();
+					swapUI.SetLeftGloveGem(corFireGlove);
 					break;
 				case (LeftGloveModGemState.Water):
 					corruptionRangedSkills.SetWaterModifiers();
+					swapUI.SetLeftGloveGem(corWaterGlove);
 					break;
 				case (LeftGloveModGemState.Earth):
 					corruptionRangedSkills.SetEarthModifiers();
+					swapUI.SetLeftGloveGem(corEarthGlove);
 					break;
 			}
 		}
@@ -753,12 +813,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case RightBootModGemState.Fire:
 					purityJumpSkills.SetFireModifiers();
+					swapUI.SetRightBootGem(pureFireBoot);
 					break;
 				case RightBootModGemState.Water:
 					purityJumpSkills.SetWaterModifiers();
+					swapUI.SetRightBootGem(pureWaterBoot);
 					break;
 				case RightBootModGemState.Earth:
 					purityJumpSkills.SetEarthModifiers();
+					swapUI.SetRightBootGem(pureEarthBoot);
 					break;
 			}
 			switch (leftBootModGemState) {
@@ -772,12 +835,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case LeftBootModGemState.Fire:
 					purityDashSkills.SetFireModifiers();
+					swapUI.SetLeftBootGem(pureFireBoot);
 					break;
 				case LeftBootModGemState.Water:
 					purityDashSkills.SetWaterModifiers();
+					swapUI.SetLeftBootGem(pureWaterBoot);
 					break;
 				case LeftBootModGemState.Earth:
 					purityDashSkills.SetEarthModifiers();
+					swapUI.SetLeftBootGem(pureEarthBoot);
 					break;
 			}
 		} else if (bootsGemState == BootsGemState.Purity) {
@@ -793,12 +859,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case RightBootModGemState.Fire:
 					corruptionJumpSkills.SetFireModifiers();
+					swapUI.SetRightBootGem(corFireBoot);
 					break;
 				case RightBootModGemState.Water:
 					corruptionJumpSkills.SetWaterModifiers();
+					swapUI.SetRightBootGem(corWaterBoot);
 					break;
 				case RightBootModGemState.Earth:
 					corruptionJumpSkills.SetEarthModifiers();
+					swapUI.SetRightBootGem(corEarthBoot);
 					break;
 			}
 			switch (leftBootModGemState) {
@@ -812,12 +881,15 @@ public class PlayerController : MonoBehaviour
 					break;
 				case LeftBootModGemState.Fire:
 					corruptionDashSkills.SetFireModifiers();
+					swapUI.SetLeftBootGem(corFireBoot);
 					break;
 				case LeftBootModGemState.Water:
 					corruptionDashSkills.SetWaterModifiers();
+					swapUI.SetLeftBootGem(corWaterBoot);
 					break;
 				case LeftBootModGemState.Earth:
 					corruptionDashSkills.SetEarthModifiers();
+					swapUI.SetLeftBootGem(corEarthBoot);
 					break;
 			}
 		}

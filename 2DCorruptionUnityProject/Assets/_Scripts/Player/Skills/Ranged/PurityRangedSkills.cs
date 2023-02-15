@@ -25,15 +25,33 @@ public class PurityRangedSkills : RangedSkills
 	}
 
 	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
+		isMultiEnemy = false;
+		canAttack = false;
+		isAttacking = false;
+		cooldown = 1f;
+		duration = 0.1f;
+		velocity = 15f;
+		animSeconds = 0.3f;
 	}
 
 	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
+		isMultiEnemy = false;
+		canAttack = false;
+		isAttacking = false;
+		cooldown = 1f;
+		duration = 0.1f;
+		velocity = 15f;
+		animSeconds = 0.3f;
 	}
 
 	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
+		isMultiEnemy = false;
+		canAttack = false;
+		isAttacking = false;
+		cooldown = 1f;
+		duration = 0.1f;
+		velocity = 15f;
+		animSeconds = 0.3f;
 	}
 
 	public override void SetupRanged(BoxCollider2D boxCollider) {
