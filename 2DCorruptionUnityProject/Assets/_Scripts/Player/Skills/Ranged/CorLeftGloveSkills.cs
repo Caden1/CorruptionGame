@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CorruptionRangedSkills : RangedSkills
+public class CorLeftGloveSkills : LeftGloveSkills
 {
 	private List<GameObject> projectileClonesRight;
 	private List<GameObject> projectileClonesLeft;

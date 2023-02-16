@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PurityRangedSkills : RangedSkills
+public class PurityLeftGloveSkills : LeftGloveSkills
 {
 	public void SetPurityDefault() {
 		isMultiEnemy = false;

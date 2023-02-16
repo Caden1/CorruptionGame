@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class JumpSkills
+public abstract class RightBootSkills
 {
 	public bool canJump { get; protected set; }
 	public bool canJumpCancel { get; protected set; }
@@ -15,7 +15,7 @@ public abstract class JumpSkills
 	protected float archVelocityThreshold;
 	protected float archGravity;
 
-	public JumpSkills(Rigidbody2D rigidbody) {
+	public RightBootSkills(Rigidbody2D rigidbody) {
 		this.rigidbody = rigidbody;
 		startingGravity = rigidbody.gravityScale;
 	}

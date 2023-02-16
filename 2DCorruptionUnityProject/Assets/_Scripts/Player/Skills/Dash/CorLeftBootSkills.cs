@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CorruptionDashSkills : DashSkills
+public class CorLeftBootSkills : LeftBootSkills
 {
 	public float damage { get; protected set; }
 
-	public CorruptionDashSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
+	public CorLeftBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetCorruptionDefault() {
 		moveVelocity = 4f;

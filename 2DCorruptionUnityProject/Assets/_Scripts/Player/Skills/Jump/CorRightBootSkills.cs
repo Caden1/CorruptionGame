@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CorruptionJumpSkills : JumpSkills
+public class CorRightBootSkills : RightBootSkills
 {
 	protected ContactFilter2D contactFilter;
 	private Vector2 attackOriginRight;
@@ -17,7 +17,7 @@ public class CorruptionJumpSkills : JumpSkills
 	private List<GameObject> attackClonesRight;
 	private List<GameObject> attackClonesLeft;
 
-	public CorruptionJumpSkills(Rigidbody2D rigidbody, ContactFilter2D contactFilter) : base(rigidbody) {
+	public CorRightBootSkills(Rigidbody2D rigidbody, ContactFilter2D contactFilter) : base(rigidbody) {
 		this.contactFilter = contactFilter;
 	}
 

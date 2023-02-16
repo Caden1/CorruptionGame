@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PurityDashSkills : DashSkills
+public class PurityLeftBootSkills : LeftBootSkills
 {
-	public PurityDashSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
+	public PurityLeftBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetPurityDefault() {
 		moveVelocity = 4f;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class DashSkills
+public abstract class LeftBootSkills
 {
 	protected Rigidbody2D rigidbody;
 	protected Vector2 dashDirection;
@@ -14,7 +14,7 @@ public abstract class DashSkills
 	public float secondsToDash { get; protected set; }
 	protected float cooldown;
 
-	public DashSkills(Rigidbody2D rigidbody) {
+	public LeftBootSkills(Rigidbody2D rigidbody) {
 		this.rigidbody = rigidbody;
 		startingGravity = rigidbody.gravityScale;
 	}

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PurityJumpSkills : JumpSkills
+public class PurityRightBootSkills : RightBootSkills
 {
 	private int jumpCount = 0;
 
-	public PurityJumpSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
+	public PurityRightBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public void SetPurityDefault() {
 		canJump = false;

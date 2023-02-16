@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RangedSkills
+public abstract class LeftGloveSkills
 {
 	public bool canAttack;
 	public bool isAttacking;

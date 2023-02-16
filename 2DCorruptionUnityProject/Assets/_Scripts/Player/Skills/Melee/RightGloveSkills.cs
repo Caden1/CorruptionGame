@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MeleeSkills
+public abstract class RightGloveSkills
 {
 	public bool canMelee { get; protected set; }
 	public bool isAnimating { get; protected set; }
@@ -13,7 +13,7 @@ public abstract class MeleeSkills
 	protected float meleeDuration;
 	protected float animationDuration;
 
-	public MeleeSkills(BoxCollider2D boxCollider) {
+	public RightGloveSkills(BoxCollider2D boxCollider) {
 		this.boxCollider = boxCollider;
 	}
 
