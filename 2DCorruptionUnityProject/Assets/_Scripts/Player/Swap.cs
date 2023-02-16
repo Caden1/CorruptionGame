@@ -75,7 +75,11 @@ public class Swap
 	}
 
     public void InitialGemState() {
-		if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Corruption) {
+		if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Purity && BootsGem.bootsGemState == BootsGem.BootsGemState.None) {
+
+		} else if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.None && BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
+
+		} else if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Corruption && BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
 			switch (RightGloveModGem.rightGloveModGemState) {
 				case (RightGloveModGem.RightGloveModGemState.None):
 					corRightGloveSkills.SetCorruptionDefault();
@@ -120,7 +124,51 @@ public class Swap
 					swapUI.SetLeftGloveGem(corEarthGlove);
 					break;
 			}
-		} else if (glovesGemState == GlovesGemState.Purity) {
+			switch (RightBootModGem.rightBootModGemState) {
+				case RightBootModGem.RightBootModGemState.None:
+					purityRightBootSkills.SetPurityDefault();
+					swapUI.SetRightBootGem(pureOnlyBoot);
+					break;
+				case RightBootModGem.RightBootModGemState.Air:
+					purityRightBootSkills.SetAirModifiers();
+					swapUI.SetRightBootGem(pureAirBoot);
+					break;
+				case RightBootModGem.RightBootModGemState.Fire:
+					purityRightBootSkills.SetFireModifiers();
+					swapUI.SetRightBootGem(pureFireBoot);
+					break;
+				case RightBootModGem.RightBootModGemState.Water:
+					purityRightBootSkills.SetWaterModifiers();
+					swapUI.SetRightBootGem(pureWaterBoot);
+					break;
+				case RightBootModGem.RightBootModGemState.Earth:
+					purityRightBootSkills.SetEarthModifiers();
+					swapUI.SetRightBootGem(pureEarthBoot);
+					break;
+			}
+			switch (LeftBootModGem.leftBootModGemState) {
+				case LeftBootModGem.LeftBootModGemState.None:
+					purityLeftBootSkills.SetPurityDefault();
+					swapUI.SetLeftBootGem(pureOnlyBoot);
+					break;
+				case LeftBootModGem.LeftBootModGemState.Air:
+					purityLeftBootSkills.SetAirModifiers();
+					swapUI.SetLeftBootGem(pureAirBoot);
+					break;
+				case LeftBootModGem.LeftBootModGemState.Fire:
+					purityLeftBootSkills.SetFireModifiers();
+					swapUI.SetLeftBootGem(pureFireBoot);
+					break;
+				case LeftBootModGem.LeftBootModGemState.Water:
+					purityLeftBootSkills.SetWaterModifiers();
+					swapUI.SetLeftBootGem(pureWaterBoot);
+					break;
+				case LeftBootModGem.LeftBootModGemState.Earth:
+					purityLeftBootSkills.SetEarthModifiers();
+					swapUI.SetLeftBootGem(pureEarthBoot);
+					break;
+			}
+		} else if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Purity && BootsGem.bootsGemState == BootsGem.BootsGemState.Corruption) {
 			switch (RightGloveModGem.rightGloveModGemState) {
 				case (RightGloveModGem.RightGloveModGemState.None):
 					purityRightGloveSkills.SetPurityDefault();
@@ -165,8 +213,6 @@ public class Swap
 					swapUI.SetLeftGloveGem(pureEarthGlove);
 					break;
 			}
-		}
-		if (BootsGem.bootsGemState == BootsGem.BootsGemState.Corruption) {
 			switch (RightBootModGem.rightBootModGemState) {
 				case RightBootModGem.RightBootModGemState.None:
 					corRightBootSkills.SetCorruptionDefault();
@@ -209,59 +255,15 @@ public class Swap
 				case LeftBootModGem.LeftBootModGemState.Earth:
 					corLeftBootSkills.SetEarthModifiers();
 					swapUI.SetLeftBootGem(corEarthBoot);
-					break;
-			}
-		} else if (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
-			switch (RightBootModGem.rightBootModGemState) {
-				case RightBootModGem.RightBootModGemState.None:
-					purityRightBootSkills.SetPurityDefault();
-					swapUI.SetRightBootGem(pureOnlyBoot);
-					break;
-				case RightBootModGem.RightBootModGemState.Air:
-					purityRightBootSkills.SetAirModifiers();
-					swapUI.SetRightBootGem(pureAirBoot);
-					break;
-				case RightBootModGem.RightBootModGemState.Fire:
-					purityRightBootSkills.SetFireModifiers();
-					swapUI.SetRightBootGem(pureFireBoot);
-					break;
-				case RightBootModGem.RightBootModGemState.Water:
-					purityRightBootSkills.SetWaterModifiers();
-					swapUI.SetRightBootGem(pureWaterBoot);
-					break;
-				case RightBootModGem.RightBootModGemState.Earth:
-					purityRightBootSkills.SetEarthModifiers();
-					swapUI.SetRightBootGem(pureEarthBoot);
-					break;
-			}
-			switch (LeftBootModGem.leftBootModGemState) {
-				case LeftBootModGem.LeftBootModGemState.None:
-					purityLeftBootSkills.SetPurityDefault();
-					swapUI.SetLeftBootGem(pureOnlyBoot);
-					break;
-				case LeftBootModGem.LeftBootModGemState.Air:
-					purityLeftBootSkills.SetAirModifiers();
-					swapUI.SetLeftBootGem(pureAirBoot);
-					break;
-				case LeftBootModGem.LeftBootModGemState.Fire:
-					purityLeftBootSkills.SetFireModifiers();
-					swapUI.SetLeftBootGem(pureFireBoot);
-					break;
-				case LeftBootModGem.LeftBootModGemState.Water:
-					purityLeftBootSkills.SetWaterModifiers();
-					swapUI.SetLeftBootGem(pureWaterBoot);
-					break;
-				case LeftBootModGem.LeftBootModGemState.Earth:
-					purityLeftBootSkills.SetEarthModifiers();
-					swapUI.SetLeftBootGem(pureEarthBoot);
 					break;
 			}
 		}
 	}
 
 	public void SwapCorruptionAndPurity() {
-		if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Corruption) {
-			GlovesGem.glovesGemState = GlovesGemState.Purity;
+		if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Corruption && BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
+			GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
+			BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
 			switch (RightGloveModGem.rightGloveModGemState) {
 				case (RightGloveModGem.RightGloveModGemState.None):
 					purityRightGloveSkills.SetPurityDefault();
@@ -306,101 +308,6 @@ public class Swap
 					swapUI.SetLeftGloveGem(pureEarthGlove);
 					break;
 			}
-		} else if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Purity) {
-			GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Corruption;
-			switch (RightGloveModGem.rightGloveModGemState) {
-				case (RightGloveModGem.RightGloveModGemState.None):
-					corRightGloveSkills.SetCorruptionDefault();
-					swapUI.SetRightGloveGem(corOnlyGlove);
-					break;
-				case (RightGloveModGem.RightGloveModGemState.Air):
-					corRightGloveSkills.SetAirModifiers();
-					swapUI.SetRightGloveGem(corAirGlove);
-					break;
-				case (RightGloveModGem.RightGloveModGemState.Fire):
-					corRightGloveSkills.SetFireModifiers();
-					swapUI.SetRightGloveGem(corFireGlove);
-					break;
-				case (RightGloveModGem.RightGloveModGemState.Water):
-					corRightGloveSkills.SetWaterModifiers();
-					swapUI.SetRightGloveGem(corWaterGlove);
-					break;
-				case (RightGloveModGem.RightGloveModGemState.Earth):
-					corRightGloveSkills.SetEarthModifiers();
-					swapUI.SetRightGloveGem(corEarthGlove);
-					break;
-			}
-			switch (LeftGloveModGem.leftGloveModGemState) {
-				case (LeftGloveModGem.LeftGloveModGemState.None):
-					corLeftGloveSkills.SetCorruptionDefault();
-					swapUI.SetLeftGloveGem(corOnlyGlove);
-					break;
-				case (LeftGloveModGem.LeftGloveModGemState.Air):
-					corLeftGloveSkills.SetAirModifiers();
-					swapUI.SetLeftGloveGem(corAirGlove);
-					break;
-				case (LeftGloveModGem.LeftGloveModGemState.Fire):
-					corLeftGloveSkills.SetFireModifiers();
-					swapUI.SetLeftGloveGem(corFireGlove);
-					break;
-				case (LeftGloveModGem.LeftGloveModGemState.Water):
-					corLeftGloveSkills.SetWaterModifiers();
-					swapUI.SetLeftGloveGem(corWaterGlove);
-					break;
-				case (LeftGloveModGem.LeftGloveModGemState.Earth):
-					corLeftGloveSkills.SetEarthModifiers();
-					swapUI.SetLeftGloveGem(corEarthGlove);
-					break;
-			}
-		}
-		if (BootsGem.bootsGemState == BootsGem.BootsGemState.Corruption) {
-			BootsGem.bootsGemState = BootsGem.BootsGemState.Purity;
-			switch (RightBootModGem.rightBootModGemState) {
-				case RightBootModGem.RightBootModGemState.None:
-					purityRightBootSkills.SetPurityDefault();
-					swapUI.SetRightBootGem(pureOnlyBoot);
-					break;
-				case RightBootModGem.RightBootModGemState.Air:
-					purityRightBootSkills.SetAirModifiers();
-					swapUI.SetRightBootGem(pureAirBoot);
-					break;
-				case RightBootModGem.RightBootModGemState.Fire:
-					purityRightBootSkills.SetFireModifiers();
-					swapUI.SetRightBootGem(pureFireBoot);
-					break;
-				case RightBootModGem.RightBootModGemState.Water:
-					purityRightBootSkills.SetWaterModifiers();
-					swapUI.SetRightBootGem(pureWaterBoot);
-					break;
-				case RightBootModGem.RightBootModGemState.Earth:
-					purityRightBootSkills.SetEarthModifiers();
-					swapUI.SetRightBootGem(pureEarthBoot);
-					break;
-			}
-			switch (LeftBootModGem.leftBootModGemState) {
-				case LeftBootModGem.LeftBootModGemState.None:
-					purityLeftBootSkills.SetPurityDefault();
-					swapUI.SetLeftBootGem(pureOnlyBoot);
-					break;
-				case LeftBootModGem.LeftBootModGemState.Air:
-					purityLeftBootSkills.SetAirModifiers();
-					swapUI.SetLeftBootGem(pureAirBoot);
-					break;
-				case LeftBootModGem.LeftBootModGemState.Fire:
-					purityLeftBootSkills.SetFireModifiers();
-					swapUI.SetLeftBootGem(pureFireBoot);
-					break;
-				case LeftBootModGem.LeftBootModGemState.Water:
-					purityLeftBootSkills.SetWaterModifiers();
-					swapUI.SetLeftBootGem(pureWaterBoot);
-					break;
-				case LeftBootModGem.LeftBootModGemState.Earth:
-					purityLeftBootSkills.SetEarthModifiers();
-					swapUI.SetLeftBootGem(pureEarthBoot);
-					break;
-			}
-		} else if (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
-			BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
 			switch (RightBootModGem.rightBootModGemState) {
 				case RightBootModGem.RightBootModGemState.None:
 					corRightBootSkills.SetCorruptionDefault();
@@ -445,15 +352,98 @@ public class Swap
 					swapUI.SetLeftBootGem(corEarthBoot);
 					break;
 			}
+		} else if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Purity && BootsGem.bootsGemState == BootsGem.BootsGemState.Corruption) {
+			GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Corruption;
+			BootsGem.bootsGemState = BootsGem.BootsGemState.Purity;
+			switch (RightGloveModGem.rightGloveModGemState) {
+				case (RightGloveModGem.RightGloveModGemState.None):
+					corRightGloveSkills.SetCorruptionDefault();
+					swapUI.SetRightGloveGem(corOnlyGlove);
+					break;
+				case (RightGloveModGem.RightGloveModGemState.Air):
+					corRightGloveSkills.SetAirModifiers();
+					swapUI.SetRightGloveGem(corAirGlove);
+					break;
+				case (RightGloveModGem.RightGloveModGemState.Fire):
+					corRightGloveSkills.SetFireModifiers();
+					swapUI.SetRightGloveGem(corFireGlove);
+					break;
+				case (RightGloveModGem.RightGloveModGemState.Water):
+					corRightGloveSkills.SetWaterModifiers();
+					swapUI.SetRightGloveGem(corWaterGlove);
+					break;
+				case (RightGloveModGem.RightGloveModGemState.Earth):
+					corRightGloveSkills.SetEarthModifiers();
+					swapUI.SetRightGloveGem(corEarthGlove);
+					break;
+			}
+			switch (LeftGloveModGem.leftGloveModGemState) {
+				case (LeftGloveModGem.LeftGloveModGemState.None):
+					corLeftGloveSkills.SetCorruptionDefault();
+					swapUI.SetLeftGloveGem(corOnlyGlove);
+					break;
+				case (LeftGloveModGem.LeftGloveModGemState.Air):
+					corLeftGloveSkills.SetAirModifiers();
+					swapUI.SetLeftGloveGem(corAirGlove);
+					break;
+				case (LeftGloveModGem.LeftGloveModGemState.Fire):
+					corLeftGloveSkills.SetFireModifiers();
+					swapUI.SetLeftGloveGem(corFireGlove);
+					break;
+				case (LeftGloveModGem.LeftGloveModGemState.Water):
+					corLeftGloveSkills.SetWaterModifiers();
+					swapUI.SetLeftGloveGem(corWaterGlove);
+					break;
+				case (LeftGloveModGem.LeftGloveModGemState.Earth):
+					corLeftGloveSkills.SetEarthModifiers();
+					swapUI.SetLeftGloveGem(corEarthGlove);
+					break;
+			}
+			switch (RightBootModGem.rightBootModGemState) {
+				case RightBootModGem.RightBootModGemState.None:
+					purityRightBootSkills.SetPurityDefault();
+					swapUI.SetRightBootGem(pureOnlyBoot);
+					break;
+				case RightBootModGem.RightBootModGemState.Air:
+					purityRightBootSkills.SetAirModifiers();
+					swapUI.SetRightBootGem(pureAirBoot);
+					break;
+				case RightBootModGem.RightBootModGemState.Fire:
+					purityRightBootSkills.SetFireModifiers();
+					swapUI.SetRightBootGem(pureFireBoot);
+					break;
+				case RightBootModGem.RightBootModGemState.Water:
+					purityRightBootSkills.SetWaterModifiers();
+					swapUI.SetRightBootGem(pureWaterBoot);
+					break;
+				case RightBootModGem.RightBootModGemState.Earth:
+					purityRightBootSkills.SetEarthModifiers();
+					swapUI.SetRightBootGem(pureEarthBoot);
+					break;
+			}
+			switch (LeftBootModGem.leftBootModGemState) {
+				case LeftBootModGem.LeftBootModGemState.None:
+					purityLeftBootSkills.SetPurityDefault();
+					swapUI.SetLeftBootGem(pureOnlyBoot);
+					break;
+				case LeftBootModGem.LeftBootModGemState.Air:
+					purityLeftBootSkills.SetAirModifiers();
+					swapUI.SetLeftBootGem(pureAirBoot);
+					break;
+				case LeftBootModGem.LeftBootModGemState.Fire:
+					purityLeftBootSkills.SetFireModifiers();
+					swapUI.SetLeftBootGem(pureFireBoot);
+					break;
+				case LeftBootModGem.LeftBootModGemState.Water:
+					purityLeftBootSkills.SetWaterModifiers();
+					swapUI.SetLeftBootGem(pureWaterBoot);
+					break;
+				case LeftBootModGem.LeftBootModGemState.Earth:
+					purityLeftBootSkills.SetEarthModifiers();
+					swapUI.SetLeftBootGem(pureEarthBoot);
+					break;
+			}
 		}
-	}
-
-	public void RotateModGemsClockwiseWithOnlyPure() {
-
-	}
-
-	public void RotateModGemsCounterclockwiseWithOnlyPure() {
-
 	}
 
 	public void RotateModGemsClockwiseWithPureAndCor() {

@@ -15,7 +15,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		meleeDuration = 0.1f;
 		animationDuration = 0.2f;
 		damage = 5f;
-}
+	}
 
 	public override void SetAirModifiers() {
 		canMelee = false;

@@ -218,12 +218,12 @@ public class PlayerController : MonoBehaviour
 
 	private void LoadGemAndSkillStates() {
 		/* These lines of code before the if-statement will need to be loaded from persistent data */
-		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Corruption;
-		BootsGem.bootsGemState = BootsGem.BootsGemState.Purity;
+		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
+		BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
 		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.Air;
 		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.Earth;
-		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Water;
-		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.Fire;
+		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Fire;
+		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.Water;
 
 		swap.InitialGemState();
 	}
