@@ -115,10 +115,6 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void Update() {
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			Application.Quit();
-		}
-
 		switch (playerState) {
 			case PlayerState.Normal:
 				SetupHorizontalMovement();
