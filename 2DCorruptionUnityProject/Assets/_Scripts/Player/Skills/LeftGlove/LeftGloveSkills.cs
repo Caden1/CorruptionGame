@@ -13,6 +13,8 @@ public abstract class LeftGloveSkills
 	public float velocity { get; protected set; }
 	public float animSeconds { get; protected set; }
 
+	public abstract void SetWithNoModifiers();
+
 	public abstract void SetAirModifiers();
 
 	public abstract void SetFireModifiers();

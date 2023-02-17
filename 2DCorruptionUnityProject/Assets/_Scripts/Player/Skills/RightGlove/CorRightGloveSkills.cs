@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class CorRightGloveSkills : RightGloveSkills
 {
-	public float damage { get; private set; }
-
 	public CorRightGloveSkills(BoxCollider2D boxCollider) : base(boxCollider) { }
 
-	public void SetCorruptionDefault() {
+	public override void SetWithNoModifiers() {
 		canMelee = false;
 		isAnimating = false;
 		cooldown = 0.3f;

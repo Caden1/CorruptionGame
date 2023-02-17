@@ -12,7 +12,7 @@ public class CorLeftGloveSkills : LeftGloveSkills
 	private float attackVelocity;
 	private float attackDistance;
 
-	public void SetCorruptionDefault() {
+	public override void SetWithNoModifiers() {
 		isMultiEnemy = false;
 		canAttack = false;
 		isAttacking = false;

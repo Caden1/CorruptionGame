@@ -6,12 +6,13 @@ public class PurityRightGloveSkills : RightGloveSkills
 {
 	public PurityRightGloveSkills(BoxCollider2D boxCollider) : base(boxCollider) { }
 
-	public void SetPurityDefault() {
+	public override void SetWithNoModifiers() {
 		canMelee = false;
 		isAnimating = false;
 		cooldown = 0.5f;
 		meleeDuration = 0.3f;
 		animationDuration = 0.1f;
+		damage = 4f;
 	}
 
 	public override void SetAirModifiers() {

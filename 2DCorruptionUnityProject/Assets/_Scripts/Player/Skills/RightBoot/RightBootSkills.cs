@@ -20,6 +20,8 @@ public abstract class RightBootSkills
 		startingGravity = rigidbody.gravityScale;
 	}
 
+	public abstract void SetWithNoModifiers();
+
 	public abstract void SetAirModifiers();
 
 	public abstract void SetFireModifiers();

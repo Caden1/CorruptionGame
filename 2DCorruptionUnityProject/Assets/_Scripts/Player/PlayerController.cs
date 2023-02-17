@@ -45,15 +45,18 @@ public class PlayerController : MonoBehaviour
 	private SpriteRenderer playerSpriteRenderer;
 	private CustomAnimation playerAnimations;
 	private SwapUI swapUI;
+	private NoGemsRightGloveSkills noGemsRightGloveSkills;
 	private CorRightGloveSkills corRightGloveSkills;
 	private PurityRightGloveSkills purityRightGloveSkills;
+	private NoGemsLeftGloveSkills noGemsLeftGloveSkills;
+	private CorLeftGloveSkills corLeftGloveSkills;
+	private PurityLeftGloveSkills purityLeftGloveSkills;
+	private NoGemsRightBootSkills noGemsRightBootSkills;
 	private CorRightBootSkills corRightBootSkills;
 	private PurityRightBootSkills purityRightBootSkills;
 	private NoGemsLeftBootSkills noGemsLeftBootSkills;
 	private CorLeftBootSkills corLeftBootSkills;
 	private PurityLeftBootSkills purityLeftBootSkills;
-	private CorLeftGloveSkills corLeftGloveSkills;
-	private PurityLeftGloveSkills purityLeftGloveSkills;
 
 	private Swap swap;
 
@@ -82,18 +85,21 @@ public class PlayerController : MonoBehaviour
 		playerSpriteRenderer = GetComponent<SpriteRenderer>();
 		playerAnimations = new CustomAnimation(playerAnimator);
 		swapUI = new SwapUI(gemSwapUIDoc);
+		noGemsRightGloveSkills = new NoGemsRightGloveSkills(playerBoxCollider);
 		corRightGloveSkills = new CorRightGloveSkills(playerBoxCollider);
+		purityRightGloveSkills = new PurityRightGloveSkills(playerBoxCollider);
+		noGemsLeftGloveSkills = new NoGemsLeftGloveSkills();
 		corLeftGloveSkills = new CorLeftGloveSkills();
+		purityLeftGloveSkills = new PurityLeftGloveSkills();
+		noGemsRightBootSkills = new NoGemsRightBootSkills(playerRigidBody, enemyContactFilter);
 		corRightBootSkills = new CorRightBootSkills(playerRigidBody, enemyContactFilter);
+		purityRightBootSkills = new PurityRightBootSkills(playerRigidBody);
 		noGemsLeftBootSkills = new NoGemsLeftBootSkills(playerRigidBody);
 		corLeftBootSkills = new CorLeftBootSkills(playerRigidBody);
-		purityRightGloveSkills = new PurityRightGloveSkills(playerBoxCollider);
-		purityLeftGloveSkills = new PurityLeftGloveSkills();
-		purityRightBootSkills = new PurityRightBootSkills(playerRigidBody);
 		purityLeftBootSkills = new PurityLeftBootSkills(playerRigidBody);
 
 		swap = new Swap(swapUI,
-			noGemsLeftBootSkills,
+			noGemsRightGloveSkills, noGemsLeftGloveSkills, noGemsRightBootSkills, noGemsLeftBootSkills,
 			corRightGloveSkills, corLeftGloveSkills, corRightBootSkills, corLeftBootSkills,
 			purityRightGloveSkills, purityLeftGloveSkills, purityRightBootSkills, purityLeftBootSkills,
 			corOnlyGlove, corAirGlove, corFireGlove, corWaterGlove, corEarthGlove, corOnlyBoot, corAirBoot, corFireBoot, corWaterBoot, corEarthBoot,
@@ -129,9 +135,9 @@ public class PlayerController : MonoBehaviour
 				if (playerInputActions.Player.Swap.WasPressedThisFrame())
 					swap.SwapCorruptionAndPurity();
 				if (playerInputActions.Player.RotateCounterclockwise.WasPressedThisFrame())
-					swap.RotateModGemsCounterclockwiseWithPureAndCor();
+					swap.RotateModGemsCounterclockwise();
 				if (playerInputActions.Player.RotateClockwise.WasPressedThisFrame())
-					swap.RotateModGemsClockwiseWithPureAndCor();
+					swap.RotateModGemsClockwise();
 				break;
 			case PlayerState.Dash:
 				SetupDash();
@@ -173,14 +179,14 @@ public class PlayerController : MonoBehaviour
 		switch (playerState) {
 			case PlayerState.Normal:
 				PerformHorizontalMovement();
-				if (corRightBootSkills.canJump || purityRightBootSkills.canJump)
-					PerformJump();
-				if (corRightBootSkills.canJumpCancel || purityRightBootSkills.canJumpCancel)
-					PerformJumpCancel();
-				if (corRightGloveSkills.canMelee || purityRightGloveSkills.canMelee)
+				if (noGemsRightGloveSkills.canMelee || corRightGloveSkills.canMelee || purityRightGloveSkills.canMelee)
 					PerformMelee();
-				if (corLeftGloveSkills.canAttack || purityLeftGloveSkills.canAttack)
+				if (noGemsLeftGloveSkills.canAttack || corLeftGloveSkills.canAttack || purityLeftGloveSkills.canAttack)
 					PerformRanged();
+				if (noGemsRightBootSkills.canJump || corRightBootSkills.canJump || purityRightBootSkills.canJump)
+					PerformJump();
+				if (noGemsRightBootSkills.canJumpCancel || corRightBootSkills.canJumpCancel || purityRightBootSkills.canJumpCancel)
+					PerformJumpCancel();
 				break;
 			case PlayerState.Dash:
 				PerformDash();
@@ -202,13 +208,13 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void LoadGemAndSkillStates() {
-		/* These lines of code before the if-statement will need to be loaded from persistent data */
+		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
 		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
 		BootsGem.bootsGemState = BootsGem.BootsGemState.None;
-		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
-		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.None;
-		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
-		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
+		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.Air;
+		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.Water;
+		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Fire;
+		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.Earth;
 
 		swap.InitialGemState();
 	}
@@ -255,6 +261,9 @@ public class PlayerController : MonoBehaviour
 
 	private void SetGravity() {
 		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemsRightBootSkills.SetGravity();
+				break;
 			case BootsGem.BootsGemState.Corruption:
 				corRightBootSkills.SetGravity();
 				break;
@@ -281,6 +290,9 @@ public class PlayerController : MonoBehaviour
 
 	private void SetupJump() {
 		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
+				break;
 			case BootsGem.BootsGemState.Corruption:
 				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
@@ -292,6 +304,9 @@ public class PlayerController : MonoBehaviour
 
 	private void PerformJump() {
 		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemsRightBootSkills.PerformJump(corruptionJumpProjectile);
+				break;
 			case BootsGem.BootsGemState.Corruption:
 				corRightBootSkills.PerformJump(corruptionJumpProjectile);
 				break;
@@ -304,6 +319,9 @@ public class PlayerController : MonoBehaviour
 	private void SetupJumpCancel() {
 		if (playerRigidBody.velocity.y > 0) {
 			switch (BootsGem.bootsGemState) {
+				case BootsGem.BootsGemState.None:
+					noGemsRightBootSkills.SetupJumpCancel();
+					break;
 				case BootsGem.BootsGemState.Corruption:
 					corRightBootSkills.SetupJumpCancel();
 					break;
@@ -316,6 +334,9 @@ public class PlayerController : MonoBehaviour
 
 	private void PerformJumpCancel() {
 		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemsRightBootSkills.PerformJumpCancel();
+				break;
 			case BootsGem.BootsGemState.Corruption:
 				corRightBootSkills.PerformJumpCancel();
 				break;

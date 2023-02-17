@@ -9,6 +9,7 @@ public abstract class RightGloveSkills
 	protected Vector2 attackOrigin;
 	protected BoxCollider2D boxCollider;
 	protected GameObject meleeEffectClone;
+	protected float damage;
 	protected float cooldown;
 	protected float meleeDuration;
 	protected float animationDuration;
@@ -16,6 +17,8 @@ public abstract class RightGloveSkills
 	public RightGloveSkills(BoxCollider2D boxCollider) {
 		this.boxCollider = boxCollider;
 	}
+
+	public abstract void SetWithNoModifiers();
 
 	public abstract void SetAirModifiers();
 

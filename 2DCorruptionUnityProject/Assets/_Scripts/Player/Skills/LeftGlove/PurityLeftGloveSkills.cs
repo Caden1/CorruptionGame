@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PurityLeftGloveSkills : LeftGloveSkills
 {
-	public void SetPurityDefault() {
+	public override void SetWithNoModifiers() {
 		isMultiEnemy = false;
 		canAttack = false;
 		isAttacking = false;

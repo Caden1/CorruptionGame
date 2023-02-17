@@ -21,7 +21,7 @@ public class CorRightBootSkills : RightBootSkills
 		this.contactFilter = contactFilter;
 	}
 
-	public void SetCorruptionDefault() {
+	public override void SetWithNoModifiers() {
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;

@@ -2,65 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PurityRightBootSkills : RightBootSkills
+public class NoGemsRightBootSkills : RightBootSkills
 {
+	protected ContactFilter2D contactFilter;
 	private int jumpCount = 0;
 
-	public PurityRightBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
+	public NoGemsRightBootSkills(Rigidbody2D rigidbody, ContactFilter2D contactFilter) : base(rigidbody) {
+		this.contactFilter = contactFilter;
+	}
 
-	public override void SetWithNoModifiers() {
+	public void SetWithNoGems() {
 		canJump = false;
 		canJumpCancel = false;
-		numjumps = 2;
+		numjumps = 1;
 		velocity = 5f;
-		jumpGravity = 1f;
-		fallGravity = 1.5f;
-		archVelocityThreshold = 1f;
-		archGravity = 2f;
+		jumpGravity = 2f;
+		fallGravity = 2f;
+		archVelocityThreshold = 3f;
+		archGravity = 5f;
+	}
+
+	public override void SetWithNoModifiers() {
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetAirModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 3;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 1.5f;
-		archVelocityThreshold = 1f;
-		archGravity = 2f;
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetFireModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 3;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 1.5f;
-		archVelocityThreshold = 1f;
-		archGravity = 2f;
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetWaterModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 3;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 1.5f;
-		archVelocityThreshold = 1f;
-		archGravity = 2f;
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetEarthModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 3;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 1.5f;
-		archVelocityThreshold = 1f;
-		archGravity = 2f;
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetGravity() {
@@ -90,7 +69,7 @@ public class PurityRightBootSkills : RightBootSkills
 	}
 
 	public override void ShootProjectile() {
-		
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetupJumpCancel() {
