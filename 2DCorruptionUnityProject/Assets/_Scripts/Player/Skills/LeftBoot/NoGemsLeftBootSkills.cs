@@ -2,50 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PurityLeftBootSkills : LeftBootSkills
+public class NoGemsLeftBootSkills : LeftBootSkills
 {
-	public PurityLeftBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
+	public NoGemsLeftBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
-	public override void SetWithNoModifiers() {
+	public void SetWithNoGems() {
 		numDashes = 1f;
-		dashVelocity = 8f;
+		dashVelocity = 6f;
 		secondsToDash = 0.25f;
-		cooldown = 2f;
+		cooldown = 4f;
 	}
 
-	public void SetPurityDefault() {
-		numDashes = 2f;
-		dashVelocity = 10f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+	public override void SetWithNoModifiers() {
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetAirModifiers() {
-		numDashes = 2f;
-		dashVelocity = 20f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetFireModifiers() {
-		numDashes = 2f;
-		dashVelocity = 20f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetWaterModifiers() {
-		numDashes = 2f;
-		dashVelocity = 20f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetEarthModifiers() {
-		numDashes = 2f;
-		dashVelocity = 20f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetupDash(bool isFacingRight) {

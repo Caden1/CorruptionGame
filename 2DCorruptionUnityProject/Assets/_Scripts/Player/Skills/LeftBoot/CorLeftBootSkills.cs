@@ -8,17 +8,15 @@ public class CorLeftBootSkills : LeftBootSkills
 
 	public CorLeftBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
-	public void SetCorruptionDefault() {
-		moveVelocity = 4f;
+	public override void SetWithNoModifiers() {
 		numDashes = 1f;
-		dashVelocity = 6f;
+		dashVelocity = 8f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
 		damage = 2f;
 	}
 
 	public override void SetAirModifiers() {
-		moveVelocity = 4f;
 		numDashes = 1f;
 		dashVelocity = 12f;
 		secondsToDash = 0.25f;
@@ -27,7 +25,6 @@ public class CorLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetFireModifiers() {
-		moveVelocity = 4f;
 		numDashes = 1f;
 		dashVelocity = 12f;
 		secondsToDash = 0.25f;
@@ -36,7 +33,6 @@ public class CorLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetWaterModifiers() {
-		moveVelocity = 4f;
 		numDashes = 1f;
 		dashVelocity = 12f;
 		secondsToDash = 0.25f;
@@ -45,16 +41,11 @@ public class CorLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetEarthModifiers() {
-		moveVelocity = 4f;
 		numDashes = 1f;
 		dashVelocity = 12f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
 		damage = 2f;
-	}
-
-	public override void PerformHorizontalMovement(float xMoveDirection) {
-		rigidbody.velocity = new Vector2(xMoveDirection * moveVelocity, rigidbody.velocity.y);
 	}
 
 	public override void SetupDash(bool isFacingRight) {

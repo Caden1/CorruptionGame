@@ -7,7 +7,6 @@ public abstract class LeftBootSkills
 {
 	protected Rigidbody2D rigidbody;
 	protected Vector2 dashDirection;
-	protected float moveVelocity;
 	protected float startingGravity;
 	protected float numDashes;
 	protected float dashVelocity;
@@ -19,6 +18,8 @@ public abstract class LeftBootSkills
 		startingGravity = rigidbody.gravityScale;
 	}
 
+	public abstract void SetWithNoModifiers();
+
 	public abstract void SetAirModifiers();
 
 	public abstract void SetFireModifiers();
@@ -26,8 +27,6 @@ public abstract class LeftBootSkills
 	public abstract void SetWaterModifiers();
 
 	public abstract void SetEarthModifiers();
-
-	public abstract void PerformHorizontalMovement(float xMoveDirection);
 
 	public abstract void SetupDash(bool isFacingRight);
 

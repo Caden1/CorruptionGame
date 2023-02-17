@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 	private PurityRightGloveSkills purityRightGloveSkills;
 	private CorRightBootSkills corRightBootSkills;
 	private PurityRightBootSkills purityRightBootSkills;
+	private NoGemsLeftBootSkills noGemsLeftBootSkills;
 	private CorLeftBootSkills corLeftBootSkills;
 	private PurityLeftBootSkills purityLeftBootSkills;
 	private CorLeftGloveSkills corLeftGloveSkills;
@@ -65,15 +66,9 @@ public class PlayerController : MonoBehaviour
 	private Vector2 moveDirection;
 	private Vector2 meleeDirection;
 
-	private const string IDLE_COR_GLOVE_PURE_BOOT_ANIM = "IdleCorGlovePureBoot";
-	private const string IDLE_PURE_GLOVE_COR_BOOT_ANIM = "IdlePureGloveCorBoot";
-	private const string PURE_RUN_ANIM = "PureRun";
-	private const string PURE_JUMP_ANIM = "PureJump";
-	private const string FALL_COR_GLOVE_PURE_BOOT_ANIM = "FallCorGlovePureBoot";
-	private const string PURE_DASH_ANIM = "PureDash";
-	private const string COR_MELEE_ANIM = "CorMelee";
-	private const string COR_RANGED_ANIM = "CorRanged";
+	private const string IDLE_ANIM = "Idle";
 
+	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
 
 	private void Awake() {
@@ -90,19 +85,22 @@ public class PlayerController : MonoBehaviour
 		corRightGloveSkills = new CorRightGloveSkills(playerBoxCollider);
 		corLeftGloveSkills = new CorLeftGloveSkills();
 		corRightBootSkills = new CorRightBootSkills(playerRigidBody, enemyContactFilter);
+		noGemsLeftBootSkills = new NoGemsLeftBootSkills(playerRigidBody);
 		corLeftBootSkills = new CorLeftBootSkills(playerRigidBody);
 		purityRightGloveSkills = new PurityRightGloveSkills(playerBoxCollider);
 		purityLeftGloveSkills = new PurityLeftGloveSkills();
 		purityRightBootSkills = new PurityRightBootSkills(playerRigidBody);
 		purityLeftBootSkills = new PurityLeftBootSkills(playerRigidBody);
 
-		swap = new Swap(swapUI, corRightGloveSkills, corLeftGloveSkills, corRightBootSkills, corLeftBootSkills,
+		swap = new Swap(swapUI,
+			noGemsLeftBootSkills,
+			corRightGloveSkills, corLeftGloveSkills, corRightBootSkills, corLeftBootSkills,
 			purityRightGloveSkills, purityLeftGloveSkills, purityRightBootSkills, purityLeftBootSkills,
 			corOnlyGlove, corAirGlove, corFireGlove, corWaterGlove, corEarthGlove, corOnlyBoot, corAirBoot, corFireBoot, corWaterBoot, corEarthBoot,
 			pureOnlyGlove, pureAirGlove, pureFireGlove, pureWaterGlove, pureEarthGlove, pureOnlyBoot, pureAirBoot, pureFireBoot, pureWaterBoot, pureEarthBoot);
 
 		playerState = PlayerState.Normal;
-		animationState = AnimationState.IdleCorGlovePureBoot;
+		animationState = AnimationState.Idle;
 
 		platformLayerMask = LayerMask.GetMask("Platform");
 		enemyLayerMask = LayerMask.GetMask("Enemy");
@@ -141,35 +139,28 @@ public class PlayerController : MonoBehaviour
 		}
 
 		switch (animationState) {
-			case AnimationState.IdleCorGlovePureBoot:
-				playerAnimations.PlayUnityAnimatorAnimation(IDLE_COR_GLOVE_PURE_BOOT_ANIM);
+			case AnimationState.Idle:
+				playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
 				break;
-			case AnimationState.IdlePureGloveCorBoot:
-				playerAnimations.PlayUnityAnimatorAnimation(IDLE_PURE_GLOVE_COR_BOOT_ANIM);
+			case AnimationState.Run:
 				break;
-			case AnimationState.CorRun:
+			case AnimationState.Fall:
 				break;
-			case AnimationState.PureRun:
+			case AnimationState.CorRightGlove:
 				break;
-			case AnimationState.CorJump:
+			case AnimationState.PureRightGlove:
 				break;
-			case AnimationState.PureJump:
+			case AnimationState.CorLeftGlove:
 				break;
-			case AnimationState.FallCorGlovePureBoot:
+			case AnimationState.PureLeftGlove:
 				break;
-			case AnimationState.FallPureGloveCorBoot:
+			case AnimationState.CorRightBoot:
 				break;
-			case AnimationState.CorDash:
+			case AnimationState.PureRightBoot:
 				break;
-			case AnimationState.PureDash:
+			case AnimationState.CorLeftBoot:
 				break;
-			case AnimationState.CorMelee:
-				break;
-			case AnimationState.PureMelee:
-				break;
-			case AnimationState.CorRanged:
-				break;
-			case AnimationState.PureRanged:
+			case AnimationState.PureLeftBoot:
 				break;
 		}
 
@@ -208,48 +199,39 @@ public class PlayerController : MonoBehaviour
 					pureMeleeEffectAnim.PlayCreatedAnimation(purityRightGloveSkills.GetMeleeEffectClone().GetComponent<SpriteRenderer>());
 				break;
 		}
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.Corruption:
-				break;
-			case BootsGem.BootsGemState.Purity:
-				break;
-		}
 	}
 
 	private void LoadGemAndSkillStates() {
 		/* These lines of code before the if-statement will need to be loaded from persistent data */
 		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
-		BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
-		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.Air;
-		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.Earth;
-		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Fire;
-		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.Water;
+		BootsGem.bootsGemState = BootsGem.BootsGemState.None;
+		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
+		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.None;
+		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
+		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
 
 		swap.InitialGemState();
 	}
 
 	private void SetAnimationState() {
-		if (playerState == PlayerState.Dash) // Need a way to separate CorDash and PureDash
-			animationState = AnimationState.PureDash;
+		if (playerState == PlayerState.Dash)
+			animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? AnimationState.PureLeftBoot : AnimationState.CorLeftBoot;
 		else if (corRightGloveSkills.isAnimating)
-			animationState = AnimationState.CorMelee;
+			animationState = AnimationState.CorRightGlove;
 		else if (purityRightGloveSkills.isAnimating)
-			animationState = AnimationState.PureMelee;
+			animationState = AnimationState.PureRightGlove;
 		else if (corLeftGloveSkills.isAttacking)
-			animationState = AnimationState.CorRanged;
+			animationState = AnimationState.CorLeftGlove;
 		else if (purityLeftGloveSkills.isAttacking)
-			animationState = AnimationState.PureRanged;
-		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f) // Need a way to separate CorRun and PureRun
-			animationState = AnimationState.PureRun;
-		else if (playerRigidBody.velocity.y > 0f) // Need a way to separate CorJump and PureJump
-			animationState = AnimationState.PureJump;
-		else if (playerRigidBody.velocity.y < 0f) // Need a way to separate FallCorGlovePureBoot and FallPureGloveCorBoot
-			animationState = AnimationState.FallCorGlovePureBoot;
+			animationState = AnimationState.PureLeftGlove;
+		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f)
+			animationState = AnimationState.Run;
+		else if (playerRigidBody.velocity.y > 0f)
+			animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? AnimationState.PureRightBoot : AnimationState.CorRightBoot;
+		else if (playerRigidBody.velocity.y < 0f)
+			animationState = AnimationState.Fall;
 		else {
-			if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Corruption && BootsGem.bootsGemState == BootsGem.BootsGemState.Purity)
-				animationState = AnimationState.IdleCorGlovePureBoot;
-			else if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Purity && BootsGem.bootsGemState == BootsGem.BootsGemState.Corruption)
-				animationState = AnimationState.IdlePureGloveCorBoot;
+			animationState = AnimationState.Idle;
 		}
 	}
 
@@ -294,14 +276,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformHorizontalMovement() {
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.Corruption:
-				corLeftBootSkills.PerformHorizontalMovement(moveDirection.x);
-				break;
-			case BootsGem.BootsGemState.Purity:
-				purityLeftBootSkills.PerformHorizontalMovement(moveDirection.x);
-				break;
-		}
+		playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
 	}
 
 	private void SetupJump() {
@@ -352,6 +327,10 @@ public class PlayerController : MonoBehaviour
 
 	private void SetupDash() {
 		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemsLeftBootSkills.SetupDash(isFacingRight);
+				StartCoroutine(noGemsLeftBootSkills.StartDashCooldown(playerInputActions));
+				break;
 			case BootsGem.BootsGemState.Corruption:
 				corLeftBootSkills.SetupDash(isFacingRight);
 				StartCoroutine(corLeftBootSkills.StartDashCooldown(playerInputActions));
@@ -365,6 +344,10 @@ public class PlayerController : MonoBehaviour
 
 	private void PerformDash() {
 		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				StartCoroutine(noGemsLeftBootSkills.PerformDash());
+				StartCoroutine(SetNormalStateAfterSeconds(noGemsLeftBootSkills.secondsToDash));
+				break;
 			case BootsGem.BootsGemState.Corruption:
 				StartCoroutine(corLeftBootSkills.PerformDash());
 				StartCoroutine(SetNormalStateAfterSeconds(corLeftBootSkills.secondsToDash));

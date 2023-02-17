@@ -1,16 +1,13 @@
 public enum AnimationState {
-	IdleCorGlovePureBoot,
-	IdlePureGloveCorBoot,
-	CorRun,
-	PureRun,
-	CorJump,
-	PureJump,
-	FallCorGlovePureBoot,
-	FallPureGloveCorBoot,
-	CorDash,
-	PureDash,
-	CorMelee,
-	PureMelee,
-	CorRanged,
-	PureRanged
+	Idle,
+	Run,
+	Fall,
+	CorRightGlove,
+	PureRightGlove,
+	CorLeftGlove,
+	PureLeftGlove,
+	CorRightBoot,
+	PureRightBoot,
+	CorLeftBoot,
+	PureLeftBoot
 }

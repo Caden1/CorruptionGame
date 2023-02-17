@@ -28,6 +28,30 @@ public class SwapUI
 		}
 	}
 
+	public void RemoveRightGloveGem() {
+		if (rightGloveEl != null) {
+			rightGloveEl.style.backgroundImage = new StyleBackground();
+		}
+	}
+
+	public void RemoveLeftGloveGem() {
+		if (leftGloveEl != null) {
+			leftGloveEl.style.backgroundImage = new StyleBackground();
+		}
+	}
+
+	public void RemoveRightBootGem() {
+		if (rightBootEl != null) {
+			rightBootEl.style.backgroundImage = new StyleBackground();
+		}
+	}
+
+	public void RemoveLeftBootGem() {
+		if (leftBootEl != null) {
+			leftBootEl.style.backgroundImage = new StyleBackground();
+		}
+	}
+
 	public void SetRightGloveGem(Sprite gem) {
 		if (rightGloveEl != null) {
 			rightGloveEl.style.backgroundImage = new StyleBackground(gem);
