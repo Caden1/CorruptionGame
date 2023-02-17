@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 855522572}
   - component: {fileID: 855522571}
   m_Layer: 5
-  m_Name: UIDocument
+  m_Name: SwapUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -673,7 +673,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d73e9c5df8e4d4d0e95ebf3451d5f105, type: 3}
+  m_Sprite: {fileID: -679310360, guid: 86301c7160c1b4862b4449960151d0ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -786,6 +786,27 @@ MonoBehaviour:
   - {fileID: -1259072125, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
   corruptionJumpProjectile: {fileID: 8560263648916854465, guid: dcc256fd1b0134831aafe4b991f735fb, type: 3}
   corruptionProjectile: {fileID: 6066601356021869870, guid: 98d5786a10a0349519ca399c2a44a5aa, type: 3}
+  gemSwapUIDoc: {fileID: 855522571}
+  corOnlyGlove: {fileID: 21300000, guid: 97cdd49ae4d2b486e93a9bba14bc3512, type: 3}
+  corOnlyBoot: {fileID: 21300000, guid: a31a15abed5bf43b29c569513e0f0bad, type: 3}
+  pureOnlyGlove: {fileID: 21300000, guid: 51d9b536942d1475984d5d8d715c9f18, type: 3}
+  pureOnlyBoot: {fileID: 21300000, guid: 4874b012a704d470cb7a565ccbcf7f53, type: 3}
+  corAirGlove: {fileID: 21300000, guid: 38e69eb47c6de46efb649989b300ea75, type: 3}
+  corAirBoot: {fileID: 21300000, guid: 50bcc44ac539e477aae8a37a611fa108, type: 3}
+  pureAirGlove: {fileID: 21300000, guid: 0b35e0ed5d94344e598f343468ad1b19, type: 3}
+  pureAirBoot: {fileID: 21300000, guid: 5725b047ab2d74e788f4544f5c7f9dbb, type: 3}
+  corFireGlove: {fileID: 21300000, guid: 758f9a06b57b945438440e67a8214ee9, type: 3}
+  corFireBoot: {fileID: 21300000, guid: e4297dfef17fb40b1b2904095c79e426, type: 3}
+  pureFireGlove: {fileID: 21300000, guid: 252c5ece1e0a84e08bf5a04a5c8fbd8f, type: 3}
+  pureFireBoot: {fileID: 21300000, guid: a9dd22fe9f82a45bfbe2893ad5275c58, type: 3}
+  corWaterGlove: {fileID: 21300000, guid: 333efb438e24f4b229209aefdf1da0ab, type: 3}
+  corWaterBoot: {fileID: 21300000, guid: f8572264f6c4d453fbd8fce2ba667fc9, type: 3}
+  pureWaterGlove: {fileID: 21300000, guid: 043a5e8f95bd34d05a9241be99eeaa49, type: 3}
+  pureWaterBoot: {fileID: 21300000, guid: 06c18487add0a4beea893ec274ecdc21, type: 3}
+  corEarthGlove: {fileID: 21300000, guid: f9b5e9383d4084fe9a403587a263c5af, type: 3}
+  corEarthBoot: {fileID: 21300000, guid: 0264112c292084e74b9089fe4378cb98, type: 3}
+  pureEarthGlove: {fileID: 21300000, guid: bb3d07ac4f89545518197861f0228fab, type: 3}
+  pureEarthBoot: {fileID: 21300000, guid: eff73be920f0b49e2bab8f29d6989a9d, type: 3}
 --- !u!1 &1242416417
 GameObject:
   m_ObjectHideFlags: 3
