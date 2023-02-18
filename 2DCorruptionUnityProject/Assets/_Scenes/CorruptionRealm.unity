@@ -778,14 +778,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51043e129809645a6b113eb4d9d7825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  corruptionProjectile: {fileID: 6066601356021869870, guid: 98d5786a10a0349519ca399c2a44a5aa, type: 3}
+  corruptionJumpProjectile: {fileID: 8560263648916854465, guid: dcc256fd1b0134831aafe4b991f735fb, type: 3}
   pureMeleeEffect: {fileID: 1550512535146750824, guid: 9f1b803476b694cf5ab81351b8691abb, type: 3}
   pureMeleeEffectSprites:
   - {fileID: 1620989434, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
   - {fileID: 1465045819, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
   - {fileID: 2101544171, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
   - {fileID: -1259072125, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
-  corruptionJumpProjectile: {fileID: 8560263648916854465, guid: dcc256fd1b0134831aafe4b991f735fb, type: 3}
-  corruptionProjectile: {fileID: 6066601356021869870, guid: 98d5786a10a0349519ca399c2a44a5aa, type: 3}
+  pureEarthPlatform: {fileID: 465465729247891978, guid: c396a3ca6a6084b4f91b29842e8a59f3, type: 3}
   gemSwapUIDoc: {fileID: 855522571}
   corOnlyGlove: {fileID: 21300000, guid: 97cdd49ae4d2b486e93a9bba14bc3512, type: 3}
   corOnlyBoot: {fileID: 21300000, guid: a31a15abed5bf43b29c569513e0f0bad, type: 3}

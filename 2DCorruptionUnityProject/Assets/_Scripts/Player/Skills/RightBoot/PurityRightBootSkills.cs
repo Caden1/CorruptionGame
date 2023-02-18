@@ -5,6 +5,11 @@ using UnityEngine;
 public class PurityRightBootSkills : RightBootSkills
 {
 	private int jumpCount = 0;
+	private bool isRocketBoosted;
+	private bool isEarth;
+	private bool producePlatform;
+	private float originalVelocity;
+	private float rocketBoostVelMultiplier;
 
 	public PurityRightBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
@@ -17,50 +22,53 @@ public class PurityRightBootSkills : RightBootSkills
 		fallGravity = 1.5f;
 		archVelocityThreshold = 1f;
 		archGravity = 2f;
+		isRocketBoosted = false;
+		isEarth = false;
 	}
 
 	public override void SetAirModifiers() {
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 3;
-		velocity = 7f;
+		velocity = 5f;
 		jumpGravity = 1f;
-		fallGravity = 1.5f;
+		fallGravity = 1f;
 		archVelocityThreshold = 1f;
 		archGravity = 2f;
+		isRocketBoosted = false;
+		isEarth = false;
 	}
 
 	public override void SetFireModifiers() {
 		canJump = false;
 		canJumpCancel = false;
-		numjumps = 3;
-		velocity = 7f;
+		numjumps = 2;
+		velocity = 5f;
 		jumpGravity = 1f;
 		fallGravity = 1.5f;
 		archVelocityThreshold = 1f;
 		archGravity = 2f;
+		isRocketBoosted = true;
+		isEarth = false;
+		originalVelocity = velocity;
+		rocketBoostVelMultiplier = 1.5f;
 	}
 
 	public override void SetWaterModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 3;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 1.5f;
-		archVelocityThreshold = 1f;
-		archGravity = 2f;
+		
 	}
 
 	public override void SetEarthModifiers() {
 		canJump = false;
 		canJumpCancel = false;
-		numjumps = 3;
-		velocity = 7f;
+		numjumps = 2;
+		velocity = 5f;
 		jumpGravity = 1f;
-		fallGravity = 1.5f;
+		fallGravity = 2f;
 		archVelocityThreshold = 1f;
 		archGravity = 2f;
+		isRocketBoosted = false;
+		isEarth = true;
 	}
 
 	public override void SetGravity() {
@@ -81,12 +89,25 @@ public class PurityRightBootSkills : RightBootSkills
 		} else if (numjumps > jumpCount) {
 			jumpCount++;
 			canJump = true;
+			if (isRocketBoosted)
+				velocity = originalVelocity * rocketBoostVelMultiplier;
+			if (isEarth)
+				producePlatform = true;
+			else
+				producePlatform = false;
 		}
 	}
 
-	public override void PerformJump(GameObject effect) {
+	public override void PerformJump(GameObject effect, BoxCollider2D boxCollider) {
 		rigidbody.velocity = Vector2.up * velocity;
 		canJump = false;
+		if (isRocketBoosted)
+			velocity = originalVelocity;
+		if (producePlatform) {
+			Vector2 platformLocation = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
+			Object.Instantiate(effect, platformLocation, effect.transform.rotation);
+		}
+		producePlatform = false;
 	}
 
 	public override void ShootProjectile() {

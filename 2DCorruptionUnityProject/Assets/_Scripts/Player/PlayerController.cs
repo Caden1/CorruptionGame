@@ -9,10 +9,11 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+	[SerializeField] private GameObject corruptionProjectile;
+	[SerializeField] private GameObject corruptionJumpProjectile;
 	[SerializeField] private GameObject pureMeleeEffect;
 	[SerializeField] private Sprite[] pureMeleeEffectSprites;
-	[SerializeField] private GameObject corruptionJumpProjectile;
-	[SerializeField] private GameObject corruptionProjectile;
+	[SerializeField] private GameObject pureEarthPlatform;
 
 	[SerializeField] private UIDocument gemSwapUIDoc;
 
@@ -211,10 +212,10 @@ public class PlayerController : MonoBehaviour
 		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
 		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
 		BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
-		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
+		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.Earth;
 		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.None;
-		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
-		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
+		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Air;
+		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.Fire;
 
 		swap.InitialGemState();
 	}
@@ -305,13 +306,13 @@ public class PlayerController : MonoBehaviour
 	private void PerformJump() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJump(corruptionJumpProjectile);
+				noGemsRightBootSkills.PerformJump(corruptionJumpProjectile, playerBoxCollider);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformJump(corruptionJumpProjectile);
+				corRightBootSkills.PerformJump(corruptionJumpProjectile, playerBoxCollider);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.PerformJump(corruptionJumpProjectile);
+				purityRightBootSkills.PerformJump(pureEarthPlatform, playerBoxCollider);
 				break;
 		}
 	}

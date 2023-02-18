@@ -63,7 +63,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 		}
 	}
 
-	public override void PerformJump(GameObject effect) {
+	public override void PerformJump(GameObject effect, BoxCollider2D boxCollider) {
 		rigidbody.velocity = Vector2.up * velocity;
 		canJump = false;
 	}

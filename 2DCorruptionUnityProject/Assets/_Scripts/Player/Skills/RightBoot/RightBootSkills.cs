@@ -34,7 +34,7 @@ public abstract class RightBootSkills
 
 	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask);
 
-	public abstract void PerformJump(GameObject effect);
+	public abstract void PerformJump(GameObject effect, BoxCollider2D boxCollider);
 
 	public abstract void ShootProjectile();
 
