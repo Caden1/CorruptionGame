@@ -25,7 +25,7 @@ public class CorRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 7f;
+		velocityAndAngle = new Vector2(0f, 7f);
 		jumpGravity = 1f;
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
@@ -45,7 +45,7 @@ public class CorRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 7f;
+		velocityAndAngle = new Vector2(0f, 7f);
 		jumpGravity = 1f;
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
@@ -65,7 +65,7 @@ public class CorRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 7f;
+		velocityAndAngle = new Vector2(0f, 7f);
 		jumpGravity = 1f;
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
@@ -85,7 +85,7 @@ public class CorRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 7f;
+		velocityAndAngle = new Vector2(0f, 7f);
 		jumpGravity = 1f;
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
@@ -105,7 +105,7 @@ public class CorRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 7f;
+		velocityAndAngle = new Vector2(0f, 7f);
 		jumpGravity = 1f;
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
@@ -132,7 +132,7 @@ public class CorRightBootSkills : RightBootSkills
 			rigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, Vector2 moveDirection) {
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -144,8 +144,8 @@ public class CorRightBootSkills : RightBootSkills
 		attackOriginLeft = boxCollider.bounds.min;
 	}
 
-	public override void PerformJump(GameObject effect, BoxCollider2D boxCollider) {
-		rigidbody.velocity = Vector2.up * velocity;
+	public override GameObject PerformJump(GameObject effect, BoxCollider2D boxCollider) {
+		rigidbody.velocity = velocityAndAngle;
 		canJump = false;
 		
 		InstantiateRightProjectile(effect, attackOriginRight);
@@ -157,6 +157,8 @@ public class CorRightBootSkills : RightBootSkills
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.65f, 0f));
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.35f, 0.5f));
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-1f, 0.5f));
+
+		return null;
 	}
 
 	private void InstantiateRightProjectile(GameObject effect, Vector2 attackOrigin) {

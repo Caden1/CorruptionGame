@@ -15,7 +15,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 5f;
+		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 2f;
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
@@ -53,7 +53,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 			rigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, Vector2 moveDirection) {
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -63,9 +63,10 @@ public class NoGemsRightBootSkills : RightBootSkills
 		}
 	}
 
-	public override void PerformJump(GameObject effect, BoxCollider2D boxCollider) {
-		rigidbody.velocity = Vector2.up * velocity;
+	public override GameObject PerformJump(GameObject effect, BoxCollider2D boxCollider) {
+		rigidbody.velocity = velocityAndAngle;
 		canJump = false;
+		return null;
 	}
 
 	public override void ShootProjectile() {

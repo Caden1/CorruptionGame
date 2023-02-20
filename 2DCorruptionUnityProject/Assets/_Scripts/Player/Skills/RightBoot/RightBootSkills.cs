@@ -9,7 +9,7 @@ public abstract class RightBootSkills
 	protected Rigidbody2D rigidbody;
 	protected float startingGravity;
 	protected int numjumps;
-	protected float velocity;
+	protected Vector2 velocityAndAngle;
 	protected float jumpGravity;
 	protected float fallGravity;
 	protected float archVelocityThreshold;
@@ -32,9 +32,9 @@ public abstract class RightBootSkills
 
 	public abstract void SetGravity();
 
-	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask);
+	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, Vector2 moveDirection);
 
-	public abstract void PerformJump(GameObject effect, BoxCollider2D boxCollider);
+	public abstract GameObject PerformJump(GameObject effect, BoxCollider2D boxCollider);
 
 	public abstract void ShootProjectile();
 

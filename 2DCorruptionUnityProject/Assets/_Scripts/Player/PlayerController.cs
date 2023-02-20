@@ -292,13 +292,13 @@ public class PlayerController : MonoBehaviour
 	private void SetupJump() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
+				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, moveDirection);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
+				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, moveDirection);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
+				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, moveDirection);
 				break;
 		}
 	}
@@ -312,9 +312,16 @@ public class PlayerController : MonoBehaviour
 				corRightBootSkills.PerformJump(corruptionJumpProjectile, playerBoxCollider);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.PerformJump(pureEarthPlatform, playerBoxCollider);
+				GameObject earthPlatformClone = purityRightBootSkills.PerformJump(pureEarthPlatform, playerBoxCollider);
+				if (earthPlatformClone != null)
+					StartCoroutine(DestroyCloneAfterSeconds(earthPlatformClone, 1f));
 				break;
 		}
+	}
+
+	private IEnumerator DestroyCloneAfterSeconds(GameObject clone, float seconds) {
+		yield return new WaitForSeconds(seconds);
+		Destroy(clone);
 	}
 
 	private void SetupJumpCancel() {

@@ -8,8 +8,9 @@ public class PurityRightBootSkills : RightBootSkills
 	private bool isRocketBoosted;
 	private bool isEarth;
 	private bool producePlatform;
-	private float originalVelocity;
+	private Vector2 originalVelocityAndAngle;
 	private float rocketBoostVelMultiplier;
+	private float earthPlatformAngle;
 
 	public PurityRightBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
@@ -17,7 +18,7 @@ public class PurityRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 2;
-		velocity = 5f;
+		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 1f;
 		fallGravity = 1.5f;
 		archVelocityThreshold = 1f;
@@ -30,7 +31,7 @@ public class PurityRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 3;
-		velocity = 5f;
+		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 1f;
 		fallGravity = 1f;
 		archVelocityThreshold = 1f;
@@ -43,14 +44,14 @@ public class PurityRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 2;
-		velocity = 5f;
+		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 1f;
 		fallGravity = 1.5f;
 		archVelocityThreshold = 1f;
 		archGravity = 2f;
 		isRocketBoosted = true;
 		isEarth = false;
-		originalVelocity = velocity;
+		originalVelocityAndAngle = velocityAndAngle;
 		rocketBoostVelMultiplier = 1.5f;
 	}
 
@@ -62,7 +63,7 @@ public class PurityRightBootSkills : RightBootSkills
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 2;
-		velocity = 5f;
+		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 1f;
 		fallGravity = 2f;
 		archVelocityThreshold = 1f;
@@ -82,7 +83,7 @@ public class PurityRightBootSkills : RightBootSkills
 			rigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, Vector2 moveDirection) {
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -90,24 +91,36 @@ public class PurityRightBootSkills : RightBootSkills
 			jumpCount++;
 			canJump = true;
 			if (isRocketBoosted)
-				velocity = originalVelocity * rocketBoostVelMultiplier;
-			if (isEarth)
+				velocityAndAngle = originalVelocityAndAngle * rocketBoostVelMultiplier;
+			if (isEarth) {
 				producePlatform = true;
-			else
+				float rightAndLeftThreshold = 0.5f;
+				float upAndDownThreshold = 0.7f;
+				float platformAngle = 0.5f;
+				earthPlatformAngle = 0f;
+				if (moveDirection.x > rightAndLeftThreshold && moveDirection.y > -upAndDownThreshold)
+					earthPlatformAngle = -platformAngle;
+				else if (moveDirection.x < -rightAndLeftThreshold && moveDirection.y > -upAndDownThreshold)
+					earthPlatformAngle = platformAngle;
+			} else {
 				producePlatform = false;
+			}
 		}
 	}
 
-	public override void PerformJump(GameObject effect, BoxCollider2D boxCollider) {
-		rigidbody.velocity = Vector2.up * velocity;
+	public override GameObject PerformJump(GameObject effect, BoxCollider2D boxCollider) {
+		rigidbody.velocity = velocityAndAngle;
 		canJump = false;
+		GameObject earthPlatformClone = null;
 		if (isRocketBoosted)
-			velocity = originalVelocity;
+			velocityAndAngle = originalVelocityAndAngle;
 		if (producePlatform) {
 			Vector2 platformLocation = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
-			Object.Instantiate(effect, platformLocation, effect.transform.rotation);
+			earthPlatformClone = Object.Instantiate(effect, platformLocation, new Quaternion(effect.transform.rotation.x, effect.transform.rotation.y, earthPlatformAngle, effect.transform.rotation.w));
 		}
 		producePlatform = false;
+
+		return earthPlatformClone;
 	}
 
 	public override void ShootProjectile() {
