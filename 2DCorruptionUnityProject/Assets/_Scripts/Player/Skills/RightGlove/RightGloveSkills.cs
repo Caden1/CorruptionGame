@@ -6,8 +6,9 @@ public abstract class RightGloveSkills
 {
 	public bool canMelee { get; protected set; }
 	public bool isAnimating { get; protected set; }
-	protected Vector2 attackOrigin;
+	protected List<Vector2> attackOrigin;
 	protected BoxCollider2D boxCollider;
+	protected PolygonCollider2D polygonCollider;
 	protected GameObject meleeEffectClone;
 	protected float damage;
 	protected float cooldown;
@@ -28,9 +29,9 @@ public abstract class RightGloveSkills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupMelee(GameObject meleeEffect, bool isFacingRight);
+	public abstract void SetupMelee(List<GameObject> meleeEffect, bool isFacingRight);
 
-	public abstract void PerformMelee(GameObject meleeEffect, bool isFacingRight);
+	public abstract IEnumerator PerformMelee(List<GameObject> meleeEffect, bool isFacingRight);
 
 	public abstract GameObject GetMeleeEffectClone();
 

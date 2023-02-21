@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class RightBootSkills
 {
+	public bool lockMovement;
 	public bool canJump { get; protected set; }
 	public bool canJumpCancel { get; protected set; }
 	protected Rigidbody2D rigidbody;

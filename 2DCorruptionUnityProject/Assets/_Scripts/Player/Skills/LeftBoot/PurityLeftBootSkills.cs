@@ -29,21 +29,21 @@ public class PurityLeftBootSkills : LeftBootSkills
 
 	public override void SetFireModifiers() {
 		numDashes = 2f;
-		dashVelocity = 20f;
+		dashVelocity = 10f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
 	}
 
 	public override void SetWaterModifiers() {
 		numDashes = 2f;
-		dashVelocity = 20f;
+		dashVelocity = 10f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
 	}
 
 	public override void SetEarthModifiers() {
 		numDashes = 2f;
-		dashVelocity = 20f;
+		dashVelocity = 10f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
 	}

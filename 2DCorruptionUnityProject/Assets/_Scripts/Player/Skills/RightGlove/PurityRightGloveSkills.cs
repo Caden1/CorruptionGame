@@ -13,6 +13,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		meleeDuration = 0.3f;
 		animationDuration = 0.1f;
 		damage = 4f;
+		attackOrigin = new List<Vector2>();
 	}
 
 	public override void SetAirModifiers() {
@@ -21,6 +22,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
+		attackOrigin = new List<Vector2>();
 	}
 
 	public override void SetFireModifiers() {
@@ -29,6 +31,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
+		attackOrigin = new List<Vector2>();
 	}
 
 	public override void SetWaterModifiers() {
@@ -37,6 +40,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
+		attackOrigin = new List<Vector2>();
 	}
 
 	public override void SetEarthModifiers() {
@@ -45,29 +49,31 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
+		attackOrigin = new List<Vector2>();
 	}
 
-	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight) {
-		if (!canMelee) {
-			canMelee = true;
-			isAnimating = true;
-			float attackOriginOffset = 0.25f;
-			BoxCollider2D meleeEffectBoxCol = meleeEffect.GetComponent<BoxCollider2D>();
-			float meleeEffectOffset = meleeEffectBoxCol.size.x / 2f;
-			if (isFacingRight) {
-				meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
-				attackOrigin = new Vector2(boxCollider.bounds.max.x + attackOriginOffset + meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
-			} else {
-				meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
-				attackOrigin = new Vector2(boxCollider.bounds.min.x - attackOriginOffset - meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
-			}
-		}
+	public override void SetupMelee(List<GameObject> meleeEffect, bool isFacingRight) {
+		//if (!canMelee) {
+		//	canMelee = true;
+		//	isAnimating = true;
+		//	float attackOriginOffset = 0.25f;
+		//	BoxCollider2D meleeEffectBoxCol = meleeEffect.GetComponent<BoxCollider2D>();
+		//	float meleeEffectOffset = meleeEffectBoxCol.size.x / 2f;
+		//	if (isFacingRight) {
+		//		meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
+		//		attackOrigin = new Vector2(boxCollider.bounds.max.x + attackOriginOffset + meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
+		//	} else {
+		//		meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
+		//		attackOrigin = new Vector2(boxCollider.bounds.min.x - attackOriginOffset - meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
+		//	}
+		//}
 	}
 
-	public override void PerformMelee(GameObject meleeEffect, bool isFacingRight) {
-		meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
-		canMelee = false;
-		isAnimating = false;
+	public override IEnumerator PerformMelee(List<GameObject> meleeEffect, bool isFacingRight) {
+		yield return new WaitForSeconds(1f);
+		//meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
+		//canMelee = false;
+		//isAnimating = false;
 	}
 
 	public override GameObject GetMeleeEffectClone() {

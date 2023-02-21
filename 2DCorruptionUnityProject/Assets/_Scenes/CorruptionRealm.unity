@@ -778,6 +778,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51043e129809645a6b113eb4d9d7825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  corMeleeEffects:
+  - {fileID: 1332367701449046336, guid: 430372c8aaf994667b2618a03f40b65b, type: 3}
+  - {fileID: 3140858980431797491, guid: 939fb8a80bd474262a3053e9bd2df030, type: 3}
+  - {fileID: 6679429760130315710, guid: 5b3e9069ce64d4c01a3fe2ebe84dd406, type: 3}
   corruptionProjectile: {fileID: 6066601356021869870, guid: 98d5786a10a0349519ca399c2a44a5aa, type: 3}
   corruptionJumpProjectile: {fileID: 8560263648916854465, guid: dcc256fd1b0134831aafe4b991f735fb, type: 3}
   pureMeleeEffect: {fileID: 1550512535146750824, guid: 9f1b803476b694cf5ab81351b8691abb, type: 3}

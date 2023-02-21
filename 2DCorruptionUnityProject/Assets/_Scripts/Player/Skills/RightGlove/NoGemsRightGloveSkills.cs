@@ -30,11 +30,11 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight) {
+	public override void SetupMelee(List<GameObject> meleeEffect, bool isFacingRight) {
 		throw new System.NotImplementedException();
 	}
 
-	public override void PerformMelee(GameObject meleeEffect, bool isFacingRight) {
+	public override IEnumerator PerformMelee(List<GameObject> meleeEffect, bool isFacingRight) {
 		throw new System.NotImplementedException();
 	}
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PurityRightBootSkills : RightBootSkills
 {
+	public float earthCloneSeconds { get; private set; }
 	private int jumpCount = 0;
 	private bool isRocketBoosted;
 	private bool isEarth;
@@ -11,12 +12,14 @@ public class PurityRightBootSkills : RightBootSkills
 	private Vector2 originalVelocityAndAngle;
 	private float rocketBoostVelMultiplier;
 	private float earthPlatformAngle;
+	private float earthBoostVelMultiplier;
 
 	public PurityRightBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
 
 	public override void SetWithNoModifiers() {
 		canJump = false;
 		canJumpCancel = false;
+		lockMovement = false;
 		numjumps = 2;
 		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 1f;
@@ -30,6 +33,7 @@ public class PurityRightBootSkills : RightBootSkills
 	public override void SetAirModifiers() {
 		canJump = false;
 		canJumpCancel = false;
+		lockMovement = false;
 		numjumps = 3;
 		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 1f;
@@ -43,6 +47,7 @@ public class PurityRightBootSkills : RightBootSkills
 	public override void SetFireModifiers() {
 		canJump = false;
 		canJumpCancel = false;
+		lockMovement = false;
 		numjumps = 2;
 		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 1f;
@@ -62,6 +67,7 @@ public class PurityRightBootSkills : RightBootSkills
 	public override void SetEarthModifiers() {
 		canJump = false;
 		canJumpCancel = false;
+		lockMovement = false;
 		numjumps = 2;
 		velocityAndAngle = new Vector2(0f, 5f);
 		jumpGravity = 1f;
@@ -70,6 +76,9 @@ public class PurityRightBootSkills : RightBootSkills
 		archGravity = 2f;
 		isRocketBoosted = false;
 		isEarth = true;
+		originalVelocityAndAngle = velocityAndAngle;
+		earthBoostVelMultiplier = 1.5f;
+		earthCloneSeconds = 0.5f;
 	}
 
 	public override void SetGravity() {
@@ -93,15 +102,21 @@ public class PurityRightBootSkills : RightBootSkills
 			if (isRocketBoosted)
 				velocityAndAngle = originalVelocityAndAngle * rocketBoostVelMultiplier;
 			if (isEarth) {
+				lockMovement = true;
 				producePlatform = true;
 				float rightAndLeftThreshold = 0.5f;
 				float upAndDownThreshold = 0.7f;
 				float platformAngle = 0.5f;
+				float xVelocity = 0f;
 				earthPlatformAngle = 0f;
-				if (moveDirection.x > rightAndLeftThreshold && moveDirection.y > -upAndDownThreshold)
+				if (moveDirection.x > rightAndLeftThreshold && moveDirection.y > -upAndDownThreshold) {
 					earthPlatformAngle = -platformAngle;
-				else if (moveDirection.x < -rightAndLeftThreshold && moveDirection.y > -upAndDownThreshold)
+					xVelocity = originalVelocityAndAngle.y;
+				} else if (moveDirection.x < -rightAndLeftThreshold && moveDirection.y > -upAndDownThreshold) {
 					earthPlatformAngle = platformAngle;
+					xVelocity = -originalVelocityAndAngle.y;
+				}
+				velocityAndAngle = new Vector2(xVelocity, originalVelocityAndAngle.y) * earthBoostVelMultiplier;
 			} else {
 				producePlatform = false;
 			}
@@ -117,6 +132,7 @@ public class PurityRightBootSkills : RightBootSkills
 		if (producePlatform) {
 			Vector2 platformLocation = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
 			earthPlatformClone = Object.Instantiate(effect, platformLocation, new Quaternion(effect.transform.rotation.x, effect.transform.rotation.y, earthPlatformAngle, effect.transform.rotation.w));
+			velocityAndAngle = originalVelocityAndAngle;
 		}
 		producePlatform = false;
 
