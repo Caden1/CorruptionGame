@@ -9,11 +9,12 @@ public class CorRightGloveSkills : RightGloveSkills
 	public override void SetWithNoModifiers() {
 		canMelee = false;
 		isAnimating = false;
-		cooldown = 0.3f;
+		cooldown = 0.5f;
 		meleeDuration = 0.1f;
 		animationDuration = 0.2f;
 		damage = 5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 0.2f;
 	}
 
 	public override void SetAirModifiers() {
@@ -22,7 +23,8 @@ public class CorRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
 	public override void SetFireModifiers() {
@@ -31,7 +33,8 @@ public class CorRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
 	public override void SetWaterModifiers() {
@@ -40,7 +43,8 @@ public class CorRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
 	public override void SetEarthModifiers() {
@@ -49,42 +53,32 @@ public class CorRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
-	public override void SetupMelee(List<GameObject> meleeEffects, bool isFacingRight) {
+	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight) {
 		if (!canMelee) {
 			canMelee = true;
 			isAnimating = true;
 			float attackOriginOffset = 0.25f;
-			foreach (GameObject effect in meleeEffects) {
-				BoxCollider2D meleeEffectBoxCol = effect.GetComponent<BoxCollider2D>();
-				float meleeEffectOffset = meleeEffectBoxCol.size.x / 2f;
-				if (isFacingRight) {
-					effect.GetComponent<SpriteRenderer>().flipX = false;
-					attackOrigin.Add(new Vector2(boxCollider.bounds.max.x + attackOriginOffset + meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset));
-				} else {
-					effect.GetComponent<SpriteRenderer>().flipX = true;
-					attackOrigin.Add(new Vector2(boxCollider.bounds.min.x - attackOriginOffset - meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset));
-				}
+			BoxCollider2D meleeEffectBoxCol = meleeEffect.GetComponent<BoxCollider2D>();
+			float meleeEffectOffset = meleeEffectBoxCol.size.x / 2f;
+			if (isFacingRight) {
+				meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
+				attackOrigin = new Vector2(boxCollider.bounds.max.x + attackOriginOffset + meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
+			} else {
+				meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
+				attackOrigin = new Vector2(boxCollider.bounds.min.x - attackOriginOffset - meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
 			}
 		}
 	}
 
-	public override IEnumerator PerformMelee(List<GameObject> meleeEffects, bool isFacingRight) {
-		int i = 0;
-		foreach (GameObject effect in meleeEffects) {
-			yield return new WaitForSeconds(1f);
-			meleeEffectClone = Object.Instantiate(effect, attackOrigin[i], effect.transform.rotation);
-			i++;
-		}
-		attackOrigin.Clear();
+	public override GameObject PerformMelee(GameObject meleeEffects) {
+		GameObject meleeEffectClone = Object.Instantiate(meleeEffects, attackOrigin, meleeEffects.transform.rotation);
 		canMelee = false;
 		isAnimating = false;
-	}
-
-	public override GameObject GetMeleeEffectClone() {
-		return null;
+		return meleeEffectClone;
 	}
 
 	public override IEnumerator DestroyCloneAfterMeleeDuration() {

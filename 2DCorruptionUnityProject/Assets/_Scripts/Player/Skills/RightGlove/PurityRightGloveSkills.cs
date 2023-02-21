@@ -13,7 +13,8 @@ public class PurityRightGloveSkills : RightGloveSkills
 		meleeDuration = 0.3f;
 		animationDuration = 0.1f;
 		damage = 4f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
 	public override void SetAirModifiers() {
@@ -22,7 +23,8 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
 	public override void SetFireModifiers() {
@@ -31,7 +33,8 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
 	public override void SetWaterModifiers() {
@@ -40,7 +43,8 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
 	public override void SetEarthModifiers() {
@@ -49,10 +53,11 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldown = 1.5f;
 		meleeDuration = 1f;
 		animationDuration = 0.5f;
-		attackOrigin = new List<Vector2>();
+		attackOrigin = new Vector2();
+		meleeEffectCloneSeconds = 1f;
 	}
 
-	public override void SetupMelee(List<GameObject> meleeEffect, bool isFacingRight) {
+	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight) {
 		//if (!canMelee) {
 		//	canMelee = true;
 		//	isAnimating = true;
@@ -69,20 +74,20 @@ public class PurityRightGloveSkills : RightGloveSkills
 		//}
 	}
 
-	public override IEnumerator PerformMelee(List<GameObject> meleeEffect, bool isFacingRight) {
-		yield return new WaitForSeconds(1f);
+	public override GameObject PerformMelee(GameObject meleeEffect) {
 		//meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
 		//canMelee = false;
 		//isAnimating = false;
+		return null;
 	}
 
-	public override GameObject GetMeleeEffectClone() {
-		return meleeEffectClone;
-	}
+	//public override GameObject GetMeleeEffectClone() {
+	//	return meleeEffectClone;
+	//}
 
 	public override IEnumerator DestroyCloneAfterMeleeDuration() {
 		yield return new WaitForSeconds(meleeDuration);
-		Object.Destroy(meleeEffectClone);
+		//Object.Destroy(meleeEffectClone);
 	}
 
 	public override IEnumerator ResetMeleeAnimation() {

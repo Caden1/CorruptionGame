@@ -9,12 +9,17 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private List<GameObject> corMeleeEffects;
+	[SerializeField] private GameObject corMeleeEffect;
+	[SerializeField] private Sprite[] corMeleeEffectSprites;
 	[SerializeField] private GameObject corruptionProjectile;
 	[SerializeField] private GameObject corruptionJumpProjectile;
 	[SerializeField] private GameObject pureMeleeEffect;
 	[SerializeField] private Sprite[] pureMeleeEffectSprites;
 	[SerializeField] private GameObject pureEarthPlatform;
+
+	private GameObject corMeleeEffectClone;
+	private CustomAnimation corMeleeEffectAnim;
+	private CustomAnimation pureMeleeEffectAnim;
 
 	[SerializeField] private UIDocument gemSwapUIDoc;
 
@@ -39,13 +44,22 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite pureEarthGlove;
 	[SerializeField] private Sprite pureEarthBoot;
 
-	private CustomAnimation pureMeleeEffectAnim;
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidBody;
 	private BoxCollider2D playerBoxCollider;
 	private Animator playerAnimator;
 	private SpriteRenderer playerSpriteRenderer;
 	private CustomAnimation playerAnimations;
+
+	private PlayerState playerState;
+	private AnimationState animationState;
+
+	private LayerMask platformLayerMask;
+	private LayerMask enemyLayerMask;
+	private ContactFilter2D enemyContactFilter;
+	private Vector2 moveDirection;
+	private Vector2 meleeDirection;
+
 	private SwapUI swapUI;
 	private NoGemsRightGloveSkills noGemsRightGloveSkills;
 	private CorRightGloveSkills corRightGloveSkills;
@@ -62,21 +76,13 @@ public class PlayerController : MonoBehaviour
 
 	private Swap swap;
 
-	private PlayerState playerState;
-	private AnimationState animationState;
-
-	private LayerMask platformLayerMask;
-	private LayerMask enemyLayerMask;
-	private ContactFilter2D enemyContactFilter;
-	private Vector2 moveDirection;
-	private Vector2 meleeDirection;
-
 	private const string IDLE_ANIM = "Idle";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
 
 	private void Awake() {
+		corMeleeEffectAnim = new CustomAnimation(corMeleeEffectSprites);
 		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
@@ -201,19 +207,21 @@ public class PlayerController : MonoBehaviour
 	private void PlayActiveAnimationEffects() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.Corruption:
+				if (corMeleeEffectClone != null)
+					corMeleeEffectAnim.PlayCreatedAnimation(corMeleeEffectClone.GetComponent<SpriteRenderer>());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				if (purityRightGloveSkills.GetMeleeEffectClone() != null)
-					pureMeleeEffectAnim.PlayCreatedAnimation(purityRightGloveSkills.GetMeleeEffectClone().GetComponent<SpriteRenderer>());
+				//if (purityRightGloveSkills.GetMeleeEffectClone() != null)
+				//	pureMeleeEffectAnim.PlayCreatedAnimation(purityRightGloveSkills.GetMeleeEffectClone().GetComponent<SpriteRenderer>());
 				break;
 		}
 	}
 
 	private void LoadGemAndSkillStates() {
 		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
-		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
-		BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
-		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.Earth;
+		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Corruption;
+		BootsGem.bootsGemState = BootsGem.BootsGemState.Purity;
+		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
 		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.Fire;
 		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
 		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
@@ -404,7 +412,7 @@ public class PlayerController : MonoBehaviour
 	private void SetupMelee() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.Corruption:
-				corRightGloveSkills.SetupMelee(corMeleeEffects, isFacingRight);
+				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight);
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				//purityRightGloveSkills.SetupMelee(pureMeleeEffect, isFacingRight);
@@ -417,7 +425,9 @@ public class PlayerController : MonoBehaviour
 	private void PerformMelee() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.Corruption:
-				StartCoroutine(corRightGloveSkills.PerformMelee(corMeleeEffects, isFacingRight));
+				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect);
+				if (corMeleeEffectClone != null)
+					StartCoroutine(DestroyCloneAfterSeconds(corMeleeEffectClone, corRightGloveSkills.meleeEffectCloneSeconds));
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				//purityRightGloveSkills.PerformMelee(pureMeleeEffect, isFacingRight);
