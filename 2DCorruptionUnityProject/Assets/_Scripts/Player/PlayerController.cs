@@ -9,6 +9,13 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+	private Vector2 meleePositionRight;
+	private Transform meleeTransformRight;
+	private Vector2 meleePositionLeft;
+	private Transform meleeTransformLeft;
+
+	private Vector3 meleePositionOffset = new Vector2(0.4f, 0f);
+
 	[SerializeField] private GameObject corMeleeEffect;
 	[SerializeField] private Sprite[] corMeleeEffectSprites;
 	[SerializeField] private GameObject corruptionProjectile;
@@ -19,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
 	private GameObject corMeleeEffectClone;
 	private CustomAnimation corMeleeEffectAnim;
+	private GameObject pureMeleeEffectClone;
 	private CustomAnimation pureMeleeEffectAnim;
 
 	[SerializeField] private UIDocument gemSwapUIDoc;
@@ -82,6 +90,9 @@ public class PlayerController : MonoBehaviour
 	private bool isFacingRight = true;
 
 	private void Awake() {
+		meleeTransformRight = GetComponent<Transform>().GetChild(0);
+		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
+
 		corMeleeEffectAnim = new CustomAnimation(corMeleeEffectSprites);
 		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
 		playerInputActions = new PlayerInputActions();
@@ -179,7 +190,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		SetAnimationState();
-		PlayActiveAnimationEffects();
+		PlayAndDestroyActiveClones();
 		ShootProjectile();
 	}
 
@@ -204,16 +215,24 @@ public class PlayerController : MonoBehaviour
 		SetGravity();
 	}
 
-	private void PlayActiveAnimationEffects() {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.Corruption:
-				if (corMeleeEffectClone != null)
-					corMeleeEffectAnim.PlayCreatedAnimation(corMeleeEffectClone.GetComponent<SpriteRenderer>());
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				//if (purityRightGloveSkills.GetMeleeEffectClone() != null)
-				//	pureMeleeEffectAnim.PlayCreatedAnimation(purityRightGloveSkills.GetMeleeEffectClone().GetComponent<SpriteRenderer>());
-				break;
+	private void PlayAndDestroyActiveClones() {
+		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
+		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
+		if (corMeleeEffectClone != null) {
+			corMeleeEffectAnim.PlayCreatedAnimation(corMeleeEffectClone.GetComponent<SpriteRenderer>());
+			if (isFacingRight)
+				corMeleeEffectClone.transform.position = meleePositionRight;
+			else
+				corMeleeEffectClone.transform.position = meleePositionLeft;
+			StartCoroutine(DestroyCloneAfterSeconds(corMeleeEffectClone, corRightGloveSkills.meleeEffectCloneSeconds));
+		}
+		if (pureMeleeEffectClone != null) {
+			pureMeleeEffectAnim.PlayCreatedAnimation(pureMeleeEffectClone.GetComponent<SpriteRenderer>());
+			if (isFacingRight)
+				pureMeleeEffectClone.transform.position = meleePositionRight;
+			else
+				pureMeleeEffectClone.transform.position = meleePositionLeft;
+			StartCoroutine(DestroyCloneAfterSeconds(pureMeleeEffectClone, purityRightGloveSkills.meleeEffectCloneSeconds));
 		}
 	}
 
@@ -412,12 +431,12 @@ public class PlayerController : MonoBehaviour
 	private void SetupMelee() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.Corruption:
-				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight);
+				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				StartCoroutine(corRightGloveSkills.StartMeleeCooldown(playerInputActions));
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				//purityRightGloveSkills.SetupMelee(pureMeleeEffect, isFacingRight);
-				//StartCoroutine(purityRightGloveSkills.StartMeleeCooldown(playerInputActions));
-				//StartCoroutine(purityRightGloveSkills.DestroyCloneAfterMeleeDuration());
+				purityRightGloveSkills.SetupMelee(pureMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				StartCoroutine(purityRightGloveSkills.StartMeleeCooldown(playerInputActions));
 				break;
 		}
 	}
@@ -426,11 +445,9 @@ public class PlayerController : MonoBehaviour
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.Corruption:
 				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect);
-				if (corMeleeEffectClone != null)
-					StartCoroutine(DestroyCloneAfterSeconds(corMeleeEffectClone, corRightGloveSkills.meleeEffectCloneSeconds));
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				//purityRightGloveSkills.PerformMelee(pureMeleeEffect, isFacingRight);
+				pureMeleeEffectClone = purityRightGloveSkills.PerformMelee(pureMeleeEffect);
 				//StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
 				break;
 		}

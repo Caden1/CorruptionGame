@@ -9,12 +9,12 @@ public class PurityRightGloveSkills : RightGloveSkills
 	public override void SetWithNoModifiers() {
 		canMelee = false;
 		isAnimating = false;
-		cooldown = 0.5f;
-		meleeDuration = 0.3f;
+		cooldown = 1f;
+		meleeDuration = 1f;
 		animationDuration = 0.1f;
 		damage = 4f;
 		attackOrigin = new Vector2();
-		meleeEffectCloneSeconds = 1f;
+		meleeEffectCloneSeconds = 0.5f;
 	}
 
 	public override void SetAirModifiers() {
@@ -57,7 +57,19 @@ public class PurityRightGloveSkills : RightGloveSkills
 		meleeEffectCloneSeconds = 1f;
 	}
 
-	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight) {
+	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
+		if (!canMelee) {
+			canMelee = true;
+			isAnimating = true;
+			if (isFacingRight) {
+				meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
+				attackOrigin = positionRight;
+			} else {
+				meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
+				attackOrigin = positionLeft;
+			}
+		}
+
 		//if (!canMelee) {
 		//	canMelee = true;
 		//	isAnimating = true;
@@ -75,10 +87,10 @@ public class PurityRightGloveSkills : RightGloveSkills
 	}
 
 	public override GameObject PerformMelee(GameObject meleeEffect) {
-		//meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
-		//canMelee = false;
-		//isAnimating = false;
-		return null;
+		GameObject meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
+		canMelee = false;
+		isAnimating = false;
+		return meleeEffectClone;
 	}
 
 	//public override GameObject GetMeleeEffectClone() {

@@ -29,7 +29,7 @@ public abstract class RightGloveSkills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupMelee(GameObject meleeEffect, bool isFacingRight);
+	public abstract void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft);
 
 	public abstract GameObject PerformMelee(GameObject meleeEffect);
 
