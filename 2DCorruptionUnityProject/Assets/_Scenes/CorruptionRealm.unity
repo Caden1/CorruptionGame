@@ -842,6 +842,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51043e129809645a6b113eb4d9d7825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noGemMeleeEffect: {fileID: 3744940654136180262, guid: 39f234977e2a34850a93ba29141c3e7c, type: 3}
+  noGemMeleeEffectSprites:
+  - {fileID: 1327885752, guid: 13fab76eac82347b9bd1cd6318a30792, type: 3}
+  - {fileID: -1025372281, guid: 13fab76eac82347b9bd1cd6318a30792, type: 3}
+  - {fileID: -696171447, guid: 13fab76eac82347b9bd1cd6318a30792, type: 3}
   corMeleeEffect: {fileID: 913447754468754611, guid: 22a8db88003214a52868ecc1359ca965, type: 3}
   corMeleeEffectSprites:
   - {fileID: -1273536999, guid: 1d4a56db7bd8a406b97910b7146d7c1f, type: 3}

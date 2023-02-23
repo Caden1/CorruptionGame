@@ -5,18 +5,11 @@ using UnityEngine;
 
 public abstract class LeftBootSkills
 {
-	protected Rigidbody2D rigidbody;
 	protected Vector2 dashDirection;
-	protected float startingGravity;
 	protected float numDashes;
 	protected float dashVelocity;
-	public float secondsToDash { get; protected set; }
+	protected float secondsToDash;
 	protected float cooldown;
-
-	public LeftBootSkills(Rigidbody2D rigidbody) {
-		this.rigidbody = rigidbody;
-		startingGravity = rigidbody.gravityScale;
-	}
 
 	public abstract void SetWithNoModifiers();
 
@@ -30,7 +23,7 @@ public abstract class LeftBootSkills
 
 	public abstract void SetupDash(bool isFacingRight);
 
-	public abstract IEnumerator PerformDash();
+	public abstract IEnumerator PerformDash(Rigidbody2D playerRigidbody);
 
 	public abstract IEnumerator StartDashCooldown(PlayerInputActions playerInputActions);
 }

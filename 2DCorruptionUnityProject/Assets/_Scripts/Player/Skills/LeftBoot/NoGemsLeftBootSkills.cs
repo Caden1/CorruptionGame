@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class NoGemsLeftBootSkills : LeftBootSkills
 {
-	public NoGemsLeftBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
-
 	public void SetWithNoGems() {
 		numDashes = 1f;
-		dashVelocity = 6f;
+		dashVelocity = 7f;
 		secondsToDash = 0.25f;
-		cooldown = 4f;
-	}
+		cooldown = 2f;
+}
 
 	public override void SetWithNoModifiers() {
 		throw new System.NotImplementedException();
@@ -40,11 +38,12 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 			dashDirection = Vector2.left;
 	}
 
-	public override IEnumerator PerformDash() {
-		rigidbody.gravityScale = 0f;
-		rigidbody.velocity = dashDirection * dashVelocity;
+	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
+		float startingGravity = playerRigidbody.gravityScale;
+		playerRigidbody.gravityScale = 0f;
+		playerRigidbody.velocity = dashDirection * dashVelocity;
 		yield return new WaitForSeconds(secondsToDash);
-		rigidbody.gravityScale = startingGravity;
+		playerRigidbody.gravityScale = startingGravity;
 		Player.playerState = Player.PlayerState.Normal;
 	}
 

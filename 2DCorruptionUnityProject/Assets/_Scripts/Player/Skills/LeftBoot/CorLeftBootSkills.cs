@@ -4,48 +4,24 @@ using UnityEngine;
 
 public class CorLeftBootSkills : LeftBootSkills
 {
-	public float damage { get; protected set; }
-
-	public CorLeftBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
-
 	public override void SetWithNoModifiers() {
-		numDashes = 1f;
-		dashVelocity = 8f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
-		damage = 2f;
+		
 	}
 
 	public override void SetAirModifiers() {
-		numDashes = 1f;
-		dashVelocity = 12f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
-		damage = 2f;
+		
 	}
 
 	public override void SetFireModifiers() {
-		numDashes = 1f;
-		dashVelocity = 12f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
-		damage = 2f;
+		
 	}
 
 	public override void SetWaterModifiers() {
-		numDashes = 1f;
-		dashVelocity = 12f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
-		damage = 2f;
+		
 	}
 
 	public override void SetEarthModifiers() {
-		numDashes = 1f;
-		dashVelocity = 12f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
-		damage = 2f;
+		
 	}
 
 	public override void SetupDash(bool isFacingRight) {
@@ -55,11 +31,12 @@ public class CorLeftBootSkills : LeftBootSkills
 			dashDirection = Vector2.left;
 	}
 
-	public override IEnumerator PerformDash() {
-		rigidbody.gravityScale = 0f;
-		rigidbody.velocity = dashDirection * dashVelocity;
+	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
+		float startingGravity = playerRigidbody.gravityScale;
+		playerRigidbody.gravityScale = 0f;
+		playerRigidbody.velocity = dashDirection * dashVelocity;
 		yield return new WaitForSeconds(secondsToDash);
-		rigidbody.gravityScale = startingGravity;
+		playerRigidbody.gravityScale = startingGravity;
 		Player.playerState = Player.PlayerState.Normal;
 	}
 

@@ -4,62 +4,24 @@ using UnityEngine;
 
 public class CorRightGloveSkills : RightGloveSkills
 {
-	public CorRightGloveSkills(BoxCollider2D boxCollider) : base(boxCollider) { }
-
 	public override void SetWithNoModifiers() {
-		canMelee = false;
-		isAnimating = false;
-		cooldown = 1f;
-		meleeDuration = 0.1f;
-		animationDuration = 0.2f;
-		damage = 5f;
-		attackOrigin = new Vector2();
-		meleeEffectCloneSeconds = 0.5f;
-		lockMovementSeconds = 1f;
+		
 	}
 
 	public override void SetAirModifiers() {
-		canMelee = false;
-		isAnimating = false;
-		cooldown = 1.5f;
-		meleeDuration = 1f;
-		animationDuration = 0.5f;
-		attackOrigin = new Vector2();
-		meleeEffectCloneSeconds = 1f;
-		lockMovementSeconds = 1f;
+		
 	}
 
 	public override void SetFireModifiers() {
-		canMelee = false;
-		isAnimating = false;
-		cooldown = 1.5f;
-		meleeDuration = 1f;
-		animationDuration = 0.5f;
-		attackOrigin = new Vector2();
-		meleeEffectCloneSeconds = 1f;
-		lockMovementSeconds = 1f;
+		
 	}
 
 	public override void SetWaterModifiers() {
-		canMelee = false;
-		isAnimating = false;
-		cooldown = 1.5f;
-		meleeDuration = 1f;
-		animationDuration = 0.5f;
-		attackOrigin = new Vector2();
-		meleeEffectCloneSeconds = 1f;
-		lockMovementSeconds = 1f;
+		
 	}
 
 	public override void SetEarthModifiers() {
-		canMelee = false;
-		isAnimating = false;
-		cooldown = 1.5f;
-		meleeDuration = 1f;
-		animationDuration = 0.5f;
-		attackOrigin = new Vector2();
-		meleeEffectCloneSeconds = 1f;
-		lockMovementSeconds = 1f;
+		
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
@@ -83,19 +45,9 @@ public class CorRightGloveSkills : RightGloveSkills
 		return meleeEffectClone;
 	}
 
-	public override IEnumerator DestroyCloneAfterMeleeDuration() {
-		yield return new WaitForSeconds(meleeDuration);
-		canMelee = false;
-	}
-
-	public override IEnumerator ResetMeleeAnimation() {
-		yield return new WaitForSeconds(animationDuration);
-		isAnimating = false;
-	}
-
 	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {
 		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(cooldown);
+		yield return new WaitForSeconds(cooldownSec);
 		playerInputActions.Player.Melee.Enable();
 	}
 }
