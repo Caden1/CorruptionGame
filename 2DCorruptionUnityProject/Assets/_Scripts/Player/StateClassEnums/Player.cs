@@ -3,8 +3,7 @@ public static class Player
 	public enum PlayerState
 	{
 		Normal,
-		Dash,
-		EarthJump
+		Dash
 	}
 
 	public static PlayerState playerState;

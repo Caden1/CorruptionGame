@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CorRightBootSkills : RightBootSkills
 {
-	protected ContactFilter2D contactFilter;
 	private Vector2 attackOriginRight;
 	private Vector2 attackOriginLeft;
 	private float damage;
@@ -17,19 +16,17 @@ public class CorRightBootSkills : RightBootSkills
 	private List<GameObject> attackClonesRight;
 	private List<GameObject> attackClonesLeft;
 
-	public CorRightBootSkills(Rigidbody2D rigidbody, ContactFilter2D contactFilter) : base(rigidbody) {
-		this.contactFilter = contactFilter;
-	}
-
 	public override void SetWithNoModifiers() {
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocityAndAngle = new Vector2(0f, 7f);
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
+		jumpGravity = 2f;
+		groundedPlayerGravity = 1f;
+		fallGravity = 3f;
+		archVelocityThreshold = 4f;
 		archGravity = 3f;
+		jumpVelocity = 9f;
+
 		damage = 2f;
 		attackDistance = 3f;
 		attackVelocity = 10f;
@@ -42,96 +39,90 @@ public class CorRightBootSkills : RightBootSkills
 	}
 
 	public override void SetAirModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 1;
-		velocityAndAngle = new Vector2(0f, 7f);
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
-		attackClonesRight = new List<GameObject>();
-		attackClonesLeft = new List<GameObject>();
-		attackOriginRight = new Vector2();
-		attackOriginLeft = new Vector2();
+		//canJump = false;
+		//canJumpCancel = false;
+		//numjumps = 1;
+		//jumpGravity = 1f;
+		//fallGravity = 2f;
+		//archVelocityThreshold = 3f;
+		//archGravity = 3f;
+		//damage = 2f;
+		//attackDistance = 3f;
+		//attackVelocity = 10f;
+		//attackAngle = 0.25f;
+		//isMultiEnemyAttack = true;
+		//attackClonesRight = new List<GameObject>();
+		//attackClonesLeft = new List<GameObject>();
+		//attackOriginRight = new Vector2();
+		//attackOriginLeft = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 1;
-		velocityAndAngle = new Vector2(0f, 7f);
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
-		attackClonesRight = new List<GameObject>();
-		attackClonesLeft = new List<GameObject>();
-		attackOriginRight = new Vector2();
-		attackOriginLeft = new Vector2();
+		//canJump = false;
+		//canJumpCancel = false;
+		//numjumps = 1;
+		//jumpGravity = 1f;
+		//fallGravity = 2f;
+		//archVelocityThreshold = 3f;
+		//archGravity = 3f;
+		//damage = 2f;
+		//attackDistance = 3f;
+		//attackVelocity = 10f;
+		//attackAngle = 0.25f;
+		//isMultiEnemyAttack = true;
+		//attackClonesRight = new List<GameObject>();
+		//attackClonesLeft = new List<GameObject>();
+		//attackOriginRight = new Vector2();
+		//attackOriginLeft = new Vector2();
 	}
 
 	public override void SetWaterModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 1;
-		velocityAndAngle = new Vector2(0f, 7f);
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
-		attackClonesRight = new List<GameObject>();
-		attackClonesLeft = new List<GameObject>();
-		attackOriginRight = new Vector2();
-		attackOriginLeft = new Vector2();
+		//canJump = false;
+		//canJumpCancel = false;
+		//numjumps = 1;
+		//jumpGravity = 1f;
+		//fallGravity = 2f;
+		//archVelocityThreshold = 3f;
+		//archGravity = 3f;
+		//damage = 2f;
+		//attackDistance = 3f;
+		//attackVelocity = 10f;
+		//attackAngle = 0.25f;
+		//isMultiEnemyAttack = true;
+		//attackClonesRight = new List<GameObject>();
+		//attackClonesLeft = new List<GameObject>();
+		//attackOriginRight = new Vector2();
+		//attackOriginLeft = new Vector2();
 	}
 
 	public override void SetEarthModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 1;
-		velocityAndAngle = new Vector2(0f, 7f);
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
-		attackClonesRight = new List<GameObject>();
-		attackClonesLeft = new List<GameObject>();
-		attackOriginRight = new Vector2();
-		attackOriginLeft = new Vector2();
-		earthJumpSeconds = 2f;
-		canEarthJump = true;
+		//canJump = false;
+		//canJumpCancel = false;
+		//numjumps = 1;
+		//jumpGravity = 1f;
+		//fallGravity = 2f;
+		//archVelocityThreshold = 3f;
+		//archGravity = 3f;
+		//damage = 2f;
+		//attackDistance = 3f;
+		//attackVelocity = 10f;
+		//attackAngle = 0.25f;
+		//isMultiEnemyAttack = true;
+		//attackClonesRight = new List<GameObject>();
+		//attackClonesLeft = new List<GameObject>();
+		//attackOriginRight = new Vector2();
+		//attackOriginLeft = new Vector2();
 	}
 
-	public override void SetGravity() {
-		if (rigidbody.velocity.y == 0f)
-			rigidbody.gravityScale = startingGravity;
-		else if (rigidbody.velocity.y < archVelocityThreshold && rigidbody.velocity.y > -archVelocityThreshold)
-			rigidbody.gravityScale = archGravity;
-		else if (rigidbody.velocity.y > 0f)
-			rigidbody.gravityScale = jumpGravity;
-		else if (rigidbody.velocity.y < 0f)
-			rigidbody.gravityScale = fallGravity;
+	public override void SetGravity(Rigidbody2D playerRigidbody) {
+		if (playerRigidbody.velocity.y == 0f)
+			playerRigidbody.gravityScale = groundedPlayerGravity;
+		else if (playerRigidbody.velocity.y < archVelocityThreshold && playerRigidbody.velocity.y > -archVelocityThreshold)
+			playerRigidbody.gravityScale = archGravity;
+		else if (playerRigidbody.velocity.y > 0f)
+			playerRigidbody.gravityScale = jumpGravity;
+		else if (playerRigidbody.velocity.y < 0f)
+			playerRigidbody.gravityScale = fallGravity;
 	}
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
@@ -146,8 +137,8 @@ public class CorRightBootSkills : RightBootSkills
 		attackOriginLeft = boxCollider.bounds.min;
 	}
 
-	public override void PerformJump(GameObject effect) {
-		rigidbody.velocity = velocityAndAngle;
+	public override void PerformJump(Rigidbody2D playerRigidbody, GameObject effect) {
+		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
 		
 		InstantiateRightProjectile(effect, attackOriginRight);
@@ -159,14 +150,6 @@ public class CorRightBootSkills : RightBootSkills
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.65f, 0f));
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.35f, 0.5f));
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-1f, 0.5f));
-	}
-
-	public override GameObject SetupEarthJump(Vector2 moveDirection, GameObject effect, BoxCollider2D boxCollider) {
-		return null;
-	}
-
-	public override IEnumerator PerformEarthJump() {
-		yield return new WaitForSeconds(earthJumpSeconds);
 	}
 
 	private void InstantiateRightProjectile(GameObject effect, Vector2 attackOrigin) {
@@ -223,8 +206,8 @@ public class CorRightBootSkills : RightBootSkills
 		canJumpCancel = true;
 	}
 
-	public override void PerformJumpCancel() {
-		rigidbody.velocity = Vector2.zero;
+	public override void PerformJumpCancel(Rigidbody2D playerRigidbody) {
+		playerRigidbody.velocity = Vector2.zero;
 		canJumpCancel = false;
 	}
 }

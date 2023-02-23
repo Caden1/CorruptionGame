@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
 	private Vector2 meleeDirection;
 
 	private SwapUI swapUI;
+
 	private NoGemsRightGloveSkills noGemsRightGloveSkills;
 	private CorRightGloveSkills corRightGloveSkills;
 	private PurityRightGloveSkills purityRightGloveSkills;
@@ -104,15 +105,16 @@ public class PlayerController : MonoBehaviour
 		playerSpriteRenderer = GetComponent<SpriteRenderer>();
 		playerAnimations = new CustomAnimation(playerAnimator);
 		swapUI = new SwapUI(gemSwapUIDoc);
+
 		noGemsRightGloveSkills = new NoGemsRightGloveSkills(playerBoxCollider);
 		corRightGloveSkills = new CorRightGloveSkills(playerBoxCollider);
 		purityRightGloveSkills = new PurityRightGloveSkills(playerBoxCollider);
 		noGemsLeftGloveSkills = new NoGemsLeftGloveSkills();
 		corLeftGloveSkills = new CorLeftGloveSkills();
 		purityLeftGloveSkills = new PurityLeftGloveSkills();
-		noGemsRightBootSkills = new NoGemsRightBootSkills(playerRigidBody, enemyContactFilter);
-		corRightBootSkills = new CorRightBootSkills(playerRigidBody, enemyContactFilter);
-		purityRightBootSkills = new PurityRightBootSkills(playerRigidBody);
+		noGemsRightBootSkills = new NoGemsRightBootSkills();
+		corRightBootSkills = new CorRightBootSkills();
+		purityRightBootSkills = new PurityRightBootSkills();
 		noGemsLeftBootSkills = new NoGemsLeftBootSkills(playerRigidBody);
 		corLeftBootSkills = new CorLeftBootSkills(playerRigidBody);
 		purityLeftBootSkills = new PurityLeftBootSkills(playerRigidBody);
@@ -158,9 +160,6 @@ public class PlayerController : MonoBehaviour
 			case Player.PlayerState.Dash:
 				SetupDash();
 				break;
-			case Player.PlayerState.EarthJump:
-				SetupEarthJump();
-				break;
 		}
 
 		switch (Animation.animationState) {
@@ -195,6 +194,8 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void FixedUpdate() {
+		SetGravity();
+
 		switch (Player.playerState) {
 			case Player.PlayerState.Normal:
 				PerformHorizontalMovement();
@@ -210,12 +211,44 @@ public class PlayerController : MonoBehaviour
 			case Player.PlayerState.Dash:
 				PerformDash();
 				break;
-			case Player.PlayerState.EarthJump:
-				PerformEarthJump();
+		}
+	}
+
+	private void SetupMelee() {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.Corruption:
+				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				StartCoroutine(corRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				purityRightGloveSkills.SetupMelee(pureMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				StartCoroutine(purityRightGloveSkills.StartMeleeCooldown(playerInputActions));
 				break;
 		}
+	}
 
-		SetGravity();
+	private void PerformMelee() {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.Corruption:
+				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect);
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				pureMeleeEffectClone = purityRightGloveSkills.PerformMelee(pureMeleeEffect);
+				//StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
+				break;
+		}
+	}
+
+	private void LoadGemStates() {
+		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
+		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
+		BootsGem.bootsGemState = BootsGem.BootsGemState.None;
+		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
+		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.None;
+		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
+		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
+
+		swap.InitialGemState();
 	}
 
 	private void PlayAndDestroyActiveClones() {
@@ -237,18 +270,6 @@ public class PlayerController : MonoBehaviour
 				pureMeleeEffectClone.transform.position = meleePositionLeft;
 			StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(pureMeleeEffectClone, purityRightGloveSkills.meleeEffectCloneSeconds));
 		}
-	}
-
-	private void LoadGemStates() {
-		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
-		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Corruption;
-		BootsGem.bootsGemState = BootsGem.BootsGemState.Purity;
-		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
-		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.Fire;
-		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Earth;
-		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
-
-		swap.InitialGemState();
 	}
 
 	private void SetAnimationState() {
@@ -294,13 +315,13 @@ public class PlayerController : MonoBehaviour
 	private void SetGravity() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.SetGravity();
+				noGemsRightBootSkills.SetGravity(playerRigidBody);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.SetGravity();
+				corRightBootSkills.SetGravity(playerRigidBody);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.SetGravity();
+				purityRightBootSkills.SetGravity(playerRigidBody);
 				break;
 		}
 	}
@@ -337,40 +358,40 @@ public class PlayerController : MonoBehaviour
 	private void PerformJump() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJump(corruptionJumpProjectile);
+				noGemsRightBootSkills.PerformJump(playerRigidBody, corruptionJumpProjectile);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformJump(corruptionJumpProjectile);
+				corRightBootSkills.PerformJump(playerRigidBody, corruptionJumpProjectile);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.PerformJump(pureEarthPlatform);
+				purityRightBootSkills.PerformJump(playerRigidBody, pureEarthPlatform);
 				break;
 		}
 	}
 
-	private void SetupEarthJump() {
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.SetupEarthJump(moveDirection, pureEarthPlatform, playerBoxCollider);
-				break;
-			case BootsGem.BootsGemState.Purity:
-				GameObject earthPlatformClone = purityRightBootSkills.SetupEarthJump(moveDirection, pureEarthPlatform, playerBoxCollider);
-				if (earthPlatformClone != null)
-					StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(earthPlatformClone, purityRightBootSkills.earthCloneSeconds));
-				break;
-		}
-	}
+	//private void SetupEarthJump() {
+	//	switch (BootsGem.bootsGemState) {
+	//		case BootsGem.BootsGemState.Corruption:
+	//			corRightBootSkills.SetupEarthJump(moveDirection, pureEarthPlatform, playerBoxCollider);
+	//			break;
+	//		case BootsGem.BootsGemState.Purity:
+	//			GameObject earthPlatformClone = purityRightBootSkills.SetupEarthJump(moveDirection, pureEarthPlatform, playerBoxCollider);
+	//			if (earthPlatformClone != null)
+	//				StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(earthPlatformClone, purityRightBootSkills.earthCloneSeconds));
+	//			break;
+	//	}
+	//}
 
-	private void PerformEarthJump() {
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformEarthJump();
-				break;
-			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.PerformEarthJump();
-				break;
-		}
-	}
+	//private void PerformEarthJump() {
+	//	switch (BootsGem.bootsGemState) {
+	//		case BootsGem.BootsGemState.Corruption:
+	//			corRightBootSkills.PerformEarthJump();
+	//			break;
+	//		case BootsGem.BootsGemState.Purity:
+	//			purityRightBootSkills.PerformEarthJump();
+	//			break;
+	//	}
+	//}
 
 	private void SetupJumpCancel() {
 		if (playerRigidBody.velocity.y > 0) {
@@ -391,13 +412,13 @@ public class PlayerController : MonoBehaviour
 	private void PerformJumpCancel() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJumpCancel();
+				noGemsRightBootSkills.PerformJumpCancel(playerRigidBody);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformJumpCancel();
+				corRightBootSkills.PerformJumpCancel(playerRigidBody);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.PerformJumpCancel();
+				purityRightBootSkills.PerformJumpCancel(playerRigidBody);
 				break;
 		}
 	}
@@ -429,31 +450,6 @@ public class PlayerController : MonoBehaviour
 				break;
 			case BootsGem.BootsGemState.Purity:
 				StartCoroutine(purityLeftBootSkills.PerformDash());
-				break;
-		}
-	}
-
-	private void SetupMelee() {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.Corruption:
-				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
-				StartCoroutine(corRightGloveSkills.StartMeleeCooldown(playerInputActions));
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				purityRightGloveSkills.SetupMelee(pureMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
-				StartCoroutine(purityRightGloveSkills.StartMeleeCooldown(playerInputActions));
-				break;
-		}
-	}
-
-	private void PerformMelee() {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.Corruption:
-				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect);
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				pureMeleeEffectClone = purityRightGloveSkills.PerformMelee(pureMeleeEffect);
-				//StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
 				break;
 		}
 	}
