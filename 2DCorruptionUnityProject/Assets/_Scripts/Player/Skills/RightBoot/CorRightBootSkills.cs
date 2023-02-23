@@ -119,6 +119,8 @@ public class CorRightBootSkills : RightBootSkills
 		attackClonesLeft = new List<GameObject>();
 		attackOriginRight = new Vector2();
 		attackOriginLeft = new Vector2();
+		earthJumpSeconds = 2f;
+		canEarthJump = true;
 	}
 
 	public override void SetGravity() {
@@ -132,7 +134,7 @@ public class CorRightBootSkills : RightBootSkills
 			rigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, Vector2 moveDirection) {
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -144,7 +146,7 @@ public class CorRightBootSkills : RightBootSkills
 		attackOriginLeft = boxCollider.bounds.min;
 	}
 
-	public override GameObject PerformJump(GameObject effect, BoxCollider2D boxCollider) {
+	public override void PerformJump(GameObject effect) {
 		rigidbody.velocity = velocityAndAngle;
 		canJump = false;
 		
@@ -157,8 +159,14 @@ public class CorRightBootSkills : RightBootSkills
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.65f, 0f));
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.35f, 0.5f));
 		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-1f, 0.5f));
+	}
 
+	public override GameObject SetupEarthJump(Vector2 moveDirection, GameObject effect, BoxCollider2D boxCollider) {
 		return null;
+	}
+
+	public override IEnumerator PerformEarthJump() {
+		yield return new WaitForSeconds(earthJumpSeconds);
 	}
 
 	private void InstantiateRightProjectile(GameObject effect, Vector2 attackOrigin) {

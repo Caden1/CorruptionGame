@@ -15,6 +15,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		damage = 4f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 0.5f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetAirModifiers() {
@@ -25,6 +26,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		animationDuration = 0.5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 1f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetFireModifiers() {
@@ -35,6 +37,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		animationDuration = 0.5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 1f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetWaterModifiers() {
@@ -45,6 +48,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		animationDuration = 0.5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 1f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetEarthModifiers() {
@@ -55,6 +59,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		animationDuration = 0.5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 1f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
@@ -69,21 +74,6 @@ public class PurityRightGloveSkills : RightGloveSkills
 				attackOrigin = positionLeft;
 			}
 		}
-
-		//if (!canMelee) {
-		//	canMelee = true;
-		//	isAnimating = true;
-		//	float attackOriginOffset = 0.25f;
-		//	BoxCollider2D meleeEffectBoxCol = meleeEffect.GetComponent<BoxCollider2D>();
-		//	float meleeEffectOffset = meleeEffectBoxCol.size.x / 2f;
-		//	if (isFacingRight) {
-		//		meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
-		//		attackOrigin = new Vector2(boxCollider.bounds.max.x + attackOriginOffset + meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
-		//	} else {
-		//		meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
-		//		attackOrigin = new Vector2(boxCollider.bounds.min.x - attackOriginOffset - meleeEffectOffset, boxCollider.bounds.center.y + attackOriginOffset);
-		//	}
-		//}
 	}
 
 	public override GameObject PerformMelee(GameObject meleeEffect) {
@@ -92,10 +82,6 @@ public class PurityRightGloveSkills : RightGloveSkills
 		isAnimating = false;
 		return meleeEffectClone;
 	}
-
-	//public override GameObject GetMeleeEffectClone() {
-	//	return meleeEffectClone;
-	//}
 
 	public override IEnumerator DestroyCloneAfterMeleeDuration() {
 		yield return new WaitForSeconds(meleeDuration);

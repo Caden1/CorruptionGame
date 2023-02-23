@@ -20,6 +20,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
 		archGravity = 5f;
+		canEarthJump = false;
 	}
 
 	public override void SetWithNoModifiers() {
@@ -53,7 +54,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 			rigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, Vector2 moveDirection) {
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -63,10 +64,17 @@ public class NoGemsRightBootSkills : RightBootSkills
 		}
 	}
 
-	public override GameObject PerformJump(GameObject effect, BoxCollider2D boxCollider) {
+	public override void PerformJump(GameObject effect) {
 		rigidbody.velocity = velocityAndAngle;
 		canJump = false;
-		return null;
+	}
+
+	public override GameObject SetupEarthJump(Vector2 moveDirection, GameObject effect, BoxCollider2D boxCollider) {
+		throw new System.NotImplementedException();
+	}
+
+	public override IEnumerator PerformEarthJump() {
+		throw new System.NotImplementedException();
 	}
 
 	public override void ShootProjectile() {

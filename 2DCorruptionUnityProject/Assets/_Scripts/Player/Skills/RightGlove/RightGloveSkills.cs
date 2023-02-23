@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class RightGloveSkills
 {
+	public float lockMovementSeconds { get; protected set; }
 	public bool canMelee { get; protected set; }
 	public bool isAnimating { get; protected set; }
 	public float meleeEffectCloneSeconds { get; protected set; }

@@ -45,6 +45,7 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		rigidbody.velocity = dashDirection * dashVelocity;
 		yield return new WaitForSeconds(secondsToDash);
 		rigidbody.gravityScale = startingGravity;
+		Player.playerState = Player.PlayerState.Normal;
 	}
 
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {

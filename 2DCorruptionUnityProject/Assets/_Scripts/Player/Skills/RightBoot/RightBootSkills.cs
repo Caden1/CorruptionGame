@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class RightBootSkills
 {
-	public bool lockMovement;
 	public bool canJump { get; protected set; }
 	public bool canJumpCancel { get; protected set; }
+	public bool canEarthJump { get; protected set; }
 	protected Rigidbody2D rigidbody;
 	protected float startingGravity;
 	protected int numjumps;
@@ -15,6 +15,7 @@ public abstract class RightBootSkills
 	protected float fallGravity;
 	protected float archVelocityThreshold;
 	protected float archGravity;
+	protected float earthJumpSeconds;
 
 	public RightBootSkills(Rigidbody2D rigidbody) {
 		this.rigidbody = rigidbody;
@@ -33,9 +34,13 @@ public abstract class RightBootSkills
 
 	public abstract void SetGravity();
 
-	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, Vector2 moveDirection);
+	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask);
 
-	public abstract GameObject PerformJump(GameObject effect, BoxCollider2D boxCollider);
+	public abstract void PerformJump(GameObject effect);
+
+	public abstract GameObject SetupEarthJump(Vector2 moveDirection, GameObject effect, BoxCollider2D boxCollider);
+
+	public abstract IEnumerator PerformEarthJump();
 
 	public abstract void ShootProjectile();
 

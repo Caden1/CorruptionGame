@@ -59,9 +59,6 @@ public class PlayerController : MonoBehaviour
 	private SpriteRenderer playerSpriteRenderer;
 	private CustomAnimation playerAnimations;
 
-	private PlayerState playerState;
-	private AnimationState animationState;
-
 	private LayerMask platformLayerMask;
 	private LayerMask enemyLayerMask;
 	private ContactFilter2D enemyContactFilter;
@@ -90,6 +87,9 @@ public class PlayerController : MonoBehaviour
 	private bool isFacingRight = true;
 
 	private void Awake() {
+		Player.playerState = Player.PlayerState.Normal;
+		Animation.animationState = Animation.AnimationState.Idle;
+
 		meleeTransformRight = GetComponent<Transform>().GetChild(0);
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
 
@@ -124,9 +124,6 @@ public class PlayerController : MonoBehaviour
 			corOnlyGlove, corAirGlove, corFireGlove, corWaterGlove, corEarthGlove, corOnlyBoot, corAirBoot, corFireBoot, corWaterBoot, corEarthBoot,
 			pureOnlyGlove, pureAirGlove, pureFireGlove, pureWaterGlove, pureEarthGlove, pureOnlyBoot, pureAirBoot, pureFireBoot, pureWaterBoot, pureEarthBoot);
 
-		playerState = PlayerState.Normal;
-		animationState = AnimationState.Idle;
-
 		platformLayerMask = LayerMask.GetMask("Platform");
 		enemyLayerMask = LayerMask.GetMask("Enemy");
 		enemyContactFilter = new ContactFilter2D();
@@ -134,19 +131,19 @@ public class PlayerController : MonoBehaviour
 		moveDirection = new Vector2();
 		meleeDirection = Vector2.right;
 
-		LoadGemAndSkillStates();
+		LoadGemStates();
 	}
 
 	private void Update() {
-		switch (playerState) {
-			case PlayerState.Normal:
+		switch (Player.playerState) {
+			case Player.PlayerState.Normal:
 				SetupHorizontalMovement();
 				if (playerInputActions.Player.Jump.WasPressedThisFrame())
 					SetupJump();
 				if (playerInputActions.Player.Jump.WasReleasedThisFrame())
 					SetupJumpCancel();
 				if (playerInputActions.Player.Dash.WasPressedThisFrame())
-					playerState = PlayerState.Dash;
+					Player.playerState = Player.PlayerState.Dash;
 				if (playerInputActions.Player.Melee.WasPressedThisFrame())
 					SetupMelee();
 				if (playerInputActions.Player.Ranged.WasPressedThisFrame())
@@ -158,34 +155,37 @@ public class PlayerController : MonoBehaviour
 				if (playerInputActions.Player.RotateClockwise.WasPressedThisFrame())
 					swap.RotateModGemsClockwise();
 				break;
-			case PlayerState.Dash:
+			case Player.PlayerState.Dash:
 				SetupDash();
+				break;
+			case Player.PlayerState.EarthJump:
+				SetupEarthJump();
 				break;
 		}
 
-		switch (animationState) {
-			case AnimationState.Idle:
+		switch (Animation.animationState) {
+			case Animation.AnimationState.Idle:
 				playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
 				break;
-			case AnimationState.Run:
+			case Animation.AnimationState.Run:
 				break;
-			case AnimationState.Fall:
+			case Animation.AnimationState.Fall:
 				break;
-			case AnimationState.CorRightGlove:
+			case Animation.AnimationState.CorRightGlove:
 				break;
-			case AnimationState.PureRightGlove:
+			case Animation.AnimationState.PureRightGlove:
 				break;
-			case AnimationState.CorLeftGlove:
+			case Animation.AnimationState.CorLeftGlove:
 				break;
-			case AnimationState.PureLeftGlove:
+			case Animation.AnimationState.PureLeftGlove:
 				break;
-			case AnimationState.CorRightBoot:
+			case Animation.AnimationState.CorRightBoot:
 				break;
-			case AnimationState.PureRightBoot:
+			case Animation.AnimationState.PureRightBoot:
 				break;
-			case AnimationState.CorLeftBoot:
+			case Animation.AnimationState.CorLeftBoot:
 				break;
-			case AnimationState.PureLeftBoot:
+			case Animation.AnimationState.PureLeftBoot:
 				break;
 		}
 
@@ -195,8 +195,8 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void FixedUpdate() {
-		switch (playerState) {
-			case PlayerState.Normal:
+		switch (Player.playerState) {
+			case Player.PlayerState.Normal:
 				PerformHorizontalMovement();
 				if (noGemsRightGloveSkills.canMelee || corRightGloveSkills.canMelee || purityRightGloveSkills.canMelee)
 					PerformMelee();
@@ -207,8 +207,11 @@ public class PlayerController : MonoBehaviour
 				if (noGemsRightBootSkills.canJumpCancel || corRightBootSkills.canJumpCancel || purityRightBootSkills.canJumpCancel)
 					PerformJumpCancel();
 				break;
-			case PlayerState.Dash:
+			case Player.PlayerState.Dash:
 				PerformDash();
+				break;
+			case Player.PlayerState.EarthJump:
+				PerformEarthJump();
 				break;
 		}
 
@@ -224,7 +227,7 @@ public class PlayerController : MonoBehaviour
 				corMeleeEffectClone.transform.position = meleePositionRight;
 			else
 				corMeleeEffectClone.transform.position = meleePositionLeft;
-			StartCoroutine(DestroyCloneAfterSeconds(corMeleeEffectClone, corRightGloveSkills.meleeEffectCloneSeconds));
+			StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(corMeleeEffectClone, corRightGloveSkills.meleeEffectCloneSeconds));
 		}
 		if (pureMeleeEffectClone != null) {
 			pureMeleeEffectAnim.PlayCreatedAnimation(pureMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -232,41 +235,41 @@ public class PlayerController : MonoBehaviour
 				pureMeleeEffectClone.transform.position = meleePositionRight;
 			else
 				pureMeleeEffectClone.transform.position = meleePositionLeft;
-			StartCoroutine(DestroyCloneAfterSeconds(pureMeleeEffectClone, purityRightGloveSkills.meleeEffectCloneSeconds));
+			StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(pureMeleeEffectClone, purityRightGloveSkills.meleeEffectCloneSeconds));
 		}
 	}
 
-	private void LoadGemAndSkillStates() {
+	private void LoadGemStates() {
 		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
 		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Corruption;
 		BootsGem.bootsGemState = BootsGem.BootsGemState.Purity;
 		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
 		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.Fire;
-		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
+		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Earth;
 		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
 
 		swap.InitialGemState();
 	}
 
 	private void SetAnimationState() {
-		if (playerState == PlayerState.Dash)
-			animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? AnimationState.PureLeftBoot : AnimationState.CorLeftBoot;
+		if (Player.playerState == Player.PlayerState.Dash)
+			Animation.animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? Animation.AnimationState.PureLeftBoot : Animation.AnimationState.CorLeftBoot;
 		else if (corRightGloveSkills.isAnimating)
-			animationState = AnimationState.CorRightGlove;
+			Animation.animationState = Animation.AnimationState.CorRightGlove;
 		else if (purityRightGloveSkills.isAnimating)
-			animationState = AnimationState.PureRightGlove;
+			Animation.animationState = Animation.AnimationState.PureRightGlove;
 		else if (corLeftGloveSkills.isAttacking)
-			animationState = AnimationState.CorLeftGlove;
+			Animation.animationState = Animation.AnimationState.CorLeftGlove;
 		else if (purityLeftGloveSkills.isAttacking)
-			animationState = AnimationState.PureLeftGlove;
+			Animation.animationState = Animation.AnimationState.PureLeftGlove;
 		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f)
-			animationState = AnimationState.Run;
+			Animation.animationState = Animation.AnimationState.Run;
 		else if (playerRigidBody.velocity.y > 0f)
-			animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? AnimationState.PureRightBoot : AnimationState.CorRightBoot;
+			Animation.animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? Animation.AnimationState.PureRightBoot : Animation.AnimationState.CorRightBoot;
 		else if (playerRigidBody.velocity.y < 0f)
-			animationState = AnimationState.Fall;
+			Animation.animationState = Animation.AnimationState.Fall;
 		else {
-			animationState = AnimationState.Idle;
+			Animation.animationState = Animation.AnimationState.Idle;
 		}
 	}
 
@@ -314,22 +317,19 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void PerformHorizontalMovement() {
-		if (!purityRightBootSkills.lockMovement)
-			playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
-		else if (purityRightBootSkills.lockMovement && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask))
-			purityRightBootSkills.lockMovement = false;
+		playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
 	}
 
 	private void SetupJump() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, moveDirection);
+				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, moveDirection);
+				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, moveDirection);
+				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
 		}
 	}
@@ -337,41 +337,54 @@ public class PlayerController : MonoBehaviour
 	private void PerformJump() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJump(corruptionJumpProjectile, playerBoxCollider);
+				noGemsRightBootSkills.PerformJump(corruptionJumpProjectile);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformJump(corruptionJumpProjectile, playerBoxCollider);
+				corRightBootSkills.PerformJump(corruptionJumpProjectile);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				GameObject earthPlatformClone = purityRightBootSkills.PerformJump(pureEarthPlatform, playerBoxCollider);
-				if (earthPlatformClone != null)
-					StartCoroutine(DestroyCloneAfterSeconds(earthPlatformClone, purityRightBootSkills.earthCloneSeconds));
+				purityRightBootSkills.PerformJump(pureEarthPlatform);
 				break;
 		}
 	}
 
-	private IEnumerator DestroyCloneAfterSeconds(GameObject clone, float seconds) {
-		yield return new WaitForSeconds(seconds);
-		Destroy(clone);
+	private void SetupEarthJump() {
+		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.Corruption:
+				corRightBootSkills.SetupEarthJump(moveDirection, pureEarthPlatform, playerBoxCollider);
+				break;
+			case BootsGem.BootsGemState.Purity:
+				GameObject earthPlatformClone = purityRightBootSkills.SetupEarthJump(moveDirection, pureEarthPlatform, playerBoxCollider);
+				if (earthPlatformClone != null)
+					StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(earthPlatformClone, purityRightBootSkills.earthCloneSeconds));
+				break;
+		}
+	}
+
+	private void PerformEarthJump() {
+		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.Corruption:
+				corRightBootSkills.PerformEarthJump();
+				break;
+			case BootsGem.BootsGemState.Purity:
+				purityRightBootSkills.PerformEarthJump();
+				break;
+		}
 	}
 
 	private void SetupJumpCancel() {
-		if (!purityRightBootSkills.lockMovement) {
-			if (playerRigidBody.velocity.y > 0) {
-				switch (BootsGem.bootsGemState) {
-					case BootsGem.BootsGemState.None:
-						noGemsRightBootSkills.SetupJumpCancel();
-						break;
-					case BootsGem.BootsGemState.Corruption:
-						corRightBootSkills.SetupJumpCancel();
-						break;
-					case BootsGem.BootsGemState.Purity:
-						purityRightBootSkills.SetupJumpCancel();
-						break;
-				}
+		if (playerRigidBody.velocity.y > 0) {
+			switch (BootsGem.bootsGemState) {
+				case BootsGem.BootsGemState.None:
+					noGemsRightBootSkills.SetupJumpCancel();
+					break;
+				case BootsGem.BootsGemState.Corruption:
+					corRightBootSkills.SetupJumpCancel();
+					break;
+				case BootsGem.BootsGemState.Purity:
+					purityRightBootSkills.SetupJumpCancel();
+					break;
 			}
-		} else if (purityRightBootSkills.lockMovement && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
-			purityRightBootSkills.lockMovement = false;
 		}
 	}
 
@@ -410,22 +423,14 @@ public class PlayerController : MonoBehaviour
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				StartCoroutine(noGemsLeftBootSkills.PerformDash());
-				StartCoroutine(SetNormalStateAfterSeconds(noGemsLeftBootSkills.secondsToDash));
 				break;
 			case BootsGem.BootsGemState.Corruption:
 				StartCoroutine(corLeftBootSkills.PerformDash());
-				StartCoroutine(SetNormalStateAfterSeconds(corLeftBootSkills.secondsToDash));
 				break;
 			case BootsGem.BootsGemState.Purity:
 				StartCoroutine(purityLeftBootSkills.PerformDash());
-				StartCoroutine(SetNormalStateAfterSeconds(purityLeftBootSkills.secondsToDash));
 				break;
 		}
-	}
-
-	private IEnumerator SetNormalStateAfterSeconds(float seconds) {
-		yield return new WaitForSeconds(seconds);
-		playerState = PlayerState.Normal;
 	}
 
 	private void SetupMelee() {

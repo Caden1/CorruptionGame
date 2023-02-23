@@ -15,6 +15,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		damage = 5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 0.5f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetAirModifiers() {
@@ -25,6 +26,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		animationDuration = 0.5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 1f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetFireModifiers() {
@@ -35,6 +37,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		animationDuration = 0.5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 1f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetWaterModifiers() {
@@ -45,6 +48,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		animationDuration = 0.5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 1f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetEarthModifiers() {
@@ -55,6 +59,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		animationDuration = 0.5f;
 		attackOrigin = new Vector2();
 		meleeEffectCloneSeconds = 1f;
+		lockMovementSeconds = 1f;
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {

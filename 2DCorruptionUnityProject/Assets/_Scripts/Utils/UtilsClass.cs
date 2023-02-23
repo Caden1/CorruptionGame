@@ -9,8 +9,8 @@ public class UtilsClass
 		return raycastHit.collider != null;
 	}
 
-	public static Vector2 GetRandomDirection()
-    {
-        return new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-    }
+	public static IEnumerator DestroyCloneAfterSeconds(GameObject clone, float seconds) {
+		yield return new WaitForSeconds(seconds);
+		Object.Destroy(clone);
+	}
 }
