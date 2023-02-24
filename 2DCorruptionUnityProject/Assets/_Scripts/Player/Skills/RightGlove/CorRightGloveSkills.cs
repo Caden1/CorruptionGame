@@ -50,4 +50,13 @@ public class CorRightGloveSkills : RightGloveSkills
 		yield return new WaitForSeconds(cooldownSec);
 		playerInputActions.Player.Melee.Enable();
 	}
+
+	public override IEnumerator DestroyEffectClone(GameObject meleeEffectClone) {
+		yield return new WaitForSeconds(meleeEffectCloneSec);
+		Object.Destroy(meleeEffectClone);
+	}
+
+	public override IEnumerator TempLockMovement() {
+		throw new System.NotImplementedException();
+	}
 }

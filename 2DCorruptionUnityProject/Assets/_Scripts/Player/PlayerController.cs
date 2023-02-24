@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite pureEarthBoot;
 
 	private PlayerInputActions playerInputActions;
-	private Rigidbody2D playerRigidBody;
+	private Rigidbody2D playerRigidbody;
 	private BoxCollider2D playerBoxCollider;
 	private Animator playerAnimator;
 	private SpriteRenderer playerSpriteRenderer;
@@ -103,8 +103,8 @@ public class PlayerController : MonoBehaviour
 		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
-		playerRigidBody = GetComponent<Rigidbody2D>();
-		playerRigidBody.freezeRotation = true;
+		playerRigidbody = GetComponent<Rigidbody2D>();
+		playerRigidbody.freezeRotation = true;
 		playerBoxCollider = GetComponent<BoxCollider2D>();
 		playerAnimator = GetComponent<Animator>();
 		playerSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
 				noGemMeleeEffectClone.transform.position = meleePositionRight;
 			else
 				noGemMeleeEffectClone.transform.position = meleePositionLeft;
-			StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(noGemMeleeEffectClone, noGemsRightGloveSkills.meleeEffectCloneSec));
+			StartCoroutine(noGemsRightGloveSkills.DestroyEffectClone(noGemMeleeEffectClone));
 		}
 
 		if (corMeleeEffectClone != null) {
@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
 				corMeleeEffectClone.transform.position = meleePositionRight;
 			else
 				corMeleeEffectClone.transform.position = meleePositionLeft;
-			StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(corMeleeEffectClone, corRightGloveSkills.meleeEffectCloneSec));
+			StartCoroutine(corRightGloveSkills.DestroyEffectClone(corMeleeEffectClone));
 		}
 
 		if (pureMeleeEffectClone != null) {
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
 				pureMeleeEffectClone.transform.position = meleePositionRight;
 			else
 				pureMeleeEffectClone.transform.position = meleePositionLeft;
-			StartCoroutine(UtilsClass.DestroyCloneAfterSeconds(pureMeleeEffectClone, purityRightGloveSkills.meleeEffectCloneSec));
+			StartCoroutine(purityRightGloveSkills.DestroyEffectClone(pureMeleeEffectClone));
 		}
 	}
 
@@ -276,9 +276,9 @@ public class PlayerController : MonoBehaviour
 			Animation.animationState = Animation.AnimationState.PureLeftGlove;
 		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f)
 			Animation.animationState = Animation.AnimationState.Run;
-		else if (playerRigidBody.velocity.y > 0f)
+		else if (playerRigidbody.velocity.y > 0f)
 			Animation.animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? Animation.AnimationState.PureRightBoot : Animation.AnimationState.CorRightBoot;
-		else if (playerRigidBody.velocity.y < 0f)
+		else if (playerRigidbody.velocity.y < 0f)
 			Animation.animationState = Animation.AnimationState.Fall;
 		else {
 			Animation.animationState = Animation.AnimationState.Idle;
@@ -306,30 +306,34 @@ public class PlayerController : MonoBehaviour
 	private void SetGravity() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.SetGravity(playerRigidBody);
+				noGemsRightBootSkills.SetGravity(playerRigidbody);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.SetGravity(playerRigidBody);
+				corRightBootSkills.SetGravity(playerRigidbody);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.SetGravity(playerRigidBody);
+				purityRightBootSkills.SetGravity(playerRigidbody);
 				break;
 		}
 	}
 
 	private void SetupHorizontalMovement() {
-		moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
-		if (moveDirection.x > 0f) {
-			isFacingRight = true;
-			playerSpriteRenderer.flipX = false;
-		} else if (moveDirection.x < 0f) {
-			isFacingRight = false;
-			playerSpriteRenderer.flipX = true;
+		if (noGemsRightGloveSkills.lockMovement && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
+			moveDirection = Vector2.zero;
+		} else {
+			moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
+			if (moveDirection.x > 0f) {
+				isFacingRight = true;
+				playerSpriteRenderer.flipX = false;
+			} else if (moveDirection.x < 0f) {
+				isFacingRight = false;
+				playerSpriteRenderer.flipX = true;
+			}
 		}
 	}
 
 	private void PerformHorizontalMovement() {
-		playerRigidBody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidBody.velocity.y);
+		playerRigidbody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidbody.velocity.y);
 	}
 
 	private void SetupJump() {
@@ -349,13 +353,13 @@ public class PlayerController : MonoBehaviour
 	private void PerformJump() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJump(playerRigidBody, corruptionJumpProjectile);
+				noGemsRightBootSkills.PerformJump(playerRigidbody, corruptionJumpProjectile);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformJump(playerRigidBody, corruptionJumpProjectile);
+				corRightBootSkills.PerformJump(playerRigidbody, corruptionJumpProjectile);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.PerformJump(playerRigidBody, pureEarthPlatform);
+				purityRightBootSkills.PerformJump(playerRigidbody, pureEarthPlatform);
 				break;
 		}
 	}
@@ -385,7 +389,7 @@ public class PlayerController : MonoBehaviour
 	//}
 
 	private void SetupJumpCancel() {
-		if (playerRigidBody.velocity.y > 0) {
+		if (playerRigidbody.velocity.y > 0) {
 			switch (BootsGem.bootsGemState) {
 				case BootsGem.BootsGemState.None:
 					noGemsRightBootSkills.SetupJumpCancel();
@@ -403,13 +407,13 @@ public class PlayerController : MonoBehaviour
 	private void PerformJumpCancel() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJumpCancel(playerRigidBody);
+				noGemsRightBootSkills.PerformJumpCancel(playerRigidbody);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformJumpCancel(playerRigidBody);
+				corRightBootSkills.PerformJumpCancel(playerRigidbody);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.PerformJumpCancel(playerRigidBody);
+				purityRightBootSkills.PerformJumpCancel(playerRigidbody);
 				break;
 		}
 	}
@@ -434,13 +438,13 @@ public class PlayerController : MonoBehaviour
 	private void PerformDash() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				StartCoroutine(noGemsLeftBootSkills.PerformDash(playerRigidBody));
+				StartCoroutine(noGemsLeftBootSkills.PerformDash(playerRigidbody));
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				StartCoroutine(corLeftBootSkills.PerformDash(playerRigidBody));
+				StartCoroutine(corLeftBootSkills.PerformDash(playerRigidbody));
 				break;
 			case BootsGem.BootsGemState.Purity:
-				StartCoroutine(purityLeftBootSkills.PerformDash(playerRigidBody));
+				StartCoroutine(purityLeftBootSkills.PerformDash(playerRigidbody));
 				break;
 		}
 	}
@@ -450,6 +454,7 @@ public class PlayerController : MonoBehaviour
 			case GlovesGem.GlovesGemState.None:
 				noGemsRightGloveSkills.SetupMelee(noGemMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
 				StartCoroutine(noGemsRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(noGemsRightGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);

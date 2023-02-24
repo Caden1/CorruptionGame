@@ -7,9 +7,10 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 	public void SetWithNoGems() {
 		canMelee = false;
 		isAnimating = false;
-		lockMovementSec = 0.5f;
-		meleeEffectCloneSec = 0.7f;
-		cooldownSec = 1f;
+		lockMovement = false;
+		lockMovementSec = 0.4f;
+		meleeEffectCloneSec = 0.4f;
+		cooldownSec = 0.5f;
 		attackOrigin = new Vector2();
 	}
 
@@ -17,6 +18,7 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		if (!canMelee) {
 			canMelee = true;
 			isAnimating = true;
+			lockMovement = true;
 			if (isFacingRight) {
 				meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
 				attackOrigin = positionRight;
@@ -38,6 +40,16 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		playerInputActions.Player.Melee.Disable();
 		yield return new WaitForSeconds(cooldownSec);
 		playerInputActions.Player.Melee.Enable();
+	}
+
+	public override IEnumerator DestroyEffectClone(GameObject meleeEffectClone) {
+		yield return new WaitForSeconds(meleeEffectCloneSec);
+		Object.Destroy(meleeEffectClone);
+	}
+
+	public override IEnumerator TempLockMovement() {
+		yield return new WaitForSeconds(lockMovementSec);
+		lockMovement = false;
 	}
 
 	public override void SetWithNoModifiers() {

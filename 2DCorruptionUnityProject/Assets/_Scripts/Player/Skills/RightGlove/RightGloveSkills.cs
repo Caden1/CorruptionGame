@@ -6,6 +6,7 @@ public abstract class RightGloveSkills
 {
 	public bool canMelee { get; protected set; }
 	public bool isAnimating { get; protected set; }
+	public bool lockMovement { get; protected set; }
 	public float lockMovementSec { get; protected set; }
 	public float meleeEffectCloneSec { get; protected set; }
 	protected float cooldownSec;
@@ -26,4 +27,8 @@ public abstract class RightGloveSkills
 	public abstract GameObject PerformMelee(GameObject meleeEffect);
 
 	public abstract IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions);
+
+	public abstract IEnumerator DestroyEffectClone(GameObject meleeEffectClone);
+
+	public abstract IEnumerator TempLockMovement();
 }
