@@ -8,24 +8,29 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
-		lockMovementSec = 0.4f;
-		meleeEffectCloneSec = 0.4f;
-		cooldownSec = 0.5f;
+		lockMovementSec = 0.2f;
+		meleeEffectCloneSec = 0.2f;
+		isForcedForward = false;
+		forwardForceVector = new Vector2();
+		forwardForce = 5f;
+		forwardForceSec = 0.1f;
+		cooldownSec = 0.3f;
 		attackOrigin = new Vector2();
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
-		if (!canMelee) {
-			canMelee = true;
-			isAnimating = true;
-			lockMovement = true;
-			if (isFacingRight) {
-				meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
-				attackOrigin = positionRight;
-			} else {
-				meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
-				attackOrigin = positionLeft;
-			}
+		canMelee = true;
+		isAnimating = true;
+		lockMovement = true;
+		isForcedForward = true;
+		if (isFacingRight) {
+			meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
+			attackOrigin = positionRight;
+			forwardForceVector = new Vector2(forwardForce, 0f);
+		} else {
+			meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
+			attackOrigin = positionLeft;
+			forwardForceVector = new Vector2(-forwardForce, 0f);
 		}
 	}
 
@@ -34,6 +39,11 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		canMelee = false;
 		isAnimating = false;
 		return meleeEffectClone;
+	}
+
+	public override IEnumerator ResetForwardForce() {
+		yield return new WaitForSeconds(forwardForceSec);
+		isForcedForward = false;
 	}
 
 	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {

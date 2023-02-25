@@ -5,7 +5,25 @@ using UnityEngine;
 public class NoGemsLeftGloveSkills : LeftGloveSkills
 {
 	public void SetWithNoGems() {
-		
+		canAttack = false;
+		isAttacking = false;
+		cooldownSeconds = 4f;
+		duration = 1f;
+		velocity = 5f;
+		animSeconds = 0.5f;
+	}
+
+	public override void SetupLeftGloveSkill(GameObject leftGloveEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
+		canAttack = true;
+		isAttacking = true;
+	}
+
+	public override void PerformLeftGloveSkill(GameObject leftGloveEffect) {
+		canAttack = false;
+	}
+
+	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetWithNoModifiers() {
@@ -25,26 +43,6 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 	}
 
 	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetupRanged(BoxCollider2D boxCollider) {
-		throw new System.NotImplementedException();
-	}
-
-	public override void PerformRanged(GameObject projectile, bool isFacingRight) {
-		throw new System.NotImplementedException();
-	}
-
-	public override void ShootProjectile() {
-		throw new System.NotImplementedException();
-	}
-
-	public override IEnumerator ResetRangedAnimation() {
-		throw new System.NotImplementedException();
-	}
-
-	public override IEnumerator StartRangedCooldown(PlayerInputActions playerInputActions) {
 		throw new System.NotImplementedException();
 	}
 }

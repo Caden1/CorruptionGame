@@ -25,16 +25,14 @@ public class PurityRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
-		if (!canMelee) {
-			canMelee = true;
-			isAnimating = true;
-			if (isFacingRight) {
-				meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
-				attackOrigin = positionRight;
-			} else {
-				meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
-				attackOrigin = positionLeft;
-			}
+		canMelee = true;
+		isAnimating = true;
+		if (isFacingRight) {
+			meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
+			attackOrigin = positionRight;
+		} else {
+			meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
+			attackOrigin = positionLeft;
 		}
 	}
 
@@ -43,6 +41,11 @@ public class PurityRightGloveSkills : RightGloveSkills
 		canMelee = false;
 		isAnimating = false;
 		return meleeEffectClone;
+	}
+
+	public override IEnumerator ResetForwardForce() {
+		yield return new WaitForSeconds(forwardForceSec);
+		isForcedForward = false;
 	}
 
 	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {

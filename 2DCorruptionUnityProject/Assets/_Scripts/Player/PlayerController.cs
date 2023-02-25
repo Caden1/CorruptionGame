@@ -146,15 +146,15 @@ public class PlayerController : MonoBehaviour
 			case Player.PlayerState.Normal:
 				SetupHorizontalMovement();
 				if (playerInputActions.Player.Jump.WasPressedThisFrame())
-					SetupJump();
+					SetupRightBootSkill();
 				if (playerInputActions.Player.Jump.WasReleasedThisFrame())
 					SetupJumpCancel();
 				if (playerInputActions.Player.Dash.WasPressedThisFrame())
 					Player.playerState = Player.PlayerState.Dash;
 				if (playerInputActions.Player.Melee.WasPressedThisFrame())
-					SetupMelee();
+					SetupRightGloveSkill();
 				if (playerInputActions.Player.Ranged.WasPressedThisFrame())
-					SetupRanged();
+					SetupLeftGloveSkill();
 				if (playerInputActions.Player.Swap.WasPressedThisFrame())
 					swap.SwapCorruptionAndPurity();
 				if (playerInputActions.Player.RotateCounterclockwise.WasPressedThisFrame())
@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
 					swap.RotateModGemsClockwise();
 				break;
 			case Player.PlayerState.Dash:
-				SetupDash();
+				SetupLeftBootSkill();
 				break;
 		}
 
@@ -205,16 +205,16 @@ public class PlayerController : MonoBehaviour
 			case Player.PlayerState.Normal:
 				PerformHorizontalMovement();
 				if (noGemsRightGloveSkills.canMelee || corRightGloveSkills.canMelee || purityRightGloveSkills.canMelee)
-					PerformMelee();
+					PerformRightGloveSkill();
 				if (noGemsLeftGloveSkills.canAttack || corLeftGloveSkills.canAttack || purityLeftGloveSkills.canAttack)
-					PerformRanged();
+					PerformLeftGloveSkill();
 				if (noGemsRightBootSkills.canJump || corRightBootSkills.canJump || purityRightBootSkills.canJump)
-					PerformJump();
+					PerformRightBootSkill();
 				if (noGemsRightBootSkills.canJumpCancel || corRightBootSkills.canJumpCancel || purityRightBootSkills.canJumpCancel)
 					PerformJumpCancel();
 				break;
 			case Player.PlayerState.Dash:
-				PerformDash();
+				PerformLeftBootSkill();
 				break;
 		}
 	}
@@ -320,6 +320,10 @@ public class PlayerController : MonoBehaviour
 	private void SetupHorizontalMovement() {
 		if (noGemsRightGloveSkills.lockMovement && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
 			moveDirection = Vector2.zero;
+			if (noGemsRightGloveSkills.isForcedForward) {
+				playerRigidbody.AddForce(noGemsRightGloveSkills.forwardForceVector);
+				StartCoroutine(noGemsRightGloveSkills.ResetForwardForce());
+			}
 		} else {
 			moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
 			if (moveDirection.x > 0f) {
@@ -336,7 +340,7 @@ public class PlayerController : MonoBehaviour
 		playerRigidbody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidbody.velocity.y);
 	}
 
-	private void SetupJump() {
+	private void SetupRightBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
@@ -350,7 +354,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void PerformJump() {
+	private void PerformRightBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				noGemsRightBootSkills.PerformJump(playerRigidbody, corruptionJumpProjectile);
@@ -418,7 +422,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void SetupDash() {
+	private void SetupLeftBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				noGemsLeftBootSkills.SetupDash(isFacingRight);
@@ -435,7 +439,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void PerformDash() {
+	private void PerformLeftBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				StartCoroutine(noGemsLeftBootSkills.PerformDash(playerRigidbody));
@@ -449,7 +453,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void SetupMelee() {
+	private void SetupRightGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
 				noGemsRightGloveSkills.SetupMelee(noGemMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
@@ -467,39 +471,39 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void PerformMelee() {
+	private void PerformRightGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemMeleeEffectClone = noGemsRightGloveSkills.PerformMelee(noGemMeleeEffect);
+				noGemMeleeEffectClone = noGemsRightGloveSkills.PerformMelee(noGemMeleeEffect, playerRigidbody);
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
-				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect);
+				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect, playerRigidbody);
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				pureMeleeEffectClone = purityRightGloveSkills.PerformMelee(pureMeleeEffect);
+				pureMeleeEffectClone = purityRightGloveSkills.PerformMelee(pureMeleeEffect, playerRigidbody);
 				//StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
 				break;
 		}
 	}
 
-	private void SetupRanged() {
+	private void SetupLeftGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.SetupRanged(playerBoxCollider);
-				StartCoroutine(corLeftGloveSkills.StartRangedCooldown(playerInputActions));
-				StartCoroutine(corLeftGloveSkills.ResetRangedAnimation());
+				corLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider);
+				StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(corLeftGloveSkills.ResetLeftGloveSkillAnim());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				purityLeftGloveSkills.SetupRanged(playerBoxCollider);
-				StartCoroutine(purityLeftGloveSkills.StartRangedCooldown(playerInputActions));
+				purityLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider);
+				StartCoroutine(purityLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				break;
 		}
 	}
 
-	private void PerformRanged() {
+	private void PerformLeftGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.PerformRanged(corruptionProjectile, isFacingRight);
+				corLeftGloveSkills.PerformLeftGloveSkill(corruptionProjectile, isFacingRight);
 				//StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
 				break;
 			case GlovesGem.GlovesGemState.Purity:

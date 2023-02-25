@@ -4,14 +4,12 @@ using UnityEngine;
 
 public abstract class LeftGloveSkills
 {
-	public bool canAttack;
-	public bool isAttacking;
-	public Vector2 attackDirection;
-	public bool isMultiEnemy { get; protected set; }
-	public float cooldown { get; protected set; }
-	public float duration { get; protected set; }
-	public float velocity { get; protected set; }
-	public float animSeconds { get; protected set; }
+	public bool canAttack { get; protected set; }
+	public bool isAttacking { get; protected set; }
+	protected float cooldownSeconds;
+	protected float duration;
+	protected float velocity;
+	protected float animSeconds;
 
 	public abstract void SetWithNoModifiers();
 
@@ -23,13 +21,13 @@ public abstract class LeftGloveSkills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupRanged(BoxCollider2D boxCollider);
+	public abstract void SetupLeftGloveSkill(GameObject leftGloveEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft);
 
-	public abstract void PerformRanged(GameObject projectile, bool isFacingRight);
+	public abstract void PerformLeftGloveSkill(GameObject leftGloveEffect);
 
-	public abstract void ShootProjectile();
+	public abstract IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions);
 
-	public abstract IEnumerator ResetRangedAnimation();
+	//public abstract void ShootProjectile();
 
-	public abstract IEnumerator StartRangedCooldown(PlayerInputActions playerInputActions);
+	//public abstract IEnumerator ResetLeftGloveSkillAnim();
 }

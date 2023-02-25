@@ -9,6 +9,10 @@ public abstract class RightGloveSkills
 	public bool lockMovement { get; protected set; }
 	public float lockMovementSec { get; protected set; }
 	public float meleeEffectCloneSec { get; protected set; }
+	public bool isForcedForward { get; protected set; }
+	public Vector2 forwardForceVector { get; protected set; }
+	protected float forwardForce;
+	protected float forwardForceSec;
 	protected float cooldownSec;
 	protected Vector2 attackOrigin;
 
@@ -25,6 +29,8 @@ public abstract class RightGloveSkills
 	public abstract void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft);
 
 	public abstract GameObject PerformMelee(GameObject meleeEffect);
+
+	public abstract IEnumerator ResetForwardForce();
 
 	public abstract IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions);
 
