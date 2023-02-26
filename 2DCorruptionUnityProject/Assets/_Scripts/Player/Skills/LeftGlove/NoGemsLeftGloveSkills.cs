@@ -8,16 +8,13 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		canAttack = false;
 		isAttacking = false;
 		cooldownSec = 4f;
-		duration = 1f;
-		velocity = 5f;
-		animSeconds = 0.5f;
-		pullEffectCloneSec = 1f;
+		pullEffectCloneSec = 0.5f;
+		attackOrigin = new Vector2();
 	}
 
 	public override void SetupLeftGloveSkill(GameObject leftGloveEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
 		canAttack = true;
 		isAttacking = true;
-		lockMovement = true;
 		attackOrigin = new Vector2();
 		if (isFacingRight) {
 			leftGloveEffect.GetComponent<SpriteRenderer>().flipX = false;

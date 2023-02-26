@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
 	private Vector2 pullPositionLeft;
 	private Transform pullTransformLeft;
 
-	private Vector3 meleePositionOffset = new Vector2(0.4f, 0f);
+	private Vector3 meleePositionOffset = new Vector2(0.3f, 0f);
 
-	private Vector3 pullPositionOffset = new Vector2(1f, 0f);
+	private Vector3 pullPositionOffset = new Vector2(1.2f, 0f);
 
 	[SerializeField] private GameObject noGemMeleeEffect;
 	[SerializeField] private Sprite[] noGemMeleeEffectSprites;
@@ -249,6 +249,12 @@ public class PlayerController : MonoBehaviour
 		swap.InitialGemState();
 	}
 
+	private void OnTriggerEnter2D(Collider2D collision) {
+		if (collision.tag == "Enemy")
+			if (!noGemsLeftBootSkills.isInvulnerable)
+				Object.Destroy(gameObject);
+	}
+
 	private void PlayAndDestroyActiveClones() {
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
@@ -284,10 +290,6 @@ public class PlayerController : MonoBehaviour
 
 		if (noGemPullEffectClone != null) {
 			noGemPullEffectAnim.PlayCreatedAnimation(noGemPullEffectClone.GetComponent<SpriteRenderer>());
-			if (isFacingRight)
-				noGemPullEffectClone.transform.position = pullPositionRight;
-			else
-				noGemPullEffectClone.transform.position = pullPositionLeft;
 			StartCoroutine(noGemsLeftGloveSkills.DestroyEffectClone(noGemPullEffectClone));
 		}
 	}

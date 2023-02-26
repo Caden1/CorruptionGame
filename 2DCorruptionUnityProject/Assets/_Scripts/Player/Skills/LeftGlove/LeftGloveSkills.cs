@@ -6,13 +6,9 @@ public abstract class LeftGloveSkills
 {
 	public bool canAttack { get; protected set; }
 	public bool isAttacking { get; protected set; }
-	public bool lockMovement { get; protected set; }
 	protected float cooldownSec;
-	protected float duration;
-	protected float velocity;
-	protected float animSeconds;
-	protected Vector2 attackOrigin;
 	protected float pullEffectCloneSec;
+	protected Vector2 attackOrigin;
 
 	public abstract void SetWithNoModifiers();
 

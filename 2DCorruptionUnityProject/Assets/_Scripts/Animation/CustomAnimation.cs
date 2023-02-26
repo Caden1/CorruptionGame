@@ -29,19 +29,19 @@ public class CustomAnimation
 	// Create Animations
 	private Sprite[] spritesToAnimate;
 	private SpriteRenderer spriteRenderer;
-	private float framesPerSecond;
+	private float animSpeedSmallerIsFaster;
 	private int spriteIndex = 0;
 
 	public CustomAnimation(Sprite[] spritesToAnimate) {
 		this.spritesToAnimate = spritesToAnimate;
-		framesPerSecond = 0.05f; // 20 FPS
+		animSpeedSmallerIsFaster = 0.08f;
 		animationCreated = true;
 	}
 
 	public CustomAnimation(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
-		framesPerSecond = 0.05f; // 20 FPS
+		animSpeedSmallerIsFaster = 0.08f;
 		animationCreated = true;
 	}
 
@@ -51,8 +51,8 @@ public class CustomAnimation
 	public void PlayCreatedAnimation() {
 		timerForCreatedAnimation += Time.deltaTime;
 		if (animationCreated) {
-			if (timerForCreatedAnimation >= (framesPerSecond + Time.deltaTime)) {
-				timerForCreatedAnimation -= (framesPerSecond + Time.deltaTime);
+			if (timerForCreatedAnimation >= (animSpeedSmallerIsFaster + Time.deltaTime)) {
+				timerForCreatedAnimation -= (animSpeedSmallerIsFaster + Time.deltaTime);
 				spriteRenderer.sprite = spritesToAnimate[spriteIndex];
 				spriteIndex = (spriteIndex + 1) % spritesToAnimate.Length;
 			}
@@ -62,8 +62,8 @@ public class CustomAnimation
 	public void PlayCreatedAnimation(SpriteRenderer localSpriteRenderer) {
 		timerForCreatedAnimation += Time.deltaTime;
 		if (animationCreated) {
-			if (timerForCreatedAnimation >= (framesPerSecond + Time.deltaTime)) {
-				timerForCreatedAnimation -= (framesPerSecond + Time.deltaTime);
+			if (timerForCreatedAnimation >= (animSpeedSmallerIsFaster + Time.deltaTime)) {
+				timerForCreatedAnimation -= (animSpeedSmallerIsFaster + Time.deltaTime);
 				localSpriteRenderer.sprite = spritesToAnimate[spriteIndex];
 				spriteIndex = (spriteIndex + 1) % spritesToAnimate.Length;
 			}

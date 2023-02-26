@@ -10,11 +10,11 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		lockMovement = false;
 		lockMovementSec = 0.2f;
 		meleeEffectCloneSec = 0.2f;
+		cooldownSec = 0.2f;
 		isForcedForward = false;
 		forwardForceVector = new Vector2();
-		forwardForce = 5f;
+		forwardForce = 3f;
 		forwardForceSec = 0.1f;
-		cooldownSec = 0.3f;
 		attackOrigin = new Vector2();
 	}
 

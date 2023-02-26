@@ -32,6 +32,7 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetupDash(bool isFacingRight) {
+		isInvulnerable = true;
 		if (isFacingRight)
 			dashDirection = Vector2.right;
 		else
@@ -44,6 +45,7 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		playerRigidbody.velocity = dashDirection * dashVelocity;
 		yield return new WaitForSeconds(secondsToDash);
 		playerRigidbody.gravityScale = startingGravity;
+		isInvulnerable = false;
 		Player.playerState = Player.PlayerState.Normal;
 	}
 

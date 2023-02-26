@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class LeftBootSkills
 {
+	public bool isInvulnerable { get; protected set; }
 	protected Vector2 dashDirection;
 	protected float numDashes;
 	protected float dashVelocity;
