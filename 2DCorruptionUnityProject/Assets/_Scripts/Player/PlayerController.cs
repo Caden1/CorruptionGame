@@ -14,10 +14,19 @@ public class PlayerController : MonoBehaviour
 	private Vector2 meleePositionLeft;
 	private Transform meleeTransformLeft;
 
+	private Vector2 pullPositionRight;
+	private Transform pullTransformRight;
+	private Vector2 pullPositionLeft;
+	private Transform pullTransformLeft;
+
 	private Vector3 meleePositionOffset = new Vector2(0.4f, 0f);
+
+	private Vector3 pullPositionOffset = new Vector2(1f, 0f);
 
 	[SerializeField] private GameObject noGemMeleeEffect;
 	[SerializeField] private Sprite[] noGemMeleeEffectSprites;
+	[SerializeField] private GameObject noGemPullEffect;
+	[SerializeField] private Sprite[] noGemPullEffectSprites;
 	[SerializeField] private GameObject corMeleeEffect;
 	[SerializeField] private Sprite[] corMeleeEffectSprites;
 	[SerializeField] private GameObject corruptionProjectile;
@@ -32,6 +41,9 @@ public class PlayerController : MonoBehaviour
 	private CustomAnimation corMeleeEffectAnim;
 	private GameObject pureMeleeEffectClone;
 	private CustomAnimation pureMeleeEffectAnim;
+
+	private GameObject noGemPullEffectClone;
+	private CustomAnimation noGemPullEffectAnim;
 
 	[SerializeField] private UIDocument gemSwapUIDoc;
 
@@ -98,9 +110,15 @@ public class PlayerController : MonoBehaviour
 		meleeTransformRight = GetComponent<Transform>().GetChild(0);
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
 
+		pullTransformRight = GetComponent<Transform>().GetChild(2);
+		pullTransformLeft = GetComponent<Transform>().GetChild(3);
+
 		noGemMeleeEffectAnim = new CustomAnimation(noGemMeleeEffectSprites);
 		corMeleeEffectAnim = new CustomAnimation(corMeleeEffectSprites);
 		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
+
+		noGemPullEffectAnim = new CustomAnimation(noGemPullEffectSprites);
+
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
 		playerRigidbody = GetComponent<Rigidbody2D>();
@@ -234,6 +252,8 @@ public class PlayerController : MonoBehaviour
 	private void PlayAndDestroyActiveClones() {
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
+		pullPositionRight = pullTransformRight.position + pullPositionOffset;
+		pullPositionLeft = pullTransformLeft.position - pullPositionOffset;
 
 		if (noGemMeleeEffectClone != null) {
 			noGemMeleeEffectAnim.PlayCreatedAnimation(noGemMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -260,6 +280,15 @@ public class PlayerController : MonoBehaviour
 			else
 				pureMeleeEffectClone.transform.position = meleePositionLeft;
 			StartCoroutine(purityRightGloveSkills.DestroyEffectClone(pureMeleeEffectClone));
+		}
+
+		if (noGemPullEffectClone != null) {
+			noGemPullEffectAnim.PlayCreatedAnimation(noGemPullEffectClone.GetComponent<SpriteRenderer>());
+			if (isFacingRight)
+				noGemPullEffectClone.transform.position = pullPositionRight;
+			else
+				noGemPullEffectClone.transform.position = pullPositionLeft;
+			StartCoroutine(noGemsLeftGloveSkills.DestroyEffectClone(noGemPullEffectClone));
 		}
 	}
 
@@ -288,7 +317,7 @@ public class PlayerController : MonoBehaviour
 	private void ShootProjectile() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.ShootProjectile();
+				//corLeftGloveSkills.ShootProjectile();
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				//purityProjectileSkills.AnimateAndShootProjectile(purityProjectileClone, purityProjectileAnimation);
@@ -474,13 +503,13 @@ public class PlayerController : MonoBehaviour
 	private void PerformRightGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemMeleeEffectClone = noGemsRightGloveSkills.PerformMelee(noGemMeleeEffect, playerRigidbody);
+				noGemMeleeEffectClone = noGemsRightGloveSkills.PerformMelee(noGemMeleeEffect);
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
-				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect, playerRigidbody);
+				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect);
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				pureMeleeEffectClone = purityRightGloveSkills.PerformMelee(pureMeleeEffect, playerRigidbody);
+				pureMeleeEffectClone = purityRightGloveSkills.PerformMelee(pureMeleeEffect);
 				//StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
 				break;
 		}
@@ -488,22 +517,27 @@ public class PlayerController : MonoBehaviour
 
 	private void SetupLeftGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				noGemsLeftGloveSkills.SetupLeftGloveSkill(noGemPullEffect, isFacingRight, pullPositionRight, pullPositionLeft);
+				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				break;
 			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider);
-				StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
-				StartCoroutine(corLeftGloveSkills.ResetLeftGloveSkillAnim());
+				//corLeftGloveSkills.SetupLeftGloveSkill(isFacingRight, pullPositionRight, pullPositionLeft);
+				//StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				//StartCoroutine(corLeftGloveSkills.ResetLeftGloveSkillAnim());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				purityLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider);
-				StartCoroutine(purityLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				break;
 		}
 	}
 
 	private void PerformLeftGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				noGemPullEffectClone = noGemsLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect);
+				break;
 			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.PerformLeftGloveSkill(corruptionProjectile, isFacingRight);
+				corLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect);
 				//StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
 				break;
 			case GlovesGem.GlovesGemState.Purity:

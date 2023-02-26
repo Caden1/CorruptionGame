@@ -24,18 +24,25 @@ public class PurityLeftGloveSkills : LeftGloveSkills
 		
 	}
 
-	public override void SetupLeftGloveSkill(GameObject leftGloveEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
+	public override void SetupLeftGloveSkill(GameObject leftGloveEffect, bool isFacingRight, Vector2 pullPositionRight, Vector2 pullPositionLeft) {
 		canAttack = true;
 		isAttacking = true;
 	}
 
-	public override void PerformLeftGloveSkill(GameObject leftGloveEffect) {
+	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect) {
 		canAttack = false;
+
+		return null;
 	}
 
 	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {
 		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(cooldownSeconds);
+		yield return new WaitForSeconds(cooldownSec);
 		playerInputActions.Player.Ranged.Enable();
+	}
+
+	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
+		yield return new WaitForSeconds(pullEffectCloneSec);
+		Object.Destroy(pullEffectClone);
 	}
 }

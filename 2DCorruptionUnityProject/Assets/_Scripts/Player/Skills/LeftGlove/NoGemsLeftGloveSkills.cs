@@ -7,23 +7,43 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 	public void SetWithNoGems() {
 		canAttack = false;
 		isAttacking = false;
-		cooldownSeconds = 4f;
+		cooldownSec = 4f;
 		duration = 1f;
 		velocity = 5f;
 		animSeconds = 0.5f;
+		pullEffectCloneSec = 1f;
 	}
 
 	public override void SetupLeftGloveSkill(GameObject leftGloveEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
 		canAttack = true;
 		isAttacking = true;
+		lockMovement = true;
+		attackOrigin = new Vector2();
+		if (isFacingRight) {
+			leftGloveEffect.GetComponent<SpriteRenderer>().flipX = false;
+			attackOrigin = positionRight;
+		} else {
+			leftGloveEffect.GetComponent<SpriteRenderer>().flipX = true;
+			attackOrigin = positionLeft;
+		}
 	}
 
-	public override void PerformLeftGloveSkill(GameObject leftGloveEffect) {
+	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect) {
+		GameObject pullEffectClone = Object.Instantiate(leftGloveEffect, attackOrigin, leftGloveEffect.transform.rotation);
 		canAttack = false;
+		isAttacking = false;
+		return pullEffectClone;
 	}
 
 	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {
-		throw new System.NotImplementedException();
+		playerInputActions.Player.Ranged.Disable();
+		yield return new WaitForSeconds(cooldownSec);
+		playerInputActions.Player.Ranged.Enable();
+	}
+
+	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
+		yield return new WaitForSeconds(pullEffectCloneSec);
+		Object.Destroy(pullEffectClone);
 	}
 
 	public override void SetWithNoModifiers() {
