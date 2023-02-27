@@ -20,7 +20,7 @@ public abstract class LeftGloveSkills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupLeftGloveSkill(GameObject leftGloveEffect, bool isFacingRight, Vector2 pullPositionRight, Vector2 pullPositionLeft);
+	public abstract void SetupLeftGloveSkill(GameObject leftGloveEffect, BoxCollider2D playerBoxCollider, Vector2 directionPointing, bool isFacingRight, Vector2 pullPositionRight, Vector2 pullPositionLeft);
 
 	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect);
 

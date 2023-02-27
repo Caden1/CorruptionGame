@@ -15,13 +15,13 @@ public class PlayerController : MonoBehaviour
 	private Transform meleeTransformLeft;
 
 	private Vector2 pullPositionRight;
-	private Transform pullTransformRight;
+	//private Transform pullTransformRight;
 	private Vector2 pullPositionLeft;
-	private Transform pullTransformLeft;
+	//private Transform pullTransformLeft;
 
 	private Vector3 meleePositionOffset = new Vector2(0.3f, 0f);
 
-	private Vector3 pullPositionOffset = new Vector2(1.2f, 0f);
+	//private Vector3 pullPositionOffset = new Vector2(1.2f, 0f);
 
 	[SerializeField] private GameObject noGemMeleeEffect;
 	[SerializeField] private Sprite[] noGemMeleeEffectSprites;
@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
 	private LayerMask enemyLayerMask;
 	private ContactFilter2D enemyContactFilter;
 	private Vector2 moveDirection;
+	private Vector2 actualMoveDirection;
 	private Vector2 meleeDirection;
 
 	private SwapUI swapUI;
@@ -114,8 +115,8 @@ public class PlayerController : MonoBehaviour
 		meleeTransformRight = GetComponent<Transform>().GetChild(0);
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
 
-		pullTransformRight = GetComponent<Transform>().GetChild(2);
-		pullTransformLeft = GetComponent<Transform>().GetChild(3);
+		//pullTransformRight = GetComponent<Transform>().GetChild(2);
+		//pullTransformLeft = GetComponent<Transform>().GetChild(3);
 
 		noGemMeleeEffectAnim = new CustomAnimation(noGemMeleeEffectSprites);
 		corMeleeEffectAnim = new CustomAnimation(corMeleeEffectSprites);
@@ -162,6 +163,7 @@ public class PlayerController : MonoBehaviour
 		enemyContactFilter = new ContactFilter2D();
 		enemyContactFilter.SetLayerMask(enemyLayerMask);
 		moveDirection = new Vector2();
+		actualMoveDirection = new Vector2();
 		meleeDirection = Vector2.right;
 
 		LoadGemStates();
@@ -271,8 +273,8 @@ public class PlayerController : MonoBehaviour
 	private void PlayAndDestroyActiveClones() {
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
-		pullPositionRight = pullTransformRight.position + pullPositionOffset;
-		pullPositionLeft = pullTransformLeft.position - pullPositionOffset;
+		//pullPositionRight = pullTransformRight.position + pullPositionOffset;
+		//pullPositionLeft = pullTransformLeft.position - pullPositionOffset;
 
 		if (noGemMeleeEffectClone != null) {
 			noGemMeleeEffectAnim.PlayCreatedAnimation(noGemMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -369,19 +371,24 @@ public class PlayerController : MonoBehaviour
 				StartCoroutine(noGemsRightGloveSkills.ResetForwardForce());
 			}
 		} else {
+			float moveDirThreshold = 0.4f;
 			moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
-			if (moveDirection.x > 0f) {
+			if (moveDirection.x > moveDirThreshold) {
 				isFacingRight = true;
 				playerSpriteRenderer.flipX = false;
-			} else if (moveDirection.x < 0f) {
+				actualMoveDirection = Vector2.right;
+			} else if (moveDirection.x < -moveDirThreshold) {
 				isFacingRight = false;
 				playerSpriteRenderer.flipX = true;
+				actualMoveDirection = Vector2.left;
+			} else {
+				actualMoveDirection = Vector2.zero;
 			}
 		}
 	}
 
 	private void PerformHorizontalMovement() {
-		playerRigidbody.velocity = new Vector2(moveDirection.x * moveVelocity, playerRigidbody.velocity.y);
+		playerRigidbody.velocity = new Vector2(actualMoveDirection.x * moveVelocity, playerRigidbody.velocity.y);
 	}
 
 	private void SetupRightBootSkill() {
@@ -533,7 +540,7 @@ public class PlayerController : MonoBehaviour
 	private void SetupLeftGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemsLeftGloveSkills.SetupLeftGloveSkill(noGemPullEffect, isFacingRight, pullPositionRight, pullPositionLeft);
+				noGemsLeftGloveSkills.SetupLeftGloveSkill(noGemPullEffect, playerBoxCollider, moveDirection, isFacingRight, pullPositionRight, pullPositionLeft);
 				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
