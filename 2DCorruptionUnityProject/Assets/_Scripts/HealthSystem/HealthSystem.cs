@@ -1,6 +1,8 @@
+using System;
+
 public class HealthSystem
 {
-    public float health { get; private set; }
+	private float health;
     private float healthMax;
 
     public HealthSystem(float healthMax) {
@@ -8,15 +10,19 @@ public class HealthSystem
 		health = healthMax;
     }
 
+    public float GetHealthPercentage() {
+        return health / healthMax;
+    }
+
     public void TakeDamage(float damageAmount) {
         health -= damageAmount;
         if (health < 0f)
             health = 0f;
-    }
+	}
 
     public void Heal(float healAmount) {
         health += healAmount;
         if (health > healthMax)
             health = healthMax;
-    }
+	}
 }

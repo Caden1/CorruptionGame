@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 	private CustomAnimation noGemPullEffectAnim;
 
 	[SerializeField] private UIDocument gemSwapUIDoc;
+	[SerializeField] private UIDocument healthBarUIDoc;
 
 	[SerializeField] private Sprite corOnlyGlove;
 	[SerializeField] private Sprite corOnlyBoot;
@@ -68,6 +69,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite pureEarthGlove;
 	[SerializeField] private Sprite pureEarthBoot;
 
+	private HealthSystem playerHealth;
+
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidbody;
 	private BoxCollider2D playerBoxCollider;
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
 	private Vector2 meleeDirection;
 
 	private SwapUI swapUI;
+	private HealthBarUI healthBarUI;
 
 	private NoGemsRightGloveSkills noGemsRightGloveSkills;
 	private CorRightGloveSkills corRightGloveSkills;
@@ -119,6 +123,8 @@ public class PlayerController : MonoBehaviour
 
 		noGemPullEffectAnim = new CustomAnimation(noGemPullEffectSprites);
 
+		playerHealth = new HealthSystem(100f);
+
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
 		playerRigidbody = GetComponent<Rigidbody2D>();
@@ -127,7 +133,9 @@ public class PlayerController : MonoBehaviour
 		playerAnimator = GetComponent<Animator>();
 		playerSpriteRenderer = GetComponent<SpriteRenderer>();
 		playerAnimations = new CustomAnimation(playerAnimator);
+
 		swapUI = new SwapUI(gemSwapUIDoc);
+		healthBarUI = new HealthBarUI(healthBarUIDoc);
 
 		noGemsRightGloveSkills = new NoGemsRightGloveSkills();
 		corRightGloveSkills = new CorRightGloveSkills();
@@ -249,11 +257,16 @@ public class PlayerController : MonoBehaviour
 		swap.InitialGemState();
 	}
 
+	// Placegolder for testing ------------
 	private void OnTriggerEnter2D(Collider2D collision) {
-		if (collision.tag == "Enemy")
-			if (!noGemsLeftBootSkills.isInvulnerable)
-				Object.Destroy(gameObject);
+		if (collision.tag == "Enemy") {
+			if (!noGemsLeftBootSkills.isInvulnerable) {
+				playerHealth.TakeDamage(10f);
+				healthBarUI.DecreaseHealthBarSize(playerHealth.GetHealthPercentage());
+			}
+		}
 	}
+	// ------------------------------------
 
 	private void PlayAndDestroyActiveClones() {
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
