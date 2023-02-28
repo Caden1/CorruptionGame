@@ -32,7 +32,7 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		
 	}
 
-	public override void SetupLeftGloveSkill(GameObject leftGloveEffect, BoxCollider2D playerBoxCollider, Vector2 directionPointing, bool isFacingRight, Vector2 pullPositionRight, Vector2 pullPositionLeft) {
+	public override void SetupLeftGloveSkill(GameObject leftGloveEffect, BoxCollider2D playerBoxCollider, Vector2 directionPointing, bool isFacingRight) {
 		//float attackOriginOffset = 0.25f;
 		//canAttack = true;
 		//isAttacking = true;

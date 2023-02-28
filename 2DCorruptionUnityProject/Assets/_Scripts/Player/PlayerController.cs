@@ -14,14 +14,7 @@ public class PlayerController : MonoBehaviour
 	private Vector2 meleePositionLeft;
 	private Transform meleeTransformLeft;
 
-	private Vector2 pullPositionRight;
-	//private Transform pullTransformRight;
-	private Vector2 pullPositionLeft;
-	//private Transform pullTransformLeft;
-
 	private Vector3 meleePositionOffset = new Vector2(0.3f, 0f);
-
-	//private Vector3 pullPositionOffset = new Vector2(1.2f, 0f);
 
 	[SerializeField] private GameObject noGemMeleeEffect;
 	[SerializeField] private Sprite[] noGemMeleeEffectSprites;
@@ -114,9 +107,6 @@ public class PlayerController : MonoBehaviour
 
 		meleeTransformRight = GetComponent<Transform>().GetChild(0);
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
-
-		//pullTransformRight = GetComponent<Transform>().GetChild(2);
-		//pullTransformLeft = GetComponent<Transform>().GetChild(3);
 
 		noGemMeleeEffectAnim = new CustomAnimation(noGemMeleeEffectSprites);
 		corMeleeEffectAnim = new CustomAnimation(corMeleeEffectSprites);
@@ -273,8 +263,6 @@ public class PlayerController : MonoBehaviour
 	private void PlayAndDestroyActiveClones() {
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
-		//pullPositionRight = pullTransformRight.position + pullPositionOffset;
-		//pullPositionLeft = pullTransformLeft.position - pullPositionOffset;
 
 		if (noGemMeleeEffectClone != null) {
 			noGemMeleeEffectAnim.PlayCreatedAnimation(noGemMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -540,7 +528,7 @@ public class PlayerController : MonoBehaviour
 	private void SetupLeftGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemsLeftGloveSkills.SetupLeftGloveSkill(noGemPullEffect, playerBoxCollider, moveDirection, isFacingRight, pullPositionRight, pullPositionLeft);
+				noGemsLeftGloveSkills.SetupLeftGloveSkill(noGemPullEffect, playerBoxCollider, moveDirection, isFacingRight);
 				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
