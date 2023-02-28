@@ -6,6 +6,8 @@ public abstract class LeftGloveSkills
 {
 	public bool canAttack { get; protected set; }
 	public bool isAttacking { get; protected set; }
+	public bool lockMovement { get; protected set; }
+	protected float lockMovementSec;
 	protected float cooldownSec;
 	protected float pullEffectCloneSec;
 	protected Vector2 attackOrigin;
@@ -25,6 +27,8 @@ public abstract class LeftGloveSkills
 	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect);
 
 	public abstract IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions);
+
+	public abstract IEnumerator TempLockMovement();
 
 	public abstract IEnumerator DestroyEffectClone(GameObject effectClone);
 

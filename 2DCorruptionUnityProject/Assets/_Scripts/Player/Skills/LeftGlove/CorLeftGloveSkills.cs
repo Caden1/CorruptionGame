@@ -56,6 +56,11 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		playerInputActions.Player.Ranged.Enable();
 	}
 
+	public override IEnumerator TempLockMovement() {
+		yield return new WaitForSeconds(lockMovementSec);
+		lockMovement = false;
+	}
+
 	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
 		yield return new WaitForSeconds(pullEffectCloneSec);
 		Object.Destroy(pullEffectClone);

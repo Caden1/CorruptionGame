@@ -75,7 +75,6 @@ public class PlayerController : MonoBehaviour
 	private LayerMask enemyLayerMask;
 	private ContactFilter2D enemyContactFilter;
 	private Vector2 moveDirection;
-	private Vector2 actualMoveDirection;
 	private Vector2 meleeDirection;
 
 	private SwapUI swapUI;
@@ -100,6 +99,9 @@ public class PlayerController : MonoBehaviour
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
+
+	private float actualXMoveDirection = 0f;
+	private float actualYMoveDirection = 0f;
 
 	private void Awake() {
 		Player.playerState = Player.PlayerState.Normal;
@@ -153,7 +155,6 @@ public class PlayerController : MonoBehaviour
 		enemyContactFilter = new ContactFilter2D();
 		enemyContactFilter.SetLayerMask(enemyLayerMask);
 		moveDirection = new Vector2();
-		actualMoveDirection = new Vector2();
 		meleeDirection = Vector2.right;
 
 		LoadGemStates();
@@ -352,8 +353,12 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetupHorizontalMovement() {
-		if (noGemsRightGloveSkills.lockMovement && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
-			moveDirection = Vector2.zero;
+		if ((noGemsLeftGloveSkills.lockMovement)) {
+			actualXMoveDirection = 0f;
+			actualYMoveDirection = 0f;
+		} else if (noGemsRightGloveSkills.lockMovement && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
+			actualXMoveDirection = 0f;
+			actualYMoveDirection = 0f;
 			if (noGemsRightGloveSkills.isForcedForward) {
 				playerRigidbody.AddForce(noGemsRightGloveSkills.forwardForceVector);
 				StartCoroutine(noGemsRightGloveSkills.ResetForwardForce());
@@ -361,22 +366,23 @@ public class PlayerController : MonoBehaviour
 		} else {
 			float moveDirThreshold = 0.4f;
 			moveDirection = playerInputActions.Player.Movement.ReadValue<Vector2>();
+			actualYMoveDirection = playerRigidbody.velocity.y;
 			if (moveDirection.x > moveDirThreshold) {
 				isFacingRight = true;
 				playerSpriteRenderer.flipX = false;
-				actualMoveDirection = Vector2.right;
+				actualXMoveDirection = 1f;
 			} else if (moveDirection.x < -moveDirThreshold) {
 				isFacingRight = false;
 				playerSpriteRenderer.flipX = true;
-				actualMoveDirection = Vector2.left;
+				actualXMoveDirection = -1f;
 			} else {
-				actualMoveDirection = Vector2.zero;
+				actualXMoveDirection = 0f;
 			}
 		}
 	}
 
 	private void PerformHorizontalMovement() {
-		playerRigidbody.velocity = new Vector2(actualMoveDirection.x * moveVelocity, playerRigidbody.velocity.y);
+		playerRigidbody.velocity = new Vector2(actualXMoveDirection * moveVelocity, actualYMoveDirection);
 	}
 
 	private void SetupRightBootSkill() {
@@ -530,6 +536,7 @@ public class PlayerController : MonoBehaviour
 			case GlovesGem.GlovesGemState.None:
 				noGemsLeftGloveSkills.SetupLeftGloveSkill(noGemPullEffect, playerBoxCollider, moveDirection, isFacingRight);
 				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(noGemsLeftGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				//corLeftGloveSkills.SetupLeftGloveSkill(isFacingRight, pullPositionRight, pullPositionLeft);

@@ -9,6 +9,8 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 	public void SetWithNoGems() {
 		canAttack = false;
 		isAttacking = false;
+		lockMovement = false;
+		lockMovementSec = 0.2f;
 		cooldownSec = 4f;
 		pullEffectCloneSec = 0.5f;
 		pullEffectZRotation = 0f;
@@ -38,6 +40,7 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		Vector2 attackUpPosition = new Vector2(playerBounds.center.x, playerBounds.max.y + yOffset);
 		canAttack = true;
 		isAttacking = true;
+		lockMovement = true;
 		attackOrigin = new Vector2();
 
 		if (directionPointing == Vector2.zero) {
@@ -96,6 +99,11 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		playerInputActions.Player.Ranged.Disable();
 		yield return new WaitForSeconds(cooldownSec);
 		playerInputActions.Player.Ranged.Enable();
+	}
+
+	public override IEnumerator TempLockMovement() {
+		yield return new WaitForSeconds(lockMovementSec);
+		lockMovement = false;
 	}
 
 	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {

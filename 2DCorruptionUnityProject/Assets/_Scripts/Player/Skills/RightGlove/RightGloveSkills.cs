@@ -7,10 +7,10 @@ public abstract class RightGloveSkills
 	public bool canMelee { get; protected set; }
 	public bool isAnimating { get; protected set; }
 	public bool lockMovement { get; protected set; }
-	public float lockMovementSec { get; protected set; }
 	public float meleeEffectCloneSec { get; protected set; }
 	public bool isForcedForward { get; protected set; }
 	public Vector2 forwardForceVector { get; protected set; }
+	protected float lockMovementSec;
 	protected float forwardForce;
 	protected float forwardForceSec;
 	protected float cooldownSec;
