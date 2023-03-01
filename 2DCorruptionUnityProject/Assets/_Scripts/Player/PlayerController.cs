@@ -194,28 +194,19 @@ public class PlayerController : MonoBehaviour
 				break;
 			case Animation.AnimationState.Fall:
 				break;
-			case Animation.AnimationState.CorRightGlove:
+			case Animation.AnimationState.RightBoot:
 				break;
-			case Animation.AnimationState.PureRightGlove:
+			case Animation.AnimationState.LeftBoot:
 				break;
-			case Animation.AnimationState.CorLeftGlove:
+			case Animation.AnimationState.RightGlove:
 				break;
-			case Animation.AnimationState.PureLeftGlove:
-				break;
-			case Animation.AnimationState.CorRightBoot:
-				break;
-			case Animation.AnimationState.PureRightBoot:
-				break;
-			case Animation.AnimationState.CorLeftBoot:
-				break;
-			case Animation.AnimationState.PureLeftBoot:
+			case Animation.AnimationState.LeftGlove:
 				break;
 		}
 
 		SetAnimationState();
 		PlayAndDestroyActiveClones();
 		ShootProjectile();
-		CheckForDoubleDash();
 	}
 
 	private void FixedUpdate() {
@@ -224,24 +215,18 @@ public class PlayerController : MonoBehaviour
 		switch (Player.playerState) {
 			case Player.PlayerState.Normal:
 				PerformHorizontalMovement();
-				if (noGemsRightGloveSkills.canMelee || corRightGloveSkills.canMelee || purityRightGloveSkills.canMelee)
-					PerformRightGloveSkill();
-				if (noGemsLeftGloveSkills.canAttack || corLeftGloveSkills.canAttack || purityLeftGloveSkills.canAttack)
-					PerformLeftGloveSkill();
-				if (noGemsRightBootSkills.canJump || corRightBootSkills.canJump || purityRightBootSkills.canJump)
+				if (RightBootSkills.canJump)
 					PerformRightBootSkill();
-				if (noGemsRightBootSkills.canJumpCancel || corRightBootSkills.canJumpCancel || purityRightBootSkills.canJumpCancel)
+				if (RightBootSkills.canJumpCancel)
 					PerformJumpCancel();
+				if (RightGloveSkills.canMelee)
+					PerformRightGloveSkill();
+				if (LeftGloveSkills.canAttack)
+					PerformLeftGloveSkill();
 				break;
 			case Player.PlayerState.Dash:
 				PerformLeftBootSkill();
 				break;
-		}
-	}
-
-	private void CheckForDoubleDash() {
-		if (LeftBootSkills.canDoubleDash && playerInputActions.Player.Dash.WasPressedThisFrame()) {
-			Player.playerState = Player.PlayerState.Dash;
 		}
 	}
 
@@ -260,7 +245,7 @@ public class PlayerController : MonoBehaviour
 	// Placegolder for testing ------------
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.tag == "Enemy") {
-			if (!LeftBootSkills.isInvulnerable) {
+			if (!Skills.isInvulnerable) {
 				playerHealth.TakeDamage(10f);
 				healthBarUI.DecreaseHealthBarSize(playerHealth.GetHealthPercentage());
 			}
@@ -307,19 +292,15 @@ public class PlayerController : MonoBehaviour
 
 	private void SetAnimationState() {
 		if (Player.playerState == Player.PlayerState.Dash)
-			Animation.animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? Animation.AnimationState.PureLeftBoot : Animation.AnimationState.CorLeftBoot;
-		else if (corRightGloveSkills.isAnimating)
-			Animation.animationState = Animation.AnimationState.CorRightGlove;
-		else if (purityRightGloveSkills.isAnimating)
-			Animation.animationState = Animation.AnimationState.PureRightGlove;
-		else if (corLeftGloveSkills.isAttacking)
-			Animation.animationState = Animation.AnimationState.CorLeftGlove;
-		else if (purityLeftGloveSkills.isAttacking)
-			Animation.animationState = Animation.AnimationState.PureLeftGlove;
-		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && moveDirection.x != 0f)
+			Animation.animationState = Animation.AnimationState.LeftBoot;
+		else if (RightGloveSkills.isAnimating)
+			Animation.animationState = Animation.AnimationState.RightGlove;
+		else if (LeftGloveSkills.isAttacking)
+			Animation.animationState = Animation.AnimationState.LeftGlove;
+		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && actualXMoveDirection != 0f)
 			Animation.animationState = Animation.AnimationState.Run;
 		else if (playerRigidbody.velocity.y > 0f)
-			Animation.animationState = (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) ? Animation.AnimationState.PureRightBoot : Animation.AnimationState.CorRightBoot;
+			Animation.animationState = Animation.AnimationState.RightBoot;
 		else if (playerRigidbody.velocity.y < 0f)
 			Animation.animationState = Animation.AnimationState.Fall;
 		else {
@@ -360,15 +341,12 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetupHorizontalMovement() {
-		if ((noGemsLeftGloveSkills.lockMovement)) {
+		if ((Skills.lockMovement)) {
 			actualXMoveDirection = 0f;
 			actualYMoveDirection = 0f;
-		} else if (noGemsRightGloveSkills.lockMovement && UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
-			actualXMoveDirection = 0f;
-			actualYMoveDirection = 0f;
-			if (noGemsRightGloveSkills.isForcedForward) {
-				playerRigidbody.AddForce(noGemsRightGloveSkills.forwardForceVector);
-				StartCoroutine(noGemsRightGloveSkills.ResetForwardForce());
+			if (Skills.hasForcedMovement) {
+				playerRigidbody.AddForce(Skills.forcedMovementVector);
+				ResetForcedMovement();
 			}
 		} else {
 			float moveDirThreshold = 0.4f;
@@ -385,6 +363,19 @@ public class PlayerController : MonoBehaviour
 			} else {
 				actualXMoveDirection = 0f;
 			}
+		}
+	}
+
+	private void ResetForcedMovement() {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				StartCoroutine(noGemsRightGloveSkills.ResetForcedMovement());
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				StartCoroutine(purityRightGloveSkills.ResetForcedMovement());
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				break;
 		}
 	}
 
@@ -512,13 +503,14 @@ public class PlayerController : MonoBehaviour
 				StartCoroutine(noGemsRightGloveSkills.StartMeleeCooldown(playerInputActions));
 				StartCoroutine(noGemsRightGloveSkills.TempLockMovement());
 				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
-				StartCoroutine(corRightGloveSkills.StartMeleeCooldown(playerInputActions));
-				break;
 			case GlovesGem.GlovesGemState.Purity:
 				purityRightGloveSkills.SetupMelee(pureMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
 				StartCoroutine(purityRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(purityRightGloveSkills.TempLockMovement());
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				StartCoroutine(corRightGloveSkills.StartMeleeCooldown(playerInputActions));
 				break;
 		}
 	}
@@ -528,12 +520,11 @@ public class PlayerController : MonoBehaviour
 			case GlovesGem.GlovesGemState.None:
 				noGemMeleeEffectClone = noGemsRightGloveSkills.PerformMelee(noGemMeleeEffect);
 				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect);
-				break;
 			case GlovesGem.GlovesGemState.Purity:
 				pureMeleeEffectClone = purityRightGloveSkills.PerformMelee(pureMeleeEffect);
-				//StartCoroutine(purityMeleeSkills.ResetMeleeAnimation());
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				corMeleeEffectClone = corRightGloveSkills.PerformMelee(corMeleeEffect);
 				break;
 		}
 	}

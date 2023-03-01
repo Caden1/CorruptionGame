@@ -5,14 +5,10 @@ public static class Animation
 		Idle,
 		Run,
 		Fall,
-		CorRightGlove,
-		PureRightGlove,
-		CorLeftGlove,
-		PureLeftGlove,
-		CorRightBoot,
-		PureRightBoot,
-		CorLeftBoot,
-		PureLeftBoot
+		RightBoot,
+		LeftBoot,
+		RightGlove,
+		LeftGlove
 	}
 
 	public static AnimationState animationState;

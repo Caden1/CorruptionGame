@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LeftGloveSkills
+public abstract class LeftGloveSkills : Skills
 {
-	public bool canAttack { get; protected set; }
-	public bool isAttacking { get; protected set; }
-	public bool lockMovement { get; protected set; }
+	public static bool canAttack { get; protected set; }
+	public static bool isAttacking { get; protected set; }
 	protected float lockMovementSec;
 	protected float cooldownSec;
 	protected float pullEffectCloneSec;

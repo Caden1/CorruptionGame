@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RightGloveSkills
+public abstract class RightGloveSkills : Skills
 {
-	public bool canMelee { get; protected set; }
-	public bool isAnimating { get; protected set; }
-	public bool lockMovement { get; protected set; }
-	public float meleeEffectCloneSec { get; protected set; }
-	public bool isForcedForward { get; protected set; }
-	public Vector2 forwardForceVector { get; protected set; }
+	public static bool canMelee { get; protected set; }
+	public static bool isAnimating { get; protected set; }
+	protected float meleeEffectCloneSec;
 	protected float lockMovementSec;
-	protected float forwardForce;
-	protected float forwardForceSec;
+	protected float forcedMovementVel;
+	protected float forcedMovementSec;
 	protected float cooldownSec;
 	protected Vector2 attackOrigin;
 
@@ -30,7 +27,7 @@ public abstract class RightGloveSkills
 
 	public abstract GameObject PerformMelee(GameObject meleeEffect);
 
-	public abstract IEnumerator ResetForwardForce();
+	public abstract IEnumerator ResetForcedMovement();
 
 	public abstract IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions);
 

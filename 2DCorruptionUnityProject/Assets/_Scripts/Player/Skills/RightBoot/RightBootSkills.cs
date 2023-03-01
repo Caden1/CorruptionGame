@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RightBootSkills
+public abstract class RightBootSkills : Skills
 {
-	public bool canJump { get; protected set; }
-	public bool canJumpCancel { get; protected set; }
-
+	public static bool canJump { get; protected set; }
+	public static bool canJumpCancel { get; protected set; }
 	protected int numjumps;
 	protected float jumpGravity;
 	protected float groundedPlayerGravity;

@@ -43,9 +43,9 @@ public class CorRightGloveSkills : RightGloveSkills
 		return meleeEffectClone;
 	}
 
-	public override IEnumerator ResetForwardForce() {
-		yield return new WaitForSeconds(forwardForceSec);
-		isForcedForward = false;
+	public override IEnumerator ResetForcedMovement() {
+		yield return new WaitForSeconds(forcedMovementSec);
+		hasForcedMovement = false;
 	}
 
 	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {

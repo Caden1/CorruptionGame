@@ -11,10 +11,10 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		lockMovementSec = 0.2f;
 		meleeEffectCloneSec = 0.2f;
 		cooldownSec = 0.2f;
-		isForcedForward = false;
-		forwardForceVector = new Vector2();
-		forwardForce = 3f;
-		forwardForceSec = 0.1f;
+		hasForcedMovement = false;
+		forcedMovementVector = new Vector2();
+		forcedMovementVel = 1f;
+		forcedMovementSec = 0.1f;
 		attackOrigin = new Vector2();
 	}
 
@@ -22,15 +22,15 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		canMelee = true;
 		isAnimating = true;
 		lockMovement = true;
-		isForcedForward = true;
+		hasForcedMovement = true;
 		if (isFacingRight) {
 			meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
 			attackOrigin = positionRight;
-			forwardForceVector = new Vector2(forwardForce, 0f);
+			forcedMovementVector = new Vector2(forcedMovementVel, 0f);
 		} else {
 			meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
 			attackOrigin = positionLeft;
-			forwardForceVector = new Vector2(-forwardForce, 0f);
+			forcedMovementVector = new Vector2(-forcedMovementVel, 0f);
 		}
 	}
 
@@ -41,9 +41,9 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		return meleeEffectClone;
 	}
 
-	public override IEnumerator ResetForwardForce() {
-		yield return new WaitForSeconds(forwardForceSec);
-		isForcedForward = false;
+	public override IEnumerator ResetForcedMovement() {
+		yield return new WaitForSeconds(forcedMovementSec);
+		hasForcedMovement = false;
 	}
 
 	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {

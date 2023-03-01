@@ -6,9 +6,6 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 {
 	public void SetWithNoGems() {
 		isInvulnerable = false;
-		canDoubleDash = false;
-		numDashes = 1;
-		dashCount = 0;
 		dashVelocity = 7f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
@@ -17,14 +14,6 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 
 	public override void SetupDash(bool isFacingRight) {
 		isInvulnerable = true;
-		dashCount++;
-		if (numDashes > dashCount) {
-			canDoubleDash = true;
-		} else {
-			canDoubleDash = false;
-			dashCount = 0;
-		}
-
 		if (isFacingRight)
 			dashDirection = Vector2.right;
 		else
@@ -42,11 +31,9 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 	}
 
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {
-		if (!canDoubleDash) {
-			playerInputActions.Player.Dash.Disable();
-			yield return new WaitForSeconds(cooldown);
-			playerInputActions.Player.Dash.Enable();
-		}
+		playerInputActions.Player.Dash.Disable();
+		yield return new WaitForSeconds(cooldown);
+		playerInputActions.Player.Dash.Enable();
 	}
 
 	public override void SetWithNoModifiers() {

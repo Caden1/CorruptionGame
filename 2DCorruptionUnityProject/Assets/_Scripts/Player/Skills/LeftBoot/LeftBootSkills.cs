@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class LeftBootSkills
+public abstract class LeftBootSkills : Skills
 {
-	public static bool isInvulnerable { get; protected set; }
-	public static bool canDoubleDash { get; protected set; }
 	protected Vector2 dashDirection;
-	protected int numDashes;
-	protected int dashCount;
 	protected float dashVelocity;
 	protected float secondsToDash;
 	protected float cooldown;

@@ -6,11 +6,8 @@ public class PurityLeftBootSkills : LeftBootSkills
 {
 	public override void SetWithNoModifiers() {
 		isInvulnerable = false;
-		canDoubleDash = false;
-		numDashes = 2;
-		dashCount = 0;
-		dashVelocity = 10f;
-		secondsToDash = 0.25f;
+		dashVelocity = 7f;
+		secondsToDash = 0.5f;
 		cooldown = 2f;
 		dashDirection = new Vector2();
 	}
@@ -33,14 +30,6 @@ public class PurityLeftBootSkills : LeftBootSkills
 
 	public override void SetupDash(bool isFacingRight) {
 		isInvulnerable = true;
-		dashCount++;
-		if (numDashes > dashCount) {
-			canDoubleDash = true;
-		} else {
-			canDoubleDash = false;
-			dashCount = 0;
-		}
-
 		if (isFacingRight)
 			dashDirection = Vector2.right;
 		else
@@ -58,10 +47,8 @@ public class PurityLeftBootSkills : LeftBootSkills
 	}
 
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {
-		if (!canDoubleDash) {
-			playerInputActions.Player.Dash.Disable();
-			yield return new WaitForSeconds(cooldown);
-			playerInputActions.Player.Dash.Enable();
-		}
+		playerInputActions.Player.Dash.Disable();
+		yield return new WaitForSeconds(cooldown);
+		playerInputActions.Player.Dash.Enable();
 	}
 }
