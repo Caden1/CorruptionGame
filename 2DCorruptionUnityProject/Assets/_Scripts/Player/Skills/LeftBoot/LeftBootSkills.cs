@@ -5,9 +5,11 @@ using UnityEngine;
 
 public abstract class LeftBootSkills
 {
-	public bool isInvulnerable { get; protected set; }
+	public static bool isInvulnerable { get; protected set; }
+	public static bool canDoubleDash { get; protected set; }
 	protected Vector2 dashDirection;
-	protected float numDashes;
+	protected int numDashes;
+	protected int dashCount;
 	protected float dashVelocity;
 	protected float secondsToDash;
 	protected float cooldown;

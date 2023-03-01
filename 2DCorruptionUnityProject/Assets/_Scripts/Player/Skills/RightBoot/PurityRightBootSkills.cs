@@ -21,9 +21,9 @@ public class PurityRightBootSkills : RightBootSkills
 		numjumps = 2;
 		jumpGravity = 2f;
 		groundedPlayerGravity = 1f;
-		fallGravity = 3f;
-		archVelocityThreshold = 4f;
-		archGravity = 3f;
+		fallGravity = 2f;
+		archVelocityThreshold = 3f;
+		archGravity = 2f;
 		jumpVelocity = 9f;
 	}
 

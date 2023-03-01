@@ -163,7 +163,7 @@ public class Swap
 			}
 			switch (LeftBootModGem.leftBootModGemState) {
 				case LeftBootModGem.LeftBootModGemState.None:
-					purityLeftBootSkills.SetPurityDefault();
+					purityLeftBootSkills.SetWithNoModifiers();
 					swapUI.SetLeftBootGem(pureOnlyBoot);
 					break;
 				case LeftBootModGem.LeftBootModGemState.Air:
@@ -252,7 +252,7 @@ public class Swap
 			}
 			switch (LeftBootModGem.leftBootModGemState) {
 				case LeftBootModGem.LeftBootModGemState.None:
-					purityLeftBootSkills.SetPurityDefault();
+					purityLeftBootSkills.SetWithNoModifiers();
 					swapUI.SetLeftBootGem(pureOnlyBoot);
 					break;
 				case LeftBootModGem.LeftBootModGemState.Air:
@@ -396,7 +396,7 @@ public class Swap
 			}
 			switch (LeftBootModGem.leftBootModGemState) {
 				case LeftBootModGem.LeftBootModGemState.None:
-					purityLeftBootSkills.SetPurityDefault();
+					purityLeftBootSkills.SetWithNoModifiers();
 					swapUI.SetLeftBootGem(pureOnlyBoot);
 					break;
 				case LeftBootModGem.LeftBootModGemState.Air:
@@ -629,7 +629,7 @@ public class Swap
 			}
 			switch (LeftBootModGem.leftBootModGemState) {
 				case LeftBootModGem.LeftBootModGemState.None:
-					purityLeftBootSkills.SetPurityDefault();
+					purityLeftBootSkills.SetWithNoModifiers();
 					swapUI.SetLeftBootGem(pureOnlyBoot);
 					break;
 				case LeftBootModGem.LeftBootModGemState.Air:
@@ -854,7 +854,7 @@ public class Swap
 			switch (RightBootModGem.rightBootModGemState) {
 				case RightBootModGem.RightBootModGemState.None:
 					LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
-					purityLeftBootSkills.SetPurityDefault();
+					purityLeftBootSkills.SetWithNoModifiers();
 					swapUI.SetLeftBootGem(pureOnlyBoot);
 					break;
 				case RightBootModGem.RightBootModGemState.Air:
@@ -1326,7 +1326,7 @@ public class Swap
 			switch (leftGloveModGemCurrentState) {
 				case "None":
 					LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
-					purityLeftBootSkills.SetPurityDefault();
+					purityLeftBootSkills.SetWithNoModifiers();
 					swapUI.SetLeftBootGem(pureOnlyBoot);
 					break;
 				case "Air":

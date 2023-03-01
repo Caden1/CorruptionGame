@@ -215,6 +215,7 @@ public class PlayerController : MonoBehaviour
 		SetAnimationState();
 		PlayAndDestroyActiveClones();
 		ShootProjectile();
+		CheckForDoubleDash();
 	}
 
 	private void FixedUpdate() {
@@ -238,6 +239,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	private void CheckForDoubleDash() {
+		if (LeftBootSkills.canDoubleDash && playerInputActions.Player.Dash.WasPressedThisFrame()) {
+			Player.playerState = Player.PlayerState.Dash;
+		}
+	}
+
 	private void LoadGemStates() {
 		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
 		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
@@ -253,7 +260,7 @@ public class PlayerController : MonoBehaviour
 	// Placegolder for testing ------------
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.tag == "Enemy") {
-			if (!noGemsLeftBootSkills.isInvulnerable) {
+			if (!LeftBootSkills.isInvulnerable) {
 				playerHealth.TakeDamage(10f);
 				healthBarUI.DecreaseHealthBarSize(playerHealth.GetHealthPercentage());
 			}
