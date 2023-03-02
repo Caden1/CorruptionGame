@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class NoGemsLeftGloveSkills : LeftGloveSkills
 {
-	private float pullEffectZRotation;
-
 	public void SetWithNoGems() {
 		canAttack = false;
 		isAttacking = false;
@@ -21,14 +19,6 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		float xOffset = 1.5f;
 		float yOffset = 1.4f;
 		Vector2 diagonalOffset = new Vector2(1.1f, 1.1f);
-		float angle0Degree = 0f;
-		float angle45Degree = 45f;
-		float angle90Degree = 90f;
-		float angle135Degree = 135f;
-		float angle180Degree = 180f;
-		float angle225Degree = 225f;
-		float angle270Degree = 270f;
-		float angle315Degree = 315f;
 		Bounds playerBounds = playerBoxCollider.bounds;
 		Vector2 attackUpRightPosition = new Vector2(playerBounds.max.x, playerBounds.max.y) + diagonalOffset;
 		Vector2 attackRightPosition = new Vector2(playerBounds.max.x + xOffset, playerBounds.center.y);
@@ -46,44 +36,44 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		if (directionPointing == Vector2.zero) {
 			if (isFacingRight) {
 				attackOrigin = attackRightPosition;
-				pullEffectZRotation = angle0Degree;
+				pullEffectZRotation = ANGLE_0_DEGREES;
 			} else {
 				attackOrigin = attackLeftPosition;
-				pullEffectZRotation = angle180Degree;
+				pullEffectZRotation = ANGLE_180_DEGREES;
 			}
 		} else if (directionPointing.x >= 0f) { // Right
 			if (directionPointing.y > 0.75f) { // Up
 				attackOrigin = attackUpPosition;
-				pullEffectZRotation = angle90Degree;
+				pullEffectZRotation = ANGLE_90_DEGREES;
 			} else if (directionPointing.y > 0.25f) { // Diagonal Up
 				attackOrigin = attackUpRightPosition;
-				pullEffectZRotation = angle45Degree;
+				pullEffectZRotation = ANGLE_45_DEGREES;
 			} else if (directionPointing.y > -0.25f) { // Right
 				attackOrigin = attackRightPosition;
-				pullEffectZRotation = angle0Degree;
+				pullEffectZRotation = ANGLE_0_DEGREES;
 			} else if (directionPointing.y > -0.75f) { // Diagonal Down
 				attackOrigin = attackDownRightPosition;
-				pullEffectZRotation = angle315Degree;
+				pullEffectZRotation = ANGLE_315_DEGREES;
 			} else if (directionPointing.y >= -1f) { // Down
 				attackOrigin = attackDownPosition;
-				pullEffectZRotation = angle270Degree;
+				pullEffectZRotation = ANGLE_270_DEGREES;
 			}
 		} else if (directionPointing.x < 0f) { // Left
 			if (directionPointing.y > 0.75f) { // Up
 				attackOrigin = attackUpPosition;
-				pullEffectZRotation = angle90Degree;
+				pullEffectZRotation = ANGLE_90_DEGREES;
 			} else if (directionPointing.y > 0.25f) { // Diagonal Up
 				attackOrigin = attackUpLeftPosition;
-				pullEffectZRotation = angle135Degree;
+				pullEffectZRotation = ANGLE_135_DEGREES;
 			} else if (directionPointing.y > -0.25f) { // Left
 				attackOrigin = attackLeftPosition;
-				pullEffectZRotation = angle180Degree;
+				pullEffectZRotation = ANGLE_180_DEGREES;
 			} else if (directionPointing.y > -0.75f) { // Diagonal Down
 				attackOrigin = attackLeftDownPosition;
-				pullEffectZRotation = angle225Degree;
+				pullEffectZRotation = ANGLE_225_DEGREES;
 			} else if (directionPointing.y >= -1f) { // Down
 				attackOrigin = attackDownPosition;
-				pullEffectZRotation = angle270Degree;
+				pullEffectZRotation = ANGLE_270_DEGREES;
 			}
 		}
 	}

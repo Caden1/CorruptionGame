@@ -18,14 +18,16 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] private GameObject noGemMeleeEffect;
 	[SerializeField] private Sprite[] noGemMeleeEffectSprites;
-	[SerializeField] private GameObject noGemPullEffect;
-	[SerializeField] private Sprite[] noGemPullEffectSprites;
-	[SerializeField] private GameObject corMeleeEffect;
-	[SerializeField] private Sprite[] corMeleeEffectSprites;
-	[SerializeField] private GameObject corruptionProjectile;
-	[SerializeField] private GameObject corruptionJumpProjectile;
 	[SerializeField] private GameObject pureMeleeEffect;
 	[SerializeField] private Sprite[] pureMeleeEffectSprites;
+	[SerializeField] private GameObject corMeleeEffect;
+	[SerializeField] private Sprite[] corMeleeEffectSprites;
+	[SerializeField] private GameObject noGemPullEffect;
+	[SerializeField] private Sprite[] noGemPullEffectSprites;
+	[SerializeField] private GameObject purePullEffect;
+	[SerializeField] private Sprite[] purePullEffectSprites;
+	[SerializeField] private GameObject corruptionProjectile;
+	[SerializeField] private GameObject corruptionJumpProjectile;
 	[SerializeField] private GameObject pureEarthPlatform;
 
 	private GameObject noGemMeleeEffectClone;
@@ -34,9 +36,10 @@ public class PlayerController : MonoBehaviour
 	private CustomAnimation corMeleeEffectAnim;
 	private GameObject pureMeleeEffectClone;
 	private CustomAnimation pureMeleeEffectAnim;
-
 	private GameObject noGemPullEffectClone;
 	private CustomAnimation noGemPullEffectAnim;
+	private GameObject purePullEffectClone;
+	private CustomAnimation purePullEffectAnim;
 
 	[SerializeField] private UIDocument gemSwapUIDoc;
 	[SerializeField] private UIDocument healthBarUIDoc;
@@ -113,8 +116,8 @@ public class PlayerController : MonoBehaviour
 		noGemMeleeEffectAnim = new CustomAnimation(noGemMeleeEffectSprites);
 		corMeleeEffectAnim = new CustomAnimation(corMeleeEffectSprites);
 		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
-
 		noGemPullEffectAnim = new CustomAnimation(noGemPullEffectSprites);
+		purePullEffectAnim = new CustomAnimation(purePullEffectSprites);
 
 		playerHealth = new HealthSystem(100f);
 
@@ -287,6 +290,11 @@ public class PlayerController : MonoBehaviour
 		if (noGemPullEffectClone != null) {
 			noGemPullEffectAnim.PlayCreatedAnimation(noGemPullEffectClone.GetComponent<SpriteRenderer>());
 			StartCoroutine(noGemsLeftGloveSkills.DestroyEffectClone(noGemPullEffectClone));
+		}
+
+		if (purePullEffectClone != null) {
+			purePullEffectAnim.PlayCreatedAnimation(purePullEffectClone.GetComponent<SpriteRenderer>());
+			StartCoroutine(purityLeftGloveSkills.DestroyEffectClone(purePullEffectClone));
 		}
 	}
 
@@ -536,12 +544,15 @@ public class PlayerController : MonoBehaviour
 				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				StartCoroutine(noGemsLeftGloveSkills.TempLockMovement());
 				break;
+			case GlovesGem.GlovesGemState.Purity:
+				purityLeftGloveSkills.SetupLeftGloveSkill(purePullEffect, playerBoxCollider, moveDirection, isFacingRight);
+				StartCoroutine(purityLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(purityLeftGloveSkills.TempLockMovement());
+				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				//corLeftGloveSkills.SetupLeftGloveSkill(isFacingRight, pullPositionRight, pullPositionLeft);
 				//StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				//StartCoroutine(corLeftGloveSkills.ResetLeftGloveSkillAnim());
-				break;
-			case GlovesGem.GlovesGemState.Purity:
 				break;
 		}
 	}
@@ -551,15 +562,12 @@ public class PlayerController : MonoBehaviour
 			case GlovesGem.GlovesGemState.None:
 				noGemPullEffectClone = noGemsLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect);
 				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect);
-				//StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
-				break;
 			case GlovesGem.GlovesGemState.Purity:
-				//purityProjectileClone = purityProjectileSkills.PerformProjectile(purityProjectile, transform);
-				//purityProjectileAnimation = new CustomAnimation(purityProjectileSprites, purityProjectileClone.GetComponent<SpriteRenderer>());
-				//StartCoroutine(purityProjectileSkills.ResetProjectileAnimation());
-				//purityProjectileSkills.DestroyProjectile(purityProjectileClone);
+				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect);
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				//corLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect);
+				//StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
 				break;
 		}
 	}

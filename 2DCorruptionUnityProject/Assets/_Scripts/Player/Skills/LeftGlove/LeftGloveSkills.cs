@@ -9,7 +9,16 @@ public abstract class LeftGloveSkills : Skills
 	protected float lockMovementSec;
 	protected float cooldownSec;
 	protected float pullEffectCloneSec;
+	protected float pullEffectZRotation;
 	protected Vector2 attackOrigin;
+	protected const float ANGLE_0_DEGREES = 0f;
+	protected const float ANGLE_45_DEGREES = 45f;
+	protected const float ANGLE_90_DEGREES = 90f;
+	protected const float ANGLE_135_DEGREES = 135f;
+	protected const float ANGLE_180_DEGREES = 180f;
+	protected const float ANGLE_225_DEGREES = 225f;
+	protected const float ANGLE_270_DEGREES = 270f;
+	protected const float ANGLE_315_DEGREES = 315f;
 
 	public abstract void SetWithNoModifiers();
 
