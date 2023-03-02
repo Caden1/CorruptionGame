@@ -32,7 +32,7 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		
 	}
 
-	public override void SetupLeftGloveSkill(GameObject leftGloveEffect, BoxCollider2D playerBoxCollider, Vector2 directionPointing, bool isFacingRight) {
+	public override void SetupLeftGloveSkill(Vector2 directionPointing) {
 		//float attackOriginOffset = 0.25f;
 		//canAttack = true;
 		//isAttacking = true;
@@ -40,7 +40,7 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		//attackOriginLeft = new Vector2(boxCollider.bounds.min.x - attackOriginOffset, boxCollider.bounds.center.y + attackOriginOffset);
 	}
 
-	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect) {
+	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation) {
 		//if (isFacingRight)
 		//	projectileClonesRight.Add(Object.Instantiate(projectile, attackOriginRight, projectile.transform.rotation));
 		//else

@@ -11,14 +11,6 @@ public abstract class LeftGloveSkills : Skills
 	protected float pullEffectCloneSec;
 	protected float pullEffectZRotation;
 	protected Vector2 attackOrigin;
-	protected const float ANGLE_0_DEGREES = 0f;
-	protected const float ANGLE_45_DEGREES = 45f;
-	protected const float ANGLE_90_DEGREES = 90f;
-	protected const float ANGLE_135_DEGREES = 135f;
-	protected const float ANGLE_180_DEGREES = 180f;
-	protected const float ANGLE_225_DEGREES = 225f;
-	protected const float ANGLE_270_DEGREES = 270f;
-	protected const float ANGLE_315_DEGREES = 315f;
 
 	public abstract void SetWithNoModifiers();
 
@@ -30,9 +22,9 @@ public abstract class LeftGloveSkills : Skills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupLeftGloveSkill(GameObject leftGloveEffect, BoxCollider2D playerBoxCollider, Vector2 directionPointing, bool isFacingRight);
+	public abstract void SetupLeftGloveSkill(Vector2 directionPointing);
 
-	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect);
+	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation);
 
 	public abstract IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions);
 

@@ -538,14 +538,17 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void SetupLeftGloveSkill() {
+		float offset = 0f;
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemsLeftGloveSkills.SetupLeftGloveSkill(noGemPullEffect, playerBoxCollider, moveDirection, isFacingRight);
+				offset = 1.5f;
+				noGemsLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
 				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				StartCoroutine(noGemsLeftGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				purityLeftGloveSkills.SetupLeftGloveSkill(purePullEffect, playerBoxCollider, moveDirection, isFacingRight);
+				offset = 2.5f;
+				purityLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
 				StartCoroutine(purityLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				StartCoroutine(purityLeftGloveSkills.TempLockMovement());
 				break;
@@ -560,10 +563,10 @@ public class PlayerController : MonoBehaviour
 	private void PerformLeftGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemPullEffectClone = noGemsLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect);
+				noGemPullEffectClone = noGemsLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect);
+				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				//corLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect);
