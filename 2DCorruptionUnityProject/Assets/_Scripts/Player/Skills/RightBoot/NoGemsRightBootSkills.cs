@@ -64,10 +64,6 @@ public class NoGemsRightBootSkills : RightBootSkills
 		canJump = false;
 	}
 
-	public override void ShootProjectile() {
-		throw new System.NotImplementedException();
-	}
-
 	public override void SetupJumpCancel() {
 		canJumpCancel = true;
 	}

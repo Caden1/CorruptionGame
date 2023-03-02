@@ -85,7 +85,7 @@ public class UtilsClass
 		return Quaternion.Euler(0f, 0f, zDegrees);
 	}
 
-	public static Quaternion GetRotationFromDegrees(float xDegrees, float yDegrees, float zDegrees, bool isFacingRight) {
+	public static Quaternion GetRotationFromDegrees(float xDegrees, float yDegrees, float zDegrees) {
 		return Quaternion.Euler(xDegrees, yDegrees, zDegrees);
 	}
 }

@@ -30,8 +30,6 @@ public abstract class RightBootSkills : Skills
 
 	public abstract void PerformJump(Rigidbody2D playerRigidbody, GameObject effect);
 
-	public abstract void ShootProjectile();
-
 	public abstract void SetupJumpCancel();
 
 	public abstract void PerformJumpCancel(Rigidbody2D playerRigidbody);

@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite[] noGemPullEffectSprites;
 	[SerializeField] private GameObject purePullEffect;
 	[SerializeField] private Sprite[] purePullEffectSprites;
+	[SerializeField] private GameObject corJumpEffect;
 	[SerializeField] private GameObject corruptionProjectile;
-	[SerializeField] private GameObject corruptionJumpProjectile;
 	[SerializeField] private GameObject pureEarthPlatform;
 
 	private GameObject noGemMeleeEffectClone;
@@ -154,11 +154,11 @@ public class PlayerController : MonoBehaviour
 			pureOnlyGlove, pureAirGlove, pureFireGlove, pureWaterGlove, pureEarthGlove, pureOnlyBoot, pureAirBoot, pureFireBoot, pureWaterBoot, pureEarthBoot);
 
 		platformLayerMask = LayerMask.GetMask("Platform");
-		enemyLayerMask = LayerMask.GetMask("Enemy");
-		enemyContactFilter = new ContactFilter2D();
-		enemyContactFilter.SetLayerMask(enemyLayerMask);
-		moveDirection = new Vector2();
-		meleeDirection = Vector2.right;
+			enemyLayerMask = LayerMask.GetMask("Enemy");
+			enemyContactFilter = new ContactFilter2D();
+			enemyContactFilter.SetLayerMask(enemyLayerMask);
+			moveDirection = new Vector2();
+			meleeDirection = Vector2.right;
 
 		LoadGemStates();
 	}
@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour
 	private void LoadGemStates() {
 		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
 		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
-		BootsGem.bootsGemState = BootsGem.BootsGemState.None;
+		BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
 		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
 		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.None;
 		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
@@ -259,6 +259,10 @@ public class PlayerController : MonoBehaviour
 	private void PlayAndDestroyActiveClones() {
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
+
+		if (corRightBootSkills.attackClonesRight != null && corRightBootSkills.attackClonesLeft != null) {
+			corRightBootSkills.LaunchJumpProjectile();
+		}
 
 		if (noGemMeleeEffectClone != null) {
 			noGemMeleeEffectAnim.PlayCreatedAnimation(noGemMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -327,7 +331,7 @@ public class PlayerController : MonoBehaviour
 		}
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.ShootProjectile();
+				corRightBootSkills.LaunchJumpProjectile();
 				break;
 			case BootsGem.BootsGemState.Purity:
 				break;
@@ -396,11 +400,11 @@ public class PlayerController : MonoBehaviour
 			case BootsGem.BootsGemState.None:
 				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
-			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
-				break;
 			case BootsGem.BootsGemState.Purity:
 				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
+				break;
+			case BootsGem.BootsGemState.Corruption:
+				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
 		}
 	}
@@ -408,13 +412,13 @@ public class PlayerController : MonoBehaviour
 	private void PerformRightBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJump(playerRigidbody, corruptionJumpProjectile);
-				break;
-			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformJump(playerRigidbody, corruptionJumpProjectile);
+				noGemsRightBootSkills.PerformJump(playerRigidbody, new GameObject());
 				break;
 			case BootsGem.BootsGemState.Purity:
 				purityRightBootSkills.PerformJump(playerRigidbody, pureEarthPlatform);
+				break;
+			case BootsGem.BootsGemState.Corruption:
+				corRightBootSkills.PerformJump(playerRigidbody, corJumpEffect);
 				break;
 		}
 	}

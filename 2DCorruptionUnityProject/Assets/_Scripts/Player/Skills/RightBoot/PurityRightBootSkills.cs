@@ -28,46 +28,18 @@ public class PurityRightBootSkills : RightBootSkills
 	}
 
 	public override void SetAirModifiers() {
-	//	canJump = false;
-	//	canJumpCancel = false;
-	//	numjumps = 3;
-	//	jumpGravity = 1f;
-	//	fallGravity = 1f;
-	//	archVelocityThreshold = 1f;
-	//	archGravity = 2f;
-	//	isRocketBoosted = false;
-	//	isEarth = false;
+	
 	}
 
 	public override void SetFireModifiers() {
-	//	canJump = false;
-	//	canJumpCancel = false;
-	//	numjumps = 2;
-	//	jumpGravity = 1f;
-	//	fallGravity = 1.5f;
-	//	archVelocityThreshold = 1f;
-	//	archGravity = 2f;
-	//	isRocketBoosted = true;
-	//	isEarth = false;
-	//	rocketBoostVelMultiplier = 1.5f;
+	
 	}
 
 	public override void SetWaterModifiers() {
 	}
 
 	public override void SetEarthModifiers() {
-	//	canJump = false;
-	//	canJumpCancel = false;
-	//	numjumps = 2;
-	//	jumpGravity = 1f;
-	//	fallGravity = 2f;
-	//	archVelocityThreshold = 1f;
-	//	archGravity = 2f;
-	//	isRocketBoosted = false;
-	//	isEarth = true;
-	//	earthBoostVerticalMultiplier = 4f;
-	//	earthBoostHorizontalMultiplier = 4f;
-	//	earthCloneSeconds = 0.5f;
+	
 	}
 
 	public override void SetGravity(Rigidbody2D playerRigidbody) {
@@ -133,10 +105,6 @@ public class PurityRightBootSkills : RightBootSkills
 	//	rigidbody.gravityScale = startingGravity;
 	//	velocityAndAngle = originalVelocityAndAngle;
 	//}
-
-	public override void ShootProjectile() {
-		
-	}
 
 	public override void SetupJumpCancel() {
 		canJumpCancel = true;
