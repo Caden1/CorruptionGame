@@ -906,6 +906,7 @@ MonoBehaviour:
   - {fileID: -1273536999, guid: 1d4a56db7bd8a406b97910b7146d7c1f, type: 3}
   - {fileID: -1403907134, guid: 1d4a56db7bd8a406b97910b7146d7c1f, type: 3}
   - {fileID: -464241445, guid: 1d4a56db7bd8a406b97910b7146d7c1f, type: 3}
+  corDashEffect: {fileID: 1101168767641393491, guid: 16168aeede7cf42db890c0e7b3f785e2, type: 3}
   noGemPullEffect: {fileID: 5838679629690344553, guid: 11f46cec240d04600bfa01bbb1f18355, type: 3}
   noGemPullEffectSprites:
   - {fileID: 1819779483, guid: d295edda8c33449e789ab2864ca1cfaf, type: 3}
@@ -916,8 +917,8 @@ MonoBehaviour:
   - {fileID: 906083576, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
   - {fileID: -2065213889, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
   - {fileID: 318299938, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
-  corruptionProjectile: {fileID: 6066601356021869870, guid: 98d5786a10a0349519ca399c2a44a5aa, type: 3}
   corJumpEffect: {fileID: 3561767254440528458, guid: 83e37c1e305d24cfa896ef46e1c0a07a, type: 3}
+  corruptionProjectile: {fileID: 6066601356021869870, guid: 98d5786a10a0349519ca399c2a44a5aa, type: 3}
   pureEarthPlatform: {fileID: 465465729247891978, guid: c396a3ca6a6084b4f91b29842e8a59f3, type: 3}
   gemSwapUIDoc: {fileID: 855522571}
   healthBarUIDoc: {fileID: 1114777326}

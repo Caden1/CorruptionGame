@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class CorLeftBootSkills : LeftBootSkills
 {
+	public bool isCorDashing { get; private set; }
+	private GameObject effect;
+
+	public CorLeftBootSkills(GameObject effect) {
+		this.effect = effect;
+	}
+
 	public override void SetWithNoModifiers() {
-		
+		isInvulnerable = false;
+		dashVelocity = 7f;
+		secondsToDash = 0.5f;
+		cooldown = 2f;
+		dashDirection = new Vector2();
+		isCorDashing = false;
 	}
 
 	public override void SetAirModifiers() {
@@ -25,6 +37,8 @@ public class CorLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetupDash(bool isFacingRight) {
+		isInvulnerable = true;
+		isCorDashing = true;
 		if (isFacingRight)
 			dashDirection = Vector2.right;
 		else
@@ -37,7 +51,18 @@ public class CorLeftBootSkills : LeftBootSkills
 		playerRigidbody.velocity = dashDirection * dashVelocity;
 		yield return new WaitForSeconds(secondsToDash);
 		playerRigidbody.gravityScale = startingGravity;
+		isInvulnerable = false;
+		isCorDashing = false;
 		Player.playerState = Player.PlayerState.Normal;
+	}
+
+	public GameObject InstantiateEffect(BoxCollider2D playerBoxCollider, Quaternion rotation, bool isFacingRight) {
+		Vector2 behindPlayerPosition = new Vector2();
+		if (isFacingRight)
+			behindPlayerPosition = playerBoxCollider.bounds.min;
+		else
+			behindPlayerPosition = new Vector2(playerBoxCollider.bounds.max.x, playerBoxCollider.bounds.min.y);
+		return Object.Instantiate(effect, behindPlayerPosition, rotation);
 	}
 
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {

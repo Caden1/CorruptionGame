@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite[] pureMeleeEffectSprites;
 	[SerializeField] private GameObject corMeleeEffect;
 	[SerializeField] private Sprite[] corMeleeEffectSprites;
+	[SerializeField] private GameObject corDashEffect;
 	[SerializeField] private GameObject noGemPullEffect;
 	[SerializeField] private Sprite[] noGemPullEffectSprites;
 	[SerializeField] private GameObject purePullEffect;
@@ -32,10 +33,11 @@ public class PlayerController : MonoBehaviour
 
 	private GameObject noGemMeleeEffectClone;
 	private CustomAnimation noGemMeleeEffectAnim;
-	private GameObject corMeleeEffectClone;
-	private CustomAnimation corMeleeEffectAnim;
 	private GameObject pureMeleeEffectClone;
 	private CustomAnimation pureMeleeEffectAnim;
+	private GameObject corMeleeEffectClone;
+	private CustomAnimation corMeleeEffectAnim;
+	private GameObject corDashEffectClone;
 	private GameObject noGemPullEffectClone;
 	private CustomAnimation noGemPullEffectAnim;
 	private GameObject purePullEffectClone;
@@ -143,7 +145,7 @@ public class PlayerController : MonoBehaviour
 		corRightBootSkills = new CorRightBootSkills();
 		purityRightBootSkills = new PurityRightBootSkills();
 		noGemsLeftBootSkills = new NoGemsLeftBootSkills();
-		corLeftBootSkills = new CorLeftBootSkills();
+		corLeftBootSkills = new CorLeftBootSkills(corDashEffect);
 		purityLeftBootSkills = new PurityLeftBootSkills();
 
 		swap = new Swap(swapUI,
@@ -262,6 +264,14 @@ public class PlayerController : MonoBehaviour
 
 		if (corRightBootSkills.attackClonesRight != null && corRightBootSkills.attackClonesLeft != null) {
 			corRightBootSkills.LaunchJumpProjectile();
+		}
+
+		if (corLeftBootSkills.isCorDashing) {
+			if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
+				corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, 0f), isFacingRight);
+			} else {
+				corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, 180f), isFacingRight);
+			}
 		}
 
 		if (noGemMeleeEffectClone != null) {
@@ -483,13 +493,13 @@ public class PlayerController : MonoBehaviour
 				noGemsLeftBootSkills.SetupDash(isFacingRight);
 				StartCoroutine(noGemsLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
-			case BootsGem.BootsGemState.Corruption:
-				corLeftBootSkills.SetupDash(isFacingRight);
-				StartCoroutine(corLeftBootSkills.StartDashCooldown(playerInputActions));
-				break;
 			case BootsGem.BootsGemState.Purity:
 				purityLeftBootSkills.SetupDash(isFacingRight);
 				StartCoroutine(purityLeftBootSkills.StartDashCooldown(playerInputActions));
+				break;
+			case BootsGem.BootsGemState.Corruption:
+				corLeftBootSkills.SetupDash(isFacingRight);
+				StartCoroutine(corLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 		}
 	}
@@ -499,11 +509,11 @@ public class PlayerController : MonoBehaviour
 			case BootsGem.BootsGemState.None:
 				StartCoroutine(noGemsLeftBootSkills.PerformDash(playerRigidbody));
 				break;
-			case BootsGem.BootsGemState.Corruption:
-				StartCoroutine(corLeftBootSkills.PerformDash(playerRigidbody));
-				break;
 			case BootsGem.BootsGemState.Purity:
 				StartCoroutine(purityLeftBootSkills.PerformDash(playerRigidbody));
+				break;
+			case BootsGem.BootsGemState.Corruption:
+				StartCoroutine(corLeftBootSkills.PerformDash(playerRigidbody));
 				break;
 		}
 	}
