@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 	private GameObject corMeleeEffectClone;
 	private CustomAnimation corMeleeEffectAnim;
 	private GameObject corDashEffectClone;
+	private List<GameObject> corDashEffectCloneList;
 	private GameObject noGemPullEffectClone;
 	private CustomAnimation noGemPullEffectAnim;
 	private GameObject purePullEffectClone;
@@ -111,6 +112,8 @@ public class PlayerController : MonoBehaviour
 	private void Awake() {
 		Player.playerState = Player.PlayerState.Normal;
 		Animation.animationState = Animation.AnimationState.Idle;
+
+		corDashEffectCloneList = new List<GameObject>();
 
 		meleeTransformRight = GetComponent<Transform>().GetChild(0);
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
@@ -262,16 +265,24 @@ public class PlayerController : MonoBehaviour
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
 
-		if (corRightBootSkills.attackClonesRight != null && corRightBootSkills.attackClonesLeft != null) {
+		if (corRightBootSkills.attackClonesRight.Count > 0 && corRightBootSkills.attackClonesLeft.Count > 0) {
 			corRightBootSkills.LaunchJumpProjectile();
 		}
 
 		if (corLeftBootSkills.isCorDashing) {
+			const float DEGREE_0_ANGLE = 0f;
+			const float DEGREE_180_ANGLE = 180f;
 			if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
-				corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, 0f), isFacingRight);
+				corDashEffectClone = corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, DEGREE_0_ANGLE), isFacingRight);
+				if (corDashEffectClone != null) {
+					StartCoroutine(corLeftBootSkills.DestroyEffectClone(corDashEffectClone));
+				}
 			} else {
-				corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, 180f), isFacingRight);
+				corDashEffectCloneList.Add(corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, DEGREE_180_ANGLE), isFacingRight));
 			}
+		}
+		if (corDashEffectCloneList.Count > 0) {
+			corLeftBootSkills.LaunchSpikesDownward(corDashEffectCloneList, platformLayerMask);
 		}
 
 		if (noGemMeleeEffectClone != null) {
