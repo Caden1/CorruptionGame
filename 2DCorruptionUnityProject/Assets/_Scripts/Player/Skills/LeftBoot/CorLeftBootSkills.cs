@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class CorLeftBootSkills : LeftBootSkills
 {
@@ -62,6 +63,7 @@ public class CorLeftBootSkills : LeftBootSkills
 		Player.playerState = Player.PlayerState.Normal;
 	}
 
+	// TODO: This produces about 170 spikes, and that number is inconsistent. Figure out a way to reduce that number drastically and make them consistent
 	public GameObject InstantiateEffect(BoxCollider2D playerBoxCollider, Quaternion rotation, bool isFacingRight) {
 		if (isFacingRight)
 			behindPlayerPosition = playerBoxCollider.bounds.min;
@@ -82,11 +84,12 @@ public class CorLeftBootSkills : LeftBootSkills
 	}
 
 	public void LaunchSpikesDownward(List<GameObject> corDashEffectCloneList, LayerMask platformLayerMask) {
-		foreach (GameObject el in corDashEffectCloneList) {
-			if (el != null) {
-				el.transform.Translate(Vector2.up * Time.deltaTime * downwardLaunchVelocity); // Vector2.up becasue it's rotated 180 degrees
-				if (UtilsClass.IsBoxColliderGrounded(el.GetComponent<BoxCollider2D>(), platformLayerMask)) {
-					Object.Destroy(el);
+		for (int i = corDashEffectCloneList.Count - 1; i >= 0; i--) {
+			if (corDashEffectCloneList[i] != null) {
+				corDashEffectCloneList[i].transform.Translate(Vector2.up * Time.deltaTime * downwardLaunchVelocity); // Vector2.up becasue it's rotated 180 degrees
+				if (UtilsClass.IsBoxColliderGrounded(corDashEffectCloneList[i].GetComponent<BoxCollider2D>(), platformLayerMask)) {
+					Object.Destroy(corDashEffectCloneList[i]);
+					corDashEffectCloneList.RemoveAt(i);
 				}
 			}
 		}

@@ -113,10 +113,10 @@ public class PlayerController : MonoBehaviour
 		Player.playerState = Player.PlayerState.Normal;
 		Animation.animationState = Animation.AnimationState.Idle;
 
-		corDashEffectCloneList = new List<GameObject>();
-
 		meleeTransformRight = GetComponent<Transform>().GetChild(0);
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
+
+		corDashEffectCloneList = new List<GameObject>();
 
 		noGemMeleeEffectAnim = new CustomAnimation(noGemMeleeEffectSprites);
 		corMeleeEffectAnim = new CustomAnimation(corMeleeEffectSprites);
@@ -215,6 +215,8 @@ public class PlayerController : MonoBehaviour
 		SetAnimationState();
 		PlayAndDestroyActiveClones();
 		ShootProjectile();
+
+		Debug.Log("corDashEffectCloneList=" + corDashEffectCloneList.Count);
 	}
 
 	private void FixedUpdate() {
