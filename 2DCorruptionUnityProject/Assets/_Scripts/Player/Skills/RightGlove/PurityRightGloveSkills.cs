@@ -13,7 +13,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		cooldownSec = 0.2f;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
-		forcedMovementVel = -1f;
+		forcedMovementVel = 0.5f;
 		forcedMovementSec = 0.1f;
 		attackOrigin = new Vector2();
 	}

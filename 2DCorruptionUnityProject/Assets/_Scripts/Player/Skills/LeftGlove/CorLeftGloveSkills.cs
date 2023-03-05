@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class CorLeftGloveSkills : LeftGloveSkills
 {
-	private List<GameObject> projectileClonesRight;
-	private List<GameObject> projectileClonesLeft;
-	private Vector2 attackOriginRight;
-	private Vector2 attackOriginLeft;
-	protected float damage;
-	private float attackVelocity;
-	private float attackDistance;
-
 	public override void SetWithNoModifiers() {
-		
+		canAttack = false;
+		isAttacking = false;
+		lockMovement = false;
+		lockMovementSec = 0.2f;
+		cooldownSec = 4f;
+		pullEffectCloneSec = 0.5f;
+		pullEffectZRotation = 0f;
+		attackOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
@@ -33,21 +32,17 @@ public class CorLeftGloveSkills : LeftGloveSkills
 	}
 
 	public override void SetupLeftGloveSkill(Vector2 directionPointing) {
-		//float attackOriginOffset = 0.25f;
-		//canAttack = true;
-		//isAttacking = true;
-		//attackOriginRight = new Vector2(boxCollider.bounds.max.x + attackOriginOffset, boxCollider.bounds.center.y + attackOriginOffset);
-		//attackOriginLeft = new Vector2(boxCollider.bounds.min.x - attackOriginOffset, boxCollider.bounds.center.y + attackOriginOffset);
+		canAttack = true;
+		isAttacking = true;
+		lockMovement = true;
+		attackOrigin = directionPointing;
 	}
 
 	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation) {
-		//if (isFacingRight)
-		//	projectileClonesRight.Add(Object.Instantiate(projectile, attackOriginRight, projectile.transform.rotation));
-		//else
-		//	projectileClonesLeft.Add(Object.Instantiate(projectile, attackOriginLeft, projectile.transform.rotation));
-		//canAttack = false;
-
-		return null;
+		GameObject pullEffectClone = Object.Instantiate(leftGloveEffect, attackOrigin, rotation);
+		canAttack = false;
+		isAttacking = false;
+		return pullEffectClone;
 	}
 
 	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {

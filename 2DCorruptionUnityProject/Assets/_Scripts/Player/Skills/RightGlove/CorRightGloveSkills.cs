@@ -5,7 +5,17 @@ using UnityEngine;
 public class CorRightGloveSkills : RightGloveSkills
 {
 	public override void SetWithNoModifiers() {
-		
+		canMelee = false;
+		isAnimating = false;
+		lockMovement = false;
+		lockMovementSec = 0.2f;
+		meleeEffectCloneSec = 0.2f;
+		cooldownSec = 0.2f;
+		hasForcedMovement = false;
+		forcedMovementVector = new Vector2();
+		forcedMovementVel = 0.5f;
+		forcedMovementSec = 0.1f;
+		attackOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
@@ -27,12 +37,16 @@ public class CorRightGloveSkills : RightGloveSkills
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
 		canMelee = true;
 		isAnimating = true;
+		lockMovement = true;
+		hasForcedMovement = true;
 		if (isFacingRight) {
 			meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
 			attackOrigin = positionRight;
+			forcedMovementVector = new Vector2(forcedMovementVel, 0f);
 		} else {
 			meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
 			attackOrigin = positionLeft;
+			forcedMovementVector = new Vector2(-forcedMovementVel, 0f);
 		}
 	}
 
@@ -60,6 +74,7 @@ public class CorRightGloveSkills : RightGloveSkills
 	}
 
 	public override IEnumerator TempLockMovement() {
-		throw new System.NotImplementedException();
+		yield return new WaitForSeconds(lockMovementSec);
+		lockMovement = false;
 	}
 }

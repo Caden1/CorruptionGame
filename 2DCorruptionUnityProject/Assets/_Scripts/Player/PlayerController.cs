@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite[] noGemPullEffectSprites;
 	[SerializeField] private GameObject purePullEffect;
 	[SerializeField] private Sprite[] purePullEffectSprites;
+	[SerializeField] private GameObject corPushEffect;
+	[SerializeField] private Sprite[] corPushEffectSprites;
 	[SerializeField] private GameObject corJumpEffect;
 	[SerializeField] private GameObject corruptionProjectile;
 	[SerializeField] private GameObject pureEarthPlatform;
@@ -43,6 +45,8 @@ public class PlayerController : MonoBehaviour
 	private CustomAnimation noGemPullEffectAnim;
 	private GameObject purePullEffectClone;
 	private CustomAnimation purePullEffectAnim;
+	private GameObject corPushEffectClone;
+	private CustomAnimation corPushEffectAnim;
 
 	[SerializeField] private UIDocument gemSwapUIDoc;
 	[SerializeField] private UIDocument healthBarUIDoc;
@@ -123,6 +127,7 @@ public class PlayerController : MonoBehaviour
 		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
 		noGemPullEffectAnim = new CustomAnimation(noGemPullEffectSprites);
 		purePullEffectAnim = new CustomAnimation(purePullEffectSprites);
+		corPushEffectAnim = new CustomAnimation(corPushEffectSprites);
 
 		playerHealth = new HealthSystem(100f);
 
@@ -215,8 +220,6 @@ public class PlayerController : MonoBehaviour
 		SetAnimationState();
 		PlayAndDestroyActiveClones();
 		ShootProjectile();
-
-		Debug.Log("corDashEffectCloneList=" + corDashEffectCloneList.Count);
 	}
 
 	private void FixedUpdate() {
@@ -322,6 +325,11 @@ public class PlayerController : MonoBehaviour
 		if (purePullEffectClone != null) {
 			purePullEffectAnim.PlayCreatedAnimation(purePullEffectClone.GetComponent<SpriteRenderer>());
 			StartCoroutine(purityLeftGloveSkills.DestroyEffectClone(purePullEffectClone));
+		}
+
+		if (corPushEffectClone != null) {
+			corPushEffectAnim.PlayCreatedAnimation(corPushEffectClone.GetComponent<SpriteRenderer>());
+			StartCoroutine(corLeftGloveSkills.DestroyEffectClone(corPushEffectClone));
 		}
 	}
 
@@ -546,6 +554,7 @@ public class PlayerController : MonoBehaviour
 			case GlovesGem.GlovesGemState.Corruption:
 				corRightGloveSkills.SetupMelee(corMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
 				StartCoroutine(corRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(corRightGloveSkills.TempLockMovement());
 				break;
 		}
 	}
@@ -580,9 +589,10 @@ public class PlayerController : MonoBehaviour
 				StartCoroutine(purityLeftGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
-				//corLeftGloveSkills.SetupLeftGloveSkill(isFacingRight, pullPositionRight, pullPositionLeft);
-				//StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
-				//StartCoroutine(corLeftGloveSkills.ResetLeftGloveSkillAnim());
+				offset = 1.5f;
+				corLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
+				StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(corLeftGloveSkills.TempLockMovement());
 				break;
 		}
 	}
@@ -596,8 +606,7 @@ public class PlayerController : MonoBehaviour
 				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
-				//corLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect);
-				//StartCoroutine(corruptionProjectileSkills.ResetProjectileAnimation());
+				corPushEffectClone = corLeftGloveSkills.PerformLeftGloveSkill(corPushEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
 				break;
 		}
 	}

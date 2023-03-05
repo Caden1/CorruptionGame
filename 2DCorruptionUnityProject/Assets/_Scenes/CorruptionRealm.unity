@@ -917,6 +917,11 @@ MonoBehaviour:
   - {fileID: 906083576, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
   - {fileID: -2065213889, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
   - {fileID: 318299938, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
+  corPushEffect: {fileID: 1092185408246970779, guid: 70d5d84148b0c4e50bbe16f9b82dc9dc, type: 3}
+  corPushEffectSprites:
+  - {fileID: 2071187181, guid: e5b28091c842a4beeaa0e941d7c5ef22, type: 3}
+  - {fileID: 1837073933, guid: e5b28091c842a4beeaa0e941d7c5ef22, type: 3}
+  - {fileID: -203828444, guid: e5b28091c842a4beeaa0e941d7c5ef22, type: 3}
   corJumpEffect: {fileID: 3561767254440528458, guid: 83e37c1e305d24cfa896ef46e1c0a07a, type: 3}
   corruptionProjectile: {fileID: 6066601356021869870, guid: 98d5786a10a0349519ca399c2a44a5aa, type: 3}
   pureEarthPlatform: {fileID: 465465729247891978, guid: c396a3ca6a6084b4f91b29842e8a59f3, type: 3}
