@@ -106,7 +106,7 @@ public class CorRightBootSkills : RightBootSkills
 	}
 
 	public void LaunchJumpProjectile() {
-		if (attackClonesRight.Count > 0) {
+		if (attackClonesRight != null && attackClonesRight.Count > 0) {
 			for (int i = 0; i < attackClonesRight.Count; i++) {
 				if (attackClonesRight[i] != null) {
 					attackClonesRight[i].transform.Translate(Vector2.right * Time.deltaTime * attackVelocity);
@@ -115,7 +115,7 @@ public class CorRightBootSkills : RightBootSkills
 				}
 			}
 		}
-		if (attackClonesLeft.Count > 0) {
+		if (attackClonesLeft != null && attackClonesLeft.Count > 0) {
 			for (int i = 0; i < attackClonesLeft.Count; i++) {
 				if (attackClonesLeft[i] != null) {
 					attackClonesLeft[i].transform.Translate(Vector2.left * Time.deltaTime * attackVelocity);

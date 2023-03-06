@@ -28,7 +28,15 @@ public class PurityRightBootSkills : RightBootSkills
 	}
 
 	public override void SetAirModifiers() {
-	
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 3;
+		jumpGravity = 2f;
+		groundedPlayerGravity = 1f;
+		fallGravity = 2f;
+		archVelocityThreshold = 3f;
+		archGravity = 2f;
+		jumpVelocity = 9f;
 	}
 
 	public override void SetFireModifiers() {

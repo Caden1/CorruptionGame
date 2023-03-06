@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
 		BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
 		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
 		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.None;
-		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
+		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Air;
 		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
 
 		swap.InitialGemState();
@@ -270,7 +270,8 @@ public class PlayerController : MonoBehaviour
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
 
-		if (corRightBootSkills.attackClonesRight.Count > 0 && corRightBootSkills.attackClonesLeft.Count > 0) {
+		if (corRightBootSkills.attackClonesRight != null && corRightBootSkills.attackClonesLeft != null
+			&& corRightBootSkills.attackClonesRight.Count > 0 && corRightBootSkills.attackClonesLeft.Count > 0) {
 			corRightBootSkills.LaunchJumpProjectile();
 		}
 

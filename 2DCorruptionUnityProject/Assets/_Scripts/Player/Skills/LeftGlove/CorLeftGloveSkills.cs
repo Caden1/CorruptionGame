@@ -9,7 +9,7 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		isAttacking = false;
 		lockMovement = false;
 		lockMovementSec = 0.2f;
-		cooldownSec = 4f;
+		cooldownSec = 2f;
 		pullEffectCloneSec = 0.5f;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
