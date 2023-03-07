@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite[] noGemPullEffectSprites;
 	[SerializeField] private GameObject purePullEffect;
 	[SerializeField] private Sprite[] purePullEffectSprites;
+	[SerializeField] private GameObject pureAirPullEffect;
+	[SerializeField] private Sprite[] pureAirPullEffectSprites;
 	[SerializeField] private GameObject corPushEffect;
 	[SerializeField] private Sprite[] corPushEffectSprites;
 	[SerializeField] private GameObject corJumpEffect;
@@ -45,6 +47,8 @@ public class PlayerController : MonoBehaviour
 	private CustomAnimation noGemPullEffectAnim;
 	private GameObject purePullEffectClone;
 	private CustomAnimation purePullEffectAnim;
+	private GameObject pureAirPullEffectClone;
+	private CustomAnimation pureAirPullEffectAnim;
 	private GameObject corPushEffectClone;
 	private CustomAnimation corPushEffectAnim;
 
@@ -127,6 +131,7 @@ public class PlayerController : MonoBehaviour
 		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
 		noGemPullEffectAnim = new CustomAnimation(noGemPullEffectSprites);
 		purePullEffectAnim = new CustomAnimation(purePullEffectSprites);
+		pureAirPullEffectAnim = new CustomAnimation(pureAirPullEffectSprites);
 		corPushEffectAnim = new CustomAnimation(corPushEffectSprites);
 
 		playerHealth = new HealthSystem(100f);
@@ -247,9 +252,9 @@ public class PlayerController : MonoBehaviour
 		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
 		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
 		BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
-		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
+		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.Air;
 		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.None;
-		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.Air;
+		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
 		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
 
 		swap.InitialGemState();
@@ -300,6 +305,27 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(noGemsRightGloveSkills.DestroyEffectClone(noGemMeleeEffectClone));
 		}
 
+		switch (RightGloveModGem.rightGloveModGemState) {
+			case RightGloveModGem.RightGloveModGemState.None:
+				if (pureMeleeEffectClone != null) {
+					pureMeleeEffectAnim.PlayCreatedAnimation(pureMeleeEffectClone.GetComponent<SpriteRenderer>());
+					if (isFacingRight)
+						pureMeleeEffectClone.transform.position = meleePositionRight;
+					else
+						pureMeleeEffectClone.transform.position = meleePositionLeft;
+					StartCoroutine(purityRightGloveSkills.DestroyEffectClone(pureMeleeEffectClone));
+				}
+				break;
+			case RightGloveModGem.RightGloveModGemState.Air:
+				if (purityRightGloveSkills.airClones != null && purityRightGloveSkills.airClones.Count > 0) {
+					if (pureMeleeEffectClone != null) {
+						pureMeleeEffectAnim.PlayCreatedAnimation(pureMeleeEffectClone.GetComponent<SpriteRenderer>());
+					}
+					purityRightGloveSkills.LaunchAirMelee();
+				}
+				break;
+		}
+
 		if (corMeleeEffectClone != null) {
 			corMeleeEffectAnim.PlayCreatedAnimation(corMeleeEffectClone.GetComponent<SpriteRenderer>());
 			if (isFacingRight)
@@ -307,15 +333,6 @@ public class PlayerController : MonoBehaviour
 			else
 				corMeleeEffectClone.transform.position = meleePositionLeft;
 			StartCoroutine(corRightGloveSkills.DestroyEffectClone(corMeleeEffectClone));
-		}
-
-		if (pureMeleeEffectClone != null) {
-			pureMeleeEffectAnim.PlayCreatedAnimation(pureMeleeEffectClone.GetComponent<SpriteRenderer>());
-			if (isFacingRight)
-				pureMeleeEffectClone.transform.position = meleePositionRight;
-			else
-				pureMeleeEffectClone.transform.position = meleePositionLeft;
-			StartCoroutine(purityRightGloveSkills.DestroyEffectClone(pureMeleeEffectClone));
 		}
 
 		if (noGemPullEffectClone != null) {
@@ -326,6 +343,11 @@ public class PlayerController : MonoBehaviour
 		if (purePullEffectClone != null) {
 			purePullEffectAnim.PlayCreatedAnimation(purePullEffectClone.GetComponent<SpriteRenderer>());
 			StartCoroutine(purityLeftGloveSkills.DestroyEffectClone(purePullEffectClone));
+		}
+
+		if (pureAirPullEffectClone != null) {
+			pureAirPullEffectAnim.PlayCreatedAnimation(pureAirPullEffectClone.GetComponent<SpriteRenderer>());
+			StartCoroutine(purityLeftGloveSkills.DestroyEffectClone(pureAirPullEffectClone));
 		}
 
 		if (corPushEffectClone != null) {
@@ -604,7 +626,10 @@ public class PlayerController : MonoBehaviour
 				noGemPullEffectClone = noGemsLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
+				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None)
+					purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
+				else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air)
+					pureAirPullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				corPushEffectClone = corLeftGloveSkills.PerformLeftGloveSkill(corPushEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));

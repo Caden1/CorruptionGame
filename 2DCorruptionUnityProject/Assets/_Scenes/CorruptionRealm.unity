@@ -917,6 +917,11 @@ MonoBehaviour:
   - {fileID: 906083576, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
   - {fileID: -2065213889, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
   - {fileID: 318299938, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
+  pureAirPullEffect: {fileID: 2703176284987579184, guid: 23804f3062e3146f8ae067c17df4c163, type: 3}
+  pureAirPullEffectSprites:
+  - {fileID: -1313145839, guid: de160081e3eb84ad18741529d66b65bd, type: 3}
+  - {fileID: 1574626026, guid: de160081e3eb84ad18741529d66b65bd, type: 3}
+  - {fileID: -1808890361, guid: de160081e3eb84ad18741529d66b65bd, type: 3}
   corPushEffect: {fileID: 1092185408246970779, guid: 70d5d84148b0c4e50bbe16f9b82dc9dc, type: 3}
   corPushEffectSprites:
   - {fileID: 2071187181, guid: e5b28091c842a4beeaa0e941d7c5ef22, type: 3}

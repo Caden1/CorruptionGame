@@ -13,7 +13,11 @@ public class PurityLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetAirModifiers() {
-		
+		isInvulnerable = false;
+		dashVelocity = 12f;
+		secondsToDash = 0.5f;
+		cooldown = 2f;
+		dashDirection = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
