@@ -28,7 +28,15 @@ public class CorLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetAirModifiers() {
-		
+		isInvulnerable = false;
+		dashVelocity = 12f;
+		secondsToDash = 0.25f;
+		cooldown = 2f;
+		dashDirection = new Vector2();
+		isCorDashing = false;
+		behindPlayerPosition = new Vector2();
+		dashEffectCloneSec = 2f;
+		downwardLaunchVelocity = 4f;
 	}
 
 	public override void SetFireModifiers() {

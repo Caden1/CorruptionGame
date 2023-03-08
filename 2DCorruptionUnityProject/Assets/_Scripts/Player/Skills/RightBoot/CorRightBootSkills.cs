@@ -34,7 +34,22 @@ public class CorRightBootSkills : RightBootSkills
 	}
 
 	public override void SetAirModifiers() {
-		
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 1;
+		jumpGravity = 2f;
+		groundedPlayerGravity = 1f;
+		fallGravity = 3f;
+		archVelocityThreshold = 4f;
+		archGravity = 3f;
+		jumpVelocity = 9f;
+		attackClonesRight = new List<GameObject>();
+		attackClonesLeft = new List<GameObject>();
+		attackOriginRight = new Vector2();
+		attackOriginLeft = new Vector2();
+		attackDistance = 7f;
+		attackVelocity = 5f;
+		damage = 2f;
 	}
 
 	public override void SetFireModifiers() {
