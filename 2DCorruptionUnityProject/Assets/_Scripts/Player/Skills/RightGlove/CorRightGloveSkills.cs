@@ -19,7 +19,17 @@ public class CorRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetAirModifiers() {
-		
+		canMelee = false;
+		isAnimating = false;
+		lockMovement = false;
+		lockMovementSec = 0.2f;
+		meleeEffectCloneSec = 0.2f;
+		cooldownSec = 0.2f;
+		hasForcedMovement = false;
+		forcedMovementVector = new Vector2();
+		forcedMovementVel = 0.5f;
+		forcedMovementSec = 0.1f;
+		attackOrigin = new Vector2();
 	}
 
 	public override void SetFireModifiers() {

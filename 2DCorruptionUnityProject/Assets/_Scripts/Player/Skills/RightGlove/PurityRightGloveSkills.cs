@@ -8,7 +8,6 @@ public class PurityRightGloveSkills : RightGloveSkills
 	private float airVelocity;
 	private float airDistance;
 	private Vector2 airDirection;
-	private bool isAir;
 
 	public override void SetWithNoModifiers() {
 		canMelee = false;
@@ -22,7 +21,6 @@ public class PurityRightGloveSkills : RightGloveSkills
 		forcedMovementVel = 0.5f;
 		forcedMovementSec = 0.1f;
 		attackOrigin = new Vector2();
-		isAir = false;
 	}
 
 	public override void SetAirModifiers() {
@@ -41,7 +39,6 @@ public class PurityRightGloveSkills : RightGloveSkills
 		airVelocity = 5f;
 		airDistance = 5f;
 		airDirection = new Vector2();
-		isAir = true;
 	}
 
 	public override void SetFireModifiers() {
@@ -76,12 +73,15 @@ public class PurityRightGloveSkills : RightGloveSkills
 
 	public override GameObject PerformMelee(GameObject meleeEffect) {
 		GameObject meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
-		if (isAir) {
-			airClones.Add(meleeEffectClone);
-		}
 		canMelee = false;
 		isAnimating = false;
 		return meleeEffectClone;
+	}
+
+	public void PerformAirMelee(GameObject meleeEffect) {
+		airClones.Add(Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation));
+		canMelee = false;
+		isAnimating = false;
 	}
 
 	public override IEnumerator ResetForcedMovement() {
@@ -107,11 +107,15 @@ public class PurityRightGloveSkills : RightGloveSkills
 
 	public void LaunchAirMelee() {
 		if (airClones != null && airClones.Count > 0) {
-			for (int i = 0; i < airClones.Count; i++) {
+			// for (int i = corDashEffectCloneList.Count - 1; i >= 0; i--)
+			for (int i = airClones.Count - 1; i >= 0; i--) {
 				if (airClones[i] != null) {
 					airClones[i].transform.Translate(airDirection * Time.deltaTime * airVelocity);
-					if (Vector2.Distance(attackOrigin, airClones[i].transform.position) > airDistance)
+					if (Vector2.Distance(attackOrigin, airClones[i].transform.position) > airDistance) {
 						Object.Destroy(airClones[i]);
+						// corDashEffectCloneList.RemoveAt(i);
+						airClones.RemoveAt(i);
+					}
 				}
 			}
 		}

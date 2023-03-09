@@ -901,11 +901,22 @@ MonoBehaviour:
   - {fileID: 1465045819, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
   - {fileID: 2101544171, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
   - {fileID: -1259072125, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
+  pureAirMeleeEffect: {fileID: 5519809720809314649, guid: 094a5e2ccfbce4db7b6ad22d9ba0a039, type: 3}
+  pureAirMeleeEffectSprites:
+  - {fileID: -1141595232, guid: bd714d916b6e44cfdb974e033050280d, type: 3}
+  - {fileID: -2133948663, guid: bd714d916b6e44cfdb974e033050280d, type: 3}
+  - {fileID: -1160036012, guid: bd714d916b6e44cfdb974e033050280d, type: 3}
+  - {fileID: -560337527, guid: bd714d916b6e44cfdb974e033050280d, type: 3}
   corMeleeEffect: {fileID: 913447754468754611, guid: 22a8db88003214a52868ecc1359ca965, type: 3}
   corMeleeEffectSprites:
   - {fileID: -1273536999, guid: 1d4a56db7bd8a406b97910b7146d7c1f, type: 3}
   - {fileID: -1403907134, guid: 1d4a56db7bd8a406b97910b7146d7c1f, type: 3}
   - {fileID: -464241445, guid: 1d4a56db7bd8a406b97910b7146d7c1f, type: 3}
+  corAirMeleeEffect: {fileID: 6667651930290126929, guid: e3c45482142204b57aafc3cbd0b347cb, type: 3}
+  corAirMeleeEffectSprites:
+  - {fileID: -2092947212, guid: a531ff7fc8cde43159a39a3bc38a0dfc, type: 3}
+  - {fileID: 1760763049, guid: a531ff7fc8cde43159a39a3bc38a0dfc, type: 3}
+  - {fileID: 10842327, guid: a531ff7fc8cde43159a39a3bc38a0dfc, type: 3}
   corDashEffect: {fileID: 1101168767641393491, guid: 16168aeede7cf42db890c0e7b3f785e2, type: 3}
   noGemPullEffect: {fileID: 5838679629690344553, guid: 11f46cec240d04600bfa01bbb1f18355, type: 3}
   noGemPullEffectSprites:
