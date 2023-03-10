@@ -9,7 +9,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		isAnimating = false;
 		lockMovement = false;
 		lockMovementSec = 0.2f;
-		meleeEffectCloneSec = 0.2f;
+		meleeEffectCloneSec = 0.3f;
 		cooldownSec = 0.2f;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
@@ -23,7 +23,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		isAnimating = false;
 		lockMovement = false;
 		lockMovementSec = 0.2f;
-		meleeEffectCloneSec = 0.2f;
+		meleeEffectCloneSec = 0.3f;
 		cooldownSec = 0.2f;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();

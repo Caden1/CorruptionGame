@@ -14,7 +14,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		isAnimating = false;
 		lockMovement = false;
 		lockMovementSec = 0.2f;
-		meleeEffectCloneSec = 0.2f;
+		meleeEffectCloneSec = 0.3f;
 		cooldownSec = 0.2f;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
@@ -28,7 +28,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		isAnimating = false;
 		lockMovement = false;
 		lockMovementSec = 0.2f;
-		meleeEffectCloneSec = 0.2f;
+		meleeEffectCloneSec = 0.3f;
 		cooldownSec = 0.2f;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
@@ -107,13 +107,11 @@ public class PurityRightGloveSkills : RightGloveSkills
 
 	public void LaunchAirMelee() {
 		if (airClones != null && airClones.Count > 0) {
-			// for (int i = corDashEffectCloneList.Count - 1; i >= 0; i--)
 			for (int i = airClones.Count - 1; i >= 0; i--) {
 				if (airClones[i] != null) {
 					airClones[i].transform.Translate(airDirection * Time.deltaTime * airVelocity);
 					if (Vector2.Distance(attackOrigin, airClones[i].transform.position) > airDistance) {
 						Object.Destroy(airClones[i]);
-						// corDashEffectCloneList.RemoveAt(i);
 						airClones.RemoveAt(i);
 					}
 				}

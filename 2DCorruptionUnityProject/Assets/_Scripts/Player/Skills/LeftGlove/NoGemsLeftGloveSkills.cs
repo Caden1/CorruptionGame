@@ -10,7 +10,7 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		lockMovement = false;
 		lockMovementSec = 0.2f;
 		cooldownSec = 2f;
-		pullEffectCloneSec = 0.5f;
+		pullEffectCloneSec = 0.2f;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}

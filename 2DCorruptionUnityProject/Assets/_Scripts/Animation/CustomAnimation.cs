@@ -48,7 +48,7 @@ public class CustomAnimation
 	// Play the Animation you Created
 	private float timerForCreatedAnimation;
 
-	public void PlayCreatedAnimation() {
+	public void PlayCreatedAnimationOnLoop() {
 		timerForCreatedAnimation += Time.deltaTime;
 		if (animationCreated) {
 			if (timerForCreatedAnimation >= (animSpeedSmallerIsFaster + Time.deltaTime)) {
@@ -59,7 +59,7 @@ public class CustomAnimation
 		}
 	}
 
-	public void PlayCreatedAnimation(SpriteRenderer localSpriteRenderer) {
+	public void PlayCreatedAnimationOnLoop(SpriteRenderer localSpriteRenderer) {
 		timerForCreatedAnimation += Time.deltaTime;
 		if (animationCreated) {
 			if (timerForCreatedAnimation >= (animSpeedSmallerIsFaster + Time.deltaTime)) {
@@ -68,5 +68,22 @@ public class CustomAnimation
 				spriteIndex = (spriteIndex + 1) % spritesToAnimate.Length;
 			}
 		}
+	}
+
+	public void PlayCreatedAnimationOnce(SpriteRenderer localSpriteRenderer) {
+		if (spriteIndex < spritesToAnimate.Length) {
+			timerForCreatedAnimation += Time.deltaTime;
+			if (animationCreated) {
+				if (timerForCreatedAnimation >= (animSpeedSmallerIsFaster + Time.deltaTime)) {
+					timerForCreatedAnimation -= (animSpeedSmallerIsFaster + Time.deltaTime);
+					localSpriteRenderer.sprite = spritesToAnimate[spriteIndex];
+					spriteIndex++;
+				}
+			}
+		}
+	}
+
+	public void ResetIndexToZero() {
+		spriteIndex = 0;
 	}
 }

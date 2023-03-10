@@ -10,13 +10,20 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		lockMovement = false;
 		lockMovementSec = 0.2f;
 		cooldownSec = 2f;
-		pullEffectCloneSec = 0.5f;
+		pullEffectCloneSec = 0.3f;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
-		
+		canAttack = false;
+		isAttacking = false;
+		lockMovement = false;
+		lockMovementSec = 0.2f;
+		cooldownSec = 2f;
+		pullEffectCloneSec = 0.3f;
+		pullEffectZRotation = 0f;
+		attackOrigin = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
