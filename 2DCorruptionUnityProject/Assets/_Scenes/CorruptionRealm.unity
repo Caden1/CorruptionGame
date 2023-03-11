@@ -905,6 +905,16 @@ MonoBehaviour:
   - {fileID: -959853268, guid: d295edda8c33449e789ab2864ca1cfaf, type: 3}
   - {fileID: -55165719, guid: d295edda8c33449e789ab2864ca1cfaf, type: 3}
   noGemPullEffect: {fileID: 5838679629690344553, guid: 11f46cec240d04600bfa01bbb1f18355, type: 3}
+  pureJumpEffectSprites:
+  - {fileID: -1018892682, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
+  - {fileID: 877710547, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
+  - {fileID: -2110232044, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
+  pureJumpEffect: {fileID: 2451221978831533218, guid: 4905bb865bcb54a4ca5e433a35b6452a, type: 3}
+  pureAirJumpEffectSprites:
+  - {fileID: 23990462, guid: 9a196b2a2eab2471081610efd77a4ba7, type: 3}
+  - {fileID: -467710810, guid: 9a196b2a2eab2471081610efd77a4ba7, type: 3}
+  - {fileID: 710520278, guid: 9a196b2a2eab2471081610efd77a4ba7, type: 3}
+  pureAirJumpEffect: {fileID: 2672062431930129880, guid: b5e89862823cf4e85920ea0a692efa6b, type: 3}
   pureMeleeEffect: {fileID: 1550512535146750824, guid: 9f1b803476b694cf5ab81351b8691abb, type: 3}
   pureMeleeEffectSprites:
   - {fileID: 1620989434, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
@@ -938,8 +948,17 @@ MonoBehaviour:
   pureWaterBoot: {fileID: 21300000, guid: 06c18487add0a4beea893ec274ecdc21, type: 3}
   pureEarthGlove: {fileID: 21300000, guid: bb3d07ac4f89545518197861f0228fab, type: 3}
   pureEarthBoot: {fileID: 21300000, guid: eff73be920f0b49e2bab8f29d6989a9d, type: 3}
-  corJumpEffect: {fileID: 3561767254440528458, guid: 83e37c1e305d24cfa896ef46e1c0a07a, type: 3}
-  corruptionProjectile: {fileID: 6066601356021869870, guid: 98d5786a10a0349519ca399c2a44a5aa, type: 3}
+  corNoDamageJumpEffectSprites:
+  - {fileID: 474034346, guid: 8f6bf81bdd3ae49efbec9f2f121767f9, type: 3}
+  - {fileID: -1352213858, guid: 8f6bf81bdd3ae49efbec9f2f121767f9, type: 3}
+  - {fileID: -1905466859, guid: 8f6bf81bdd3ae49efbec9f2f121767f9, type: 3}
+  corNoDamageJumpEffect: {fileID: 2874753853328672233, guid: 3008fd945a90145e5901327e03c2f727, type: 3}
+  corAirNoDamageJumpEffectSprites:
+  - {fileID: 1949493775, guid: 5e46ef136474144799a0641ceb9d7c28, type: 3}
+  - {fileID: 962191914, guid: 5e46ef136474144799a0641ceb9d7c28, type: 3}
+  - {fileID: 871815446, guid: 5e46ef136474144799a0641ceb9d7c28, type: 3}
+  corAirNoDamageJumpEffect: {fileID: 2672062431930129880, guid: b5e89862823cf4e85920ea0a692efa6b, type: 3}
+  corDamagingJumpEffect: {fileID: 3561767254440528458, guid: 83e37c1e305d24cfa896ef46e1c0a07a, type: 3}
   corDashEffect: {fileID: 1101168767641393491, guid: 16168aeede7cf42db890c0e7b3f785e2, type: 3}
   corMeleeEffect: {fileID: 913447754468754611, guid: 22a8db88003214a52868ecc1359ca965, type: 3}
   corMeleeEffectSprites:

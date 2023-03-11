@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8f6bf81bdd3ae49efbec9f2f121767f9
+guid: 9a196b2a2eab2471081610efd77a4ba7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NoDamageCorJumpEffect-Sheet_0
+      name: PureAirJumpEffect-Sheet_0
       rect:
         serializedVersion: 2
         x: 1
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e46b0d60a85d549389c2cb89e6705f35
-      internalID: 474034346
+      spriteID: ce33f5958d2fa4c43b53991a50f8f7ba
+      internalID: 23990462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoDamageCorJumpEffect-Sheet_1
+      name: PureAirJumpEffect-Sheet_1
       rect:
         serializedVersion: 2
         x: 84
@@ -152,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6396083e28c674b6bbef93e25542bdc3
-      internalID: -1352213858
+      spriteID: ba1fec5bb02a741899322d25fc3f6c07
+      internalID: -467710810
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoDamageCorJumpEffect-Sheet_2
+      name: PureAirJumpEffect-Sheet_2
       rect:
         serializedVersion: 2
         x: 167
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1d142b6f2d0345e8971a0d21913f9a7
-      internalID: -1905466859
+      spriteID: 2dbdce3401b6848baba75ec8ef6dc934
+      internalID: 710520278
       vertices: []
       indices: 
       edges: []
@@ -190,9 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoDamageCorJumpEffect-Sheet_2: -1905466859
-      NoDamageCorJumpEffect-Sheet_1: -1352213858
-      NoDamageCorJumpEffect-Sheet_0: 474034346
+      PureAirJumpEffect-Sheet_0: 23990462
+      PureAirJumpEffect-Sheet_2: 710520278
+      PureAirJumpEffect-Sheet_1: -467710810
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
