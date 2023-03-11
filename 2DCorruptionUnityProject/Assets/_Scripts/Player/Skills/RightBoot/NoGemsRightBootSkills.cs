@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class NoGemsRightBootSkills : RightBootSkills
 {
@@ -16,6 +17,8 @@ public class NoGemsRightBootSkills : RightBootSkills
 		archVelocityThreshold = 4f;
 		archGravity = 3f;
 		jumpVelocity = 9f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
 	}
 
 	public override void SetWithNoModifiers() {
@@ -50,6 +53,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 	}
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -59,9 +63,10 @@ public class NoGemsRightBootSkills : RightBootSkills
 		}
 	}
 
-	public override void PerformJump(Rigidbody2D playerRigidbody, GameObject effect) {
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
+		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
 	}
 
 	public override void SetupJumpCancel() {
@@ -71,5 +76,10 @@ public class NoGemsRightBootSkills : RightBootSkills
 	public override void PerformJumpCancel(Rigidbody2D playerRigidbody) {
 		playerRigidbody.velocity = Vector2.zero;
 		canJumpCancel = false;
+	}
+
+	public override IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone) {
+		yield return new WaitForSeconds(jumpEffectCloneSec);
+		Object.Destroy(jumpEffectClone);
 	}
 }

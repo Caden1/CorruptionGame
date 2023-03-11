@@ -25,6 +25,8 @@ public class PurityRightBootSkills : RightBootSkills
 		archVelocityThreshold = 3f;
 		archGravity = 2f;
 		jumpVelocity = 9f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
@@ -37,6 +39,8 @@ public class PurityRightBootSkills : RightBootSkills
 		archVelocityThreshold = 3f;
 		archGravity = 2f;
 		jumpVelocity = 9f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
@@ -62,6 +66,7 @@ public class PurityRightBootSkills : RightBootSkills
 	}
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -77,9 +82,10 @@ public class PurityRightBootSkills : RightBootSkills
 		}
 	}
 
-	public override void PerformJump(Rigidbody2D playerRigidbody, GameObject effect) {
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
+		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
 		//if (isRocketBoosted)
 		//	velocityAndAngle = originalVelocityAndAngle;
 	}
@@ -121,5 +127,10 @@ public class PurityRightBootSkills : RightBootSkills
 	public override void PerformJumpCancel(Rigidbody2D playerRigidbody) {
 		playerRigidbody.velocity = Vector2.zero;
 		canJumpCancel = false;
+	}
+
+	public override IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone) {
+		yield return new WaitForSeconds(jumpEffectCloneSec);
+		Object.Destroy(jumpEffectClone);
 	}
 }

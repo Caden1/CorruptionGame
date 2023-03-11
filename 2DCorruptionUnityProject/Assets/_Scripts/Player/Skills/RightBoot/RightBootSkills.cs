@@ -13,6 +13,8 @@ public abstract class RightBootSkills : Skills
 	protected float archVelocityThreshold;
 	protected float archGravity;
 	protected float jumpVelocity;
+	protected float jumpEffectCloneSec;
+	protected Vector2 effectOrigin;
 
 	public abstract void SetWithNoModifiers();
 
@@ -28,9 +30,11 @@ public abstract class RightBootSkills : Skills
 
 	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask);
 
-	public abstract void PerformJump(Rigidbody2D playerRigidbody, GameObject effect);
+	public abstract GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect);
 
 	public abstract void SetupJumpCancel();
 
 	public abstract void PerformJumpCancel(Rigidbody2D playerRigidbody);
+
+	public abstract IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone);
 }

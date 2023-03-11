@@ -31,6 +31,8 @@ public class CorRightBootSkills : RightBootSkills
 		attackDistance = 2f;
 		attackVelocity = 5f;
 		damage = 2f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
@@ -50,6 +52,8 @@ public class CorRightBootSkills : RightBootSkills
 		attackDistance = 7f;
 		attackVelocity = 5f;
 		damage = 2f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
@@ -76,6 +80,7 @@ public class CorRightBootSkills : RightBootSkills
 	}
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -91,10 +96,11 @@ public class CorRightBootSkills : RightBootSkills
 		attackOriginLeft = boxCollider.bounds.min;
 	}
 
-	public override void PerformJump(Rigidbody2D playerRigidbody, GameObject effect) {
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
-		InstantiateProjectiles(effect);
+		InstantiateProjectiles(damagingEffect);
+		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
 	}
 
 	private void InstantiateProjectiles(GameObject effect) {
@@ -169,5 +175,10 @@ public class CorRightBootSkills : RightBootSkills
 	public override void PerformJumpCancel(Rigidbody2D playerRigidbody) {
 		playerRigidbody.velocity = Vector2.zero;
 		canJumpCancel = false;
+	}
+
+	public override IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone) {
+		yield return new WaitForSeconds(jumpEffectCloneSec);
+		Object.Destroy(jumpEffectClone);
 	}
 }

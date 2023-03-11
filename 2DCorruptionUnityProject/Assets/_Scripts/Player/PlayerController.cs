@@ -10,10 +10,14 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
 	// No Gem
-	[SerializeField] private GameObject noGemMeleeEffect;
+	[SerializeField] private Sprite[] noGemJumpEffectSprites;
+	[SerializeField] private GameObject noGemJumpEffect;
 	[SerializeField] private Sprite[] noGemMeleeEffectSprites;
-	[SerializeField] private GameObject noGemPullEffect;
+	[SerializeField] private GameObject noGemMeleeEffect;
 	[SerializeField] private Sprite[] noGemPullEffectSprites;
+	[SerializeField] private GameObject noGemPullEffect;
+	private GameObject noGemJumpEffectClone;
+	private CustomAnimation noGemJumpEffectAnim;
 	private GameObject noGemMeleeEffectClone;
 	private CustomAnimation noGemMeleeEffectAnim;
 	private GameObject noGemPullEffectClone;
@@ -138,6 +142,7 @@ public class PlayerController : MonoBehaviour
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
 
 		// No Gem
+		noGemJumpEffectAnim = new CustomAnimation(noGemJumpEffectSprites);
 		noGemMeleeEffectAnim = new CustomAnimation(noGemMeleeEffectSprites);
 		noGemPullEffectAnim = new CustomAnimation(noGemPullEffectSprites);
 		noGemsRightGloveSkills = new NoGemsRightGloveSkills();
@@ -294,6 +299,11 @@ public class PlayerController : MonoBehaviour
 	private void PlayAndDestroyActiveClones() {
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
+
+		if (noGemJumpEffectClone != null) {
+			noGemJumpEffectAnim.PlayCreatedAnimationOnce(noGemJumpEffectClone.GetComponent<SpriteRenderer>());
+			StartCoroutine(noGemsRightBootSkills.DestroyJumpEffectClone(noGemJumpEffectClone));
+		}
 
 		if (noGemMeleeEffectClone != null) {
 			noGemMeleeEffectAnim.PlayCreatedAnimationOnce(noGemMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -480,6 +490,7 @@ public class PlayerController : MonoBehaviour
 	private void SetupRightBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
+				noGemJumpEffectAnim.ResetIndexToZero();
 				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
 			case BootsGem.BootsGemState.Purity:
@@ -494,13 +505,13 @@ public class PlayerController : MonoBehaviour
 	private void PerformRightBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJump(playerRigidbody, new GameObject());
+			 	noGemJumpEffectClone = noGemsRightBootSkills.PerformJump(playerRigidbody, new GameObject(), noGemJumpEffect);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.PerformJump(playerRigidbody, pureEarthPlatform);
+				purityRightBootSkills.PerformJump(playerRigidbody, pureEarthPlatform, new GameObject());
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.PerformJump(playerRigidbody, corJumpEffect);
+				corRightBootSkills.PerformJump(playerRigidbody, corJumpEffect, new GameObject());
 				break;
 		}
 	}

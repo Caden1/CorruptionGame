@@ -890,16 +890,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51043e129809645a6b113eb4d9d7825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noGemMeleeEffect: {fileID: 3744940654136180262, guid: 39f234977e2a34850a93ba29141c3e7c, type: 3}
+  noGemJumpEffectSprites:
+  - {fileID: 1492344593, guid: aabe331aa3a0845248e92c1a90a8d2a9, type: 3}
+  - {fileID: -1935023395, guid: aabe331aa3a0845248e92c1a90a8d2a9, type: 3}
+  - {fileID: -1564078091, guid: aabe331aa3a0845248e92c1a90a8d2a9, type: 3}
+  noGemJumpEffect: {fileID: 5210816743057191795, guid: e184e0d23291e422fa6a00aa742a9271, type: 3}
   noGemMeleeEffectSprites:
   - {fileID: 1327885752, guid: 13fab76eac82347b9bd1cd6318a30792, type: 3}
   - {fileID: -1025372281, guid: 13fab76eac82347b9bd1cd6318a30792, type: 3}
   - {fileID: -696171447, guid: 13fab76eac82347b9bd1cd6318a30792, type: 3}
-  noGemPullEffect: {fileID: 5838679629690344553, guid: 11f46cec240d04600bfa01bbb1f18355, type: 3}
+  noGemMeleeEffect: {fileID: 3744940654136180262, guid: 39f234977e2a34850a93ba29141c3e7c, type: 3}
   noGemPullEffectSprites:
   - {fileID: 1819779483, guid: d295edda8c33449e789ab2864ca1cfaf, type: 3}
   - {fileID: -959853268, guid: d295edda8c33449e789ab2864ca1cfaf, type: 3}
   - {fileID: -55165719, guid: d295edda8c33449e789ab2864ca1cfaf, type: 3}
+  noGemPullEffect: {fileID: 5838679629690344553, guid: 11f46cec240d04600bfa01bbb1f18355, type: 3}
   pureMeleeEffect: {fileID: 1550512535146750824, guid: 9f1b803476b694cf5ab81351b8691abb, type: 3}
   pureMeleeEffectSprites:
   - {fileID: 1620989434, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
