@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5ea96c9ac3f9b404e9694208a8c06e37
+guid: 566d9475d671f4dbd8b0ec5359e4c180
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NoGemNoDamageDashEffect-Sheet_0
+      name: PurityNoDamDashEffect-Sheet_0
       rect:
         serializedVersion: 2
         x: 1
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e677aa516f13f40f2ad7612e6f41a6f8
-      internalID: -974191700
+      spriteID: b33c9e036d91442eea90907f16b49ca5
+      internalID: 1299224222
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemNoDamageDashEffect-Sheet_1
+      name: PurityNoDamDashEffect-Sheet_1
       rect:
         serializedVersion: 2
         x: 43
@@ -152,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7663a7034e844297a43a098bc1d81b2
-      internalID: -2060640480
+      spriteID: 7dd8aeb315c784478a3538b0b4e06d0b
+      internalID: 1851194841
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemNoDamageDashEffect-Sheet_2
+      name: PurityNoDamDashEffect-Sheet_2
       rect:
         serializedVersion: 2
         x: 85
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3a3b658dbcd34662bd68186c1870131
-      internalID: 586665300
+      spriteID: a873e60bf33234a4e91c34d88e4ce0a7
+      internalID: 1584474931
       vertices: []
       indices: 
       edges: []
@@ -190,9 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemNoDamageDashEffect-Sheet_1: -2060640480
-      NoGemNoDamageDashEffect-Sheet_0: -974191700
-      NoGemNoDamageDashEffect-Sheet_2: 586665300
+      PurityNoDamDashEffect-Sheet_2: 1584474931
+      PurityNoDamDashEffect-Sheet_1: 1851194841
+      PurityNoDamDashEffect-Sheet_0: 1299224222
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

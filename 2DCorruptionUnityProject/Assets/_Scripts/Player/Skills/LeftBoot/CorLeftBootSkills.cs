@@ -7,7 +7,7 @@ public class CorLeftBootSkills : LeftBootSkills
 {
 	private GameObject dashEffect;
 	public bool isCorDashing { get; private set; }
-	private Vector2 behindPlayerPosition;
+	private Vector2 spikesBehindPlayerPosition;
 	private float damagingDashEffectCloneSec;
 	private float downwardLaunchVelocity;
 
@@ -20,12 +20,13 @@ public class CorLeftBootSkills : LeftBootSkills
 		dashVelocity = 7f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
+		dashEffectCloneSec = 0.3f;
 		dashDirection = new Vector2();
-		isCorDashing = false;
 		behindPlayerPosition = new Vector2();
+		isCorDashing = false;
+		spikesBehindPlayerPosition = new Vector2();
 		damagingDashEffectCloneSec = 2f;
 		downwardLaunchVelocity = 4f;
-		dashEffectCloneSec = 0.3f;
 	}
 
 	public override void SetAirModifiers() {
@@ -33,12 +34,13 @@ public class CorLeftBootSkills : LeftBootSkills
 		dashVelocity = 12f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
+		dashEffectCloneSec = 0.3f;
 		dashDirection = new Vector2();
-		isCorDashing = false;
 		behindPlayerPosition = new Vector2();
+		isCorDashing = false;
+		spikesBehindPlayerPosition = new Vector2();
 		damagingDashEffectCloneSec = 2f;
 		downwardLaunchVelocity = 4f;
-		dashEffectCloneSec = 0.3f;
 	}
 
 	public override void SetFireModifiers() {
@@ -56,11 +58,16 @@ public class CorLeftBootSkills : LeftBootSkills
 	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect) {
 		isInvulnerable = true;
 		isCorDashing = true;
-		if (isFacingRight)
+		if (isFacingRight) {
 			dashDirection = Vector2.right;
-		else
+			behindPlayerPosition = playerBoxCollider.bounds.min;
+			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = false;
+		} else {
 			dashDirection = Vector2.left;
-		return null;
+			behindPlayerPosition = new Vector2(playerBoxCollider.bounds.max.x, playerBoxCollider.bounds.min.y);
+			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = true;
+		}
+		return Object.Instantiate(noDamageDashEffect, behindPlayerPosition, noDamageDashEffect.transform.rotation);
 	}
 
 	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
@@ -77,10 +84,10 @@ public class CorLeftBootSkills : LeftBootSkills
 	// TODO: This produces about 170 spikes, and that number is inconsistent. Figure out a way to reduce that number drastically and make them consistent
 	public GameObject InstantiateEffect(BoxCollider2D playerBoxCollider, Quaternion rotation, bool isFacingRight) {
 		if (isFacingRight)
-			behindPlayerPosition = playerBoxCollider.bounds.min;
+			spikesBehindPlayerPosition = playerBoxCollider.bounds.min;
 		else
-			behindPlayerPosition = new Vector2(playerBoxCollider.bounds.max.x, playerBoxCollider.bounds.min.y);
-		return Object.Instantiate(dashEffect, behindPlayerPosition, rotation);
+			spikesBehindPlayerPosition = new Vector2(playerBoxCollider.bounds.max.x, playerBoxCollider.bounds.min.y);
+		return Object.Instantiate(dashEffect, spikesBehindPlayerPosition, rotation);
 	}
 
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {
