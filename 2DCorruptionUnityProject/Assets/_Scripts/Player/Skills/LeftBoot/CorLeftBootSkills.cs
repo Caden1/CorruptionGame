@@ -8,7 +8,7 @@ public class CorLeftBootSkills : LeftBootSkills
 	private GameObject dashEffect;
 	public bool isCorDashing { get; private set; }
 	private Vector2 behindPlayerPosition;
-	private float dashEffectCloneSec;
+	private float damagingDashEffectCloneSec;
 	private float downwardLaunchVelocity;
 
 	public CorLeftBootSkills(GameObject effect) {
@@ -23,8 +23,9 @@ public class CorLeftBootSkills : LeftBootSkills
 		dashDirection = new Vector2();
 		isCorDashing = false;
 		behindPlayerPosition = new Vector2();
-		dashEffectCloneSec = 2f;
+		damagingDashEffectCloneSec = 2f;
 		downwardLaunchVelocity = 4f;
+		dashEffectCloneSec = 0.3f;
 	}
 
 	public override void SetAirModifiers() {
@@ -35,8 +36,9 @@ public class CorLeftBootSkills : LeftBootSkills
 		dashDirection = new Vector2();
 		isCorDashing = false;
 		behindPlayerPosition = new Vector2();
-		dashEffectCloneSec = 2f;
+		damagingDashEffectCloneSec = 2f;
 		downwardLaunchVelocity = 4f;
+		dashEffectCloneSec = 0.3f;
 	}
 
 	public override void SetFireModifiers() {
@@ -51,13 +53,14 @@ public class CorLeftBootSkills : LeftBootSkills
 		
 	}
 
-	public override void SetupDash(bool isFacingRight) {
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect) {
 		isInvulnerable = true;
 		isCorDashing = true;
 		if (isFacingRight)
 			dashDirection = Vector2.right;
 		else
 			dashDirection = Vector2.left;
+		return null;
 	}
 
 	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
@@ -86,9 +89,9 @@ public class CorLeftBootSkills : LeftBootSkills
 		playerInputActions.Player.Dash.Enable();
 	}
 
-	public IEnumerator DestroyEffectClone(GameObject dashEffectClone) {
-		yield return new WaitForSeconds(dashEffectCloneSec);
-		Object.Destroy(dashEffectClone);
+	public IEnumerator DestroyDamagingDashEffectClone(GameObject damagingDashEffectClone) {
+		yield return new WaitForSeconds(damagingDashEffectCloneSec);
+		Object.Destroy(damagingDashEffectClone);
 	}
 
 	public void LaunchSpikesDownward(List<GameObject> corDashEffectCloneList, LayerMask platformLayerMask) {
@@ -101,5 +104,10 @@ public class CorLeftBootSkills : LeftBootSkills
 				}
 			}
 		}
+	}
+
+	public override IEnumerator DestroyDashEffectClone(GameObject dashEffectClone) {
+		yield return new WaitForSeconds(dashEffectCloneSec);
+		Object.Destroy(dashEffectClone);
 	}
 }

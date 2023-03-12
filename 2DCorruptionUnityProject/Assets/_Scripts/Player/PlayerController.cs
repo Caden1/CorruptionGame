@@ -12,14 +12,18 @@ public class PlayerController : MonoBehaviour
 	// No Gem
 	[SerializeField] private Sprite[] noGemJumpEffectSprites;
 	[SerializeField] private GameObject noGemJumpEffect;
+	[SerializeField] private Sprite[] noGemNoDamageDashEffectSprites;
+	[SerializeField] private GameObject noGemNoDamageDashEffect;
 	[SerializeField] private Sprite[] noGemMeleeEffectSprites;
 	[SerializeField] private GameObject noGemMeleeEffect;
 	[SerializeField] private Sprite[] noGemPullEffectSprites;
 	[SerializeField] private GameObject noGemPullEffect;
 	private GameObject noGemJumpEffectClone;
+	private GameObject noGemNoDamageDashEffectClone;
 	private GameObject noGemMeleeEffectClone;
 	private GameObject noGemPullEffectClone;
 	private CustomAnimation noGemJumpEffectAnim;
+	private CustomAnimation noGemNoDamageDashEffectAnim;
 	private CustomAnimation noGemMeleeEffectAnim;
 	private CustomAnimation noGemPullEffectAnim;
 	private NoGemsRightGloveSkills noGemsRightGloveSkills;
@@ -158,6 +162,7 @@ public class PlayerController : MonoBehaviour
 
 		// No Gem
 		noGemJumpEffectAnim = new CustomAnimation(noGemJumpEffectSprites);
+		noGemNoDamageDashEffectAnim = new CustomAnimation(noGemNoDamageDashEffectSprites);
 		noGemMeleeEffectAnim = new CustomAnimation(noGemMeleeEffectSprites);
 		noGemPullEffectAnim = new CustomAnimation(noGemPullEffectSprites);
 		noGemsRightGloveSkills = new NoGemsRightGloveSkills();
@@ -230,8 +235,10 @@ public class PlayerController : MonoBehaviour
 					SetupRightBootSkill();
 				if (playerInputActions.Player.Jump.WasReleasedThisFrame())
 					SetupJumpCancel();
-				if (playerInputActions.Player.Dash.WasPressedThisFrame())
+				if (playerInputActions.Player.Dash.WasPressedThisFrame()) {
+					SetupLeftBootSkill();
 					Player.playerState = Player.PlayerState.Dash;
+				}
 				if (playerInputActions.Player.Melee.WasPressedThisFrame())
 					SetupRightGloveSkill();
 				if (playerInputActions.Player.Ranged.WasPressedThisFrame())
@@ -244,7 +251,7 @@ public class PlayerController : MonoBehaviour
 					swap.RotateModGemsClockwise();
 				break;
 			case Player.PlayerState.Dash:
-				SetupLeftBootSkill();
+				//SetupLeftBootSkill();
 				break;
 		}
 
@@ -324,6 +331,10 @@ public class PlayerController : MonoBehaviour
 			noGemJumpEffectAnim.PlayCreatedAnimationOnce(noGemJumpEffectClone.GetComponent<SpriteRenderer>());
 			StartCoroutine(noGemsRightBootSkills.DestroyJumpEffectClone(noGemJumpEffectClone));
 		}
+		if (noGemNoDamageDashEffectClone != null) {
+			noGemNoDamageDashEffectAnim.PlayCreatedAnimationOnce(noGemNoDamageDashEffectClone.GetComponent<SpriteRenderer>());
+			StartCoroutine(noGemsLeftBootSkills.DestroyDashEffectClone(noGemNoDamageDashEffectClone));
+		}
 		if (noGemMeleeEffectClone != null) {
 			noGemMeleeEffectAnim.PlayCreatedAnimationOnce(noGemMeleeEffectClone.GetComponent<SpriteRenderer>());
 			if (isFacingRight)
@@ -386,7 +397,7 @@ public class PlayerController : MonoBehaviour
 			if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
 				corDashEffectClone = corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, DEGREE_0_ANGLE), isFacingRight);
 				if (corDashEffectClone != null) {
-					StartCoroutine(corLeftBootSkills.DestroyEffectClone(corDashEffectClone));
+					StartCoroutine(corLeftBootSkills.DestroyDamagingDashEffectClone(corDashEffectClone));
 				}
 			} else {
 				corDashEffectCloneList.Add(corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, DEGREE_180_ANGLE), isFacingRight));
@@ -543,20 +554,20 @@ public class PlayerController : MonoBehaviour
 	private void PerformRightBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-			 	noGemJumpEffectClone = noGemsRightBootSkills.PerformJump(playerRigidbody, new GameObject(), noGemJumpEffect);
+			 	noGemJumpEffectClone = noGemsRightBootSkills.PerformJump(playerRigidbody, noGemJumpEffect);
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
-					pureJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, new GameObject(), pureJumpEffect);
+					pureJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, pureJumpEffect);
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
-					pureAirJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, new GameObject(), pureAirJumpEffect);
+					pureAirJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, pureAirJumpEffect);
 				}
 				break;
 			case BootsGem.BootsGemState.Corruption:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
-					corNoDamageJumpEffectClone = corRightBootSkills.PerformJump(playerRigidbody, corDamagingJumpEffect, corNoDamageJumpEffect);
+					corNoDamageJumpEffectClone = corRightBootSkills.PerformCorruptionJump(playerRigidbody, corDamagingJumpEffect, corNoDamageJumpEffect);
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
-					corAirNoDamageJumpEffectClone = corRightBootSkills.PerformJump(playerRigidbody, corDamagingJumpEffect, corAirNoDamageJumpEffect);
+					corAirNoDamageJumpEffectClone = corRightBootSkills.PerformCorruptionJump(playerRigidbody, corDamagingJumpEffect, corAirNoDamageJumpEffect);
 				}
 				break;
 		}
@@ -619,15 +630,16 @@ public class PlayerController : MonoBehaviour
 	private void SetupLeftBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsLeftBootSkills.SetupDash(isFacingRight);
+				noGemNoDamageDashEffectAnim.ResetIndexToZero();
+				noGemNoDamageDashEffectClone = noGemsLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, noGemNoDamageDashEffect);
 				StartCoroutine(noGemsLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityLeftBootSkills.SetupDash(isFacingRight);
+				purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, noGemNoDamageDashEffect);
 				StartCoroutine(purityLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corLeftBootSkills.SetupDash(isFacingRight);
+				corLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, noGemNoDamageDashEffect);
 				StartCoroutine(corLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 		}

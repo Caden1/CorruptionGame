@@ -6,9 +6,11 @@ using UnityEngine;
 public abstract class LeftBootSkills : Skills
 {
 	protected Vector2 dashDirection;
+	protected Vector2 behindPlayerPosition;
 	protected float dashVelocity;
 	protected float secondsToDash;
 	protected float cooldown;
+	protected float dashEffectCloneSec;
 
 	public abstract void SetWithNoModifiers();
 
@@ -20,9 +22,11 @@ public abstract class LeftBootSkills : Skills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupDash(bool isFacingRight);
+	public abstract GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect);
 
 	public abstract IEnumerator PerformDash(Rigidbody2D playerRigidbody);
 
 	public abstract IEnumerator StartDashCooldown(PlayerInputActions playerInputActions);
+
+	public abstract IEnumerator DestroyDashEffectClone(GameObject dashEffectClone);
 }

@@ -895,6 +895,11 @@ MonoBehaviour:
   - {fileID: -1935023395, guid: aabe331aa3a0845248e92c1a90a8d2a9, type: 3}
   - {fileID: -1564078091, guid: aabe331aa3a0845248e92c1a90a8d2a9, type: 3}
   noGemJumpEffect: {fileID: 5210816743057191795, guid: e184e0d23291e422fa6a00aa742a9271, type: 3}
+  noGemNoDamageDashEffectSprites:
+  - {fileID: -1012124097, guid: 5ea96c9ac3f9b404e9694208a8c06e37, type: 3}
+  - {fileID: -578298654, guid: 5ea96c9ac3f9b404e9694208a8c06e37, type: 3}
+  - {fileID: 358008859, guid: 5ea96c9ac3f9b404e9694208a8c06e37, type: 3}
+  noGemNoDamageDashEffect: {fileID: 6484798581725854695, guid: 6ca5d623d249a4818b5503cd98389b17, type: 3}
   noGemMeleeEffectSprites:
   - {fileID: 1327885752, guid: 13fab76eac82347b9bd1cd6318a30792, type: 3}
   - {fileID: -1025372281, guid: 13fab76eac82347b9bd1cd6318a30792, type: 3}

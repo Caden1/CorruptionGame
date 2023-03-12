@@ -9,6 +9,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 		dashVelocity = 7f;
 		secondsToDash = 0.5f;
 		cooldown = 2f;
+		dashEffectCloneSec = 0.3f;
 		dashDirection = new Vector2();
 	}
 
@@ -17,6 +18,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 		dashVelocity = 12f;
 		secondsToDash = 0.5f;
 		cooldown = 2f;
+		dashEffectCloneSec = 0.3f;
 		dashDirection = new Vector2();
 	}
 
@@ -32,12 +34,13 @@ public class PurityLeftBootSkills : LeftBootSkills
 		
 	}
 
-	public override void SetupDash(bool isFacingRight) {
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect) {
 		isInvulnerable = true;
 		if (isFacingRight)
 			dashDirection = Vector2.right;
 		else
 			dashDirection = Vector2.left;
+		return null;
 	}
 
 	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
@@ -54,5 +57,10 @@ public class PurityLeftBootSkills : LeftBootSkills
 		playerInputActions.Player.Dash.Disable();
 		yield return new WaitForSeconds(cooldown);
 		playerInputActions.Player.Dash.Enable();
+	}
+
+	public override IEnumerator DestroyDashEffectClone(GameObject dashEffectClone) {
+		yield return new WaitForSeconds(dashEffectCloneSec);
+		Object.Destroy(dashEffectClone);
 	}
 }

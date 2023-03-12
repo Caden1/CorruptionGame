@@ -30,7 +30,7 @@ public abstract class RightBootSkills : Skills
 
 	public abstract void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask);
 
-	public abstract GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect);
+	public abstract GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect);
 
 	public abstract void SetupJumpCancel();
 

@@ -96,7 +96,11 @@ public class CorRightBootSkills : RightBootSkills
 		attackOriginLeft = boxCollider.bounds.min;
 	}
 
-	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect) {
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
+		throw new System.NotImplementedException();
+	}
+
+	public GameObject PerformCorruptionJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
 		InstantiateProjectiles(damagingEffect);

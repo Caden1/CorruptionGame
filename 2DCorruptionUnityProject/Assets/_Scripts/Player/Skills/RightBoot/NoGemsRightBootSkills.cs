@@ -63,7 +63,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 		}
 	}
 
-	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect) {
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
 		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);

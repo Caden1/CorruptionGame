@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class NoGemsLeftBootSkills : LeftBootSkills
 {
@@ -9,15 +10,23 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		dashVelocity = 7f;
 		secondsToDash = 0.25f;
 		cooldown = 2f;
+		dashEffectCloneSec = 0.3f;
 		dashDirection = new Vector2();
+		behindPlayerPosition = new Vector2();
 	}
 
-	public override void SetupDash(bool isFacingRight) {
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect) {
 		isInvulnerable = true;
-		if (isFacingRight)
+		if (isFacingRight) {
 			dashDirection = Vector2.right;
-		else
+			behindPlayerPosition = playerBoxCollider.bounds.min;
+			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = false;
+		} else {
 			dashDirection = Vector2.left;
+			behindPlayerPosition = new Vector2(playerBoxCollider.bounds.max.x, playerBoxCollider.bounds.min.y);
+			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = true;
+		}
+		return Object.Instantiate(noDamageDashEffect, behindPlayerPosition, noDamageDashEffect.transform.rotation);
 	}
 
 	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
@@ -34,6 +43,11 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		playerInputActions.Player.Dash.Disable();
 		yield return new WaitForSeconds(cooldown);
 		playerInputActions.Player.Dash.Enable();
+	}
+
+	public override IEnumerator DestroyDashEffectClone(GameObject dashEffectClone) {
+		yield return new WaitForSeconds(dashEffectCloneSec);
+		Object.Destroy(dashEffectClone);
 	}
 
 	public override void SetWithNoModifiers() {
