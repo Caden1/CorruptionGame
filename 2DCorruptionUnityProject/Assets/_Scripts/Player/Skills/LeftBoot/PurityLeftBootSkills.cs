@@ -9,9 +9,9 @@ public class PurityLeftBootSkills : LeftBootSkills
 		dashVelocity = 7f;
 		secondsToDash = 0.5f;
 		cooldown = 2f;
-		dashEffectCloneSec = 0.3f;
+		dashEffectCloneSec = 0.4f;
 		dashDirection = new Vector2();
-		behindPlayerPosition = new Vector2();
+		noDamageDashEffectPosition = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
@@ -21,7 +21,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 		cooldown = 2f;
 		dashEffectCloneSec = 0.3f;
 		dashDirection = new Vector2();
-		behindPlayerPosition = new Vector2();
+		noDamageDashEffectPosition = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
@@ -38,16 +38,17 @@ public class PurityLeftBootSkills : LeftBootSkills
 
 	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect) {
 		isInvulnerable = true;
+		float xDashEffectOffset = 0.2f;
 		if (isFacingRight) {
 			dashDirection = Vector2.right;
-			behindPlayerPosition = playerBoxCollider.bounds.min;
+			noDamageDashEffectPosition = new Vector2(playerBoxCollider.bounds.min.x - xDashEffectOffset, playerBoxCollider.bounds.min.y);
 			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = false;
 		} else {
 			dashDirection = Vector2.left;
-			behindPlayerPosition = new Vector2(playerBoxCollider.bounds.max.x, playerBoxCollider.bounds.min.y);
+			noDamageDashEffectPosition = new Vector2(playerBoxCollider.bounds.max.x + xDashEffectOffset, playerBoxCollider.bounds.min.y);
 			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = true;
 		}
-		return Object.Instantiate(noDamageDashEffect, behindPlayerPosition, noDamageDashEffect.transform.rotation);
+		return Object.Instantiate(noDamageDashEffect, noDamageDashEffectPosition, noDamageDashEffect.transform.rotation);
 	}
 
 	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {

@@ -83,6 +83,19 @@ public class CustomAnimation
 		}
 	}
 
+	public void PlayCreatedAnimationOnceWithModifiedSpeed(SpriteRenderer localSpriteRenderer, float animSpeed) {
+		if (spriteIndex < spritesToAnimate.Length) {
+			timerForCreatedAnimation += Time.deltaTime;
+			if (animationCreated) {
+				if (timerForCreatedAnimation >= (animSpeed + Time.deltaTime)) {
+					timerForCreatedAnimation -= (animSpeed + Time.deltaTime);
+					localSpriteRenderer.sprite = spritesToAnimate[spriteIndex];
+					spriteIndex++;
+				}
+			}
+		}
+	}
+
 	public void ResetIndexToZero() {
 		spriteIndex = 0;
 	}

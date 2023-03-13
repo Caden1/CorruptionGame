@@ -122,8 +122,8 @@ TextureImporter:
         serializedVersion: 2
         x: 1
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e677aa516f13f40f2ad7612e6f41a6f8
-      internalID: -974191700
+      spriteID: fd534882a544f4c5c8dda04efed84020
+      internalID: -295624502
       vertices: []
       indices: 
       edges: []
@@ -141,10 +141,10 @@ TextureImporter:
       name: NoGemNoDamageDashEffect-Sheet_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 85
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7663a7034e844297a43a098bc1d81b2
-      internalID: -2060640480
+      spriteID: d8a845a98fe2546be9f951b5ffb5bd94
+      internalID: 1400907608
       vertices: []
       indices: 
       edges: []
@@ -162,10 +162,10 @@ TextureImporter:
       name: NoGemNoDamageDashEffect-Sheet_2
       rect:
         serializedVersion: 2
-        x: 85
+        x: 169
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +173,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3a3b658dbcd34662bd68186c1870131
-      internalID: 586665300
+      spriteID: abd26c74b77154f358b119f010ce1aac
+      internalID: 1850907057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NoGemNoDamageDashEffect-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 0
+        width: 82
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7013fe38b772c4db892a8b1c01bf53e5
+      internalID: -1675758520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NoGemNoDamageDashEffect-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 0
+        width: 82
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e5725e020a374d539fe6a03d59adf0e
+      internalID: -1731760777
       vertices: []
       indices: 
       edges: []
@@ -190,9 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemNoDamageDashEffect-Sheet_1: -2060640480
-      NoGemNoDamageDashEffect-Sheet_0: -974191700
-      NoGemNoDamageDashEffect-Sheet_2: 586665300
+      NoGemNoDamageDashEffect-Sheet_1: 1400907608
+      NoGemNoDamageDashEffect-Sheet_0: -295624502
+      NoGemNoDamageDashEffect-Sheet_4: -1731760777
+      NoGemNoDamageDashEffect-Sheet_3: -1675758520
+      NoGemNoDamageDashEffect-Sheet_2: 1850907057
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

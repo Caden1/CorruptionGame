@@ -122,8 +122,8 @@ TextureImporter:
         serializedVersion: 2
         x: 1
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00c47514be19b4ca285729c182cf237b
-      internalID: 60322721
+      spriteID: a1f49f61537664900b5d00a43c105508
+      internalID: -406755636
       vertices: []
       indices: 
       edges: []
@@ -141,10 +141,10 @@ TextureImporter:
       name: CorNoDamageDashEffect-Sheet_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 85
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e7741d09fd414fb194d2cf9c96b7bd4
-      internalID: 981878483
+      spriteID: 589280025c4b14969b124419d166b3e2
+      internalID: -1234807756
       vertices: []
       indices: 
       edges: []
@@ -162,10 +162,10 @@ TextureImporter:
       name: CorNoDamageDashEffect-Sheet_2
       rect:
         serializedVersion: 2
-        x: 85
+        x: 169
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +173,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 45fb23d701cd84baf850054bb88354e4
-      internalID: 1107582020
+      spriteID: 45466b5cfece847bb9d05a2b3c57c28f
+      internalID: 995533031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CorNoDamageDashEffect-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 0
+        width: 82
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da2f29df362ab43ed8fb070d55d64782
+      internalID: 635964470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CorNoDamageDashEffect-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 0
+        width: 82
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b1c1cadfc56f4102a53d7b3078b425b
+      internalID: 2109805956
       vertices: []
       indices: 
       edges: []
@@ -190,9 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      CorNoDamageDashEffect-Sheet_0: 60322721
-      CorNoDamageDashEffect-Sheet_2: 1107582020
-      CorNoDamageDashEffect-Sheet_1: 981878483
+      CorNoDamageDashEffect-Sheet_4: 2109805956
+      CorNoDamageDashEffect-Sheet_0: -406755636
+      CorNoDamageDashEffect-Sheet_3: 635964470
+      CorNoDamageDashEffect-Sheet_2: 995533031
+      CorNoDamageDashEffect-Sheet_1: -1234807756
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

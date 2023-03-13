@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class LeftBootSkills : Skills
 {
 	protected Vector2 dashDirection;
-	protected Vector2 behindPlayerPosition;
+	protected Vector2 noDamageDashEffectPosition;
 	protected float dashVelocity;
 	protected float secondsToDash;
 	protected float cooldown;

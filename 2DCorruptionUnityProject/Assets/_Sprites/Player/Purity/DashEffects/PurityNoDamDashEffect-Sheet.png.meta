@@ -122,8 +122,8 @@ TextureImporter:
         serializedVersion: 2
         x: 1
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b33c9e036d91442eea90907f16b49ca5
-      internalID: 1299224222
+      spriteID: 75cbeee607c7d4eef856871f11f636f7
+      internalID: 1731470977
       vertices: []
       indices: 
       edges: []
@@ -141,10 +141,10 @@ TextureImporter:
       name: PurityNoDamDashEffect-Sheet_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 85
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dd8aeb315c784478a3538b0b4e06d0b
-      internalID: 1851194841
+      spriteID: a38e7df4d93f64c7c8183007079c710f
+      internalID: -1601850605
       vertices: []
       indices: 
       edges: []
@@ -162,10 +162,10 @@ TextureImporter:
       name: PurityNoDamDashEffect-Sheet_2
       rect:
         serializedVersion: 2
-        x: 85
+        x: 169
         y: 0
-        width: 40
-        height: 16
+        width: 82
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +173,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a873e60bf33234a4e91c34d88e4ce0a7
-      internalID: 1584474931
+      spriteID: 128786a22fccc480a9e10731b9c44b0a
+      internalID: -1932238930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurityNoDamDashEffect-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 0
+        width: 82
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db4bd190738c94ef59163407605d800f
+      internalID: 2129824353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurityNoDamDashEffect-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 0
+        width: 82
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2601b8f96057498eafb423fe204daeb
+      internalID: -1068537454
       vertices: []
       indices: 
       edges: []
@@ -190,9 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PurityNoDamDashEffect-Sheet_2: 1584474931
-      PurityNoDamDashEffect-Sheet_1: 1851194841
-      PurityNoDamDashEffect-Sheet_0: 1299224222
+      PurityNoDamDashEffect-Sheet_3: 2129824353
+      PurityNoDamDashEffect-Sheet_2: -1932238930
+      PurityNoDamDashEffect-Sheet_4: -1068537454
+      PurityNoDamDashEffect-Sheet_1: -1601850605
+      PurityNoDamDashEffect-Sheet_0: 1731470977
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

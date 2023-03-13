@@ -342,7 +342,7 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(noGemsRightBootSkills.DestroyJumpEffectClone(noGemJumpEffectClone));
 		}
 		if (noGemNoDamageDashEffectClone != null) {
-			noGemNoDamageDashEffectAnim.PlayCreatedAnimationOnce(noGemNoDamageDashEffectClone.GetComponent<SpriteRenderer>());
+			noGemNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(noGemNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
 			StartCoroutine(noGemsLeftBootSkills.DestroyDashEffectClone(noGemNoDamageDashEffectClone));
 		}
 		if (noGemMeleeEffectClone != null) {
@@ -368,7 +368,7 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(purityRightBootSkills.DestroyJumpEffectClone(pureAirJumpEffectClone));
 		}
 		if (pureNoDamageDashEffectClone != null) {
-			pureNoDamageDashEffectAnim.PlayCreatedAnimationOnce(pureNoDamageDashEffectClone.GetComponent<SpriteRenderer>());
+			pureNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
 			StartCoroutine(purityLeftBootSkills.DestroyDashEffectClone(pureNoDamageDashEffectClone));
 		}
 		if (pureMeleeEffectClone != null) {
