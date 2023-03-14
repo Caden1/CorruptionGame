@@ -12,6 +12,8 @@ public abstract class LeftBootSkills : Skills
 	protected float cooldown;
 	protected float dashEffectCloneSec;
 
+	public abstract void SetWithNoGems();
+
 	public abstract void SetWithNoModifiers();
 
 	public abstract void SetAirModifiers();
@@ -25,6 +27,8 @@ public abstract class LeftBootSkills : Skills
 	public abstract GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect);
 
 	public abstract IEnumerator PerformDash(Rigidbody2D playerRigidbody);
+
+	public abstract IEnumerator PerformDash(Rigidbody2D playerRigidbody, bool isFacingRight, BoxCollider2D playerBoxCollider, LayerMask platformLayerMask);
 
 	public abstract IEnumerator StartDashCooldown(PlayerInputActions playerInputActions);
 

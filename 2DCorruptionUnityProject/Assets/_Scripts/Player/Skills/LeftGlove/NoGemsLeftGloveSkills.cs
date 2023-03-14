@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NoGemsLeftGloveSkills : LeftGloveSkills
 {
-	public void SetWithNoGems() {
+	public override void SetWithNoGems() {
 		canAttack = false;
 		isAttacking = false;
 		lockMovement = false;
@@ -13,6 +13,26 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		pullEffectCloneSec = 0.2f;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
+	}
+
+	public override void SetWithNoModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetAirModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetFireModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetWaterModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetEarthModifiers() {
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetupLeftGloveSkill(Vector2 directionPointing) {
@@ -43,25 +63,5 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
 		yield return new WaitForSeconds(pullEffectCloneSec);
 		Object.Destroy(pullEffectClone);
-	}
-
-	public override void SetWithNoModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
 	}
 }

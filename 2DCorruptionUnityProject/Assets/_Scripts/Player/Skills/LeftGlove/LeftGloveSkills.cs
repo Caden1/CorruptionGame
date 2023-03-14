@@ -12,6 +12,8 @@ public abstract class LeftGloveSkills : Skills
 	protected float pullEffectZRotation;
 	protected Vector2 attackOrigin;
 
+	public abstract void SetWithNoGems();
+
 	public abstract void SetWithNoModifiers();
 
 	public abstract void SetAirModifiers();

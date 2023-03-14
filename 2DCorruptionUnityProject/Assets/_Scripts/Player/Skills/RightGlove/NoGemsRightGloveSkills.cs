@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NoGemsRightGloveSkills : RightGloveSkills
 {
-	public void SetWithNoGems() {
+	public override void SetWithNoGems() {
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;

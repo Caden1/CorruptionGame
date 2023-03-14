@@ -15,6 +15,10 @@ public class PurityRightBootSkills : RightBootSkills
 	//private float earthBoostVerticalMultiplier;
 	//private float earthBoostHorizontalMultiplier;
 
+	public override void SetWithNoGems() {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetWithNoModifiers() {
 		canJump = false;
 		canJumpCancel = false;

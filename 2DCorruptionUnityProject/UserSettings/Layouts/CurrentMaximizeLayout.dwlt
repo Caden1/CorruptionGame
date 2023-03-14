@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 10216
+  controlID: 41
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 10217
+  controlID: 42
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 10218
+  controlID: 87
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -767,8 +767,8 @@ MonoBehaviour:
     y: 741
     width: 1553
     height: 236
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
@@ -816,22 +816,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/_Scripts/Player
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/_Scripts/Player
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/cadenbarton/Desktop/Corruption/Repo/CorruptionGame/2DCorruptionUnityProject
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 00680000
-    m_LastClickedID: 26624
-    m_ExpandedIDs: 00000000d0670000d2670000d4670000d6670000d8670000da670000dc670000de670000e067000000ca9a3b
+    scrollPos: {x: 0, y: 221}
+    m_SelectedIDs: 3a680000
+    m_LastClickedID: 26682
+    m_ExpandedIDs: 00000000dc670000de670000e0670000e2670000e4670000e6670000e8670000ea670000ec670000f267000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -859,7 +859,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d0670000d2670000d4670000d6670000d8670000da670000dc670000de670000e067000000ca9a3b
+    m_ExpandedIDs: 00000000dc670000de670000e0670000e2670000e4670000e6670000e8670000ea670000ec670000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -884,9 +884,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 12170000
+    m_LastClickedInstanceID: 5906
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300005e6400008a700000646400007464000020650000368000008e64000000000000647e000068640000ce6400009a8800001667000028650000a68000009c670000f0670000fc830000a6650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1003,7 +1003,7 @@ MonoBehaviour:
     m_CachedPref: 151
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 5906
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

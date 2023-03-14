@@ -7,7 +7,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 {
 	private int jumpCount = 0;
 
-	public void SetWithNoGems() {
+	public override void SetWithNoGems() {
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;

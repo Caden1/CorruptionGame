@@ -9,6 +9,10 @@ public class PurityRightGloveSkills : RightGloveSkills
 	private float airDistance;
 	private Vector2 airDirection;
 
+	public override void SetWithNoGems() {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetWithNoModifiers() {
 		canMelee = false;
 		isAnimating = false;

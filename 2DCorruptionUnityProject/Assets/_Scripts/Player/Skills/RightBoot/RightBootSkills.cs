@@ -16,6 +16,8 @@ public abstract class RightBootSkills : Skills
 	protected float jumpEffectCloneSec;
 	protected Vector2 effectOrigin;
 
+	public abstract void SetWithNoGems();
+
 	public abstract void SetWithNoModifiers();
 
 	public abstract void SetAirModifiers();

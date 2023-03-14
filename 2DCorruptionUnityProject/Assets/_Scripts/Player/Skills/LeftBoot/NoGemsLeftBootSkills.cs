@@ -5,7 +5,7 @@ using static UnityEditor.FilePathAttribute;
 
 public class NoGemsLeftBootSkills : LeftBootSkills
 {
-	public void SetWithNoGems() {
+	public override void SetWithNoGems() {
 		isInvulnerable = false;
 		dashVelocity = 7f;
 		secondsToDash = 0.25f;
@@ -13,6 +13,26 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		dashEffectCloneSec = 0.4f;
 		dashDirection = new Vector2();
 		noDamageDashEffectPosition = new Vector2();
+	}
+
+	public override void SetWithNoModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetAirModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetFireModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetWaterModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetEarthModifiers() {
+		throw new System.NotImplementedException();
 	}
 
 	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect) {
@@ -40,6 +60,10 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		Player.playerState = Player.PlayerState.Normal;
 	}
 
+	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody, bool isFacingRight, BoxCollider2D playerBoxCollider, LayerMask platformLayerMask) {
+		throw new System.NotImplementedException();
+	}
+
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {
 		playerInputActions.Player.Dash.Disable();
 		yield return new WaitForSeconds(cooldown);
@@ -49,25 +73,5 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 	public override IEnumerator DestroyDashEffectClone(GameObject dashEffectClone) {
 		yield return new WaitForSeconds(dashEffectCloneSec);
 		Object.Destroy(dashEffectClone);
-	}
-
-	public override void SetWithNoModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
 	}
 }

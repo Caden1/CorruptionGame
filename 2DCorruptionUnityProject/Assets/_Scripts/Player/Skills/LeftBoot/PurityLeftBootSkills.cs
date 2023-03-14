@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PurityLeftBootSkills : LeftBootSkills
 {
+	public override void SetWithNoGems() {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetWithNoModifiers() {
 		isInvulnerable = false;
 		dashVelocity = 7f;
@@ -19,7 +23,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 		dashVelocity = 12f;
 		secondsToDash = 0.5f;
 		cooldown = 2f;
-		dashEffectCloneSec = 0.3f;
+		dashEffectCloneSec = 0.4f;
 		dashDirection = new Vector2();
 		noDamageDashEffectPosition = new Vector2();
 	}
@@ -59,6 +63,10 @@ public class PurityLeftBootSkills : LeftBootSkills
 		playerRigidbody.gravityScale = startingGravity;
 		isInvulnerable = false;
 		Player.playerState = Player.PlayerState.Normal;
+	}
+
+	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody, bool isFacingRight, BoxCollider2D playerBoxCollider, LayerMask platformLayerMask) {
+		throw new System.NotImplementedException();
 	}
 
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {

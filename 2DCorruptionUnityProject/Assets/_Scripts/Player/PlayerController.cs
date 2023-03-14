@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
 	private GameObject corAirMeleeEffectClone;
 	private GameObject corPushEffectClone;
 	private GameObject corAirPushEffectClone;
-	private List<GameObject> corDashEffectCloneList;
+	private List<GameObject> corDamagingDashEffectClonesCopy;
 	private CustomAnimation corNoDamageJumpEffectAnim;
 	private CustomAnimation corAirNoDamageJumpEffectAnim;
 	private CustomAnimation corNoDamageDashEffectAnim;
@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour
 		corRightBootSkills = new CorRightBootSkills();
 		corLeftBootSkills = new CorLeftBootSkills(corDashEffect);
 
-		corDashEffectCloneList = new List<GameObject>();
+		corDamagingDashEffectClonesCopy = new List<GameObject>();
 
 		playerHealth = new HealthSystem(100f);
 
@@ -406,23 +406,15 @@ public class PlayerController : MonoBehaviour
 			corRightBootSkills.LaunchJumpProjectile();
 		}
 		if (corNoDamageDashEffectClone != null) {
-			corNoDamageDashEffectAnim.PlayCreatedAnimationOnce(corNoDamageDashEffectClone.GetComponent<SpriteRenderer>());
+			corNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(corNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
 			corLeftBootSkills.DestroyDashEffectClone(corNoDamageDashEffectClone);
 		}
-		if (corLeftBootSkills.isCorDashing) {
-			const float DEGREE_0_ANGLE = 0f;
-			const float DEGREE_180_ANGLE = 180f;
-			if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
-				corDashEffectClone = corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, DEGREE_0_ANGLE), isFacingRight);
-				if (corDashEffectClone != null) {
-					StartCoroutine(corLeftBootSkills.DestroyDamagingDashEffectClone(corDashEffectClone));
-				}
+		if (corLeftBootSkills.damagingDashEffectClones != null && corLeftBootSkills.damagingDashEffectClones.Count > 0) {
+			if (corLeftBootSkills.isPlayerGrounded) {
+				StartCoroutine(corLeftBootSkills.DestroyDamagingDashEffectClone());
 			} else {
-				corDashEffectCloneList.Add(corLeftBootSkills.InstantiateEffect(playerBoxCollider, UtilsClass.GetRotationFromDegrees(0f, 0f, DEGREE_180_ANGLE), isFacingRight));
+				corLeftBootSkills.LaunchAndDestroySpikes(platformLayerMask);
 			}
-		}
-		if (corDashEffectCloneList.Count > 0) {
-			corLeftBootSkills.LaunchSpikesDownward(corDashEffectCloneList, platformLayerMask);
 		}
 		if (corMeleeEffectClone != null) {
 			corMeleeEffectAnim.PlayCreatedAnimationOnce(corMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -674,7 +666,7 @@ public class PlayerController : MonoBehaviour
 				StartCoroutine(purityLeftBootSkills.PerformDash(playerRigidbody));
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				StartCoroutine(corLeftBootSkills.PerformDash(playerRigidbody));
+				StartCoroutine(corLeftBootSkills.PerformDash(playerRigidbody, isFacingRight, playerBoxCollider, platformLayerMask));
 				break;
 		}
 	}

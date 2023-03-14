@@ -14,6 +14,10 @@ public class CorRightBootSkills : RightBootSkills
 	private float damage;
 	private int jumpCount = 0;
 
+	public override void SetWithNoGems() {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetWithNoModifiers() {
 		canJump = false;
 		canJumpCancel = false;

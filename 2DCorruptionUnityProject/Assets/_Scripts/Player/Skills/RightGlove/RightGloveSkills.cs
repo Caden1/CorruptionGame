@@ -13,6 +13,8 @@ public abstract class RightGloveSkills : Skills
 	protected float cooldownSec;
 	protected Vector2 attackOrigin;
 
+	public abstract void SetWithNoGems();
+
 	public abstract void SetWithNoModifiers();
 
 	public abstract void SetAirModifiers();

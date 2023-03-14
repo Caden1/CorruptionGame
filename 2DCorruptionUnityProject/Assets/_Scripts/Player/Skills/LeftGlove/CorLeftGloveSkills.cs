@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CorLeftGloveSkills : LeftGloveSkills
 {
+	public override void SetWithNoGems() {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetWithNoModifiers() {
 		canAttack = false;
 		isAttacking = false;
