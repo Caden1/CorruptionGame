@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite[] corAirNoDamageJumpEffectSprites;
 	[SerializeField] private GameObject corAirNoDamageJumpEffect;
 	[SerializeField] private GameObject corDamagingJumpEffect;
-	[SerializeField] private GameObject corDashEffect;
+	[SerializeField] private GameObject corDamagingDashEffect;
 	[SerializeField] private Sprite[] corNoDamageDashEffectSprites;
 	[SerializeField] private GameObject corNoDamageDashEffect;
 	[SerializeField] private GameObject corMeleeEffect;
@@ -94,13 +94,13 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite[] corAirPushEffectSprites;
 	private GameObject corNoDamageJumpEffectClone;
 	private GameObject corAirNoDamageJumpEffectClone;
-	private GameObject corDashEffectClone;
+	private GameObject corDamagingDashEffectClone;
 	private GameObject corNoDamageDashEffectClone;
 	private GameObject corMeleeEffectClone;
 	private GameObject corAirMeleeEffectClone;
 	private GameObject corPushEffectClone;
 	private GameObject corAirPushEffectClone;
-	private List<GameObject> corDamagingDashEffectClonesCopy;
+	private List<GameObject> corDamagingDashEffectClones;
 	private CustomAnimation corNoDamageJumpEffectAnim;
 	private CustomAnimation corAirNoDamageJumpEffectAnim;
 	private CustomAnimation corNoDamageDashEffectAnim;
@@ -150,6 +150,7 @@ public class PlayerController : MonoBehaviour
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
+	private bool playerGroundedWhenDashing = false;
 
 	private float actualXMoveDirection = 0f;
 	private float actualYMoveDirection = 0f;
@@ -202,9 +203,9 @@ public class PlayerController : MonoBehaviour
 		corRightGloveSkills = new CorRightGloveSkills();
 		corLeftGloveSkills = new CorLeftGloveSkills();
 		corRightBootSkills = new CorRightBootSkills();
-		corLeftBootSkills = new CorLeftBootSkills(corDashEffect);
+		corLeftBootSkills = new CorLeftBootSkills();
 
-		corDamagingDashEffectClonesCopy = new List<GameObject>();
+		corDamagingDashEffectClones = new List<GameObject>();
 
 		playerHealth = new HealthSystem(100f);
 
@@ -407,11 +408,11 @@ public class PlayerController : MonoBehaviour
 		}
 		if (corNoDamageDashEffectClone != null) {
 			corNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(corNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
-			corLeftBootSkills.DestroyDashEffectClone(corNoDamageDashEffectClone);
+			StartCoroutine(corLeftBootSkills.DestroyDashEffectClone(corNoDamageDashEffectClone));
 		}
 		if (corLeftBootSkills.damagingDashEffectClones != null && corLeftBootSkills.damagingDashEffectClones.Count > 0) {
-			if (corLeftBootSkills.isPlayerGrounded) {
-				StartCoroutine(corLeftBootSkills.DestroyDamagingDashEffectClone());
+			if (playerGroundedWhenDashing) {
+				StartCoroutine(corLeftBootSkills.DestroySpikes());
 			} else {
 				corLeftBootSkills.LaunchAndDestroySpikes(platformLayerMask);
 			}
@@ -641,17 +642,22 @@ public class PlayerController : MonoBehaviour
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				noGemNoDamageDashEffectAnim.ResetIndexToZero();
-				noGemNoDamageDashEffectClone = noGemsLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, noGemNoDamageDashEffect);
+				noGemNoDamageDashEffectClone = noGemsLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, noGemNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
 				StartCoroutine(noGemsLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 			case BootsGem.BootsGemState.Purity:
 				pureNoDamageDashEffectAnim.ResetIndexToZero();
-				pureNoDamageDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, pureNoDamageDashEffect);
+				pureNoDamageDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, pureNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
 				StartCoroutine(purityLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 			case BootsGem.BootsGemState.Corruption:
+				if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask)) {
+					playerGroundedWhenDashing = true;
+				} else {
+					playerGroundedWhenDashing = false;
+				}
 				corNoDamageDashEffectAnim.ResetIndexToZero();
-				corNoDamageDashEffectClone = corLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, corNoDamageDashEffect);
+				corNoDamageDashEffectClone = corLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, corNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
 				StartCoroutine(corLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 		}
@@ -666,7 +672,8 @@ public class PlayerController : MonoBehaviour
 				StartCoroutine(purityLeftBootSkills.PerformDash(playerRigidbody));
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				StartCoroutine(corLeftBootSkills.PerformDash(playerRigidbody, isFacingRight, playerBoxCollider, platformLayerMask));
+				StartCoroutine(corLeftBootSkills.PerformDash(playerRigidbody));
+				corLeftBootSkills.InstantiateSpikes(isFacingRight, playerBoxCollider, corDamagingDashEffect);
 				break;
 		}
 	}

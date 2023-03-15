@@ -35,7 +35,7 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect) {
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect, bool playerGroundedWhenDashing, GameObject damagingDashEffect) {
 		isInvulnerable = true;
 		float xDashEffectOffset = 0.2f;
 		if (isFacingRight) {
@@ -58,10 +58,6 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		playerRigidbody.gravityScale = startingGravity;
 		isInvulnerable = false;
 		Player.playerState = Player.PlayerState.Normal;
-	}
-
-	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody, bool isFacingRight, BoxCollider2D playerBoxCollider, LayerMask platformLayerMask) {
-		throw new System.NotImplementedException();
 	}
 
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {

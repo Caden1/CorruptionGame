@@ -973,7 +973,7 @@ MonoBehaviour:
   - {fileID: 871815446, guid: 5e46ef136474144799a0641ceb9d7c28, type: 3}
   corAirNoDamageJumpEffect: {fileID: 2672062431930129880, guid: b5e89862823cf4e85920ea0a692efa6b, type: 3}
   corDamagingJumpEffect: {fileID: 3561767254440528458, guid: 83e37c1e305d24cfa896ef46e1c0a07a, type: 3}
-  corDashEffect: {fileID: 1101168767641393491, guid: 16168aeede7cf42db890c0e7b3f785e2, type: 3}
+  corDamagingDashEffect: {fileID: 1101168767641393491, guid: 16168aeede7cf42db890c0e7b3f785e2, type: 3}
   corNoDamageDashEffectSprites:
   - {fileID: -406755636, guid: d2bdcdd3b69b54cc19e0526ec01a884c, type: 3}
   - {fileID: -1234807756, guid: d2bdcdd3b69b54cc19e0526ec01a884c, type: 3}
