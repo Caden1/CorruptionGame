@@ -7,7 +7,9 @@ public class PurityRightBootSkills : RightBootSkills
 {
 	public float earthCloneSeconds { get; private set; }
 	private int jumpCount = 0;
-	//private bool isRocketBoosted;
+	private bool isRocketBoosted;
+	private float rocketBoostVelocityAddition;
+	private float originalJumpVelocity;
 	//private bool isEarth;
 	//private Vector2 originalVelocityAndAngle;
 	//private float rocketBoostVelMultiplier;
@@ -31,6 +33,9 @@ public class PurityRightBootSkills : RightBootSkills
 		jumpVelocity = 9f;
 		jumpEffectCloneSec = 0.3f;
 		effectOrigin = new Vector2();
+		isRocketBoosted = false;
+		rocketBoostVelocityAddition = 0f;
+		originalJumpVelocity = jumpVelocity;
 	}
 
 	public override void SetAirModifiers() {
@@ -45,10 +50,26 @@ public class PurityRightBootSkills : RightBootSkills
 		jumpVelocity = 9f;
 		jumpEffectCloneSec = 0.3f;
 		effectOrigin = new Vector2();
+		isRocketBoosted = false;
+		rocketBoostVelocityAddition = 0f;
+		originalJumpVelocity = jumpVelocity;
 	}
 
 	public override void SetFireModifiers() {
-	
+		canJump = false;
+		canJumpCancel = false;
+		numjumps = 2;
+		jumpGravity = 2f;
+		groundedPlayerGravity = 1f;
+		fallGravity = 2f;
+		archVelocityThreshold = 3f;
+		archGravity = 2f;
+		jumpVelocity = 9f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
+		isRocketBoosted = true;
+		rocketBoostVelocityAddition = 5f;
+		originalJumpVelocity = jumpVelocity;
 	}
 
 	public override void SetWaterModifiers() {
@@ -70,6 +91,7 @@ public class PurityRightBootSkills : RightBootSkills
 	}
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+		jumpVelocity = originalJumpVelocity;
 		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
@@ -77,12 +99,9 @@ public class PurityRightBootSkills : RightBootSkills
 		} else if (numjumps > jumpCount) {
 			jumpCount++;
 			canJump = true;
-			//if (isRocketBoosted)
-			//	velocityAndAngle = originalVelocityAndAngle * rocketBoostVelMultiplier;
-			//if (isEarth)
-			//	canEarthJump = true;
-			//else
-			//	canEarthJump = false;
+			if (isRocketBoosted) {
+				jumpVelocity += rocketBoostVelocityAddition;
+			}
 		}
 	}
 
@@ -90,8 +109,6 @@ public class PurityRightBootSkills : RightBootSkills
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
 		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
-		//if (isRocketBoosted)
-		//	velocityAndAngle = originalVelocityAndAngle;
 	}
 
 	//public override GameObject SetupEarthJump(Vector2 moveDirection, GameObject effect, BoxCollider2D boxCollider) {

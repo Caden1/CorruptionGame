@@ -572,6 +572,8 @@ public class PlayerController : MonoBehaviour
 					pureJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, pureJumpEffect);
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
 					pureAirJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, pureAirJumpEffect);
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Fire) {
+					purityRightBootSkills.PerformJump(playerRigidbody, pureAirJumpEffect);
 				}
 				break;
 			case BootsGem.BootsGemState.Corruption:
