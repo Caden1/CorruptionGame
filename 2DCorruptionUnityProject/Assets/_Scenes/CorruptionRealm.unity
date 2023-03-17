@@ -922,6 +922,11 @@ MonoBehaviour:
   - {fileID: -467710810, guid: 9a196b2a2eab2471081610efd77a4ba7, type: 3}
   - {fileID: 710520278, guid: 9a196b2a2eab2471081610efd77a4ba7, type: 3}
   pureAirJumpEffect: {fileID: 2672062431930129880, guid: b5e89862823cf4e85920ea0a692efa6b, type: 3}
+  pureFireJumpEffectSprites:
+  - {fileID: -840081804, guid: 4857f0bfe6de64830a84d796034dcc6f, type: 3}
+  - {fileID: 838756064, guid: 4857f0bfe6de64830a84d796034dcc6f, type: 3}
+  - {fileID: -646376849, guid: 4857f0bfe6de64830a84d796034dcc6f, type: 3}
+  pureFireJumpEffect: {fileID: 8972417251228457436, guid: eda3eb49e950d4639a66cdc70db53f74, type: 3}
   pureNoDamageDashEffectSprites:
   - {fileID: 1731470977, guid: 566d9475d671f4dbd8b0ec5359e4c180, type: 3}
   - {fileID: -1601850605, guid: 566d9475d671f4dbd8b0ec5359e4c180, type: 3}
@@ -929,6 +934,13 @@ MonoBehaviour:
   - {fileID: 2129824353, guid: 566d9475d671f4dbd8b0ec5359e4c180, type: 3}
   - {fileID: -1068537454, guid: 566d9475d671f4dbd8b0ec5359e4c180, type: 3}
   pureNoDamageDashEffect: {fileID: 8229948809993635478, guid: 2a7b45ec63847490484f52da028d8dee, type: 3}
+  pureAirDashEffectSprites:
+  - {fileID: 1972929450, guid: 260e1a429294a4a4ca12578c5da362fa, type: 3}
+  - {fileID: -1081165613, guid: 260e1a429294a4a4ca12578c5da362fa, type: 3}
+  - {fileID: -1666709112, guid: 260e1a429294a4a4ca12578c5da362fa, type: 3}
+  - {fileID: -1983013028, guid: 260e1a429294a4a4ca12578c5da362fa, type: 3}
+  - {fileID: 617732510, guid: 260e1a429294a4a4ca12578c5da362fa, type: 3}
+  pureAirDashEffect: {fileID: 8651842492170691256, guid: 6c659e83a71ec4c76ac687d94c72a81e, type: 3}
   pureMeleeEffect: {fileID: 1550512535146750824, guid: 9f1b803476b694cf5ab81351b8691abb, type: 3}
   pureMeleeEffectSprites:
   - {fileID: 1620989434, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
@@ -981,6 +993,13 @@ MonoBehaviour:
   - {fileID: 635964470, guid: d2bdcdd3b69b54cc19e0526ec01a884c, type: 3}
   - {fileID: 2109805956, guid: d2bdcdd3b69b54cc19e0526ec01a884c, type: 3}
   corNoDamageDashEffect: {fileID: 8212279896620394826, guid: bca3971bcee074d3083c5d86d2a800a2, type: 3}
+  corAirNoDamageDashEffectSprites:
+  - {fileID: 83890337, guid: cffa012fc870245dd8fe54dcac9c42e7, type: 3}
+  - {fileID: -1466915903, guid: cffa012fc870245dd8fe54dcac9c42e7, type: 3}
+  - {fileID: 742875937, guid: cffa012fc870245dd8fe54dcac9c42e7, type: 3}
+  - {fileID: -1539119394, guid: cffa012fc870245dd8fe54dcac9c42e7, type: 3}
+  - {fileID: 606512982, guid: cffa012fc870245dd8fe54dcac9c42e7, type: 3}
+  corAirNoDamageDashEffect: {fileID: 1424693364543424815, guid: 8da042ad6dfc044539a668d9e13acbdb, type: 3}
   corMeleeEffect: {fileID: 913447754468754611, guid: 22a8db88003214a52868ecc1359ca965, type: 3}
   corMeleeEffectSprites:
   - {fileID: -1273536999, guid: 1d4a56db7bd8a406b97910b7146d7c1f, type: 3}

@@ -1,10 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.Playables;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
@@ -36,8 +31,12 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject pureJumpEffect;
 	[SerializeField] private Sprite[] pureAirJumpEffectSprites;
 	[SerializeField] private GameObject pureAirJumpEffect;
+	[SerializeField] private Sprite[] pureFireJumpEffectSprites;
+	[SerializeField] private GameObject pureFireJumpEffect;
 	[SerializeField] private Sprite[] pureNoDamageDashEffectSprites;
 	[SerializeField] private GameObject pureNoDamageDashEffect;
+	[SerializeField] private Sprite[] pureAirDashEffectSprites;
+	[SerializeField] private GameObject pureAirDashEffect;
 	[SerializeField] private GameObject pureMeleeEffect;
 	[SerializeField] private Sprite[] pureMeleeEffectSprites;
 	[SerializeField] private GameObject pureAirMeleeEffect;
@@ -47,15 +46,19 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject pureAirPullEffect;
 	[SerializeField] private Sprite[] pureAirPullEffectSprites;
 	[SerializeField] private GameObject pureEarthPlatform;
-	private GameObject pureAirJumpEffectClone;
 	private GameObject pureJumpEffectClone;
+	private GameObject pureAirJumpEffectClone;
+	private GameObject pureFireJumpEffectClone;
 	private GameObject pureNoDamageDashEffectClone;
+	private GameObject pureAirDashEffectClone;
 	private GameObject pureMeleeEffectClone;
 	private GameObject purePullEffectClone;
 	private GameObject pureAirPullEffectClone;
-	private CustomAnimation pureAirJumpEffectAnim;
 	private CustomAnimation pureJumpEffectAnim;
+	private CustomAnimation pureAirJumpEffectAnim;
+	private CustomAnimation pureFireJumpEffectAnim;
 	private CustomAnimation pureNoDamageDashEffectAnim;
+	private CustomAnimation pureAirDashEffectAnim;
 	private CustomAnimation pureMeleeEffectAnim;
 	private CustomAnimation pureAirMeleeEffectAnim;
 	private CustomAnimation purePullEffectAnim;
@@ -84,6 +87,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject corDamagingDashEffect;
 	[SerializeField] private Sprite[] corNoDamageDashEffectSprites;
 	[SerializeField] private GameObject corNoDamageDashEffect;
+	[SerializeField] private Sprite[] corAirNoDamageDashEffectSprites;
+	[SerializeField] private GameObject corAirNoDamageDashEffect;
 	[SerializeField] private GameObject corMeleeEffect;
 	[SerializeField] private Sprite[] corMeleeEffectSprites;
 	[SerializeField] private GameObject corAirMeleeEffect;
@@ -94,16 +99,16 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite[] corAirPushEffectSprites;
 	private GameObject corNoDamageJumpEffectClone;
 	private GameObject corAirNoDamageJumpEffectClone;
-	private GameObject corDamagingDashEffectClone;
 	private GameObject corNoDamageDashEffectClone;
+	private GameObject corAirNoDamageDashEffectClone;
 	private GameObject corMeleeEffectClone;
 	private GameObject corAirMeleeEffectClone;
 	private GameObject corPushEffectClone;
 	private GameObject corAirPushEffectClone;
-	private List<GameObject> corDamagingDashEffectClones;
 	private CustomAnimation corNoDamageJumpEffectAnim;
 	private CustomAnimation corAirNoDamageJumpEffectAnim;
 	private CustomAnimation corNoDamageDashEffectAnim;
+	private CustomAnimation corAirNoDamageDashEffectAnim;
 	private CustomAnimation corMeleeEffectAnim;
 	private CustomAnimation corAirMeleeEffectAnim;
 	private CustomAnimation corPushEffectAnim;
@@ -182,7 +187,9 @@ public class PlayerController : MonoBehaviour
 		// Purity
 		pureJumpEffectAnim = new CustomAnimation(pureJumpEffectSprites);
 		pureAirJumpEffectAnim = new CustomAnimation(pureAirJumpEffectSprites);
+		pureFireJumpEffectAnim = new CustomAnimation(pureFireJumpEffectSprites);
 		pureNoDamageDashEffectAnim = new CustomAnimation(pureNoDamageDashEffectSprites);
+		pureAirDashEffectAnim = new CustomAnimation(pureAirDashEffectSprites);
 		pureMeleeEffectAnim = new CustomAnimation(pureMeleeEffectSprites);
 		pureAirMeleeEffectAnim = new CustomAnimation(pureAirMeleeEffectSprites);
 		purePullEffectAnim = new CustomAnimation(purePullEffectSprites);
@@ -196,6 +203,7 @@ public class PlayerController : MonoBehaviour
 		corNoDamageJumpEffectAnim = new CustomAnimation(corNoDamageJumpEffectSprites);
 		corAirNoDamageJumpEffectAnim = new CustomAnimation(corAirNoDamageJumpEffectSprites);
 		corNoDamageDashEffectAnim = new CustomAnimation(corNoDamageDashEffectSprites);
+		corAirNoDamageDashEffectAnim = new CustomAnimation(corAirNoDamageDashEffectSprites);
 		corMeleeEffectAnim = new CustomAnimation(corMeleeEffectSprites);
 		corAirMeleeEffectAnim = new CustomAnimation(corAirMeleeEffectSprites);
 		corPushEffectAnim = new CustomAnimation(corPushEffectSprites);
@@ -204,8 +212,6 @@ public class PlayerController : MonoBehaviour
 		corLeftGloveSkills = new CorLeftGloveSkills();
 		corRightBootSkills = new CorRightBootSkills();
 		corLeftBootSkills = new CorLeftBootSkills();
-
-		corDamagingDashEffectClones = new List<GameObject>();
 
 		playerHealth = new HealthSystem(100f);
 
@@ -368,9 +374,17 @@ public class PlayerController : MonoBehaviour
 			pureAirJumpEffectAnim.PlayCreatedAnimationOnce(pureAirJumpEffectClone.GetComponent<SpriteRenderer>());
 			StartCoroutine(purityRightBootSkills.DestroyJumpEffectClone(pureAirJumpEffectClone));
 		}
+		if (pureFireJumpEffectClone != null) {
+			pureFireJumpEffectAnim.PlayCreatedAnimationOnce(pureFireJumpEffectClone.GetComponent<SpriteRenderer>());
+			StartCoroutine(purityRightBootSkills.DestroyJumpEffectClone(pureFireJumpEffectClone));
+		}
 		if (pureNoDamageDashEffectClone != null) {
 			pureNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
 			StartCoroutine(purityLeftBootSkills.DestroyDashEffectClone(pureNoDamageDashEffectClone));
+		}
+		if (pureAirDashEffectClone != null) {
+			pureAirDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureAirDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
+			StartCoroutine(purityLeftBootSkills.DestroyDashEffectClone(pureAirDashEffectClone));
 		}
 		if (pureMeleeEffectClone != null) {
 			pureMeleeEffectAnim.PlayCreatedAnimationOnce(pureMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -416,6 +430,10 @@ public class PlayerController : MonoBehaviour
 			} else {
 				corLeftBootSkills.LaunchAndDestroySpikes(platformLayerMask);
 			}
+		}
+		if (corAirNoDamageDashEffectClone != null) {
+			corAirNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(corAirNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
+			StartCoroutine(corLeftBootSkills.DestroyDashEffectClone(corAirNoDamageDashEffectClone));
 		}
 		if (corMeleeEffectClone != null) {
 			corMeleeEffectAnim.PlayCreatedAnimationOnce(corMeleeEffectClone.GetComponent<SpriteRenderer>());
@@ -548,6 +566,8 @@ public class PlayerController : MonoBehaviour
 					pureJumpEffectAnim.ResetIndexToZero();
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
 					pureAirJumpEffectAnim.ResetIndexToZero();
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Fire) {
+					pureFireJumpEffectAnim.ResetIndexToZero();
 				}
 				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
@@ -573,7 +593,7 @@ public class PlayerController : MonoBehaviour
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
 					pureAirJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, pureAirJumpEffect);
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Fire) {
-					purityRightBootSkills.PerformJump(playerRigidbody, pureAirJumpEffect);
+					pureFireJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, pureFireJumpEffect);
 				}
 				break;
 			case BootsGem.BootsGemState.Corruption:
@@ -648,8 +668,13 @@ public class PlayerController : MonoBehaviour
 				StartCoroutine(noGemsLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 			case BootsGem.BootsGemState.Purity:
-				pureNoDamageDashEffectAnim.ResetIndexToZero();
-				pureNoDamageDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, pureNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
+				if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.None) {
+					pureNoDamageDashEffectAnim.ResetIndexToZero();
+					pureNoDamageDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, pureNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
+				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Air) {
+					pureAirDashEffectAnim.ResetIndexToZero();
+					pureAirDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, pureAirDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
+				}
 				StartCoroutine(purityLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 			case BootsGem.BootsGemState.Corruption:
@@ -658,8 +683,13 @@ public class PlayerController : MonoBehaviour
 				} else {
 					playerGroundedWhenDashing = false;
 				}
-				corNoDamageDashEffectAnim.ResetIndexToZero();
-				corNoDamageDashEffectClone = corLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, corNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
+				if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.None) {
+					corNoDamageDashEffectAnim.ResetIndexToZero();
+					corNoDamageDashEffectClone = corLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, corNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
+				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Air) {
+					corAirNoDamageDashEffectAnim.ResetIndexToZero();
+					corAirNoDamageDashEffectClone = corLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, corAirNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
+				}
 				StartCoroutine(corLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 		}
