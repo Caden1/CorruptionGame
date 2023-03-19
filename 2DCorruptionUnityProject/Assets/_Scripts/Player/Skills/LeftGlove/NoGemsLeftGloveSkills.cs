@@ -43,10 +43,12 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 	}
 
 	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation) {
-		GameObject pullEffectClone = Object.Instantiate(leftGloveEffect, attackOrigin, rotation);
+		throw new System.NotImplementedException();
+	}
+
+	public void PerformLeftGloveSkill() {
 		canAttack = false;
 		isAttacking = false;
-		return pullEffectClone;
 	}
 
 	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {

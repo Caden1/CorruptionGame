@@ -41,6 +41,10 @@ public class NoGemsRightBootSkills : RightBootSkills
 		throw new System.NotImplementedException();
 	}
 
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetGravity(Rigidbody2D playerRigidbody) {
 		if (playerRigidbody.velocity.y == 0f)
 			playerRigidbody.gravityScale = groundedPlayerGravity;
@@ -63,10 +67,9 @@ public class NoGemsRightBootSkills : RightBootSkills
 		}
 	}
 
-	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
+	public void PerformJump(Rigidbody2D playerRigidbody) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
-		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
 	}
 
 	public override void SetupJumpCancel() {

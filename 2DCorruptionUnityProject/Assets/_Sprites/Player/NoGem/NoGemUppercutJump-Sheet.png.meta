@@ -123,16 +123,16 @@ TextureImporter:
         x: 0
         y: 0
         width: 56
-        height: 125
+        height: 126
       alignment: 9
-      pivot: {x: 0.39285713, y: 0.504}
+      pivot: {x: 0.39285713, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c68176f93c80d40d496d258daef4677a
-      internalID: 597380113
+      spriteID: dffad273aa48c45a5b075520fae2df43
+      internalID: -702470059
       vertices: []
       indices: 
       edges: []
@@ -144,16 +144,16 @@ TextureImporter:
         x: 56
         y: 0
         width: 56
-        height: 125
+        height: 126
       alignment: 9
-      pivot: {x: 0.39285713, y: 0.504}
+      pivot: {x: 0.39285713, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d8bd9c20a366419084608a37e9e1843
-      internalID: 1436244680
+      spriteID: e3df602d34ef141baa21b45d3132ddc2
+      internalID: -2139827940
       vertices: []
       indices: 
       edges: []
@@ -165,16 +165,16 @@ TextureImporter:
         x: 112
         y: 0
         width: 56
-        height: 125
+        height: 126
       alignment: 9
-      pivot: {x: 0.39285713, y: 0.504}
+      pivot: {x: 0.39285713, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 953585ae85e28488bb8c8a3ee36f651b
-      internalID: -275087708
+      spriteID: a13e8e089a2f14371afbb7a7e2bf2c52
+      internalID: 132512040
       vertices: []
       indices: 
       edges: []
@@ -186,16 +186,37 @@ TextureImporter:
         x: 168
         y: 0
         width: 56
-        height: 125
+        height: 126
       alignment: 9
-      pivot: {x: 0.39285713, y: 0.504}
+      pivot: {x: 0.39285713, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7adb4d091ab8145e08f4656fd671b3fb
-      internalID: 375818375
+      spriteID: 7ca924d55a04949eca3b4ec36492af2d
+      internalID: 526788164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NoGemUppercutJump-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 56
+        height: 126
+      alignment: 9
+      pivot: {x: 0.39285713, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f1c8230c13484891a9f361646e73fef
+      internalID: -1293011071
       vertices: []
       indices: 
       edges: []
@@ -211,10 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemUppercutJump-Sheet_1: 1436244680
-      NoGemUppercutJump-Sheet_3: 375818375
-      NoGemUppercutJump-Sheet_2: -275087708
-      NoGemUppercutJump-Sheet_0: 597380113
+      NoGemUppercutJump-Sheet_1: -2139827940
+      NoGemUppercutJump-Sheet_4: -1293011071
+      NoGemUppercutJump-Sheet_3: 526788164
+      NoGemUppercutJump-Sheet_2: 132512040
+      NoGemUppercutJump-Sheet_0: -702470059
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

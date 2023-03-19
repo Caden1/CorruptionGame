@@ -4,6 +4,26 @@ using UnityEngine;
 
 public class NoGemsRightGloveSkills : RightGloveSkills
 {
+	public override void SetWithNoModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetAirModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetFireModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetWaterModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetEarthModifiers() {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetWithNoGems() {
 		canMelee = false;
 		isAnimating = false;
@@ -19,26 +39,30 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
+		throw new System.NotImplementedException();
+	}
+
+	public override GameObject PerformMelee(GameObject meleeEffect) {
+		throw new System.NotImplementedException();
+	}
+
+	public void SetupMelee(bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
 		canMelee = true;
 		isAnimating = true;
 		lockMovement = true;
 		hasForcedMovement = true;
 		if (isFacingRight) {
-			meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
 			attackOrigin = positionRight;
 			forcedMovementVector = new Vector2(forcedMovementVel, 0f);
 		} else {
-			meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
 			attackOrigin = positionLeft;
 			forcedMovementVector = new Vector2(-forcedMovementVel, 0f);
 		}
 	}
 
-	public override GameObject PerformMelee(GameObject meleeEffect) {
-		GameObject meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
+	public void PerformMelee() {
 		canMelee = false;
 		isAnimating = false;
-		return meleeEffectClone;
 	}
 
 	public override IEnumerator ResetForcedMovement() {
@@ -60,25 +84,5 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 	public override IEnumerator TempLockMovement() {
 		yield return new WaitForSeconds(lockMovementSec);
 		lockMovement = false;
-	}
-
-	public override void SetWithNoModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
 	}
 }
