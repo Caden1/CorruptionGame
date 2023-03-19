@@ -152,6 +152,7 @@ public class PlayerController : MonoBehaviour
 	private Swap swap;
 
 	private const string IDLE_ANIM = "Idle";
+	private const string NO_GEM_UPPERCUT_JUMP_ANIM	 = "NoGemUppercutJump";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -281,6 +282,7 @@ public class PlayerController : MonoBehaviour
 			case Animation.AnimationState.Fall:
 				break;
 			case Animation.AnimationState.RightBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_UPPERCUT_JUMP_ANIM);
 				break;
 			case Animation.AnimationState.LeftBoot:
 				break;
