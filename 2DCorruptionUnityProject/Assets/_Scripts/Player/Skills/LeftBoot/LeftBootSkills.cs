@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class LeftBootSkills
+public abstract class LeftBootSkills : Skills
 {
-	protected Rigidbody2D rigidbody;
 	protected Vector2 dashDirection;
-	protected float startingGravity;
-	protected float numDashes;
+	protected Vector2 noDamageDashEffectPosition;
 	protected float dashVelocity;
-	public float secondsToDash { get; protected set; }
+	protected float secondsToDash;
 	protected float cooldown;
+	protected float dashEffectCloneSec;
 
-	public LeftBootSkills(Rigidbody2D rigidbody) {
-		this.rigidbody = rigidbody;
-		startingGravity = rigidbody.gravityScale;
-	}
+	public abstract void SetWithNoGems();
 
 	public abstract void SetWithNoModifiers();
 
@@ -28,9 +24,11 @@ public abstract class LeftBootSkills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupDash(bool isFacingRight);
+	public abstract GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect, bool playerGroundedWhenDashing, GameObject damagingDashEffect);
 
-	public abstract IEnumerator PerformDash();
+	public abstract IEnumerator PerformDash(Rigidbody2D playerRigidbody);
 
 	public abstract IEnumerator StartDashCooldown(PlayerInputActions playerInputActions);
+
+	public abstract IEnumerator DestroyDashEffectClone(GameObject dashEffectClone);
 }

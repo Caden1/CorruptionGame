@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class NoGemsLeftGloveSkills : LeftGloveSkills
 {
-	public void SetWithNoGems() {
-		
+	public override void SetWithNoGems() {
+		canAttack = false;
+		isAttacking = false;
+		lockMovement = false;
+		lockMovementSec = 0.2f;
+		cooldownSec = 2f;
+		pullEffectCloneSec = 0.2f;
+		pullEffectZRotation = 0f;
+		attackOrigin = new Vector2();
 	}
 
 	public override void SetWithNoModifiers() {
@@ -28,23 +35,33 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override void SetupRanged(BoxCollider2D boxCollider) {
-		throw new System.NotImplementedException();
+	public override void SetupLeftGloveSkill(Vector2 directionPointing) {
+		canAttack = true;
+		isAttacking = true;
+		lockMovement = true;
+		attackOrigin = directionPointing;
 	}
 
-	public override void PerformRanged(GameObject projectile, bool isFacingRight) {
-		throw new System.NotImplementedException();
+	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation) {
+		GameObject pullEffectClone = Object.Instantiate(leftGloveEffect, attackOrigin, rotation);
+		canAttack = false;
+		isAttacking = false;
+		return pullEffectClone;
 	}
 
-	public override void ShootProjectile() {
-		throw new System.NotImplementedException();
+	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {
+		playerInputActions.Player.Ranged.Disable();
+		yield return new WaitForSeconds(cooldownSec);
+		playerInputActions.Player.Ranged.Enable();
 	}
 
-	public override IEnumerator ResetRangedAnimation() {
-		throw new System.NotImplementedException();
+	public override IEnumerator TempLockMovement() {
+		yield return new WaitForSeconds(lockMovementSec);
+		lockMovement = false;
 	}
 
-	public override IEnumerator StartRangedCooldown(PlayerInputActions playerInputActions) {
-		throw new System.NotImplementedException();
+	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
+		yield return new WaitForSeconds(pullEffectCloneSec);
+		Object.Destroy(pullEffectClone);
 	}
 }

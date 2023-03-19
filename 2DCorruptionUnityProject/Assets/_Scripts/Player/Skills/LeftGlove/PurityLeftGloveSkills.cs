@@ -4,77 +4,71 @@ using UnityEngine;
 
 public class PurityLeftGloveSkills : LeftGloveSkills
 {
+	public override void SetWithNoGems() {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetWithNoModifiers() {
-		isMultiEnemy = false;
 		canAttack = false;
 		isAttacking = false;
-		cooldown = 1f;
-		duration = 0.1f;
-		velocity = 15f;
-		animSeconds = 0.3f;
+		lockMovement = false;
+		lockMovementSec = 0.2f;
+		cooldownSec = 2f;
+		pullEffectCloneSec = 0.3f;
+		pullEffectZRotation = 0f;
+		attackOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
-		isMultiEnemy = false;
 		canAttack = false;
 		isAttacking = false;
-		cooldown = 1f;
-		duration = 0.1f;
-		velocity = 15f;
-		animSeconds = 0.3f;
+		lockMovement = false;
+		lockMovementSec = 0.2f;
+		cooldownSec = 2f;
+		pullEffectCloneSec = 0.3f;
+		pullEffectZRotation = 0f;
+		attackOrigin = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
-		isMultiEnemy = false;
-		canAttack = false;
-		isAttacking = false;
-		cooldown = 1f;
-		duration = 0.1f;
-		velocity = 15f;
-		animSeconds = 0.3f;
+		
 	}
 
 	public override void SetWaterModifiers() {
-		isMultiEnemy = false;
-		canAttack = false;
-		isAttacking = false;
-		cooldown = 1f;
-		duration = 0.1f;
-		velocity = 15f;
-		animSeconds = 0.3f;
+		
 	}
 
 	public override void SetEarthModifiers() {
-		isMultiEnemy = false;
-		canAttack = false;
-		isAttacking = false;
-		cooldown = 1f;
-		duration = 0.1f;
-		velocity = 15f;
-		animSeconds = 0.3f;
+		
 	}
 
-	public override void SetupRanged(BoxCollider2D boxCollider) {
+	public override void SetupLeftGloveSkill(Vector2 directionPointing) {
 		canAttack = true;
 		isAttacking = true;
+		lockMovement = true;
+		attackOrigin = directionPointing;
 	}
 
-	public override void PerformRanged(GameObject projectile, bool isFacingRight) {
+	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation) {
+		GameObject pullEffectClone = Object.Instantiate(leftGloveEffect, attackOrigin, rotation);
 		canAttack = false;
-	}
-
-	public override IEnumerator ResetRangedAnimation() {
-		yield return new WaitForSeconds(animSeconds);
 		isAttacking = false;
+		return pullEffectClone;
 	}
 
-	public override IEnumerator StartRangedCooldown(PlayerInputActions playerInputActions) {
+	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {
 		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(cooldown);
+		yield return new WaitForSeconds(cooldownSec);
 		playerInputActions.Player.Ranged.Enable();
 	}
 
-	public override void ShootProjectile() {
-		
+	public override IEnumerator TempLockMovement() {
+		yield return new WaitForSeconds(lockMovementSec);
+		lockMovement = false;
+	}
+
+	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
+		yield return new WaitForSeconds(pullEffectCloneSec);
+		Object.Destroy(pullEffectClone);
 	}
 }

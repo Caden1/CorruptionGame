@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LeftGloveSkills
+public abstract class LeftGloveSkills : Skills
 {
-	public bool canAttack;
-	public bool isAttacking;
-	public Vector2 attackDirection;
-	public bool isMultiEnemy { get; protected set; }
-	public float cooldown { get; protected set; }
-	public float duration { get; protected set; }
-	public float velocity { get; protected set; }
-	public float animSeconds { get; protected set; }
+	public static bool canAttack { get; protected set; }
+	public static bool isAttacking { get; protected set; }
+	protected float lockMovementSec;
+	protected float cooldownSec;
+	protected float pullEffectCloneSec;
+	protected float pullEffectZRotation;
+	protected Vector2 attackOrigin;
+
+	public abstract void SetWithNoGems();
 
 	public abstract void SetWithNoModifiers();
 
@@ -23,13 +24,17 @@ public abstract class LeftGloveSkills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupRanged(BoxCollider2D boxCollider);
+	public abstract void SetupLeftGloveSkill(Vector2 directionPointing);
 
-	public abstract void PerformRanged(GameObject projectile, bool isFacingRight);
+	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation);
 
-	public abstract void ShootProjectile();
+	public abstract IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions);
 
-	public abstract IEnumerator ResetRangedAnimation();
+	public abstract IEnumerator TempLockMovement();
 
-	public abstract IEnumerator StartRangedCooldown(PlayerInputActions playerInputActions);
+	public abstract IEnumerator DestroyEffectClone(GameObject effectClone);
+
+	//public abstract void ShootProjectile();
+
+	//public abstract IEnumerator ResetLeftGloveSkillAnim();
 }

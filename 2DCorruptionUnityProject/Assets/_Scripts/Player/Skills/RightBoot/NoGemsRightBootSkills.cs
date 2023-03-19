@@ -1,25 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class NoGemsRightBootSkills : RightBootSkills
 {
-	protected ContactFilter2D contactFilter;
 	private int jumpCount = 0;
 
-	public NoGemsRightBootSkills(Rigidbody2D rigidbody, ContactFilter2D contactFilter) : base(rigidbody) {
-		this.contactFilter = contactFilter;
-	}
-
-	public void SetWithNoGems() {
+	public override void SetWithNoGems() {
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 5f;
 		jumpGravity = 2f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 5f;
+		groundedPlayerGravity = 1f;
+		fallGravity = 3f;
+		archVelocityThreshold = 4f;
+		archGravity = 3f;
+		jumpVelocity = 9f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
 	}
 
 	public override void SetWithNoModifiers() {
@@ -42,18 +41,19 @@ public class NoGemsRightBootSkills : RightBootSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override void SetGravity() {
-		if (rigidbody.velocity.y == 0f)
-			rigidbody.gravityScale = startingGravity;
-		else if (rigidbody.velocity.y < archVelocityThreshold && rigidbody.velocity.y > -archVelocityThreshold)
-			rigidbody.gravityScale = archGravity;
-		else if (rigidbody.velocity.y > 0f)
-			rigidbody.gravityScale = jumpGravity;
-		else if (rigidbody.velocity.y < 0f)
-			rigidbody.gravityScale = fallGravity;
+	public override void SetGravity(Rigidbody2D playerRigidbody) {
+		if (playerRigidbody.velocity.y == 0f)
+			playerRigidbody.gravityScale = groundedPlayerGravity;
+		else if (playerRigidbody.velocity.y < archVelocityThreshold && playerRigidbody.velocity.y > -archVelocityThreshold)
+			playerRigidbody.gravityScale = archGravity;
+		else if (playerRigidbody.velocity.y > 0f)
+			playerRigidbody.gravityScale = jumpGravity;
+		else if (playerRigidbody.velocity.y < 0f)
+			playerRigidbody.gravityScale = fallGravity;
 	}
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -63,21 +63,23 @@ public class NoGemsRightBootSkills : RightBootSkills
 		}
 	}
 
-	public override void PerformJump(GameObject effect) {
-		rigidbody.velocity = Vector2.up * velocity;
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
+		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
-	}
-
-	public override void ShootProjectile() {
-		throw new System.NotImplementedException();
+		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
 	}
 
 	public override void SetupJumpCancel() {
 		canJumpCancel = true;
 	}
 
-	public override void PerformJumpCancel() {
-		rigidbody.velocity = Vector2.zero;
+	public override void PerformJumpCancel(Rigidbody2D playerRigidbody) {
+		playerRigidbody.velocity = Vector2.zero;
 		canJumpCancel = false;
+	}
+
+	public override IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone) {
+		yield return new WaitForSeconds(jumpEffectCloneSec);
+		Object.Destroy(jumpEffectClone);
 	}
 }

@@ -4,67 +4,75 @@ using UnityEngine;
 
 public class PurityLeftBootSkills : LeftBootSkills
 {
-	public PurityLeftBootSkills(Rigidbody2D rigidbody) : base(rigidbody) { }
-
-	public override void SetWithNoModifiers() {
-		numDashes = 1f;
-		dashVelocity = 8f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+	public override void SetWithNoGems() {
+		throw new System.NotImplementedException();
 	}
 
-	public void SetPurityDefault() {
-		numDashes = 2f;
-		dashVelocity = 10f;
-		secondsToDash = 0.25f;
+	public override void SetWithNoModifiers() {
+		isInvulnerable = false;
+		dashVelocity = 7f;
+		secondsToDash = 0.5f;
 		cooldown = 2f;
+		dashEffectCloneSec = 0.4f;
+		dashDirection = new Vector2();
+		noDamageDashEffectPosition = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
-		numDashes = 2f;
-		dashVelocity = 20f;
-		secondsToDash = 0.25f;
+		isInvulnerable = false;
+		dashVelocity = 12f;
+		secondsToDash = 0.5f;
 		cooldown = 2f;
+		dashEffectCloneSec = 0.4f;
+		dashDirection = new Vector2();
+		noDamageDashEffectPosition = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
-		numDashes = 2f;
-		dashVelocity = 20f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+		
 	}
 
 	public override void SetWaterModifiers() {
-		numDashes = 2f;
-		dashVelocity = 20f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+		
 	}
 
 	public override void SetEarthModifiers() {
-		numDashes = 2f;
-		dashVelocity = 20f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
+		
 	}
 
-	public override void SetupDash(bool isFacingRight) {
-		if (isFacingRight)
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect, bool playerGroundedWhenDashing, GameObject damagingDashEffect) {
+		isInvulnerable = true;
+		float xDashEffectOffset = 0.2f;
+		if (isFacingRight) {
 			dashDirection = Vector2.right;
-		else
+			noDamageDashEffectPosition = new Vector2(playerBoxCollider.bounds.min.x - xDashEffectOffset, playerBoxCollider.bounds.min.y);
+			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = false;
+		} else {
 			dashDirection = Vector2.left;
+			noDamageDashEffectPosition = new Vector2(playerBoxCollider.bounds.max.x + xDashEffectOffset, playerBoxCollider.bounds.min.y);
+			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = true;
+		}
+		return Object.Instantiate(noDamageDashEffect, noDamageDashEffectPosition, noDamageDashEffect.transform.rotation);
 	}
 
-	public override IEnumerator PerformDash() {
-		rigidbody.gravityScale = 0f;
-		rigidbody.velocity = dashDirection * dashVelocity;
+	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
+		float startingGravity = playerRigidbody.gravityScale;
+		playerRigidbody.gravityScale = 0f;
+		playerRigidbody.velocity = dashDirection * dashVelocity;
 		yield return new WaitForSeconds(secondsToDash);
-		rigidbody.gravityScale = startingGravity;
+		playerRigidbody.gravityScale = startingGravity;
+		isInvulnerable = false;
+		Player.playerState = Player.PlayerState.Normal;
 	}
 
 	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {
 		playerInputActions.Player.Dash.Disable();
 		yield return new WaitForSeconds(cooldown);
 		playerInputActions.Player.Dash.Enable();
+	}
+
+	public override IEnumerator DestroyDashEffectClone(GameObject dashEffectClone) {
+		yield return new WaitForSeconds(dashEffectCloneSec);
+		Object.Destroy(dashEffectClone);
 	}
 }

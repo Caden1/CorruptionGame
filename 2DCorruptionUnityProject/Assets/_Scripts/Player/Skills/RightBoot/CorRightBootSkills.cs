@@ -5,134 +5,86 @@ using UnityEngine;
 
 public class CorRightBootSkills : RightBootSkills
 {
-	protected ContactFilter2D contactFilter;
+	public List<GameObject> attackClonesRight { get; private set; }
+	public List<GameObject> attackClonesLeft { get; private set; }
 	private Vector2 attackOriginRight;
 	private Vector2 attackOriginLeft;
-	private float damage;
 	private float attackDistance;
 	private float attackVelocity;
-	private float attackAngle;
-	private bool isMultiEnemyAttack;
+	private float damage;
 	private int jumpCount = 0;
-	private List<GameObject> attackClonesRight;
-	private List<GameObject> attackClonesLeft;
 
-	public CorRightBootSkills(Rigidbody2D rigidbody, ContactFilter2D contactFilter) : base(rigidbody) {
-		this.contactFilter = contactFilter;
+	public override void SetWithNoGems() {
+		throw new System.NotImplementedException();
 	}
 
 	public override void SetWithNoModifiers() {
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
+		jumpGravity = 2f;
+		groundedPlayerGravity = 1f;
+		fallGravity = 3f;
+		archVelocityThreshold = 4f;
 		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
+		jumpVelocity = 9f;
 		attackClonesRight = new List<GameObject>();
 		attackClonesLeft = new List<GameObject>();
 		attackOriginRight = new Vector2();
 		attackOriginLeft = new Vector2();
+		attackDistance = 2f;
+		attackVelocity = 5f;
+		damage = 2f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
+		jumpGravity = 2f;
+		groundedPlayerGravity = 1f;
+		fallGravity = 3f;
+		archVelocityThreshold = 4f;
 		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
+		jumpVelocity = 9f;
 		attackClonesRight = new List<GameObject>();
 		attackClonesLeft = new List<GameObject>();
 		attackOriginRight = new Vector2();
 		attackOriginLeft = new Vector2();
+		attackDistance = 7f;
+		attackVelocity = 5f;
+		damage = 2f;
+		jumpEffectCloneSec = 0.3f;
+		effectOrigin = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 1;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
-		attackClonesRight = new List<GameObject>();
-		attackClonesLeft = new List<GameObject>();
-		attackOriginRight = new Vector2();
-		attackOriginLeft = new Vector2();
+		
 	}
 
 	public override void SetWaterModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 1;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
-		attackClonesRight = new List<GameObject>();
-		attackClonesLeft = new List<GameObject>();
-		attackOriginRight = new Vector2();
-		attackOriginLeft = new Vector2();
+		
 	}
 
 	public override void SetEarthModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 1;
-		velocity = 7f;
-		jumpGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 3f;
-		damage = 2f;
-		attackDistance = 3f;
-		attackVelocity = 10f;
-		attackAngle = 0.25f;
-		isMultiEnemyAttack = true;
-		attackClonesRight = new List<GameObject>();
-		attackClonesLeft = new List<GameObject>();
-		attackOriginRight = new Vector2();
-		attackOriginLeft = new Vector2();
+		
 	}
 
-	public override void SetGravity() {
-		if (rigidbody.velocity.y == 0f)
-			rigidbody.gravityScale = startingGravity;
-		else if (rigidbody.velocity.y < archVelocityThreshold && rigidbody.velocity.y > -archVelocityThreshold)
-			rigidbody.gravityScale = archGravity;
-		else if (rigidbody.velocity.y > 0f)
-			rigidbody.gravityScale = jumpGravity;
-		else if (rigidbody.velocity.y < 0f)
-			rigidbody.gravityScale = fallGravity;
+	public override void SetGravity(Rigidbody2D playerRigidbody) {
+		if (playerRigidbody.velocity.y == 0f)
+			playerRigidbody.gravityScale = groundedPlayerGravity;
+		else if (playerRigidbody.velocity.y < archVelocityThreshold && playerRigidbody.velocity.y > -archVelocityThreshold)
+			playerRigidbody.gravityScale = archGravity;
+		else if (playerRigidbody.velocity.y > 0f)
+			playerRigidbody.gravityScale = jumpGravity;
+		else if (playerRigidbody.velocity.y < 0f)
+			playerRigidbody.gravityScale = fallGravity;
 	}
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -140,35 +92,50 @@ public class CorRightBootSkills : RightBootSkills
 			jumpCount++;
 			canJump = true;
 		}
+		SetupAttackOrigins(boxCollider);
+	}
+
+	private void SetupAttackOrigins(BoxCollider2D boxCollider) {
 		attackOriginRight = new Vector2(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
 		attackOriginLeft = boxCollider.bounds.min;
 	}
 
-	public override void PerformJump(GameObject effect) {
-		rigidbody.velocity = Vector2.up * velocity;
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
+		throw new System.NotImplementedException();
+	}
+
+	public GameObject PerformCorruptionJump(Rigidbody2D playerRigidbody, GameObject damagingEffect, GameObject jumpEffect) {
+		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
-		
-		InstantiateRightProjectile(effect, attackOriginRight);
-		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(0.65f, 0f));
-		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(0.35f, 0.5f));
-		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(1f, 0.5f));
-
-		InstantiateLeftProjectile(effect, attackOriginLeft);
-		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.65f, 0f));
-		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-0.35f, 0.5f));
-		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-1f, 0.5f));
+		InstantiateProjectiles(damagingEffect);
+		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
 	}
 
-	private void InstantiateRightProjectile(GameObject effect, Vector2 attackOrigin) {
-		attackClonesRight.Add(Object.Instantiate(effect, attackOrigin, new Quaternion(effect.transform.rotation.x, effect.transform.rotation.y, attackAngle, effect.transform.rotation.w)));
+	private void InstantiateProjectiles(GameObject effect) {
+		Vector3 angle45Degree = new Vector3(0f, 0f, 45f);
+		float offset1 = 0f;
+		float offset2 = 0.2f;
+		InstantiateRightProjectile(effect, attackOriginRight, Quaternion.Euler(angle45Degree));
+		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(offset2, offset1), Quaternion.Euler(angle45Degree));
+		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(offset1, offset2), Quaternion.Euler(angle45Degree));
+		InstantiateRightProjectile(effect, attackOriginRight + new Vector2(offset2, offset2), Quaternion.Euler(angle45Degree));
+
+		InstantiateLeftProjectile(effect, attackOriginLeft, Quaternion.Euler(-angle45Degree));
+		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-offset2, offset1), Quaternion.Euler(-angle45Degree));
+		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(offset1, offset2), Quaternion.Euler(-angle45Degree));
+		InstantiateLeftProjectile(effect, attackOriginLeft + new Vector2(-offset2, offset2), Quaternion.Euler(-angle45Degree));
 	}
 
-	private void InstantiateLeftProjectile(GameObject effect, Vector2 attackOrigin) {
-		attackClonesLeft.Add(Object.Instantiate(effect, attackOrigin, new Quaternion(effect.transform.rotation.x, effect.transform.rotation.y, -attackAngle, effect.transform.rotation.w)));
+	private void InstantiateRightProjectile(GameObject effect, Vector2 attackOrigin, Quaternion rotation) {
+		attackClonesRight.Add(Object.Instantiate(effect, attackOrigin, rotation));
 	}
 
-	public override void ShootProjectile() {
-		if (attackClonesRight.Count > 0) {
+	private void InstantiateLeftProjectile(GameObject effect, Vector2 attackOrigin, Quaternion rotation) {
+		attackClonesLeft.Add(Object.Instantiate(effect, attackOrigin, rotation));
+	}
+
+	public void LaunchJumpProjectile() {
+		if (attackClonesRight != null && attackClonesRight.Count > 0) {
 			for (int i = 0; i < attackClonesRight.Count; i++) {
 				if (attackClonesRight[i] != null) {
 					attackClonesRight[i].transform.Translate(Vector2.right * Time.deltaTime * attackVelocity);
@@ -177,7 +144,7 @@ public class CorRightBootSkills : RightBootSkills
 				}
 			}
 		}
-		if (attackClonesLeft.Count > 0) {
+		if (attackClonesLeft != null && attackClonesLeft.Count > 0) {
 			for (int i = 0; i < attackClonesLeft.Count; i++) {
 				if (attackClonesLeft[i] != null) {
 					attackClonesLeft[i].transform.Translate(Vector2.left * Time.deltaTime * attackVelocity);
@@ -213,8 +180,13 @@ public class CorRightBootSkills : RightBootSkills
 		canJumpCancel = true;
 	}
 
-	public override void PerformJumpCancel() {
-		rigidbody.velocity = Vector2.zero;
+	public override void PerformJumpCancel(Rigidbody2D playerRigidbody) {
+		playerRigidbody.velocity = Vector2.zero;
 		canJumpCancel = false;
+	}
+
+	public override IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone) {
+		yield return new WaitForSeconds(jumpEffectCloneSec);
+		Object.Destroy(jumpEffectClone);
 	}
 }

@@ -29,44 +29,74 @@ public class CustomAnimation
 	// Create Animations
 	private Sprite[] spritesToAnimate;
 	private SpriteRenderer spriteRenderer;
-	private float framesPerSecond;
+	private float animSpeedSmallerIsFaster;
 	private int spriteIndex = 0;
 
 	public CustomAnimation(Sprite[] spritesToAnimate) {
 		this.spritesToAnimate = spritesToAnimate;
-		framesPerSecond = 0.05f; // 20 FPS
+		animSpeedSmallerIsFaster = 0.08f;
 		animationCreated = true;
 	}
 
 	public CustomAnimation(Sprite[] spritesToAnimate, SpriteRenderer spriteRenderer) {
 		this.spritesToAnimate = spritesToAnimate;
 		this.spriteRenderer = spriteRenderer;
-		framesPerSecond = 0.05f; // 20 FPS
+		animSpeedSmallerIsFaster = 0.08f;
 		animationCreated = true;
 	}
 
 	// Play the Animation you Created
 	private float timerForCreatedAnimation;
 
-	public void PlayCreatedAnimation() {
+	public void PlayCreatedAnimationOnLoop() {
 		timerForCreatedAnimation += Time.deltaTime;
 		if (animationCreated) {
-			if (timerForCreatedAnimation >= (framesPerSecond + Time.deltaTime)) {
-				timerForCreatedAnimation -= (framesPerSecond + Time.deltaTime);
+			if (timerForCreatedAnimation >= (animSpeedSmallerIsFaster + Time.deltaTime)) {
+				timerForCreatedAnimation -= (animSpeedSmallerIsFaster + Time.deltaTime);
 				spriteRenderer.sprite = spritesToAnimate[spriteIndex];
 				spriteIndex = (spriteIndex + 1) % spritesToAnimate.Length;
 			}
 		}
 	}
 
-	public void PlayCreatedAnimation(SpriteRenderer localSpriteRenderer) {
+	public void PlayCreatedAnimationOnLoop(SpriteRenderer localSpriteRenderer) {
 		timerForCreatedAnimation += Time.deltaTime;
 		if (animationCreated) {
-			if (timerForCreatedAnimation >= (framesPerSecond + Time.deltaTime)) {
-				timerForCreatedAnimation -= (framesPerSecond + Time.deltaTime);
+			if (timerForCreatedAnimation >= (animSpeedSmallerIsFaster + Time.deltaTime)) {
+				timerForCreatedAnimation -= (animSpeedSmallerIsFaster + Time.deltaTime);
 				localSpriteRenderer.sprite = spritesToAnimate[spriteIndex];
 				spriteIndex = (spriteIndex + 1) % spritesToAnimate.Length;
 			}
 		}
+	}
+
+	public void PlayCreatedAnimationOnce(SpriteRenderer localSpriteRenderer) {
+		if (spriteIndex < spritesToAnimate.Length) {
+			timerForCreatedAnimation += Time.deltaTime;
+			if (animationCreated) {
+				if (timerForCreatedAnimation >= (animSpeedSmallerIsFaster + Time.deltaTime)) {
+					timerForCreatedAnimation -= (animSpeedSmallerIsFaster + Time.deltaTime);
+					localSpriteRenderer.sprite = spritesToAnimate[spriteIndex];
+					spriteIndex++;
+				}
+			}
+		}
+	}
+
+	public void PlayCreatedAnimationOnceWithModifiedSpeed(SpriteRenderer localSpriteRenderer, float animSpeed) {
+		if (spriteIndex < spritesToAnimate.Length) {
+			timerForCreatedAnimation += Time.deltaTime;
+			if (animationCreated) {
+				if (timerForCreatedAnimation >= (animSpeed + Time.deltaTime)) {
+					timerForCreatedAnimation -= (animSpeed + Time.deltaTime);
+					localSpriteRenderer.sprite = spritesToAnimate[spriteIndex];
+					spriteIndex++;
+				}
+			}
+		}
+	}
+
+	public void ResetIndexToZero() {
+		spriteIndex = 0;
 	}
 }
