@@ -122,8 +122,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
-        height: 144
+        width: 43
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f19bee99855e94004a27a68e781cd6bc
-      internalID: -679310360
+      spriteID: 84cc2f56de1364b5ba62daed2d178b2b
+      internalID: 973731696
       vertices: []
       indices: 
       edges: []
@@ -141,10 +141,10 @@ TextureImporter:
       name: Idle-Sheet_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 43
         y: 0
-        width: 128
-        height: 144
+        width: 43
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 170969d1c58ec4aa7a444e4e70103269
-      internalID: -1750402235
+      spriteID: 933cfd35558f64f3d8ef82c13747aaf0
+      internalID: -1506503894
       vertices: []
       indices: 
       edges: []
@@ -162,10 +162,10 @@ TextureImporter:
       name: Idle-Sheet_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 86
         y: 0
-        width: 128
-        height: 144
+        width: 43
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbf83961b171f49b7a0bbc929f182ce8
-      internalID: 1861007086
+      spriteID: d968f379ed6b4427386e7de8070aa110
+      internalID: -1193866904
       vertices: []
       indices: 
       edges: []
@@ -183,10 +183,10 @@ TextureImporter:
       name: Idle-Sheet_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 129
         y: 0
-        width: 128
-        height: 144
+        width: 43
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e13d166fd6fea40d896db8f3e8c3e370
-      internalID: -1905787
+      spriteID: 49e892323f95647369de994eb893c8a5
+      internalID: -1636194702
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
       name: Idle-Sheet_4
       rect:
         serializedVersion: 2
-        x: 512
+        x: 172
         y: 0
-        width: 128
-        height: 144
+        width: 43
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0909ca9d3f5c436f95c578cf33b5b3a
-      internalID: -1768749542
+      spriteID: dbe3e62025b104d5e8b4c61ce6f2c540
+      internalID: 1739391267
       vertices: []
       indices: 
       edges: []
@@ -225,10 +225,10 @@ TextureImporter:
       name: Idle-Sheet_5
       rect:
         serializedVersion: 2
-        x: 640
+        x: 215
         y: 0
-        width: 128
-        height: 144
+        width: 43
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,8 +236,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07a9d59f30dfe479b8a62139037151ca
-      internalID: 1208400732
+      spriteID: 4201c11c8bc3e41fab58e14e213c975c
+      internalID: 1381447964
       vertices: []
       indices: 
       edges: []
@@ -246,10 +246,10 @@ TextureImporter:
       name: Idle-Sheet_6
       rect:
         serializedVersion: 2
-        x: 768
+        x: 258
         y: 0
-        width: 128
-        height: 144
+        width: 43
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,8 +257,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de9e0da03ca624bd0b3c5131a5447f1b
-      internalID: -807896176
+      spriteID: 313c42578db024d5d9089a22e7673265
+      internalID: -748108392
       vertices: []
       indices: 
       edges: []
@@ -267,10 +267,10 @@ TextureImporter:
       name: Idle-Sheet_7
       rect:
         serializedVersion: 2
-        x: 896
+        x: 301
         y: 0
-        width: 128
-        height: 144
+        width: 43
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,8 +278,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4739823453004bbb93bb6741b4f0766
-      internalID: -3648400
+      spriteID: 204320e0ef3504ceca804c9676941c1b
+      internalID: 209876671
       vertices: []
       indices: 
       edges: []
@@ -295,14 +295,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Idle-Sheet_1: -1750402235
-      Idle-Sheet_7: -3648400
-      Idle-Sheet_0: -679310360
-      Idle-Sheet_6: -807896176
-      Idle-Sheet_3: -1905787
-      Idle-Sheet_4: -1768749542
-      Idle-Sheet_5: 1208400732
-      Idle-Sheet_2: 1861007086
+      Idle-Sheet_1: -1506503894
+      Idle-Sheet_7: 209876671
+      Idle-Sheet_0: 973731696
+      Idle-Sheet_6: -748108392
+      Idle-Sheet_3: -1636194702
+      Idle-Sheet_4: 1739391267
+      Idle-Sheet_5: 1381447964
+      Idle-Sheet_2: -1193866904
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
