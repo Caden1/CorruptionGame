@@ -319,9 +319,9 @@ public class PlayerController : MonoBehaviour
 	private void LoadGemStates() {
 		/* These lines of code before the "swap.InitialGemState();" will need to be loaded from persistent data */
 		GlovesGem.glovesGemState = GlovesGem.GlovesGemState.Purity;
-		BootsGem.bootsGemState = BootsGem.BootsGemState.Corruption;
-		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.Air;
-		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.Fire;
+		BootsGem.bootsGemState = BootsGem.BootsGemState.None;
+		RightGloveModGem.rightGloveModGemState = RightGloveModGem.RightGloveModGemState.None;
+		LeftGloveModGem.leftGloveModGemState = LeftGloveModGem.LeftGloveModGemState.None;
 		RightBootModGem.rightBootModGemState = RightBootModGem.RightBootModGemState.None;
 		LeftBootModGem.leftBootModGemState = LeftBootModGem.LeftBootModGemState.None;
 
