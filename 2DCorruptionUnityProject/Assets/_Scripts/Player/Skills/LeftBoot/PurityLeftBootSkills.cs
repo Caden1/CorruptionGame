@@ -10,7 +10,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 
 	public override void SetWithNoModifiers() {
 		isInvulnerable = false;
-		dashVelocity = 7f;
+		dashVelocity = 12f;
 		secondsToDash = 0.5f;
 		cooldown = 2f;
 		dashEffectCloneSec = 0.4f;
@@ -20,7 +20,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 
 	public override void SetAirModifiers() {
 		isInvulnerable = false;
-		dashVelocity = 12f;
+		dashVelocity = 16f;
 		secondsToDash = 0.5f;
 		cooldown = 2f;
 		dashEffectCloneSec = 0.4f;

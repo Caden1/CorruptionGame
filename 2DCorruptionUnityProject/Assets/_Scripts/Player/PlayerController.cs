@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour
 
 	private const string IDLE_ANIM = "Idle";
 	private const string NO_GEM_UPPERCUT_JUMP_ANIM	 = "NoGemUppercutJump";
+	private const string NO_GEM_KICK_DASH_ANIM = "NoGemKickDash";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -265,6 +266,7 @@ public class PlayerController : MonoBehaviour
 				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_UPPERCUT_JUMP_ANIM);
 				break;
 			case Animation.AnimationState.LeftBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_KICK_DASH_ANIM);
 				break;
 			case Animation.AnimationState.RightGlove:
 				break;
