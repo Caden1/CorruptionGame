@@ -138,6 +138,7 @@ public class PlayerController : MonoBehaviour
 	private const string IDLE_ANIM = "Idle";
 	private const string NO_GEM_UPPERCUT_JUMP_ANIM	 = "NoGemUppercutJump";
 	private const string NO_GEM_KICK_DASH_ANIM = "NoGemKickDash";
+	private const string NO_GEM_PUNCH_ANIM = "NoGemPunch";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -269,6 +270,7 @@ public class PlayerController : MonoBehaviour
 				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_KICK_DASH_ANIM);
 				break;
 			case Animation.AnimationState.RightGlove:
+				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUNCH_ANIM);
 				break;
 			case Animation.AnimationState.LeftGlove:
 				break;
@@ -677,6 +679,7 @@ public class PlayerController : MonoBehaviour
 			case GlovesGem.GlovesGemState.None:
 				noGemsRightGloveSkills.SetupMelee(isFacingRight, meleePositionRight, meleePositionLeft);
 				StartCoroutine(noGemsRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(noGemsRightGloveSkills.ResetAnimation());
 				StartCoroutine(noGemsRightGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
@@ -688,6 +691,7 @@ public class PlayerController : MonoBehaviour
 					purityRightGloveSkills.SetupMelee(pureAirMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
 				}
 				StartCoroutine(purityRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(purityRightGloveSkills.ResetAnimation());
 				StartCoroutine(purityRightGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
@@ -699,6 +703,7 @@ public class PlayerController : MonoBehaviour
 					corRightGloveSkills.SetupMelee(corAirMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
 				}
 				StartCoroutine(corRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(corRightGloveSkills.ResetAnimation());
 				StartCoroutine(corRightGloveSkills.TempLockMovement());
 				break;
 		}

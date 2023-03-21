@@ -25,16 +25,18 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetWithNoGems() {
+		float punchSeconds = 0.2f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
-		lockMovementSec = 0.2f;
-		meleeEffectCloneSec = 0.2f;
-		cooldownSec = 0.2f;
+		animationSec = punchSeconds;
+		lockMovementSec = punchSeconds;
+		meleeEffectCloneSec = punchSeconds;
+		cooldownSec = punchSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
-		forcedMovementSec = 0.1f;
+		forcedMovementSec = punchSeconds;
 		attackOrigin = new Vector2();
 	}
 
@@ -62,6 +64,10 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 
 	public void PerformMelee() {
 		canMelee = false;
+	}
+
+	public override IEnumerator ResetAnimation() {
+		yield return new WaitForSeconds(animationSec);
 		isAnimating = false;
 	}
 
