@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5ea96c9ac3f9b404e9694208a8c06e37
+guid: 6377c4d7b9d6348f3909a591ca85947b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,106 +117,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NoGemNoDamageDashEffect-Sheet_0
+      name: NoGemPunch-Sheet_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 82
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 126
+      alignment: 9
+      pivot: {x: 0.34375, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd534882a544f4c5c8dda04efed84020
-      internalID: -295624502
+      spriteID: 5ca0bafb8348e4761803df9b1743b1f8
+      internalID: -1187277723
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemNoDamageDashEffect-Sheet_1
+      name: NoGemPunch-Sheet_1
       rect:
         serializedVersion: 2
-        x: 85
+        x: 64
         y: 0
-        width: 82
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 126
+      alignment: 9
+      pivot: {x: 0.34375, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8a845a98fe2546be9f951b5ffb5bd94
-      internalID: 1400907608
+      spriteID: ab20a8a20ecf74c5fad3e361bc1e2eaf
+      internalID: -410518710
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemNoDamageDashEffect-Sheet_2
+      name: NoGemPunch-Sheet_2
       rect:
         serializedVersion: 2
-        x: 169
+        x: 128
         y: 0
-        width: 82
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 126
+      alignment: 9
+      pivot: {x: 0.34375, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abd26c74b77154f358b119f010ce1aac
-      internalID: 1850907057
+      spriteID: d998e43b0960a43829d156c989a6ba9b
+      internalID: 649315331
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemNoDamageDashEffect-Sheet_3
+      name: NoGemPunch-Sheet_3
       rect:
         serializedVersion: 2
-        x: 253
+        x: 192
         y: 0
-        width: 82
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 126
+      alignment: 9
+      pivot: {x: 0.34375, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7013fe38b772c4db892a8b1c01bf53e5
-      internalID: -1675758520
+      spriteID: d27941be57c444aa8ad53c33eb9945dd
+      internalID: 256677994
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemNoDamageDashEffect-Sheet_4
+      name: NoGemPunch-Sheet_4
       rect:
         serializedVersion: 2
-        x: 337
+        x: 256
         y: 0
-        width: 82
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 64
+        height: 126
+      alignment: 9
+      pivot: {x: 0.34375, y: 0.50793654}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e5725e020a374d539fe6a03d59adf0e
-      internalID: -1731760777
+      spriteID: 9432b6c8b41db4216873732ba5895239
+      internalID: 417539642
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemNoDamageDashEffect-Sheet_1: 1400907608
-      NoGemNoDamageDashEffect-Sheet_0: -295624502
-      NoGemNoDamageDashEffect-Sheet_4: -1731760777
-      NoGemNoDamageDashEffect-Sheet_3: -1675758520
-      NoGemNoDamageDashEffect-Sheet_2: 1850907057
+      NoGemPunch-Sheet_4: 417539642
+      NoGemPunch-Sheet_2: 649315331
+      NoGemPunch-Sheet_3: 256677994
+      NoGemPunch-Sheet_1: -410518710
+      NoGemPunch-Sheet_0: -1187277723
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

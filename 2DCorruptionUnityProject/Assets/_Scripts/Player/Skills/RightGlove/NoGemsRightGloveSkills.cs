@@ -4,41 +4,71 @@ using UnityEngine;
 
 public class NoGemsRightGloveSkills : RightGloveSkills
 {
+	public override void SetWithNoModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetAirModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetFireModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetWaterModifiers() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void SetEarthModifiers() {
+		throw new System.NotImplementedException();
+	}
+
 	public override void SetWithNoGems() {
+		float punchSeconds = 0.2f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
-		lockMovementSec = 0.2f;
-		meleeEffectCloneSec = 0.2f;
-		cooldownSec = 0.2f;
+		animationSec = punchSeconds;
+		lockMovementSec = punchSeconds;
+		meleeEffectCloneSec = punchSeconds;
+		cooldownSec = punchSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
-		forcedMovementSec = 0.1f;
+		forcedMovementSec = punchSeconds;
 		attackOrigin = new Vector2();
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
+		throw new System.NotImplementedException();
+	}
+
+	public override GameObject PerformMelee(GameObject meleeEffect) {
+		throw new System.NotImplementedException();
+	}
+
+	public void SetupMelee(bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
 		canMelee = true;
 		isAnimating = true;
 		lockMovement = true;
 		hasForcedMovement = true;
 		if (isFacingRight) {
-			meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
 			attackOrigin = positionRight;
 			forcedMovementVector = new Vector2(forcedMovementVel, 0f);
 		} else {
-			meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
 			attackOrigin = positionLeft;
 			forcedMovementVector = new Vector2(-forcedMovementVel, 0f);
 		}
 	}
 
-	public override GameObject PerformMelee(GameObject meleeEffect) {
-		GameObject meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
+	public void PerformMelee() {
 		canMelee = false;
+	}
+
+	public override IEnumerator ResetAnimation() {
+		yield return new WaitForSeconds(animationSec);
 		isAnimating = false;
-		return meleeEffectClone;
 	}
 
 	public override IEnumerator ResetForcedMovement() {
@@ -60,25 +90,5 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 	public override IEnumerator TempLockMovement() {
 		yield return new WaitForSeconds(lockMovementSec);
 		lockMovement = false;
-	}
-
-	public override void SetWithNoModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetAirModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetFireModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetWaterModifiers() {
-		throw new System.NotImplementedException();
-	}
-
-	public override void SetEarthModifiers() {
-		throw new System.NotImplementedException();
 	}
 }

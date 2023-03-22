@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d295edda8c33449e789ab2864ca1cfaf
+guid: cbea8e03d32db4d31b9ef6fc8608b0f8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,64 +117,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NoGemPullEffect-Sheet_0
+      name: NoGemPush-Sheet_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 234
+        width: 69
         height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.3188406, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6f92c513767542e8a75b9c34f16e8d8
-      internalID: 1819779483
+      spriteID: 07f218b48664849d8a764775f6954988
+      internalID: -973368705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPullEffect-Sheet_1
+      name: NoGemPush-Sheet_1
       rect:
         serializedVersion: 2
-        x: 237
+        x: 69
         y: 0
-        width: 233
+        width: 69
         height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.3188406, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 640519e8f99bb4ee09c7066e5c5bfe2d
-      internalID: -959853268
+      spriteID: c5cca9e24b1d64bb9a37574535cf3a27
+      internalID: 1139783566
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPullEffect-Sheet_2
+      name: NoGemPush-Sheet_2
       rect:
         serializedVersion: 2
-        x: 473
+        x: 138
         y: 0
-        width: 232
+        width: 69
         height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.3188406, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36794c439b2cf4ade83417fb161bd2c7
-      internalID: -55165719
+      spriteID: 3d0572398254a4603a21df753ab68544
+      internalID: 2046038867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NoGemPush-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 0
+        width: 69
+        height: 128
+      alignment: 9
+      pivot: {x: 0.3188406, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0db6eb73f6a0f46e0983db5bcf04935c
+      internalID: 111782651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NoGemPush-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 0
+        width: 69
+        height: 128
+      alignment: 9
+      pivot: {x: 0.3188406, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 434f7037474ee4224842201aafa05cc6
+      internalID: -1665656834
       vertices: []
       indices: 
       edges: []
@@ -190,9 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemPullEffect-Sheet_0: 1819779483
-      NoGemPullEffect-Sheet_1: -959853268
-      NoGemPullEffect-Sheet_2: -55165719
+      NoGemPush-Sheet_3: 111782651
+      NoGemPush-Sheet_4: -1665656834
+      NoGemPush-Sheet_1: 1139783566
+      NoGemPush-Sheet_2: 2046038867
+      NoGemPush-Sheet_0: -973368705
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

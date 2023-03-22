@@ -5,22 +5,6 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
 	// No Gem
-	[SerializeField] private Sprite[] noGemJumpEffectSprites;
-	[SerializeField] private GameObject noGemJumpEffect;
-	[SerializeField] private Sprite[] noGemNoDamageDashEffectSprites;
-	[SerializeField] private GameObject noGemNoDamageDashEffect;
-	[SerializeField] private Sprite[] noGemMeleeEffectSprites;
-	[SerializeField] private GameObject noGemMeleeEffect;
-	[SerializeField] private Sprite[] noGemPullEffectSprites;
-	[SerializeField] private GameObject noGemPullEffect;
-	private GameObject noGemJumpEffectClone;
-	private GameObject noGemNoDamageDashEffectClone;
-	private GameObject noGemMeleeEffectClone;
-	private GameObject noGemPullEffectClone;
-	private CustomAnimation noGemJumpEffectAnim;
-	private CustomAnimation noGemNoDamageDashEffectAnim;
-	private CustomAnimation noGemMeleeEffectAnim;
-	private CustomAnimation noGemPullEffectAnim;
 	private NoGemsRightGloveSkills noGemsRightGloveSkills;
 	private NoGemsLeftGloveSkills noGemsLeftGloveSkills;
 	private NoGemsRightBootSkills noGemsRightBootSkills;
@@ -152,6 +136,10 @@ public class PlayerController : MonoBehaviour
 	private Swap swap;
 
 	private const string IDLE_ANIM = "Idle";
+	private const string NO_GEM_UPPERCUT_JUMP_ANIM	 = "NoGemUppercutJump";
+	private const string NO_GEM_KICK_DASH_ANIM = "NoGemKickDash";
+	private const string NO_GEM_PUNCH_ANIM = "NoGemPunch";
+	private const string NO_GEM_PUSH_ANIM = "NoGemPush";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -175,10 +163,6 @@ public class PlayerController : MonoBehaviour
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
 
 		// No Gem
-		noGemJumpEffectAnim = new CustomAnimation(noGemJumpEffectSprites);
-		noGemNoDamageDashEffectAnim = new CustomAnimation(noGemNoDamageDashEffectSprites);
-		noGemMeleeEffectAnim = new CustomAnimation(noGemMeleeEffectSprites);
-		noGemPullEffectAnim = new CustomAnimation(noGemPullEffectSprites);
 		noGemsRightGloveSkills = new NoGemsRightGloveSkills();
 		noGemsLeftGloveSkills = new NoGemsLeftGloveSkills();
 		noGemsRightBootSkills = new NoGemsRightBootSkills();
@@ -281,12 +265,16 @@ public class PlayerController : MonoBehaviour
 			case Animation.AnimationState.Fall:
 				break;
 			case Animation.AnimationState.RightBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_UPPERCUT_JUMP_ANIM);
 				break;
 			case Animation.AnimationState.LeftBoot:
+				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_KICK_DASH_ANIM);
 				break;
 			case Animation.AnimationState.RightGlove:
+				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUNCH_ANIM);
 				break;
 			case Animation.AnimationState.LeftGlove:
+				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUSH_ANIM);
 				break;
 		}
 
@@ -344,26 +332,6 @@ public class PlayerController : MonoBehaviour
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
 
 		// No Gem
-		if (noGemJumpEffectClone != null) {
-			noGemJumpEffectAnim.PlayCreatedAnimationOnce(noGemJumpEffectClone.GetComponent<SpriteRenderer>());
-			StartCoroutine(noGemsRightBootSkills.DestroyJumpEffectClone(noGemJumpEffectClone));
-		}
-		if (noGemNoDamageDashEffectClone != null) {
-			noGemNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(noGemNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
-			StartCoroutine(noGemsLeftBootSkills.DestroyDashEffectClone(noGemNoDamageDashEffectClone));
-		}
-		if (noGemMeleeEffectClone != null) {
-			noGemMeleeEffectAnim.PlayCreatedAnimationOnce(noGemMeleeEffectClone.GetComponent<SpriteRenderer>());
-			if (isFacingRight)
-				noGemMeleeEffectClone.transform.position = meleePositionRight;
-			else
-				noGemMeleeEffectClone.transform.position = meleePositionLeft;
-			StartCoroutine(noGemsRightGloveSkills.DestroyEffectClone(noGemMeleeEffectClone));
-		}
-		if (noGemPullEffectClone != null) {
-			noGemPullEffectAnim.PlayCreatedAnimationOnce(noGemPullEffectClone.GetComponent<SpriteRenderer>());
-			StartCoroutine(noGemsLeftGloveSkills.DestroyEffectClone(noGemPullEffectClone));
-		}
 
 		// Purity
 		if (pureJumpEffectClone != null) {
@@ -466,7 +434,7 @@ public class PlayerController : MonoBehaviour
 			Animation.animationState = Animation.AnimationState.LeftBoot;
 		else if (RightGloveSkills.isAnimating)
 			Animation.animationState = Animation.AnimationState.RightGlove;
-		else if (LeftGloveSkills.isAttacking)
+		else if (LeftGloveSkills.isAnimating)
 			Animation.animationState = Animation.AnimationState.LeftGlove;
 		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && actualXMoveDirection != 0f)
 			Animation.animationState = Animation.AnimationState.Run;
@@ -558,7 +526,6 @@ public class PlayerController : MonoBehaviour
 	private void SetupRightBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemJumpEffectAnim.ResetIndexToZero();
 				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
 				break;
 			case BootsGem.BootsGemState.Purity:
@@ -585,7 +552,7 @@ public class PlayerController : MonoBehaviour
 	private void PerformRightBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-			 	noGemJumpEffectClone = noGemsRightBootSkills.PerformJump(playerRigidbody, noGemJumpEffect);
+			 	noGemsRightBootSkills.PerformJump(playerRigidbody);
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
@@ -663,8 +630,7 @@ public class PlayerController : MonoBehaviour
 	private void SetupLeftBootSkill() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemNoDamageDashEffectAnim.ResetIndexToZero();
-				noGemNoDamageDashEffectClone = noGemsLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, noGemNoDamageDashEffect, playerGroundedWhenDashing, corDamagingDashEffect);
+				noGemsLeftBootSkills.SetupDash(isFacingRight);
 				StartCoroutine(noGemsLeftBootSkills.StartDashCooldown(playerInputActions));
 				break;
 			case BootsGem.BootsGemState.Purity:
@@ -713,9 +679,9 @@ public class PlayerController : MonoBehaviour
 	private void SetupRightGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemMeleeEffectAnim.ResetIndexToZero();
-				noGemsRightGloveSkills.SetupMelee(noGemMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				noGemsRightGloveSkills.SetupMelee(isFacingRight, meleePositionRight, meleePositionLeft);
 				StartCoroutine(noGemsRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(noGemsRightGloveSkills.ResetAnimation());
 				StartCoroutine(noGemsRightGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
@@ -727,6 +693,7 @@ public class PlayerController : MonoBehaviour
 					purityRightGloveSkills.SetupMelee(pureAirMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
 				}
 				StartCoroutine(purityRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(purityRightGloveSkills.ResetAnimation());
 				StartCoroutine(purityRightGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
@@ -738,6 +705,7 @@ public class PlayerController : MonoBehaviour
 					corRightGloveSkills.SetupMelee(corAirMeleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
 				}
 				StartCoroutine(corRightGloveSkills.StartMeleeCooldown(playerInputActions));
+				StartCoroutine(corRightGloveSkills.ResetAnimation());
 				StartCoroutine(corRightGloveSkills.TempLockMovement());
 				break;
 		}
@@ -746,7 +714,7 @@ public class PlayerController : MonoBehaviour
 	private void PerformRightGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemMeleeEffectClone = noGemsRightGloveSkills.PerformMelee(noGemMeleeEffect);
+				noGemsRightGloveSkills.PerformMelee();
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None)
@@ -768,9 +736,9 @@ public class PlayerController : MonoBehaviour
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
 				offset = 1.5f;
-				noGemPullEffectAnim.ResetIndexToZero();
 				noGemsLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
 				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(noGemsLeftGloveSkills.ResetAnimation());
 				StartCoroutine(noGemsLeftGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
@@ -782,6 +750,7 @@ public class PlayerController : MonoBehaviour
 				}
 				purityLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
 				StartCoroutine(purityLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(purityLeftGloveSkills.ResetAnimation());
 				StartCoroutine(purityLeftGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
@@ -794,6 +763,7 @@ public class PlayerController : MonoBehaviour
 				}
 				corLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
 				StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(corLeftGloveSkills.ResetAnimation());
 				StartCoroutine(corLeftGloveSkills.TempLockMovement());
 				break;
 		}
@@ -802,7 +772,7 @@ public class PlayerController : MonoBehaviour
 	private void PerformLeftGloveSkill() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemPullEffectClone = noGemsLeftGloveSkills.PerformLeftGloveSkill(noGemPullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
+				noGemsLeftGloveSkills.PerformLeftGloveSkill();
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None)

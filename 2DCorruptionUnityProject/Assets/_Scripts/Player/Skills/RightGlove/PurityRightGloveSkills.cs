@@ -14,12 +14,14 @@ public class PurityRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetWithNoModifiers() {
+		float punchSeconds = 0.2f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
-		lockMovementSec = 0.2f;
-		meleeEffectCloneSec = 0.3f;
-		cooldownSec = 0.2f;
+		animationSec = punchSeconds;
+		lockMovementSec = punchSeconds;
+		meleeEffectCloneSec = punchSeconds;
+		cooldownSec = punchSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -28,12 +30,14 @@ public class PurityRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetAirModifiers() {
+		float punchSeconds = 0.2f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
-		lockMovementSec = 0.2f;
-		meleeEffectCloneSec = 0.3f;
-		cooldownSec = 0.2f;
+		animationSec = punchSeconds;
+		lockMovementSec = punchSeconds;
+		meleeEffectCloneSec = punchSeconds;
+		cooldownSec = punchSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -78,13 +82,16 @@ public class PurityRightGloveSkills : RightGloveSkills
 	public override GameObject PerformMelee(GameObject meleeEffect) {
 		GameObject meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
 		canMelee = false;
-		isAnimating = false;
 		return meleeEffectClone;
 	}
 
 	public void PerformAirMelee(GameObject meleeEffect) {
 		airClones.Add(Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation));
 		canMelee = false;
+	}
+
+	public override IEnumerator ResetAnimation() {
+		yield return new WaitForSeconds(animationSec);
 		isAnimating = false;
 	}
 

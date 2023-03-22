@@ -7,6 +7,7 @@ public abstract class RightGloveSkills : Skills
 	public static bool canMelee { get; protected set; }
 	public static bool isAnimating { get; protected set; }
 	protected float meleeEffectCloneSec;
+	protected float animationSec;
 	protected float lockMovementSec;
 	protected float forcedMovementVel;
 	protected float forcedMovementSec;
@@ -28,6 +29,8 @@ public abstract class RightGloveSkills : Skills
 	public abstract void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft);
 
 	public abstract GameObject PerformMelee(GameObject meleeEffect);
+
+	public abstract IEnumerator ResetAnimation();
 
 	public abstract IEnumerator ResetForcedMovement();
 

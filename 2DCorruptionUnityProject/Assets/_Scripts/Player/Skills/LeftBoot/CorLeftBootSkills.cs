@@ -16,8 +16,8 @@ public class CorLeftBootSkills : LeftBootSkills
 
 	public override void SetWithNoModifiers() {
 		isInvulnerable = false;
-		dashVelocity = 7f;
-		secondsToDash = 0.25f;
+		dashVelocity = 8f;
+		secondsToDash = 0.5f;
 		cooldown = 2f;
 		dashEffectCloneSec = 0.4f;
 		dashDirection = new Vector2();

@@ -5,7 +5,8 @@ using UnityEngine;
 public abstract class LeftGloveSkills : Skills
 {
 	public static bool canAttack { get; protected set; }
-	public static bool isAttacking { get; protected set; }
+	public static bool isAnimating { get; protected set; }
+	protected float animationSec;
 	protected float lockMovementSec;
 	protected float cooldownSec;
 	protected float pullEffectCloneSec;
@@ -28,13 +29,11 @@ public abstract class LeftGloveSkills : Skills
 
 	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation);
 
+	public abstract IEnumerator ResetAnimation();
+
 	public abstract IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions);
 
 	public abstract IEnumerator TempLockMovement();
 
 	public abstract IEnumerator DestroyEffectClone(GameObject effectClone);
-
-	//public abstract void ShootProjectile();
-
-	//public abstract IEnumerator ResetLeftGloveSkillAnim();
 }

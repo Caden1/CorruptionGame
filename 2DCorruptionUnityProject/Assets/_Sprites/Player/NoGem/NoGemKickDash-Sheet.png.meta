@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aabe331aa3a0845248e92c1a90a8d2a9
+guid: f1924bf43f132481aa2693e0a906199a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,64 +117,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NoGemJumpEffect-Sheet_0
+      name: NoGemKickDash-Sheet_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 81
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 92
+        height: 128
+      alignment: 9
+      pivot: {x: 0.23913044, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b57a206d7a5cd406ca7b7eb0578238df
-      internalID: 1492344593
+      spriteID: dafb2d824fc50434e9ca6d8fb047f4bd
+      internalID: -2074827440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemJumpEffect-Sheet_1
+      name: NoGemKickDash-Sheet_1
       rect:
         serializedVersion: 2
-        x: 84
+        x: 92
         y: 0
-        width: 81
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 92
+        height: 128
+      alignment: 9
+      pivot: {x: 0.23913044, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6f58721b197c46eba359951a8fda8b2
-      internalID: -1935023395
+      spriteID: b65db83bd91434f7e9378b95ac0ef642
+      internalID: 386206350
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemJumpEffect-Sheet_2
+      name: NoGemKickDash-Sheet_2
       rect:
         serializedVersion: 2
-        x: 167
+        x: 184
         y: 0
-        width: 81
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 92
+        height: 128
+      alignment: 9
+      pivot: {x: 0.23913044, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d9828d612e824866b35cdad113a2f15
-      internalID: -1564078091
+      spriteID: 11d39a87c74c34d7ea1e94290d3ff340
+      internalID: -750850569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NoGemKickDash-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 0
+        width: 92
+        height: 128
+      alignment: 9
+      pivot: {x: 0.23913044, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11b83877e60e04be9a252960c7836f8f
+      internalID: -1518846758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NoGemKickDash-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 0
+        width: 92
+        height: 128
+      alignment: 9
+      pivot: {x: 0.23913044, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10f786667c09a4a2b82a7a69c2e6692f
+      internalID: -1544017127
       vertices: []
       indices: 
       edges: []
@@ -190,9 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemJumpEffect-Sheet_2: -1564078091
-      NoGemJumpEffect-Sheet_1: -1935023395
-      NoGemJumpEffect-Sheet_0: 1492344593
+      NoGemKickDash-Sheet_3: -1518846758
+      NoGemKickDash-Sheet_2: -750850569
+      NoGemKickDash-Sheet_1: 386206350
+      NoGemKickDash-Sheet_0: -2074827440
+      NoGemKickDash-Sheet_4: -1544017127
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
