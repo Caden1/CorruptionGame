@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BasicMeleeEnemy : MonoBehaviour
 {
+	public float damageDealt { get; private set; }
 	private const string IDLE_ANIM = "Idle";
 	private const string ATTACK_ANIM = "Attack";
 	public GameObject playerObject;
@@ -28,6 +29,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private float attackSpeed = 4f;
 
 	private void Start() {
+		damageDealt = 10f;
 		// Starts enemy off moving left
 		if (transform.position.x >= 0f) {
 			xRaomToPosition = transform.position.x - roamDistance;
