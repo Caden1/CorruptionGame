@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour
 	private const string NO_GEM_UPPERCUT_JUMP_ANIM	 = "NoGemUppercutJump";
 	private const string NO_GEM_KICK_DASH_ANIM = "NoGemKickDash";
 	private const string NO_GEM_PUNCH_ANIM = "NoGemPunch";
+	private const string NO_GEM_PUSH_ANIM = "NoGemPush";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -273,6 +274,7 @@ public class PlayerController : MonoBehaviour
 				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUNCH_ANIM);
 				break;
 			case Animation.AnimationState.LeftGlove:
+				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUSH_ANIM);
 				break;
 		}
 
@@ -432,7 +434,7 @@ public class PlayerController : MonoBehaviour
 			Animation.animationState = Animation.AnimationState.LeftBoot;
 		else if (RightGloveSkills.isAnimating)
 			Animation.animationState = Animation.AnimationState.RightGlove;
-		else if (LeftGloveSkills.isAttacking)
+		else if (LeftGloveSkills.isAnimating)
 			Animation.animationState = Animation.AnimationState.LeftGlove;
 		else if (UtilsClass.IsBoxColliderGrounded(playerBoxCollider, platformLayerMask) && actualXMoveDirection != 0f)
 			Animation.animationState = Animation.AnimationState.Run;
@@ -736,6 +738,7 @@ public class PlayerController : MonoBehaviour
 				offset = 1.5f;
 				noGemsLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
 				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(noGemsLeftGloveSkills.ResetAnimation());
 				StartCoroutine(noGemsLeftGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
@@ -747,6 +750,7 @@ public class PlayerController : MonoBehaviour
 				}
 				purityLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
 				StartCoroutine(purityLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(purityLeftGloveSkills.ResetAnimation());
 				StartCoroutine(purityLeftGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
@@ -759,6 +763,7 @@ public class PlayerController : MonoBehaviour
 				}
 				corLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
 				StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
+				StartCoroutine(corLeftGloveSkills.ResetAnimation());
 				StartCoroutine(corLeftGloveSkills.TempLockMovement());
 				break;
 		}
