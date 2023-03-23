@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour
 	private const string NO_GEM_KICK_DASH_ANIM = "NoGemKickDash";
 	private const string NO_GEM_PUNCH_ANIM = "NoGemPunch";
 	private const string NO_GEM_PUSH_ANIM = "NoGemPush";
+	private const string PURITY_ONLY_JUMP_ANIM = "PurityOnlyJump";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -265,7 +266,11 @@ public class PlayerController : MonoBehaviour
 			case Animation.AnimationState.Fall:
 				break;
 			case Animation.AnimationState.RightBoot:
-				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_UPPERCUT_JUMP_ANIM);
+				if (BootsGem.bootsGemState == BootsGem.BootsGemState.None) {
+					playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_UPPERCUT_JUMP_ANIM);
+				} else if (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
+					playerAnimations.PlayUnityAnimatorAnimation(PURITY_ONLY_JUMP_ANIM);
+				}
 				break;
 			case Animation.AnimationState.LeftBoot:
 				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_KICK_DASH_ANIM);
