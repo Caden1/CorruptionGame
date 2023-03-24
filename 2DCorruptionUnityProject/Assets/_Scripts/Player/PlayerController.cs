@@ -136,11 +136,13 @@ public class PlayerController : MonoBehaviour
 	private Swap swap;
 
 	private const string IDLE_ANIM = "Idle";
+	private const string RUN_ANIM = "Run";
 	private const string NO_GEM_UPPERCUT_JUMP_ANIM	 = "NoGemUppercutJump";
 	private const string NO_GEM_KICK_DASH_ANIM = "NoGemKickDash";
 	private const string NO_GEM_PUNCH_ANIM = "NoGemPunch";
 	private const string NO_GEM_PUSH_ANIM = "NoGemPush";
 	private const string PURITY_ONLY_JUMP_ANIM = "PurityOnlyJump";
+	private const string PURITY_ONLY_FALL_ANIM = "PurityOnlyFall";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -262,8 +264,14 @@ public class PlayerController : MonoBehaviour
 				playerAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
 				break;
 			case Animation.AnimationState.Run:
+				playerAnimations.PlayUnityAnimatorAnimation(RUN_ANIM);
 				break;
 			case Animation.AnimationState.Fall:
+				if (BootsGem.bootsGemState == BootsGem.BootsGemState.None) {
+					
+				} else if (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
+					playerAnimations.PlayUnityAnimatorAnimation(PURITY_ONLY_FALL_ANIM);
+				}
 				break;
 			case Animation.AnimationState.RightBoot:
 				if (BootsGem.bootsGemState == BootsGem.BootsGemState.None) {
