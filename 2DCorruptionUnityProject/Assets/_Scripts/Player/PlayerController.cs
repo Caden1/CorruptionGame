@@ -137,12 +137,14 @@ public class PlayerController : MonoBehaviour
 
 	private const string IDLE_ANIM = "Idle";
 	private const string RUN_ANIM = "Run";
-	private const string NO_GEM_UPPERCUT_JUMP_ANIM	 = "NoGemUppercutJump";
+	private const string NO_GEM_UPPERCUT_JUMP_ANIM = "NoGemUppercutJump";
+	private const string NO_GEM_FALL_ANIM = "NoGemFall";
 	private const string NO_GEM_KICK_DASH_ANIM = "NoGemKickDash";
 	private const string NO_GEM_PUNCH_ANIM = "NoGemPunch";
 	private const string NO_GEM_PUSH_ANIM = "NoGemPush";
 	private const string PURITY_ONLY_JUMP_ANIM = "PurityOnlyJump";
 	private const string PURITY_ONLY_FALL_ANIM = "PurityOnlyFall";
+	private const string PURITY_ONLY_DASH_ANIM = "PurityOnlyDash";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -268,7 +270,7 @@ public class PlayerController : MonoBehaviour
 				break;
 			case Animation.AnimationState.Fall:
 				if (BootsGem.bootsGemState == BootsGem.BootsGemState.None) {
-					
+					playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_FALL_ANIM);
 				} else if (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
 					playerAnimations.PlayUnityAnimatorAnimation(PURITY_ONLY_FALL_ANIM);
 				}
@@ -281,7 +283,11 @@ public class PlayerController : MonoBehaviour
 				}
 				break;
 			case Animation.AnimationState.LeftBoot:
-				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_KICK_DASH_ANIM);
+				if (BootsGem.bootsGemState == BootsGem.BootsGemState.None) {
+					playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_KICK_DASH_ANIM);
+				} else if (BootsGem.bootsGemState == BootsGem.BootsGemState.Purity) {
+					playerAnimations.PlayUnityAnimatorAnimation(PURITY_ONLY_DASH_ANIM);
+				}
 				break;
 			case Animation.AnimationState.RightGlove:
 				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUNCH_ANIM);

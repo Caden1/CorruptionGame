@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0f842c8cdaf2a45738512c4d4f30a55f
+guid: 09ad0e64b71444626b381b05275c41fe
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,169 +117,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Run-Sheet_0
+      name: PurityOnlyDash-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 66
+        width: 59
         height: 128
       alignment: 9
-      pivot: {x: 0.5151515, y: 0.5}
+      pivot: {x: 0.47457626, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 679ad2ee9936c4b71a00ba3a7925271d
-      internalID: -1259998779
+      spriteID: 05a1ba163ab0f4b39bf89ec95fb403ea
+      internalID: -327268445
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_1
+      name: PurityOnlyDash-Sheet_1
       rect:
         serializedVersion: 2
-        x: 66
+        x: 59
         y: 0
-        width: 66
+        width: 59
         height: 128
       alignment: 9
-      pivot: {x: 0.5151515, y: 0.5}
+      pivot: {x: 0.47457626, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81e8a255190f9461883e1dc88a687e4b
-      internalID: -2023270447
+      spriteID: 6072704e93126470293b52b68f69b1b2
+      internalID: 2105728573
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_2
+      name: PurityOnlyDash-Sheet_2
       rect:
         serializedVersion: 2
-        x: 132
+        x: 118
         y: 0
-        width: 66
+        width: 59
         height: 128
       alignment: 9
-      pivot: {x: 0.5151515, y: 0.5}
+      pivot: {x: 0.47457626, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d57bd93ea223e4119becfd2cfec6840f
-      internalID: -1456724071
+      spriteID: 2557e985add4d482b8ce4ad064068926
+      internalID: -1475350855
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_3
+      name: PurityOnlyDash-Sheet_3
       rect:
         serializedVersion: 2
-        x: 198
+        x: 177
         y: 0
-        width: 66
+        width: 59
         height: 128
       alignment: 9
-      pivot: {x: 0.5151515, y: 0.5}
+      pivot: {x: 0.47457626, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6789d1acf18a4b739ba959f5d952cda
-      internalID: -1289227614
+      spriteID: eac72178d22ae496296a5314f8af16e2
+      internalID: 1013120198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Run-Sheet_4
+      name: PurityOnlyDash-Sheet_4
       rect:
         serializedVersion: 2
-        x: 264
+        x: 236
         y: 0
-        width: 66
+        width: 59
         height: 128
       alignment: 9
-      pivot: {x: 0.5151515, y: 0.5}
+      pivot: {x: 0.47457626, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c4b60ca3b3ee476fb7bdd109e96ab5b
-      internalID: -1586874408
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 330
-        y: 0
-        width: 66
-        height: 128
-      alignment: 9
-      pivot: {x: 0.5151515, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e34e7ed688d564ba78977c8039335c79
-      internalID: -1659457778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 396
-        y: 0
-        width: 66
-        height: 128
-      alignment: 9
-      pivot: {x: 0.5151515, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c9b623963c43341719837112e6334e2d
-      internalID: 989357988
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 462
-        y: 0
-        width: 66
-        height: 128
-      alignment: 9
-      pivot: {x: 0.5151515, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8dee9acb61bc244dc9cec82e20fbba0a
-      internalID: 821760256
+      spriteID: c149c9348ffdf4366b4202ab055ac733
+      internalID: -1393922086
       vertices: []
       indices: 
       edges: []
@@ -295,14 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Run-Sheet_0: -1259998779
-      Run-Sheet_7: 821760256
-      Run-Sheet_6: 989357988
-      Run-Sheet_5: -1659457778
-      Run-Sheet_1: -2023270447
-      Run-Sheet_4: -1586874408
-      Run-Sheet_3: -1289227614
-      Run-Sheet_2: -1456724071
+      PurityOnlyDash-Sheet_2: -1475350855
+      PurityOnlyDash-Sheet_0: -327268445
+      PurityOnlyDash-Sheet_3: 1013120198
+      PurityOnlyDash-Sheet_1: 2105728573
+      PurityOnlyDash-Sheet_4: -1393922086
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
