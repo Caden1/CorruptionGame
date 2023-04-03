@@ -145,6 +145,7 @@ public class PlayerController : MonoBehaviour
 	private const string PURITY_ONLY_JUMP_ANIM = "PurityOnlyJump";
 	private const string PURITY_ONLY_FALL_ANIM = "PurityOnlyFall";
 	private const string PURITY_ONLY_DASH_ANIM = "PurityOnlyDash";
+	private const string PURITY_ONLY_SHIELD_ANIM = "PurityOnlyShield";
 
 	private float moveVelocity = 4f;
 	private bool isFacingRight = true;
@@ -290,7 +291,11 @@ public class PlayerController : MonoBehaviour
 				}
 				break;
 			case Animation.AnimationState.RightGlove:
-				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUNCH_ANIM);
+				if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.None) {
+					playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUNCH_ANIM);
+				} else if (GlovesGem.glovesGemState == GlovesGem.GlovesGemState.Purity) {
+					playerAnimations.PlayUnityAnimatorAnimation(PURITY_ONLY_SHIELD_ANIM);
+				}
 				break;
 			case Animation.AnimationState.LeftGlove:
 				playerAnimations.PlayUnityAnimatorAnimation(NO_GEM_PUSH_ANIM);
