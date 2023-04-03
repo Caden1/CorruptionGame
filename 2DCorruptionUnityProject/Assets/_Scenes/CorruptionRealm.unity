@@ -916,29 +916,17 @@ MonoBehaviour:
   pureNoDamageDashEffect: {fileID: 3863685752463457200, guid: 2a7b45ec63847490484f52da028d8dee, type: 3}
   pureAirDashEffectSprites: []
   pureAirDashEffect: {fileID: 8651842492170691256, guid: 6c659e83a71ec4c76ac687d94c72a81e, type: 3}
-  pureMeleeEffect: {fileID: 1550512535146750824, guid: 9f1b803476b694cf5ab81351b8691abb, type: 3}
-  pureMeleeEffectSprites:
-  - {fileID: 1620989434, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
-  - {fileID: 1465045819, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
-  - {fileID: 2101544171, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
-  - {fileID: -1259072125, guid: 5d6565a4032754fceb56991e9d7667a8, type: 3}
-  pureAirMeleeEffect: {fileID: 5519809720809314649, guid: 094a5e2ccfbce4db7b6ad22d9ba0a039, type: 3}
-  pureAirMeleeEffectSprites:
-  - {fileID: -1141595232, guid: bd714d916b6e44cfdb974e033050280d, type: 3}
-  - {fileID: -2133948663, guid: bd714d916b6e44cfdb974e033050280d, type: 3}
-  - {fileID: -1160036012, guid: bd714d916b6e44cfdb974e033050280d, type: 3}
-  - {fileID: -560337527, guid: bd714d916b6e44cfdb974e033050280d, type: 3}
+  pureShieldEffectSprites:
+  - {fileID: -32737858, guid: dadfeb51f6a8648e39d49de9c0b2eb31, type: 3}
+  - {fileID: 855969097, guid: dadfeb51f6a8648e39d49de9c0b2eb31, type: 3}
+  - {fileID: -75831857, guid: dadfeb51f6a8648e39d49de9c0b2eb31, type: 3}
+  - {fileID: 1581357789, guid: dadfeb51f6a8648e39d49de9c0b2eb31, type: 3}
+  pureShieldEffect: {fileID: 1172981230446101837, guid: b368ad920e65548829d02dc20c95dc34, type: 3}
   purePullEffect: {fileID: 8368179588414506854, guid: a8b95b899a46148949396a0186c8e9d6, type: 3}
   purePullEffectSprites:
   - {fileID: 906083576, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
   - {fileID: -2065213889, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
   - {fileID: 318299938, guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5, type: 3}
-  pureAirPullEffect: {fileID: 2703176284987579184, guid: 23804f3062e3146f8ae067c17df4c163, type: 3}
-  pureAirPullEffectSprites:
-  - {fileID: -1313145839, guid: de160081e3eb84ad18741529d66b65bd, type: 3}
-  - {fileID: 1574626026, guid: de160081e3eb84ad18741529d66b65bd, type: 3}
-  - {fileID: -1808890361, guid: de160081e3eb84ad18741529d66b65bd, type: 3}
-  pureEarthPlatform: {fileID: 465465729247891978, guid: c396a3ca6a6084b4f91b29842e8a59f3, type: 3}
   pureOnlyGlove: {fileID: 21300000, guid: 51d9b536942d1475984d5d8d715c9f18, type: 3}
   pureOnlyBoot: {fileID: 21300000, guid: 4874b012a704d470cb7a565ccbcf7f53, type: 3}
   pureAirGlove: {fileID: 21300000, guid: 0b35e0ed5d94344e598f343468ad1b19, type: 3}

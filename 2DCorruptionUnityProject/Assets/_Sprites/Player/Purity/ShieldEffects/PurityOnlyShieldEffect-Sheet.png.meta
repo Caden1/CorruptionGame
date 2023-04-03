@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5d6565a4032754fceb56991e9d7667a8
+guid: dadfeb51f6a8648e39d49de9c0b2eb31
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PureMeleeEffect-Sheet_0
+      name: PurityOnlyShieldEffect-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 69
-        height: 14
+        width: 66
+        height: 148
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67aebfebc10a847279343ce8375bd824
-      internalID: 1620989434
+      spriteID: 99887e41127eb45e2919e07307688edf
+      internalID: -32737858
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PureMeleeEffect-Sheet_1
+      name: PurityOnlyShieldEffect-Sheet_1
       rect:
         serializedVersion: 2
-        x: 70
+        x: 66
         y: 0
-        width: 69
-        height: 14
+        width: 66
+        height: 148
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3559472396d54628882e4554e44affc
-      internalID: 1465045819
+      spriteID: 44d6f7e99978c47cf9af9f8e759f750d
+      internalID: 855969097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PureMeleeEffect-Sheet_2
+      name: PurityOnlyShieldEffect-Sheet_2
       rect:
         serializedVersion: 2
-        x: 140
+        x: 132
         y: 0
-        width: 69
-        height: 14
+        width: 66
+        height: 148
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b2452b51b46340148e676910f1d27d0
-      internalID: 2101544171
+      spriteID: b3d69cb1eda9b4f6a8b3a5714b53454d
+      internalID: -75831857
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PureMeleeEffect-Sheet_3
+      name: PurityOnlyShieldEffect-Sheet_3
       rect:
         serializedVersion: 2
-        x: 210
+        x: 198
         y: 0
-        width: 69
-        height: 14
+        width: 66
+        height: 148
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 404452e4379114b31b62f16012b276cd
-      internalID: -1259072125
+      spriteID: 8b67d3b71d9d04b28893e7004892e090
+      internalID: 1581357789
       vertices: []
       indices: 
       edges: []
@@ -211,10 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PureMeleeEffect-Sheet_2: 2101544171
-      PureMeleeEffect-Sheet_3: -1259072125
-      PureMeleeEffect-Sheet_1: 1465045819
-      PureMeleeEffect-Sheet_0: 1620989434
+      PurityOnlyShieldEffect-Sheet_1: 855969097
+      PurityOnlyShieldEffect-Sheet_3: 1581357789
+      PurityOnlyShieldEffect-Sheet_2: -75831857
+      PurityOnlyShieldEffect-Sheet_0: -32737858
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
