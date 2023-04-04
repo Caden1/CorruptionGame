@@ -9,29 +9,20 @@ public class PurityLeftGloveSkills : LeftGloveSkills
 	}
 
 	public override void SetWithNoModifiers() {
-		float pushSeconds = 0.3f;
+		float pullSeconds = 0.4f;
 		canAttack = false;
 		isAnimating = false;
-		animationSec = pushSeconds;
+		animationSec = pullSeconds;
 		lockMovement = false;
-		lockMovementSec = pushSeconds;
+		lockMovementSec = pullSeconds;
 		cooldownSec = 2f;
-		pullEffectCloneSec = pushSeconds;
+		pullEffectCloneSec = pullSeconds;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
-		float pushSeconds = 0.3f;
-		canAttack = false;
-		isAnimating = false;
-		animationSec = pushSeconds;
-		lockMovement = false;
-		lockMovementSec = pushSeconds;
-		cooldownSec = 2f;
-		pullEffectCloneSec = pushSeconds;
-		pullEffectZRotation = 0f;
-		attackOrigin = new Vector2();
+		
 	}
 
 	public override void SetFireModifiers() {
