@@ -30,7 +30,7 @@ public class PurityRightBootSkills : RightBootSkills
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
 		archGravity = 2f;
-		jumpVelocity = 9f;
+		jumpVelocity = 10f;
 		jumpEffectCloneSec = 0.3f;
 		effectOrigin = new Vector2();
 		isRocketBoosted = false;
@@ -47,7 +47,7 @@ public class PurityRightBootSkills : RightBootSkills
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
 		archGravity = 2f;
-		jumpVelocity = 9f;
+		jumpVelocity = 10f;
 		jumpEffectCloneSec = 0.3f;
 		effectOrigin = new Vector2();
 		isRocketBoosted = false;
@@ -64,7 +64,7 @@ public class PurityRightBootSkills : RightBootSkills
 		fallGravity = 2f;
 		archVelocityThreshold = 3f;
 		archGravity = 2f;
-		jumpVelocity = 9f;
+		jumpVelocity = 10f;
 		jumpEffectCloneSec = 0.3f;
 		effectOrigin = new Vector2();
 		isRocketBoosted = true;

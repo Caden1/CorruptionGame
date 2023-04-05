@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
 	//[SerializeField] private Sprite[] pureMeleeEffectSprites;
 	//[SerializeField] private GameObject pureAirMeleeEffect;
 	//[SerializeField] private Sprite[] pureAirMeleeEffectSprites;
-	[SerializeField] private GameObject purePullEffect;
 	[SerializeField] private Sprite[] purePullEffectSprites;
+	[SerializeField] private GameObject purePullEffect;
 	//[SerializeField] private GameObject pureAirPullEffect;
 	//[SerializeField] private Sprite[] pureAirPullEffectSprites;
 	//[SerializeField] private GameObject pureEarthPlatform;
@@ -379,15 +379,18 @@ public class PlayerController : MonoBehaviour
 			StartCoroutine(purityRightBootSkills.DestroyJumpEffectClone(pureFireJumpEffectClone));
 		}
 		if (pureNoDamageDashEffectClone != null) {
-			pureNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
+			float animSpeed = 0.05f;
+			pureNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), animSpeed);
 			StartCoroutine(purityLeftBootSkills.DestroyDashEffectClone(pureNoDamageDashEffectClone));
 		}
 		if (pureAirDashEffectClone != null) {
-			pureAirDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureAirDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
+			float animSpeed = 0.05f;
+			pureAirDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureAirDashEffectClone.GetComponent<SpriteRenderer>(), animSpeed);
 			StartCoroutine(purityLeftBootSkills.DestroyDashEffectClone(pureAirDashEffectClone));
 		}
 		if (pureOnlyShieldEffectClone != null) {
-			pureShieldEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureOnlyShieldEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
+			float animSpeed = 0.05f;
+			pureShieldEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(pureOnlyShieldEffectClone.GetComponent<SpriteRenderer>(), animSpeed);
 			pureOnlyShieldEffectClone.transform.position = gameObject.transform.position;
 		}
 		//if (pureMeleeEffectClone != null) {
@@ -403,7 +406,8 @@ public class PlayerController : MonoBehaviour
 		//	purityRightGloveSkills.LaunchAirMelee();
 		//}
 		if (purePullEffectClone != null) {
-			purePullEffectAnim.PlayCreatedAnimationOnce(purePullEffectClone.GetComponent<SpriteRenderer>());
+			float animSpeed = 0.04f;
+			purePullEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(purePullEffectClone.GetComponent<SpriteRenderer>(), animSpeed);
 			StartCoroutine(purityLeftGloveSkills.DestroyEffectClone(purePullEffectClone));
 		}
 		//if (pureAirPullEffectClone != null) {
@@ -425,7 +429,8 @@ public class PlayerController : MonoBehaviour
 			corRightBootSkills.LaunchJumpProjectile();
 		}
 		if (corNoDamageDashEffectClone != null) {
-			corNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(corNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
+			float animSpeed = 0.05f;
+			corNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(corNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), animSpeed);
 			StartCoroutine(corLeftBootSkills.DestroyDashEffectClone(corNoDamageDashEffectClone));
 		}
 		if (corLeftBootSkills.damagingDashEffectClones != null && corLeftBootSkills.damagingDashEffectClones.Count > 0) {
@@ -436,7 +441,8 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 		if (corAirNoDamageDashEffectClone != null) {
-			corAirNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(corAirNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), 0.05f);
+			float animSpeed = 0.05f;
+			corAirNoDamageDashEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(corAirNoDamageDashEffectClone.GetComponent<SpriteRenderer>(), animSpeed);
 			StartCoroutine(corLeftBootSkills.DestroyDashEffectClone(corAirNoDamageDashEffectClone));
 		}
 		if (corMeleeEffectClone != null) {
@@ -775,19 +781,19 @@ public class PlayerController : MonoBehaviour
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
 				offset = 1.5f;
-				noGemsLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
+				noGemsLeftGloveSkills.SetupLeftGloveSkill();
 				StartCoroutine(noGemsLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				StartCoroutine(noGemsLeftGloveSkills.ResetAnimation());
 				StartCoroutine(noGemsLeftGloveSkills.TempLockMovement());
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				offset = 2.5f;
+				offset = 0.88f;
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
 					purePullEffectAnim.ResetIndexToZero();
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air) {
 					pureAirPullEffectAnim.ResetIndexToZero();
 				}
-				purityLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
+				purityLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, purePullEffect, isFacingRight, offset);
 				StartCoroutine(purityLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				StartCoroutine(purityLeftGloveSkills.ResetAnimation());
 				StartCoroutine(purityLeftGloveSkills.TempLockMovement());
@@ -800,7 +806,7 @@ public class PlayerController : MonoBehaviour
 					offset = 2;
 					corAirPushEffectAnim.ResetIndexToZero();
 				}
-				corLeftGloveSkills.SetupLeftGloveSkill(UtilsClass.GetLeftAndRightDirectionalPointLocation(playerBoxCollider, moveDirection, offset, isFacingRight));
+				corLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, corPushEffect, isFacingRight, offset);
 				StartCoroutine(corLeftGloveSkills.StartLeftGloveSkillCooldown(playerInputActions));
 				StartCoroutine(corLeftGloveSkills.ResetAnimation());
 				StartCoroutine(corLeftGloveSkills.TempLockMovement());
@@ -815,16 +821,16 @@ public class PlayerController : MonoBehaviour
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
-					purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
+					purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect);
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air) {
 					//pureAirPullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(purePullEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
 				}
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None)
-					corPushEffectClone = corLeftGloveSkills.PerformLeftGloveSkill(corPushEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
+					corPushEffectClone = corLeftGloveSkills.PerformLeftGloveSkill(corPushEffect);
 				else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air)
-					corAirPushEffectClone = corLeftGloveSkills.PerformLeftGloveSkill(corAirPushEffect, UtilsClass.GetLeftOrRightRotation(isFacingRight));
+					corAirPushEffectClone = corLeftGloveSkills.PerformLeftGloveSkill(corAirPushEffect);
 				break;
 		}
 	}

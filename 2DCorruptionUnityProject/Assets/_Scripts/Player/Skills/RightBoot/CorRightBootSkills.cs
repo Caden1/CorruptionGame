@@ -27,7 +27,7 @@ public class CorRightBootSkills : RightBootSkills
 		fallGravity = 3f;
 		archVelocityThreshold = 4f;
 		archGravity = 3f;
-		jumpVelocity = 9f;
+		jumpVelocity = 10f;
 		attackClonesRight = new List<GameObject>();
 		attackClonesLeft = new List<GameObject>();
 		attackOriginRight = new Vector2();
@@ -48,7 +48,7 @@ public class CorRightBootSkills : RightBootSkills
 		fallGravity = 3f;
 		archVelocityThreshold = 4f;
 		archGravity = 3f;
-		jumpVelocity = 9f;
+		jumpVelocity = 10f;
 		attackClonesRight = new List<GameObject>();
 		attackClonesLeft = new List<GameObject>();
 		attackOriginRight = new Vector2();

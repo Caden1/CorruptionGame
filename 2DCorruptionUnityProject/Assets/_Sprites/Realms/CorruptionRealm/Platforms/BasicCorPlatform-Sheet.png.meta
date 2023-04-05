@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6f9f9a3b145ee45189ffcb0fe1cfc1e5
+guid: 5837644048eab4c03b21b9f2fffda93a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,70 +115,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: PurityPullEffect-Sheet_0
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 0
-        width: 441
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2254138d19bc84e2da7cfc912ea1296b
-      internalID: 906083576
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurityPullEffect-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 444
-        y: 0
-        width: 441
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e69213f23a654911830d482fc73623c
-      internalID: -2065213889
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurityPullEffect-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 887
-        y: 0
-        width: 441
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 94ecb473dd4f740688d6f2fe265291dc
-      internalID: 318299938
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -189,10 +126,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      PurityPullEffect-Sheet_0: 906083576
-      PurityPullEffect-Sheet_2: 318299938
-      PurityPullEffect-Sheet_1: -2065213889
+    nameFileIdTable: {}
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

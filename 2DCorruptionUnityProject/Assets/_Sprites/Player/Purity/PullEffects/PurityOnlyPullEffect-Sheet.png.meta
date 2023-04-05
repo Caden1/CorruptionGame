@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: de160081e3eb84ad18741529d66b65bd
+guid: 59082b327b5e34aacbe0fb2d2721c074
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,64 +117,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PurityAirPullEffect-Sheet_0
+      name: PurityOnlyPullEffect-Sheet_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 441
+        width: 273
         height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2dce6a60f0d354453b1e2a25b3ddd1fa
-      internalID: -1313145839
+      spriteID: a263b8fc0616147a39750ce388fec3f8
+      internalID: 127162685
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurityAirPullEffect-Sheet_1
+      name: PurityOnlyPullEffect-Sheet_1
       rect:
         serializedVersion: 2
-        x: 444
+        x: 273
         y: 0
-        width: 441
+        width: 273
         height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84a31cfd5ba8d44edb052658e9adda99
-      internalID: 1574626026
+      spriteID: 461f3dfc3a1c14ec09306f68c8620d7f
+      internalID: 920007315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurityAirPullEffect-Sheet_2
+      name: PurityOnlyPullEffect-Sheet_2
       rect:
         serializedVersion: 2
-        x: 887
+        x: 546
         y: 0
-        width: 441
+        width: 273
         height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f968a1a442f2b4421b69b84a53fafca4
-      internalID: -1808890361
+      spriteID: 4a7e811727a7f4048b054e11031956c1
+      internalID: -125938834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurityOnlyPullEffect-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 0
+        width: 273
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3793fb9bf88640fb9a1a4557f88a827
+      internalID: 847328410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurityOnlyPullEffect-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 1092
+        y: 0
+        width: 273
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6de0ac179bb634e79a2ac4ccbea39345
+      internalID: -1698506751
       vertices: []
       indices: 
       edges: []
@@ -190,9 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PurityAirPullEffect-Sheet_2: -1808890361
-      PurityAirPullEffect-Sheet_0: -1313145839
-      PurityAirPullEffect-Sheet_1: 1574626026
+      PurityOnlyPullEffect-Sheet_2: -125938834
+      PurityOnlyPullEffect-Sheet_0: 127162685
+      PurityOnlyPullEffect-Sheet_1: 920007315
+      PurityOnlyPullEffect-Sheet_4: -1698506751
+      PurityOnlyPullEffect-Sheet_3: 847328410
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

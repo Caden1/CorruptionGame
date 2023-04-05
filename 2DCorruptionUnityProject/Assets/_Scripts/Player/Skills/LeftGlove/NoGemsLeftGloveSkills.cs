@@ -37,14 +37,17 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override void SetupLeftGloveSkill(Vector2 directionPointing) {
+	public void SetupLeftGloveSkill() {
 		canAttack = true;
 		isAnimating = true;
 		lockMovement = true;
-		attackOrigin = directionPointing;
 	}
 
-	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation) {
+	public override void SetupLeftGloveSkill(BoxCollider2D boxCollider, GameObject leftGloveEffect, bool isFacingRight, float offset) {
+		throw new System.NotImplementedException();
+	}
+
+	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect) {
 		throw new System.NotImplementedException();
 	}
 
