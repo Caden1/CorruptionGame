@@ -14,14 +14,14 @@ public class PurityRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetWithNoModifiers() {
-		float punchSeconds = 0.2f;
+		float shieldSeconds = 0.5f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
-		animationSec = punchSeconds;
-		lockMovementSec = punchSeconds;
-		meleeEffectCloneSec = punchSeconds;
-		cooldownSec = punchSeconds;
+		animationSec = shieldSeconds;
+		lockMovementSec = shieldSeconds;
+		meleeEffectCloneSec = shieldSeconds;
+		cooldownSec = shieldSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -30,14 +30,14 @@ public class PurityRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetAirModifiers() {
-		float punchSeconds = 0.2f;
+		float shieldSeconds = 0.5f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
-		animationSec = punchSeconds;
-		lockMovementSec = punchSeconds;
-		meleeEffectCloneSec = punchSeconds;
-		cooldownSec = punchSeconds;
+		animationSec = shieldSeconds;
+		lockMovementSec = shieldSeconds;
+		meleeEffectCloneSec = shieldSeconds;
+		cooldownSec = shieldSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;

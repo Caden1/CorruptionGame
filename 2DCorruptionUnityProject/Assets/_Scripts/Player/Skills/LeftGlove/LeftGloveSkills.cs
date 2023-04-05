@@ -25,9 +25,9 @@ public abstract class LeftGloveSkills : Skills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract void SetupLeftGloveSkill(Vector2 directionPointing);
+	public abstract void SetupLeftGloveSkill(BoxCollider2D boxCollider, GameObject leftGloveEffect, bool isFacingRight, float offset);
 
-	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect, Quaternion rotation);
+	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect);
 
 	public abstract IEnumerator ResetAnimation();
 
