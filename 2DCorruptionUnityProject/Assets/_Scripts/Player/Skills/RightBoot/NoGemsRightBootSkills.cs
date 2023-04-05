@@ -16,7 +16,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 		fallGravity = 3f;
 		archVelocityThreshold = 4f;
 		archGravity = 3f;
-		jumpVelocity = 9f;
+		jumpVelocity = 10f;
 		jumpEffectCloneSec = 0.3f;
 		effectOrigin = new Vector2();
 	}
