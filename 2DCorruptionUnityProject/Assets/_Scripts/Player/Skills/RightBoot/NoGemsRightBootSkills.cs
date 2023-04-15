@@ -17,7 +17,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 		archVelocityThreshold = 4f;
 		archGravity = 3f;
 		jumpVelocity = 10f;
-		jumpEffectCloneSec = 0.3f;
+		jumpEffectCloneSec = 0.4f;
 		effectOrigin = new Vector2();
 	}
 
@@ -41,10 +41,6 @@ public class NoGemsRightBootSkills : RightBootSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
-		throw new System.NotImplementedException();
-	}
-
 	public override void SetGravity(Rigidbody2D playerRigidbody) {
 		if (playerRigidbody.velocity.y == 0f)
 			playerRigidbody.gravityScale = groundedPlayerGravity;
@@ -57,7 +53,17 @@ public class NoGemsRightBootSkills : RightBootSkills
 	}
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
-		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
+		throw new System.NotImplementedException();
+	}
+
+	public void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, bool isFacingRight, GameObject jumpEffect) {
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.center.y);
+		if (isFacingRight) {
+			jumpEffect.GetComponent<SpriteRenderer>().flipX = false;
+		} else {
+			jumpEffect.GetComponent<SpriteRenderer>().flipX = true;
+		}
+		
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -67,9 +73,10 @@ public class NoGemsRightBootSkills : RightBootSkills
 		}
 	}
 
-	public void PerformJump(Rigidbody2D playerRigidbody) {
+	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
+		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
 	}
 
 	public override void SetupJumpCancel() {

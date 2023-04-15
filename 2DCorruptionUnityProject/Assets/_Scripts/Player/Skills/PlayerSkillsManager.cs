@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerSkillsManager
 {
+	public GameObject noGemUppercutEffectClone { get; private set; }
+
 	public GameObject pureJumpEffectClone { get; private set; }
 	public GameObject pureDashEffectClone { get; private set; }
 	public GameObject pureShieldEffectClone { get; private set; }
@@ -70,10 +72,10 @@ public class PlayerSkillsManager
 		}
 	}
 
-	public void SetupRightBootSkill(BoxCollider2D playerBoxCollider, LayerMask platformLayerMask) {
+	public void SetupRightBootSkill(BoxCollider2D playerBoxCollider, LayerMask platformLayerMask, bool isFacingRight, GameObject jumpEffect) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
+				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, isFacingRight, jumpEffect);
 				break;
 			case BootsGem.BootsGemState.Purity:
 				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
@@ -87,7 +89,7 @@ public class PlayerSkillsManager
 	public void PerformRightBootSkill(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.PerformJump(playerRigidbody);
+				noGemUppercutEffectClone = noGemsRightBootSkills.PerformJump(playerRigidbody, jumpEffect);
 				break;
 			case BootsGem.BootsGemState.Purity:
 				pureJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, jumpEffect);

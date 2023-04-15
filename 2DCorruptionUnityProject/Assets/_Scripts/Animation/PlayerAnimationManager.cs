@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class PlayerAnimationManager
 {
+	private GameObject noGemUppercutEffect;
 	private GameObject pureJumpEffect;
 	private GameObject pureDashEffect;
 	private GameObject pureMeleeEffect;
 	private GameObject purePullEffect;
+	private CustomAnimation noGemUppercutAnim;
 	private CustomAnimation pureJumpEffectAnim;
 	private CustomAnimation pureDashEffectAnim;
 	private CustomAnimation pureShieldEffectAnim;
 	private CustomAnimation purePullEffectAnim;
 
-	public PlayerAnimationManager(GameObject pureJumpEffect, GameObject pureDashEffect, GameObject pureMeleeEffect, GameObject purePullEffect, Sprite[] pureJumpEffectSprites, Sprite[] pureDashEffectSprites, Sprite[] pureShieldEffectSprites, Sprite[] purePullEffectSprites) {
+	public PlayerAnimationManager(
+		GameObject noGemUppercutEffect,
+		GameObject pureJumpEffect, GameObject pureDashEffect, GameObject pureMeleeEffect, GameObject purePullEffect,
+		Sprite[] noGemUppercutEffectSprites,
+		Sprite[] pureJumpEffectSprites, Sprite[] pureDashEffectSprites, Sprite[] pureShieldEffectSprites, Sprite[] purePullEffectSprites) {
+		this.noGemUppercutEffect = noGemUppercutEffect;
 		this.pureJumpEffect = pureJumpEffect;
 		this.pureDashEffect = pureDashEffect;
 		this.pureMeleeEffect = pureMeleeEffect;
 		this.purePullEffect = purePullEffect;
+		noGemUppercutAnim = new CustomAnimation(noGemUppercutEffectSprites);
 		pureJumpEffectAnim = new CustomAnimation(pureJumpEffectSprites);
 		pureDashEffectAnim = new CustomAnimation(pureDashEffectSprites);
 		pureShieldEffectAnim = new CustomAnimation(pureShieldEffectSprites);
@@ -27,6 +35,7 @@ public class PlayerAnimationManager
 	public void ResetRightBootSkillAnimationIndex() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
+				noGemUppercutAnim.ResetIndexToZero();
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
@@ -90,10 +99,76 @@ public class PlayerAnimationManager
 		}
 	}
 
+	public void ResetRightGloveSkillAnimationIndex() {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {
+					pureShieldEffectAnim.ResetIndexToZero();
+				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Air) {
+
+				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Fire) {
+
+				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Water) {
+
+				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Earth) {
+
+				}
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {
+
+				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Air) {
+
+				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Fire) {
+
+				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Water) {
+
+				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Earth) {
+
+				}
+				break;
+		}
+	}
+
+	public void ResetLeftGloveSkillAnimationIndex() {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
+					purePullEffectAnim.ResetIndexToZero();
+				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air) {
+
+				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Fire) {
+
+				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Water) {
+
+				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Earth) {
+
+				}
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
+
+				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air) {
+
+				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Fire) {
+
+				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Water) {
+
+				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Earth) {
+
+				}
+				break;
+		}
+	}
+
 	public GameObject GetJumpEffect() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				break;
+				return noGemUppercutEffect;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
 					return pureJumpEffect;
@@ -159,39 +234,6 @@ public class PlayerAnimationManager
 		return null;
 	}
 
-	public void ResetRightGloveSkillAnimationIndex() {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.None:
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {
-					pureShieldEffectAnim.ResetIndexToZero();
-				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Air) {
-
-				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Fire) {
-
-				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Water) {
-
-				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Earth) {
-
-				}
-				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {
-
-				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Air) {
-
-				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Fire) {
-
-				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Water) {
-
-				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Earth) {
-
-				}
-				break;
-		}
-	}
-
 	public GameObject GetMeleeEffect() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
@@ -224,39 +266,6 @@ public class PlayerAnimationManager
 				break;
 		}
 		return null;
-	}
-
-	public void ResetLeftGloveSkillAnimationIndex() {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.None:
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
-					purePullEffectAnim.ResetIndexToZero();
-				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air) {
-
-				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Fire) {
-
-				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Water) {
-
-				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Earth) {
-
-				}
-				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
-
-				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air) {
-
-				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Fire) {
-
-				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Water) {
-
-				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Earth) {
-
-				}
-				break;
-		}
 	}
 
 	public GameObject GetLeftGloveEffect() {
@@ -301,6 +310,40 @@ public class PlayerAnimationManager
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
 					pureJumpEffectAnim.PlayCreatedAnimationOnce(clone.GetComponent<SpriteRenderer>());
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
+
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Fire) {
+
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Water) {
+
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Earth) {
+
+				}
+				break;
+			case BootsGem.BootsGemState.Corruption:
+				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
+
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
+
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Fire) {
+
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Water) {
+
+				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Earth) {
+
+				}
+				break;
+		}
+	}
+
+	public void PlayRightBootEffectAnimationOnceWithModifiedSpeed(GameObject clone, float animSpeed) {
+		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemUppercutAnim.PlayCreatedAnimationOnceWithModifiedSpeed(clone.GetComponent<SpriteRenderer>(), animSpeed);
+				break;
+			case BootsGem.BootsGemState.Purity:
+				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
+					
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
 
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Fire) {

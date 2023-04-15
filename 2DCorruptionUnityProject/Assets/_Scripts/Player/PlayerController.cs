@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
 	private PlayerSkillsManager playerSkillsManager;
 	private PlayerAnimationManager playerAnimationManager;
 
+	// No Gem
+	[SerializeField] private Sprite[] noGemUppercutEffectSprites;
+	[SerializeField] private GameObject noGemUppercutEffect;
+
 	// Purity
 	[SerializeField] private Sprite[] pureJumpEffectSprites;
 	[SerializeField] private GameObject pureJumpEffect;
@@ -27,7 +31,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite pureWaterGlove;
 	[SerializeField] private Sprite pureEarthGlove;
 
-	// Corruption (Soon to be implemented)
+	// Corruption
 	[SerializeField] private Sprite corOnlyBoot;
 	[SerializeField] private Sprite corAirBoot;
 	[SerializeField] private Sprite corFireBoot;
@@ -91,8 +95,10 @@ public class PlayerController : MonoBehaviour
 	private void Start() {
 		playerSkillsManager = new PlayerSkillsManager();
 		playerAnimationManager = new PlayerAnimationManager(
-			pureJumpEffect, pureDashEffect, pureShieldEffect, purePullEffect, pureJumpEffectSprites,
-			pureDashEffectSprites, pureShieldEffectSprites, purePullEffectSprites);
+			noGemUppercutEffect,
+			pureJumpEffect, pureDashEffect, pureShieldEffect, purePullEffect,
+			noGemUppercutEffectSprites,
+			pureJumpEffectSprites, pureDashEffectSprites, pureShieldEffectSprites, purePullEffectSprites);
 
 		Player.playerState = Player.PlayerState.Normal;
 		Animation.animationState = Animation.AnimationState.Idle;
@@ -254,6 +260,21 @@ public class PlayerController : MonoBehaviour
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
 
+		// No Gem
+		if (playerSkillsManager.noGemUppercutEffectClone != null) {
+			float animSpeed = 0.05f;
+			float horizontalOffset = 0f;
+			float verticalOffset = 0.15f;
+			playerAnimationManager.PlayRightBootEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemUppercutEffectClone, animSpeed);
+			if (isFacingRight) {
+				horizontalOffset = 0.2f;
+			} else {
+				horizontalOffset = -0.2f;
+			}
+			playerSkillsManager.noGemUppercutEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
+			StartCoroutine(playerSkillsManager.DestroyJumpEffectClone(playerSkillsManager.noGemUppercutEffectClone, RightBootSkills.jumpEffectCloneSec));
+		}
+
 		// Purity
 		if (playerSkillsManager.pureJumpEffectClone != null) {
 			playerAnimationManager.PlayRightBootEffectAnimationOnce(playerSkillsManager.pureJumpEffectClone);
@@ -334,7 +355,7 @@ public class PlayerController : MonoBehaviour
 
 	private void SetupRightBootSkill() {
 		playerAnimationManager.ResetRightBootSkillAnimationIndex();
-		playerSkillsManager.SetupRightBootSkill(playerBoxCollider, platformLayerMask);
+		playerSkillsManager.SetupRightBootSkill(playerBoxCollider, platformLayerMask, isFacingRight, playerAnimationManager.GetJumpEffect());
 	}
 
 	private void PerformRightBootSkill() {
