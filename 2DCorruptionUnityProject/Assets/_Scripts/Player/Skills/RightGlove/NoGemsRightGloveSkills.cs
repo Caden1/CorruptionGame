@@ -32,7 +32,7 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		animationSec = punchSeconds;
 		lockMovementSec = punchSeconds;
 		meleeEffectCloneSec = punchSeconds;
-		cooldownSec = punchSeconds;
+		cooldown = punchSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -66,29 +66,20 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 		canMelee = false;
 	}
 
-	public override IEnumerator ResetAnimation() {
-		yield return new WaitForSeconds(animationSec);
+	public override void ResetAnimation() {
 		isAnimating = false;
 	}
 
-	public override IEnumerator ResetForcedMovement() {
-		yield return new WaitForSeconds(forcedMovementSec);
+	public override void ResetForcedMovement() {
 		hasForcedMovement = false;
 	}
 
-	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(cooldownSec);
-		playerInputActions.Player.Melee.Enable();
+	public override void TempLockMovement() {
+		lockMovement = false;
 	}
 
 	public override IEnumerator DestroyEffectClone(GameObject meleeEffectClone) {
 		yield return new WaitForSeconds(meleeEffectCloneSec);
 		Object.Destroy(meleeEffectClone);
-	}
-
-	public override IEnumerator TempLockMovement() {
-		yield return new WaitForSeconds(lockMovementSec);
-		lockMovement = false;
 	}
 }

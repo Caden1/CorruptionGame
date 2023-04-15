@@ -81,8 +81,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 		canJumpCancel = false;
 	}
 
-	public override IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone) {
-		yield return new WaitForSeconds(jumpEffectCloneSec);
+	public override void DestroyJumpEffectClone(GameObject jumpEffectClone) {
 		Object.Destroy(jumpEffectClone);
 	}
 }

@@ -21,7 +21,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		animationSec = shieldSeconds;
 		lockMovementSec = shieldSeconds;
 		meleeEffectCloneSec = shieldSeconds;
-		cooldownSec = shieldSeconds;
+		cooldown = shieldSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -37,7 +37,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 		animationSec = shieldSeconds;
 		lockMovementSec = shieldSeconds;
 		meleeEffectCloneSec = shieldSeconds;
-		cooldownSec = shieldSeconds;
+		cooldown = shieldSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -90,30 +90,21 @@ public class PurityRightGloveSkills : RightGloveSkills
 		canMelee = false;
 	}
 
-	public override IEnumerator ResetAnimation() {
-		yield return new WaitForSeconds(animationSec);
-		isAnimating = false;
-	}
-
-	public override IEnumerator ResetForcedMovement() {
-		yield return new WaitForSeconds(forcedMovementSec);
+	public override void ResetForcedMovement() {
 		hasForcedMovement = false;
 	}
 
-	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(cooldownSec);
-		playerInputActions.Player.Melee.Enable();
+	public override void ResetAnimation() {
+		isAnimating = false;
+	}
+
+	public override void TempLockMovement() {
+		lockMovement = false;
 	}
 
 	public override IEnumerator DestroyEffectClone(GameObject meleeEffectClone) {
 		yield return new WaitForSeconds(meleeEffectCloneSec);
 		Object.Destroy(meleeEffectClone);
-	}
-
-	public override IEnumerator TempLockMovement() {
-		yield return new WaitForSeconds(lockMovementSec);
-		lockMovement = false;
 	}
 
 	public void LaunchAirMelee() {

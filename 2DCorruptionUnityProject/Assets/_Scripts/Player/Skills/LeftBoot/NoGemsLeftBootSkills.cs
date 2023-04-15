@@ -5,6 +5,8 @@ using static UnityEditor.FilePathAttribute;
 
 public class NoGemsLeftBootSkills : LeftBootSkills
 {
+	private float startingGravity;
+
 	public override void SetWithNoGems() {
 		isInvulnerable = false;
 		dashVelocity = 8f;
@@ -12,7 +14,7 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		cooldown = 2f;
 		dashEffectCloneSec = 0.4f;
 		dashDirection = new Vector2();
-		noDamageDashEffectPosition = new Vector2();
+		dashEffectPosition = new Vector2();
 	}
 
 	public override void SetWithNoModifiers() {
@@ -35,7 +37,7 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect, bool playerGroundedWhenDashing, GameObject damagingDashEffect) {
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect) {
 		throw new System.NotImplementedException();
 	}
 
@@ -48,24 +50,19 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		}
 	}
 
-	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
-		float startingGravity = playerRigidbody.gravityScale;
+	public override void StartDash(Rigidbody2D playerRigidbody) {
+		startingGravity = playerRigidbody.gravityScale;
 		playerRigidbody.gravityScale = 0f;
 		playerRigidbody.velocity = dashDirection * dashVelocity;
-		yield return new WaitForSeconds(secondsToDash);
+	}
+
+	public override void EndDash(Rigidbody2D playerRigidbody) {
 		playerRigidbody.gravityScale = startingGravity;
 		isInvulnerable = false;
 		Player.playerState = Player.PlayerState.Normal;
 	}
 
-	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(cooldown);
-		playerInputActions.Player.Dash.Enable();
-	}
-
-	public override IEnumerator DestroyDashEffectClone(GameObject dashEffectClone) {
-		yield return new WaitForSeconds(dashEffectCloneSec);
+	public override void DestroyDashEffectClone(GameObject dashEffectClone) {
 		Object.Destroy(dashEffectClone);
 	}
 }

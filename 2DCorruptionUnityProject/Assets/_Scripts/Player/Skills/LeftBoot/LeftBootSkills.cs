@@ -5,12 +5,12 @@ using UnityEngine;
 
 public abstract class LeftBootSkills : Skills
 {
+	public static float cooldown { get; protected set; }
+	public static float secondsToDash { get; protected set; }
+	public static float dashEffectCloneSec { get; protected set; }
 	protected Vector2 dashDirection;
-	protected Vector2 noDamageDashEffectPosition;
+	protected Vector2 dashEffectPosition;
 	protected float dashVelocity;
-	protected float secondsToDash;
-	protected float cooldown;
-	protected float dashEffectCloneSec;
 
 	public abstract void SetWithNoGems();
 
@@ -24,11 +24,11 @@ public abstract class LeftBootSkills : Skills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect, bool playerGroundedWhenDashing, GameObject damagingDashEffect);
+	public abstract GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect);
 
-	public abstract IEnumerator PerformDash(Rigidbody2D playerRigidbody);
+	public abstract void StartDash(Rigidbody2D playerRigidbody);
 
-	public abstract IEnumerator StartDashCooldown(PlayerInputActions playerInputActions);
+	public abstract void EndDash(Rigidbody2D playerRigidbody);
 
-	public abstract IEnumerator DestroyDashEffectClone(GameObject dashEffectClone);
+	public abstract void DestroyDashEffectClone(GameObject dashEffectClone);
 }

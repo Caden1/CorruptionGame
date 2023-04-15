@@ -66,24 +66,15 @@ public class PurityLeftGloveSkills : LeftGloveSkills
 		return pullEffectClone;
 	}
 
-	public override IEnumerator ResetAnimation() {
-		yield return new WaitForSeconds(animationSec);
+	public override void ResetAnimation() {
 		isAnimating = false;
 	}
 
-	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(cooldownSec);
-		playerInputActions.Player.Ranged.Enable();
-	}
-
-	public override IEnumerator TempLockMovement() {
-		yield return new WaitForSeconds(lockMovementSec);
+	public override void TempLockMovement() {
 		lockMovement = false;
 	}
 
-	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
-		yield return new WaitForSeconds(pullEffectCloneSec);
+	public override void DestroyEffectClone(GameObject pullEffectClone) {
 		Object.Destroy(pullEffectClone);
 	}
 }

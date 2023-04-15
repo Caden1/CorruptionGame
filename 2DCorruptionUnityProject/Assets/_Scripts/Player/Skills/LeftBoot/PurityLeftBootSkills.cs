@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PurityLeftBootSkills : LeftBootSkills
 {
+	private float startingGravity;
+
 	public override void SetWithNoGems() {
 		throw new System.NotImplementedException();
 	}
@@ -15,7 +17,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 		cooldown = 2f;
 		dashEffectCloneSec = 0.4f;
 		dashDirection = new Vector2();
-		noDamageDashEffectPosition = new Vector2();
+		dashEffectPosition = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
@@ -25,7 +27,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 		cooldown = 2f;
 		dashEffectCloneSec = 0.4f;
 		dashDirection = new Vector2();
-		noDamageDashEffectPosition = new Vector2();
+		dashEffectPosition = new Vector2();
 	}
 
 	public override void SetFireModifiers() {
@@ -40,38 +42,33 @@ public class PurityLeftBootSkills : LeftBootSkills
 		
 	}
 
-	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect, bool playerGroundedWhenDashing, GameObject damagingDashEffect) {
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect) {
 		isInvulnerable = true;
 		if (isFacingRight) {
 			dashDirection = Vector2.right;
-			noDamageDashEffectPosition = new Vector2(playerBoxCollider.bounds.min.x, playerBoxCollider.bounds.min.y);
-			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = false;
+			dashEffectPosition = new Vector2(playerBoxCollider.bounds.min.x, playerBoxCollider.bounds.min.y);
+			dashEffect.GetComponent<SpriteRenderer>().flipX = false;
 		} else {
 			dashDirection = Vector2.left;
-			noDamageDashEffectPosition = new Vector2(playerBoxCollider.bounds.max.x, playerBoxCollider.bounds.min.y);
-			noDamageDashEffect.GetComponent<SpriteRenderer>().flipX = true;
+			dashEffectPosition = new Vector2(playerBoxCollider.bounds.max.x, playerBoxCollider.bounds.min.y);
+			dashEffect.GetComponent<SpriteRenderer>().flipX = true;
 		}
-		return Object.Instantiate(noDamageDashEffect, noDamageDashEffectPosition, noDamageDashEffect.transform.rotation);
+		return Object.Instantiate(dashEffect, dashEffectPosition, dashEffect.transform.rotation);
 	}
 
-	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
-		float startingGravity = playerRigidbody.gravityScale;
+	public override void StartDash(Rigidbody2D playerRigidbody) {
+		startingGravity = playerRigidbody.gravityScale;
 		playerRigidbody.gravityScale = 0f;
 		playerRigidbody.velocity = dashDirection * dashVelocity;
-		yield return new WaitForSeconds(secondsToDash);
+	}
+
+	public override void EndDash(Rigidbody2D playerRigidbody) {
 		playerRigidbody.gravityScale = startingGravity;
 		isInvulnerable = false;
 		Player.playerState = Player.PlayerState.Normal;
 	}
 
-	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(cooldown);
-		playerInputActions.Player.Dash.Enable();
-	}
-
-	public override IEnumerator DestroyDashEffectClone(GameObject dashEffectClone) {
-		yield return new WaitForSeconds(dashEffectCloneSec);
+	public override void DestroyDashEffectClone(GameObject dashEffectClone) {
 		Object.Destroy(dashEffectClone);
 	}
 }

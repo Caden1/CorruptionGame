@@ -6,6 +6,7 @@ public abstract class RightBootSkills : Skills
 {
 	public static bool canJump { get; protected set; }
 	public static bool canJumpCancel { get; protected set; }
+	public static float jumpEffectCloneSec { get; protected set; }
 	protected int numjumps;
 	protected float jumpGravity;
 	protected float groundedPlayerGravity;
@@ -13,7 +14,6 @@ public abstract class RightBootSkills : Skills
 	protected float archVelocityThreshold;
 	protected float archGravity;
 	protected float jumpVelocity;
-	protected float jumpEffectCloneSec;
 	protected Vector2 effectOrigin;
 
 	public abstract void SetWithNoGems();
@@ -38,5 +38,5 @@ public abstract class RightBootSkills : Skills
 
 	public abstract void PerformJumpCancel(Rigidbody2D playerRigidbody);
 
-	public abstract IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone);
+	public abstract void DestroyJumpEffectClone(GameObject jumpEffectClone);
 }
