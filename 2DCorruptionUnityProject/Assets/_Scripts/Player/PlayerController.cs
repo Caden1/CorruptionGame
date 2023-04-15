@@ -204,7 +204,6 @@ public class PlayerController : MonoBehaviour
 
 		SetAnimationState();
 		PlayAndDestroyActiveClones();
-		ShootProjectile();
 	}
 
 	private void FixedUpdate() {
@@ -292,24 +291,6 @@ public class PlayerController : MonoBehaviour
 			Animation.animationState = Animation.AnimationState.Fall;
 		else {
 			Animation.animationState = Animation.AnimationState.Idle;
-		}
-	}
-
-	private void ShootProjectile() {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.Corruption:
-				//corLeftGloveSkills.ShootProjectile();
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				//purityProjectileSkills.AnimateAndShootProjectile(purityProjectileClone, purityProjectileAnimation);
-				break;
-		}
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.Corruption:
-				//corRightBootSkills.LaunchJumpProjectile();
-				break;
-			case BootsGem.BootsGemState.Purity:
-				break;
 		}
 	}
 

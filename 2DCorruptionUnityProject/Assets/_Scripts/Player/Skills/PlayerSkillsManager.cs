@@ -155,12 +155,6 @@ public class PlayerSkillsManager
 		}
 	}
 
-	public IEnumerator LeftBootSkillCooldown(PlayerInputActions playerInputActions, float cooldown) {
-		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(cooldown);
-		playerInputActions.Player.Dash.Enable();
-	}
-
 	public void StartLeftBootSkill(Rigidbody2D playerRigidbody) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
@@ -190,6 +184,12 @@ public class PlayerSkillsManager
 		}
 	}
 
+	public IEnumerator LeftBootSkillCooldown(PlayerInputActions playerInputActions, float cooldown) {
+		playerInputActions.Player.Dash.Disable();
+		yield return new WaitForSeconds(cooldown);
+		playerInputActions.Player.Dash.Enable();
+	}
+
 	public IEnumerator DestroyLeftBootEffectClone(GameObject leftBootEffectClone, float leftBootEffectCloneSec) {
 		yield return new WaitForSeconds(leftBootEffectCloneSec);
 		switch (BootsGem.bootsGemState) {
@@ -201,6 +201,33 @@ public class PlayerSkillsManager
 				break;
 			case BootsGem.BootsGemState.Purity:
 				purityLeftBootSkills.DestroyDashEffectClone(leftBootEffectClone);
+				break;
+		}
+	}
+
+	public void SetupRightGloveSkill(bool isFacingRight, Vector2 meleePositionRight, Vector2 meleePositionLeft, GameObject meleeEffect) {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				noGemsRightGloveSkills.SetupMelee(isFacingRight, meleePositionRight, meleePositionLeft);
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				purityRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				corRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				break;
+		}
+	}
+
+	public void PerformRightGloveSkill(GameObject meleeEffect) {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				noGemsRightGloveSkills.PerformMelee();
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				pureShieldEffectClone = purityRightGloveSkills.PerformMelee(meleeEffect);
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
 				break;
 		}
 	}
@@ -241,27 +268,30 @@ public class PlayerSkillsManager
 		}
 	}
 
-	public void SetupRightGloveSkill(bool isFacingRight, Vector2 meleePositionRight, Vector2 meleePositionLeft, GameObject meleeEffect) {
+	public void SetupLeftGloveSkill(BoxCollider2D playerBoxCollider, GameObject leftGloveEffect, bool isFacingRight) {
+		float offset = 0f;
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemsRightGloveSkills.SetupMelee(isFacingRight, meleePositionRight, meleePositionLeft);
+				offset = 1.5f;
+				noGemsLeftGloveSkills.SetupLeftGloveSkill();
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				purityRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				offset = 0.88f;
+				purityLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
-				corRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				corLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
 				break;
 		}
 	}
 
-	public void PerformRightGloveSkill(GameObject meleeEffect) {
+	public void PerformLeftGloveSkill(GameObject leftGloveEffect) {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemsRightGloveSkills.PerformMelee();
+				noGemsLeftGloveSkills.PerformLeftGloveSkill();
 				break;
 			case GlovesGem.GlovesGemState.Purity:
-				pureShieldEffectClone = purityRightGloveSkills.PerformMelee(meleeEffect);
+				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(leftGloveEffect);
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				break;
@@ -300,36 +330,6 @@ public class PlayerSkillsManager
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				corLeftGloveSkills.TempLockMovement();
-				break;
-		}
-	}
-
-	public void SetupLeftGloveSkill(BoxCollider2D playerBoxCollider, GameObject leftGloveEffect, bool isFacingRight) {
-		float offset = 0f;
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.None:
-				offset = 1.5f;
-				noGemsLeftGloveSkills.SetupLeftGloveSkill();
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				offset = 0.88f;
-				purityLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
-				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
-				break;
-		}
-	}
-
-	public void PerformLeftGloveSkill(GameObject leftGloveEffect) {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.None:
-				noGemsLeftGloveSkills.PerformLeftGloveSkill();
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(leftGloveEffect);
-				break;
-			case GlovesGem.GlovesGemState.Corruption:
 				break;
 		}
 	}

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BasicMeleeEnemy : MonoBehaviour
 {
+	public GameObject playerObject;
 	public float damageDealt { get; private set; }
 	private const string IDLE_ANIM = "Idle";
 	//private const string ATTACK_ANIM = "Attack";
-	public GameObject playerObject;
 	private enum State { Roam, ChaseTarget, AttackTarget }
 	private State state;
 	private enum AnimationState { Idle, Attack }
@@ -113,6 +113,18 @@ public class BasicMeleeEnemy : MonoBehaviour
 	//	if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > attackRange) {
 	//		enemyRigidbody.gravityScale = startingGravity;
 	//		state = State.ChaseTarget;
+	//	}
+	//}
+
+	private void OnTriggerStay2D(Collider2D collision) {
+		if (collision.tag == "PurityOnlyPull") {
+			transform.position = Vector2.MoveTowards(transform.position, playerObject.transform.position, 5f * Time.deltaTime);
+		}
+	}
+
+	//private void OnTriggerEnter2D(Collider2D collision) {
+	//	if (collision.tag == "PurityOnlyPull") {
+	//		transform.position = Vector2.MoveTowards(transform.position, playerObject.transform.position, 20f * Time.deltaTime);
 	//	}
 	//}
 }

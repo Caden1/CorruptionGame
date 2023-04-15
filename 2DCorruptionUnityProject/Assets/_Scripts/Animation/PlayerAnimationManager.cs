@@ -91,75 +91,72 @@ public class PlayerAnimationManager
 	}
 
 	public GameObject GetJumpEffect() {
-		GameObject jumpEffect = new GameObject();
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
-					jumpEffect = pureJumpEffect;
+					return pureJumpEffect;
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
-
+					return null;
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Fire) {
-
+					return null;
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Water) {
-
+					return null;
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Earth) {
-
+					return null;
 				}
 				break;
 			case BootsGem.BootsGemState.Corruption:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
-
+					return null;
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Air) {
-
+					return null;
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Fire) {
-
+					return null;
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Water) {
-
+					return null;
 				} else if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.Earth) {
-
+					return null;
 				}
 				break;
 		}
-
-		return jumpEffect;
+		return null;
 	}
 
 	public GameObject GetDashEffect() {
-		GameObject dashEffect = new GameObject();
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.None) {
-					dashEffect = pureDashEffect;
+					return pureDashEffect;
 				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Air) {
-
+					return null;
 				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Fire) {
-
+					return null;
 				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Water) {
-
+					return null;
 				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Earth) {
-
+					return null;
 				}
 				break;
 			case BootsGem.BootsGemState.Corruption:
 				if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.None) {
-
+					return null;
 				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Air) {
-
+					return null;
 				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Fire) {
-
+					return null;
 				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Water) {
-
+					return null;
 				} else if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.Earth) {
-
+					return null;
 				}
 				break;
 		}
 
-		return dashEffect;
+		return null;
 	}
 
 	public void ResetRightGloveSkillAnimationIndex() {
@@ -196,39 +193,37 @@ public class PlayerAnimationManager
 	}
 
 	public GameObject GetMeleeEffect() {
-		GameObject meleeEffect = new GameObject();
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {
-					meleeEffect = pureMeleeEffect;
+					return pureMeleeEffect;
 				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Air) {
-
+					return null;
 				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Fire) {
-
+					return null;
 				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Water) {
-
+					return null;
 				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Earth) {
-
+					return null;
 				}
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {
-
+					return null;
 				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Air) {
-
+					return null;
 				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Fire) {
-
+					return null;
 				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Water) {
-
+					return null;
 				} else if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.Earth) {
-
+					return null;
 				}
 				break;
 		}
-
-		return meleeEffect;
+		return null;
 	}
 
 	public void ResetLeftGloveSkillAnimationIndex() {
@@ -265,39 +260,38 @@ public class PlayerAnimationManager
 	}
 
 	public GameObject GetLeftGloveEffect() {
-		GameObject leftGloveEffect = new GameObject();
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
-					leftGloveEffect = purePullEffect;
+					return purePullEffect;
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air) {
-
+					return null;
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Fire) {
-
+					return null;
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Water) {
-
+					return null;
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Earth) {
-
+					return null;
 				}
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
-
+					return null;
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Air) {
-
+					return null;
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Fire) {
-
+					return null;
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Water) {
-
+					return null;
 				} else if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.Earth) {
-
+					return null;
 				}
 				break;
 		}
 
-		return leftGloveEffect;
+		return null;
 	}
 
 	public void PlayRightBootEffectAnimationOnce(GameObject clone) {
