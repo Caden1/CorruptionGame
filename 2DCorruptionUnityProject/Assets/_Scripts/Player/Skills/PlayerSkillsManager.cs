@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSkillsManager
 {
+	public GameObject noGemPunchEffectClone { get; private set; }
 	public GameObject noGemUppercutEffectClone { get; private set; }
 
 	public GameObject pureJumpEffectClone { get; private set; }
@@ -86,19 +87,6 @@ public class PlayerSkillsManager
 		}
 	}
 
-	public void PerformRightBootSkill(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.None:
-				noGemUppercutEffectClone = noGemsRightBootSkills.PerformJump(playerRigidbody, jumpEffect);
-				break;
-			case BootsGem.BootsGemState.Purity:
-				pureJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, jumpEffect);
-				break;
-			case BootsGem.BootsGemState.Corruption:
-				break;
-		}
-	}
-
 	public void SetupJumpCancel(Rigidbody2D playerRigidbody) {
 		if (playerRigidbody.velocity.y > 0) {
 			switch (BootsGem.bootsGemState) {
@@ -115,6 +103,63 @@ public class PlayerSkillsManager
 		}
 	}
 
+	public void SetupLeftBootSkill(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect) {
+		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemsLeftBootSkills.SetupDash(isFacingRight);
+				break;
+			case BootsGem.BootsGemState.Purity:
+				pureDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, dashEffect);
+				break;
+			case BootsGem.BootsGemState.Corruption:
+				break;
+		}
+	}
+
+	public void SetupRightGloveSkill(bool isFacingRight, Vector2 meleePositionRight, Vector2 meleePositionLeft, GameObject meleeEffect) {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				noGemsRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				purityRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				corRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
+				break;
+		}
+	}
+
+	public void SetupLeftGloveSkill(BoxCollider2D playerBoxCollider, GameObject leftGloveEffect, bool isFacingRight) {
+		float offset = 0f;
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				offset = 1.5f;
+				noGemsLeftGloveSkills.SetupLeftGloveSkill();
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				offset = 0.88f;
+				purityLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				corLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
+				break;
+		}
+	}
+
+	public void PerformRightBootSkill(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
+		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemUppercutEffectClone = noGemsRightBootSkills.PerformJump(playerRigidbody, jumpEffect);
+				break;
+			case BootsGem.BootsGemState.Purity:
+				pureJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, jumpEffect);
+				break;
+			case BootsGem.BootsGemState.Corruption:
+				break;
+		}
+	}
+
 	public void PerformJumpCancel(Rigidbody2D playerRigidbody) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
@@ -125,34 +170,6 @@ public class PlayerSkillsManager
 				break;
 			case BootsGem.BootsGemState.Corruption:
 				corRightBootSkills.PerformJumpCancel(playerRigidbody);
-				break;
-		}
-	}
-
-	public IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone, float jumpEffectCloneSec) {
-		yield return new WaitForSeconds(jumpEffectCloneSec);
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.None:
-				noGemsRightBootSkills.DestroyJumpEffectClone(jumpEffectClone);
-				break;
-			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.DestroyJumpEffectClone(jumpEffectClone);
-				break;
-			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.DestroyJumpEffectClone(jumpEffectClone);
-				break;
-		}
-	}
-
-	public void SetupLeftBootSkill(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect) {
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.None:
-				noGemsLeftBootSkills.SetupDash(isFacingRight);
-				break;
-			case BootsGem.BootsGemState.Purity:
-				pureDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, dashEffect);
-				break;
-			case BootsGem.BootsGemState.Corruption:
 				break;
 		}
 	}
@@ -186,45 +203,10 @@ public class PlayerSkillsManager
 		}
 	}
 
-	public IEnumerator LeftBootSkillCooldown(PlayerInputActions playerInputActions, float cooldown) {
-		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(cooldown);
-		playerInputActions.Player.Dash.Enable();
-	}
-
-	public IEnumerator DestroyLeftBootEffectClone(GameObject leftBootEffectClone, float leftBootEffectCloneSec) {
-		yield return new WaitForSeconds(leftBootEffectCloneSec);
-		switch (BootsGem.bootsGemState) {
-			case BootsGem.BootsGemState.None:
-				noGemsLeftBootSkills.DestroyDashEffectClone(leftBootEffectClone);
-				break;
-			case BootsGem.BootsGemState.Corruption:
-				corLeftBootSkills.DestroyDashEffectClone(leftBootEffectClone);
-				break;
-			case BootsGem.BootsGemState.Purity:
-				purityLeftBootSkills.DestroyDashEffectClone(leftBootEffectClone);
-				break;
-		}
-	}
-
-	public void SetupRightGloveSkill(bool isFacingRight, Vector2 meleePositionRight, Vector2 meleePositionLeft, GameObject meleeEffect) {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.None:
-				noGemsRightGloveSkills.SetupMelee(isFacingRight, meleePositionRight, meleePositionLeft);
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				purityRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
-				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				corRightGloveSkills.SetupMelee(meleeEffect, isFacingRight, meleePositionRight, meleePositionLeft);
-				break;
-		}
-	}
-
 	public void PerformRightGloveSkill(GameObject meleeEffect) {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemsRightGloveSkills.PerformMelee();
+				noGemPunchEffectClone = noGemsRightGloveSkills.PerformMelee(meleeEffect);
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				pureShieldEffectClone = purityRightGloveSkills.PerformMelee(meleeEffect);
@@ -234,10 +216,35 @@ public class PlayerSkillsManager
 		}
 	}
 
+	public void PerformLeftGloveSkill(GameObject leftGloveEffect) {
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				noGemsLeftGloveSkills.PerformLeftGloveSkill();
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(leftGloveEffect);
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				break;
+		}
+	}
+
+	public IEnumerator LeftBootSkillCooldown(PlayerInputActions playerInputActions, float cooldown) {
+		playerInputActions.Player.Dash.Disable();
+		yield return new WaitForSeconds(cooldown);
+		playerInputActions.Player.Dash.Enable();
+	}
+
 	public IEnumerator RightGloveSkillCooldown(PlayerInputActions playerInputActions, float cooldown) {
 		playerInputActions.Player.Melee.Disable();
 		yield return new WaitForSeconds(cooldown);
 		playerInputActions.Player.Melee.Enable();
+	}
+
+	public IEnumerator LeftGloveSkillCooldown(PlayerInputActions playerInputActions, float cooldown) {
+		playerInputActions.Player.Ranged.Disable();
+		yield return new WaitForSeconds(cooldown);
+		playerInputActions.Player.Ranged.Enable();
 	}
 
 	public IEnumerator RightGloveSkillResetAnimation(float animationSec) {
@@ -251,6 +258,21 @@ public class PlayerSkillsManager
 				break;
 			case GlovesGem.GlovesGemState.Corruption:
 				corRightGloveSkills.ResetAnimation();
+				break;
+		}
+	}
+
+	public IEnumerator LeftGloveSkillResetAnimation(float animationSec) {
+		yield return new WaitForSeconds(animationSec);
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				noGemsLeftGloveSkills.ResetAnimation();
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				purityLeftGloveSkills.ResetAnimation();
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				corLeftGloveSkills.ResetAnimation();
 				break;
 		}
 	}
@@ -270,57 +292,6 @@ public class PlayerSkillsManager
 		}
 	}
 
-	public void SetupLeftGloveSkill(BoxCollider2D playerBoxCollider, GameObject leftGloveEffect, bool isFacingRight) {
-		float offset = 0f;
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.None:
-				offset = 1.5f;
-				noGemsLeftGloveSkills.SetupLeftGloveSkill();
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				offset = 0.88f;
-				purityLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
-				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
-				break;
-		}
-	}
-
-	public void PerformLeftGloveSkill(GameObject leftGloveEffect) {
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.None:
-				noGemsLeftGloveSkills.PerformLeftGloveSkill();
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(leftGloveEffect);
-				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				break;
-		}
-	}
-
-	public IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions, float cooldown) {
-		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(cooldown);
-		playerInputActions.Player.Ranged.Enable();
-	}
-
-	public IEnumerator LeftGloveSkillResetAnimation(float animationSec) {
-		yield return new WaitForSeconds(animationSec);
-		switch (GlovesGem.glovesGemState) {
-			case GlovesGem.GlovesGemState.None:
-				noGemsLeftGloveSkills.ResetAnimation();
-				break;
-			case GlovesGem.GlovesGemState.Purity:
-				purityLeftGloveSkills.ResetAnimation();
-				break;
-			case GlovesGem.GlovesGemState.Corruption:
-				corLeftGloveSkills.ResetAnimation();
-				break;
-		}
-	}
-
 	public IEnumerator LeftGloveSkillTempLockMovement(float lockMovementSec) {
 		yield return new WaitForSeconds(lockMovementSec);
 		switch (GlovesGem.glovesGemState) {
@@ -336,17 +307,62 @@ public class PlayerSkillsManager
 		}
 	}
 
-	public IEnumerator DestroyLeftGloveEffectClone(GameObject leftGloveEffectClone, float pullEffectCloneSec) {
-		yield return new WaitForSeconds(pullEffectCloneSec);
+	public IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone, float jumpEffectCloneSec) {
+		yield return new WaitForSeconds(jumpEffectCloneSec);
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsLeftGloveSkills.DestroyEffectClone(leftGloveEffectClone);
+				noGemsRightBootSkills.DestroyJumpEffectClone(jumpEffectClone);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				noGemsLeftGloveSkills.DestroyEffectClone(leftGloveEffectClone);
+				corRightBootSkills.DestroyJumpEffectClone(jumpEffectClone);
 				break;
 			case BootsGem.BootsGemState.Purity:
+				purityRightBootSkills.DestroyJumpEffectClone(jumpEffectClone);
+				break;
+		}
+	}
+
+	public IEnumerator DestroyLeftBootEffectClone(GameObject leftBootEffectClone, float leftBootEffectCloneSec) {
+		yield return new WaitForSeconds(leftBootEffectCloneSec);
+		switch (BootsGem.bootsGemState) {
+			case BootsGem.BootsGemState.None:
+				noGemsLeftBootSkills.DestroyDashEffectClone(leftBootEffectClone);
+				break;
+			case BootsGem.BootsGemState.Corruption:
+				corLeftBootSkills.DestroyDashEffectClone(leftBootEffectClone);
+				break;
+			case BootsGem.BootsGemState.Purity:
+				purityLeftBootSkills.DestroyDashEffectClone(leftBootEffectClone);
+				break;
+		}
+	}
+
+	public IEnumerator DestroyRightGloveEffectClone(GameObject rightGloveEffectClone, float rightGloveEffectCloneSec) {
+		yield return new WaitForSeconds(rightGloveEffectCloneSec);
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
+				noGemsRightGloveSkills.DestroyEffectClone(rightGloveEffectClone);
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				corRightGloveSkills.DestroyEffectClone(rightGloveEffectClone);
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				purityRightGloveSkills.DestroyEffectClone(rightGloveEffectClone);
+				break;
+		}
+	}
+
+	public IEnumerator DestroyLeftGloveEffectClone(GameObject leftGloveEffectClone, float pullEffectCloneSec) {
+		yield return new WaitForSeconds(pullEffectCloneSec);
+		switch (GlovesGem.glovesGemState) {
+			case GlovesGem.GlovesGemState.None:
 				noGemsLeftGloveSkills.DestroyEffectClone(leftGloveEffectClone);
+				break;
+			case GlovesGem.GlovesGemState.Corruption:
+				corLeftGloveSkills.DestroyEffectClone(leftGloveEffectClone);
+				break;
+			case GlovesGem.GlovesGemState.Purity:
+				purityLeftGloveSkills.DestroyEffectClone(leftGloveEffectClone);
 				break;
 		}
 	}

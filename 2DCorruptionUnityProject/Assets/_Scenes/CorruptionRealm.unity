@@ -3860,6 +3860,13 @@ MonoBehaviour:
   - {fileID: 1749321804, guid: 0749794b380354bc7ba9c71a2d9af4fb, type: 3}
   - {fileID: 187559307, guid: 0749794b380354bc7ba9c71a2d9af4fb, type: 3}
   noGemUppercutEffect: {fileID: 2474214399933087508, guid: c1d246b556bf84f67965a437cce40edd, type: 3}
+  noGemPunchEffectSprites:
+  - {fileID: 1239310273, guid: 3d41d7cc2d68846de9ae96525ccfbda8, type: 3}
+  - {fileID: -948311388, guid: 3d41d7cc2d68846de9ae96525ccfbda8, type: 3}
+  - {fileID: 1877947387, guid: 3d41d7cc2d68846de9ae96525ccfbda8, type: 3}
+  - {fileID: 1184397763, guid: 3d41d7cc2d68846de9ae96525ccfbda8, type: 3}
+  - {fileID: -21734078, guid: 3d41d7cc2d68846de9ae96525ccfbda8, type: 3}
+  noGemPunchEffect: {fileID: 6648720149107355290, guid: 3087fb26d250f436a8ce5ef19f0cd276, type: 3}
   pureJumpEffectSprites:
   - {fileID: -1018892682, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
   - {fileID: 877710547, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}

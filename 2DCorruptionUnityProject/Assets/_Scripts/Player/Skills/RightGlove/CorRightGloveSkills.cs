@@ -86,8 +86,7 @@ public class CorRightGloveSkills : RightGloveSkills
 		lockMovement = false;
 	}
 
-	public override IEnumerator DestroyEffectClone(GameObject meleeEffectClone) {
-		yield return new WaitForSeconds(meleeEffectCloneSec);
+	public override void DestroyEffectClone(GameObject meleeEffectClone) {
 		Object.Destroy(meleeEffectClone);
 	}
 }

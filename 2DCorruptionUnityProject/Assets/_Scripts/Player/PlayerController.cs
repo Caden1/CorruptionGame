@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 	// No Gem
 	[SerializeField] private Sprite[] noGemUppercutEffectSprites;
 	[SerializeField] private GameObject noGemUppercutEffect;
+	[SerializeField] private Sprite[] noGemPunchEffectSprites;
+	[SerializeField] private GameObject noGemPunchEffect;
 
 	// Purity
 	[SerializeField] private Sprite[] pureJumpEffectSprites;
@@ -95,9 +97,9 @@ public class PlayerController : MonoBehaviour
 	private void Start() {
 		playerSkillsManager = new PlayerSkillsManager();
 		playerAnimationManager = new PlayerAnimationManager(
-			noGemUppercutEffect,
+			noGemUppercutEffect, noGemPunchEffect,
 			pureJumpEffect, pureDashEffect, pureShieldEffect, purePullEffect,
-			noGemUppercutEffectSprites,
+			noGemUppercutEffectSprites, noGemPunchEffectSprites,
 			pureJumpEffectSprites, pureDashEffectSprites, pureShieldEffectSprites, purePullEffectSprites);
 
 		Player.playerState = Player.PlayerState.Normal;
@@ -274,6 +276,19 @@ public class PlayerController : MonoBehaviour
 			playerSkillsManager.noGemUppercutEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
 			StartCoroutine(playerSkillsManager.DestroyJumpEffectClone(playerSkillsManager.noGemUppercutEffectClone, RightBootSkills.jumpEffectCloneSec));
 		}
+		if (playerSkillsManager.noGemPunchEffectClone != null) {
+			float animSpeed = 0.02f;
+			float horizontalOffset = 0f;
+			float verticalOffset = 0.2f;
+			playerAnimationManager.PlayRightGloveEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemPunchEffectClone, animSpeed);
+			if (isFacingRight) {
+				horizontalOffset = 0.32f;
+			} else {
+				horizontalOffset = -0.32f;
+			}
+			playerSkillsManager.noGemPunchEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
+			StartCoroutine(playerSkillsManager.DestroyRightGloveEffectClone(playerSkillsManager.noGemPunchEffectClone, RightGloveSkills.meleeEffectCloneSec));
+		}
 
 		// Purity
 		if (playerSkillsManager.pureJumpEffectClone != null) {
@@ -397,7 +412,7 @@ public class PlayerController : MonoBehaviour
 		playerAnimationManager.ResetLeftGloveSkillAnimationIndex();
 		playerSkillsManager.SetupLeftGloveSkill(playerBoxCollider, playerAnimationManager.GetLeftGloveEffect(), isFacingRight);
 		StartCoroutine(playerSkillsManager.LeftGloveSkillTempLockMovement(LeftGloveSkills.lockMovementSec));
-		StartCoroutine(playerSkillsManager.StartLeftGloveSkillCooldown(playerInputActions, LeftGloveSkills.cooldownSec));
+		StartCoroutine(playerSkillsManager.LeftGloveSkillCooldown(playerInputActions, LeftGloveSkills.cooldownSec));
 		StartCoroutine(playerSkillsManager.LeftGloveSkillResetAnimation(LeftGloveSkills.animationSec));
 	}
 

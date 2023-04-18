@@ -10,7 +10,7 @@ public abstract class RightGloveSkills : Skills
 	public static float cooldown { get; protected set; }
 	public static float animationSec { get; protected set; }
 	public static float lockMovementSec { get; protected set; }
-	protected float meleeEffectCloneSec;
+	public static float meleeEffectCloneSec { get; protected set; }
 	protected float forcedMovementVel;
 	protected Vector2 attackOrigin;
 
@@ -36,5 +36,5 @@ public abstract class RightGloveSkills : Skills
 
 	public abstract void TempLockMovement();
 
-	public abstract IEnumerator DestroyEffectClone(GameObject meleeEffectClone);
+	public abstract void DestroyEffectClone(GameObject meleeEffectClone);
 }

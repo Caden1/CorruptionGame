@@ -5,27 +5,34 @@ using UnityEngine;
 public class PlayerAnimationManager
 {
 	private GameObject noGemUppercutEffect;
+	private GameObject noGemPunchEffect;
+
 	private GameObject pureJumpEffect;
 	private GameObject pureDashEffect;
 	private GameObject pureMeleeEffect;
 	private GameObject purePullEffect;
-	private CustomAnimation noGemUppercutAnim;
+
+	private CustomAnimation noGemUppercutEffectAnim;
+	private CustomAnimation noGemPunchEffectAnim;
+
 	private CustomAnimation pureJumpEffectAnim;
 	private CustomAnimation pureDashEffectAnim;
 	private CustomAnimation pureShieldEffectAnim;
 	private CustomAnimation purePullEffectAnim;
 
 	public PlayerAnimationManager(
-		GameObject noGemUppercutEffect,
+		GameObject noGemUppercutEffect, GameObject noGemPunchEffect,
 		GameObject pureJumpEffect, GameObject pureDashEffect, GameObject pureMeleeEffect, GameObject purePullEffect,
-		Sprite[] noGemUppercutEffectSprites,
+		Sprite[] noGemUppercutEffectSprites, Sprite[] noGemPunchEffectSprites,
 		Sprite[] pureJumpEffectSprites, Sprite[] pureDashEffectSprites, Sprite[] pureShieldEffectSprites, Sprite[] purePullEffectSprites) {
 		this.noGemUppercutEffect = noGemUppercutEffect;
+		this.noGemPunchEffect = noGemPunchEffect;
 		this.pureJumpEffect = pureJumpEffect;
 		this.pureDashEffect = pureDashEffect;
 		this.pureMeleeEffect = pureMeleeEffect;
 		this.purePullEffect = purePullEffect;
-		noGemUppercutAnim = new CustomAnimation(noGemUppercutEffectSprites);
+		noGemUppercutEffectAnim = new CustomAnimation(noGemUppercutEffectSprites);
+		noGemPunchEffectAnim = new CustomAnimation(noGemPunchEffectSprites);
 		pureJumpEffectAnim = new CustomAnimation(pureJumpEffectSprites);
 		pureDashEffectAnim = new CustomAnimation(pureDashEffectSprites);
 		pureShieldEffectAnim = new CustomAnimation(pureShieldEffectSprites);
@@ -35,7 +42,7 @@ public class PlayerAnimationManager
 	public void ResetRightBootSkillAnimationIndex() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemUppercutAnim.ResetIndexToZero();
+				noGemUppercutEffectAnim.ResetIndexToZero();
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
@@ -102,6 +109,7 @@ public class PlayerAnimationManager
 	public void ResetRightGloveSkillAnimationIndex() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
+				noGemPunchEffectAnim.ResetIndexToZero();
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {
@@ -237,7 +245,7 @@ public class PlayerAnimationManager
 	public GameObject GetMeleeEffect() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				break;
+				return noGemPunchEffect;
 			case GlovesGem.GlovesGemState.Purity:
 				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {
 					return pureMeleeEffect;
@@ -339,7 +347,7 @@ public class PlayerAnimationManager
 	public void PlayRightBootEffectAnimationOnceWithModifiedSpeed(GameObject clone, float animSpeed) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemUppercutAnim.PlayCreatedAnimationOnceWithModifiedSpeed(clone.GetComponent<SpriteRenderer>(), animSpeed);
+				noGemUppercutEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(clone.GetComponent<SpriteRenderer>(), animSpeed);
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
@@ -406,6 +414,7 @@ public class PlayerAnimationManager
 	public void PlayRightGloveEffectAnimationOnceWithModifiedSpeed(GameObject clone, float animSpeed) {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
+				noGemPunchEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(clone.GetComponent<SpriteRenderer>(), animSpeed);
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (RightGloveModGem.rightGloveModGemState == RightGloveModGem.RightGloveModGemState.None) {

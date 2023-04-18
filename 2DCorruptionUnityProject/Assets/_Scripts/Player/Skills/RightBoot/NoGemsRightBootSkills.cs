@@ -63,7 +63,6 @@ public class NoGemsRightBootSkills : RightBootSkills
 		} else {
 			jumpEffect.GetComponent<SpriteRenderer>().flipX = true;
 		}
-		
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
