@@ -118,9 +118,18 @@ public class BasicMeleeEnemy : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		float knockupDistance = 1f;
+		float knockbackDistance = 0.2f;
 		if (collision.tag == "NoGemUppercut") {
 			transform.position = new Vector2(transform.position.x, transform.position.y + knockupDistance);
 			collision.GetComponent<BoxCollider2D>().enabled = false; // This works because the collider is on the clone. A new one is created everytime.
+		}
+		if (collision.tag == "NoGemPunch") {
+			if (collision.GetComponent<SpriteRenderer>().flipX) {
+				transform.position = new Vector2(transform.position.x - knockbackDistance, transform.position.y);
+			} else {
+				transform.position = new Vector2(transform.position.x + knockbackDistance, transform.position.y);
+			}
+			collision.GetComponent<BoxCollider2D>().enabled = false;
 		}
 	}
 

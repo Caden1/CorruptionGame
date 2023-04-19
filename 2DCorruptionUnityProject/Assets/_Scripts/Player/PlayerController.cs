@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
 		// No Gem
 		if (playerSkillsManager.noGemUppercutEffectClone != null) {
 			float animSpeed = 0.05f;
-			float horizontalOffset = 0f;
+			float horizontalOffset;
 			float verticalOffset = 0.15f;
 			playerAnimationManager.PlayRightBootEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemUppercutEffectClone, animSpeed);
 			if (isFacingRight) {
@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
 		}
 		if (playerSkillsManager.noGemPunchEffectClone != null) {
 			float animSpeed = 0.02f;
-			float horizontalOffset = 0f;
+			float horizontalOffset;
 			float verticalOffset = 0.2f;
 			playerAnimationManager.PlayRightGloveEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemPunchEffectClone, animSpeed);
 			if (isFacingRight) {

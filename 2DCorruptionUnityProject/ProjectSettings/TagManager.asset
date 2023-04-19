@@ -9,6 +9,7 @@ TagManager:
   - BasicMeleeEnemy
   - PurityOnlyPull
   - NoGemUppercut
+  - NoGemPunch
   layers:
   - Default
   - TransparentFX
