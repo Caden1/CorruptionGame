@@ -4,6 +4,7 @@ public class PlayerAnimationManager
 {
 	private GameObject noGemUppercutEffect;
 	private GameObject noGemPunchEffect;
+	private GameObject noGemPushEffect;
 
 	private GameObject pureJumpEffect;
 	private GameObject pureDashEffect;
@@ -12,6 +13,7 @@ public class PlayerAnimationManager
 
 	private CustomAnimation noGemUppercutEffectAnim;
 	private CustomAnimation noGemPunchEffectAnim;
+	private CustomAnimation noGemPushEffectAnim;
 
 	private CustomAnimation pureJumpEffectAnim;
 	private CustomAnimation pureDashEffectAnim;
@@ -19,18 +21,20 @@ public class PlayerAnimationManager
 	private CustomAnimation purePullEffectAnim;
 
 	public PlayerAnimationManager(
-		GameObject noGemUppercutEffect, GameObject noGemPunchEffect,
+		GameObject noGemUppercutEffect, GameObject noGemPunchEffect, GameObject noGemPushEffect,
 		GameObject pureJumpEffect, GameObject pureDashEffect, GameObject pureMeleeEffect, GameObject purePullEffect,
-		Sprite[] noGemUppercutEffectSprites, Sprite[] noGemPunchEffectSprites,
+		Sprite[] noGemUppercutEffectSprites, Sprite[] noGemPunchEffectSprites, Sprite[] noGemPushEffectSprites,
 		Sprite[] pureJumpEffectSprites, Sprite[] pureDashEffectSprites, Sprite[] pureShieldEffectSprites, Sprite[] purePullEffectSprites) {
 		this.noGemUppercutEffect = noGemUppercutEffect;
 		this.noGemPunchEffect = noGemPunchEffect;
+		this.noGemPushEffect = noGemPushEffect;
 		this.pureJumpEffect = pureJumpEffect;
 		this.pureDashEffect = pureDashEffect;
 		this.pureMeleeEffect = pureMeleeEffect;
 		this.purePullEffect = purePullEffect;
 		noGemUppercutEffectAnim = new CustomAnimation(noGemUppercutEffectSprites);
 		noGemPunchEffectAnim = new CustomAnimation(noGemPunchEffectSprites);
+		noGemPushEffectAnim = new CustomAnimation(noGemPushEffectSprites);
 		pureJumpEffectAnim = new CustomAnimation(pureJumpEffectSprites);
 		pureDashEffectAnim = new CustomAnimation(pureDashEffectSprites);
 		pureShieldEffectAnim = new CustomAnimation(pureShieldEffectSprites);
@@ -141,6 +145,7 @@ public class PlayerAnimationManager
 	public void ResetLeftGloveSkillAnimationIndex() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
+				noGemPushEffectAnim.ResetIndexToZero();
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
@@ -277,7 +282,7 @@ public class PlayerAnimationManager
 	public GameObject GetLeftGloveEffect() {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				break;
+				return noGemPushEffect;
 			case GlovesGem.GlovesGemState.Purity:
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {
 					return purePullEffect;
@@ -446,6 +451,7 @@ public class PlayerAnimationManager
 	public void PlayLeftGloveEffectAnimationOnceWithModifiedSpeed(GameObject clone, float animSpeed) {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
+				noGemPushEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(clone.GetComponent<SpriteRenderer>(), animSpeed);
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				if (LeftGloveModGem.leftGloveModGemState == LeftGloveModGem.LeftGloveModGemState.None) {

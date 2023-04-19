@@ -12,7 +12,7 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		lockMovement = false;
 		lockMovementSec = pushSeconds;
 		cooldownSec = 2f;
-		pullEffectCloneSec = pushSeconds;
+		leftGloveEffectCloneSec = pushSeconds;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}
@@ -37,22 +37,26 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		throw new System.NotImplementedException();
 	}
 
-	public void SetupLeftGloveSkill() {
+	public override void SetupLeftGloveSkill(BoxCollider2D boxCollider, GameObject leftGloveEffect, bool isFacingRight, float offset) {
 		canAttack = true;
 		isAnimating = true;
 		lockMovement = true;
-	}
-
-	public override void SetupLeftGloveSkill(BoxCollider2D boxCollider, GameObject leftGloveEffect, bool isFacingRight, float offset) {
-		throw new System.NotImplementedException();
+		Bounds playerBounds = boxCollider.bounds;
+		Vector2 attackRightPosition = new Vector2(playerBounds.max.x + offset, playerBounds.center.y);
+		Vector2 attackLeftPosition = new Vector2(playerBounds.min.x - offset, playerBounds.center.y);
+		if (isFacingRight) {
+			leftGloveEffect.GetComponent<SpriteRenderer>().flipX = false;
+			attackOrigin = attackRightPosition;
+		} else {
+			leftGloveEffect.GetComponent<SpriteRenderer>().flipX = true;
+			attackOrigin = attackLeftPosition;
+		}
 	}
 
 	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect) {
-		throw new System.NotImplementedException();
-	}
-
-	public void PerformLeftGloveSkill() {
+		GameObject pushEffectClone = Object.Instantiate(leftGloveEffect, attackOrigin, leftGloveEffect.transform.rotation);
 		canAttack = false;
+		return pushEffectClone;
 	}
 
 	public override void ResetAnimation() {

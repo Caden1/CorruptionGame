@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerSkillsManager
 {
-	public GameObject noGemPunchEffectClone { get; private set; }
 	public GameObject noGemUppercutEffectClone { get; private set; }
+	public GameObject noGemPunchEffectClone { get; private set; }
+	public GameObject noGemPushEffectClone { get; private set; }
 
 	public GameObject pureJumpEffectClone { get; private set; }
 	public GameObject pureDashEffectClone { get; private set; }
@@ -134,8 +135,8 @@ public class PlayerSkillsManager
 		float offset = 0f;
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				offset = 1.5f;
-				noGemsLeftGloveSkills.SetupLeftGloveSkill();
+				offset = 0.18f;
+				noGemsLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				offset = 0.88f;
@@ -219,7 +220,7 @@ public class PlayerSkillsManager
 	public void PerformLeftGloveSkill(GameObject leftGloveEffect) {
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				noGemsLeftGloveSkills.PerformLeftGloveSkill();
+				noGemPushEffectClone = noGemsLeftGloveSkills.PerformLeftGloveSkill(leftGloveEffect);
 				break;
 			case GlovesGem.GlovesGemState.Purity:
 				purePullEffectClone = purityLeftGloveSkills.PerformLeftGloveSkill(leftGloveEffect);

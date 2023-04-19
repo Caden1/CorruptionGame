@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject noGemUppercutEffect;
 	[SerializeField] private Sprite[] noGemPunchEffectSprites;
 	[SerializeField] private GameObject noGemPunchEffect;
+	[SerializeField] private Sprite[] noGemPushEffectSprites;
+	[SerializeField] private GameObject noGemPushEffect;
 
 	// Purity
 	[SerializeField] private Sprite[] pureJumpEffectSprites;
@@ -97,9 +99,9 @@ public class PlayerController : MonoBehaviour
 	private void Start() {
 		playerSkillsManager = new PlayerSkillsManager();
 		playerAnimationManager = new PlayerAnimationManager(
-			noGemUppercutEffect, noGemPunchEffect,
+			noGemUppercutEffect, noGemPunchEffect, noGemPushEffect,
 			pureJumpEffect, pureDashEffect, pureShieldEffect, purePullEffect,
-			noGemUppercutEffectSprites, noGemPunchEffectSprites,
+			noGemUppercutEffectSprites, noGemPunchEffectSprites, noGemPushEffectSprites,
 			pureJumpEffectSprites, pureDashEffectSprites, pureShieldEffectSprites, purePullEffectSprites);
 
 		Player.playerState = Player.PlayerState.Normal;
@@ -289,6 +291,11 @@ public class PlayerController : MonoBehaviour
 			playerSkillsManager.noGemPunchEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
 			StartCoroutine(playerSkillsManager.DestroyRightGloveEffectClone(playerSkillsManager.noGemPunchEffectClone, RightGloveSkills.meleeEffectCloneSec));
 		}
+		if (playerSkillsManager.noGemPushEffectClone != null) {
+			float animSpeed = 0.04f;
+			playerAnimationManager.PlayLeftGloveEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemPushEffectClone, animSpeed);
+			StartCoroutine(playerSkillsManager.DestroyLeftGloveEffectClone(playerSkillsManager.noGemPushEffectClone, LeftGloveSkills.leftGloveEffectCloneSec));
+		}
 
 		// Purity
 		if (playerSkillsManager.pureJumpEffectClone != null) {
@@ -308,7 +315,7 @@ public class PlayerController : MonoBehaviour
 		if (playerSkillsManager.purePullEffectClone != null) {
 			float animSpeed = 0.04f;
 			playerAnimationManager.PlayLeftGloveEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.purePullEffectClone, animSpeed);
-			StartCoroutine(playerSkillsManager.DestroyLeftGloveEffectClone(playerSkillsManager.purePullEffectClone, LeftGloveSkills.pullEffectCloneSec));
+			StartCoroutine(playerSkillsManager.DestroyLeftGloveEffectClone(playerSkillsManager.purePullEffectClone, LeftGloveSkills.leftGloveEffectCloneSec));
 		}
 	}
 

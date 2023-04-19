@@ -10,6 +10,7 @@ TagManager:
   - PurityOnlyPull
   - NoGemUppercut
   - NoGemPunch
+  - NoGemPush
   layers:
   - Default
   - TransparentFX

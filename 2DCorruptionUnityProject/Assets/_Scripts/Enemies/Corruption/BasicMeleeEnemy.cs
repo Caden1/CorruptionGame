@@ -29,6 +29,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private float attackSpeed = 1f;
 
 	private void Start() {
+		Physics2D.IgnoreCollision(playerObject.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
 		damageDealt = 10f;
 		// Starts enemy off moving left
 		if (transform.position.x >= 0f) {
@@ -117,17 +118,26 @@ public class BasicMeleeEnemy : MonoBehaviour
 	//}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
-		float knockupDistance = 1f;
-		float knockbackDistance = 0.2f;
+		float knockupUppercutVelocity = 4f;
+		float punchKnockbackVelocity = 1.2f;
+		float pushbackVelocity = 5f;
 		if (collision.tag == "NoGemUppercut") {
-			transform.position = new Vector2(transform.position.x, transform.position.y + knockupDistance);
-			collision.GetComponent<BoxCollider2D>().enabled = false; // This works because the collider is on the clone. A new one is created everytime.
+			transform.GetComponent<Rigidbody2D>().velocity = Vector2.up * knockupUppercutVelocity;
+			collision.GetComponent<BoxCollider2D>().enabled = false;
 		}
 		if (collision.tag == "NoGemPunch") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
-				transform.position = new Vector2(transform.position.x - knockbackDistance, transform.position.y);
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * punchKnockbackVelocity;
 			} else {
-				transform.position = new Vector2(transform.position.x + knockbackDistance, transform.position.y);
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * punchKnockbackVelocity;
+			}
+			collision.GetComponent<BoxCollider2D>().enabled = false;
+		}
+		if (collision.tag == "NoGemPush") {
+			if (collision.GetComponent<SpriteRenderer>().flipX) {
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * pushbackVelocity;
+			} else {
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * pushbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
 		}

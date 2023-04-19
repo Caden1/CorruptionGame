@@ -3807,7 +3807,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.03, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -3818,7 +3818,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 1.26}
+  m_Size: {x: 0.35, y: 1.26}
   m_EdgeRadius: 0
 --- !u!50 &1208835183
 Rigidbody2D:
@@ -3867,6 +3867,13 @@ MonoBehaviour:
   - {fileID: 1184397763, guid: 3d41d7cc2d68846de9ae96525ccfbda8, type: 3}
   - {fileID: -21734078, guid: 3d41d7cc2d68846de9ae96525ccfbda8, type: 3}
   noGemPunchEffect: {fileID: 6648720149107355290, guid: 3087fb26d250f436a8ce5ef19f0cd276, type: 3}
+  noGemPushEffectSprites:
+  - {fileID: -413727761, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  - {fileID: 2097008819, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  - {fileID: -1099584967, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  - {fileID: 1019074624, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  - {fileID: 857054839, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  noGemPushEffect: {fileID: 4495335826799877806, guid: 38fe0ddb1f4da4c3b99626d673e1250e, type: 3}
   pureJumpEffectSprites:
   - {fileID: -1018892682, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
   - {fileID: 877710547, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}

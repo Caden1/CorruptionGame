@@ -9,7 +9,7 @@ public abstract class LeftGloveSkills : Skills
 	public static float cooldownSec { get; protected set; }
 	public static float animationSec { get; protected set; }
 	public static float lockMovementSec { get; protected set; }
-	public static float pullEffectCloneSec { get; protected set; }
+	public static float leftGloveEffectCloneSec { get; protected set; }
 	protected float pullEffectZRotation;
 	protected Vector2 attackOrigin;
 

@@ -16,7 +16,7 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		lockMovement = false;
 		lockMovementSec = pushSeconds;
 		cooldownSec = 2f;
-		pullEffectCloneSec = pushSeconds;
+		leftGloveEffectCloneSec = pushSeconds;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}
@@ -29,7 +29,7 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		lockMovement = false;
 		lockMovementSec = pushSeconds;
 		cooldownSec = 2f;
-		pullEffectCloneSec = pushSeconds;
+		leftGloveEffectCloneSec = pushSeconds;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}

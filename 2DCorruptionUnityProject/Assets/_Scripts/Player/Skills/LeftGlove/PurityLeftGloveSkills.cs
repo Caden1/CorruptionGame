@@ -16,7 +16,7 @@ public class PurityLeftGloveSkills : LeftGloveSkills
 		lockMovement = false;
 		lockMovementSec = pullSeconds;
 		cooldownSec = 2f;
-		pullEffectCloneSec = pullSeconds;
+		leftGloveEffectCloneSec = pullSeconds;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}
