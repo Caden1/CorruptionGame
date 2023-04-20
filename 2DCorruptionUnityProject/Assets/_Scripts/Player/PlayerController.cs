@@ -273,9 +273,9 @@ public class PlayerController : MonoBehaviour
 			float verticalOffset = 0.15f;
 			playerAnimationManager.PlayRightBootEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemUppercutEffectClone, animSpeed);
 			if (isFacingRight) {
-				horizontalOffset = 0.2f;
+				horizontalOffset = 0.25f;
 			} else {
-				horizontalOffset = -0.2f;
+				horizontalOffset = -0.25f;
 			}
 			playerSkillsManager.noGemUppercutEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
 			StartCoroutine(playerSkillsManager.DestroyJumpEffectClone(playerSkillsManager.noGemUppercutEffectClone, RightBootSkills.jumpEffectCloneSec));

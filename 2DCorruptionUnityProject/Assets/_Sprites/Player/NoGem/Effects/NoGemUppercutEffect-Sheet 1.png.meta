@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3d41d7cc2d68846de9ae96525ccfbda8
+guid: c0b79ea518fc54c03b6388308abc6ed3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NoGemPunchEffect-Sheet_0
+      name: NoGemUppercutEffect-Sheet 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 68
-        height: 81
+        width: 56
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c153d30d942747c2b596f4678f4a047
-      internalID: 1239310273
+      spriteID: c4694333985494cfa88d756b2feaf0db
+      internalID: -593404691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPunchEffect-Sheet_1
+      name: NoGemUppercutEffect-Sheet 1_1
       rect:
         serializedVersion: 2
-        x: 68
+        x: 56
         y: 0
-        width: 68
-        height: 81
+        width: 56
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a9daa9a617cd4e02be0c0b3bd2e13c2
-      internalID: -948311388
+      spriteID: bdb52a07a03e7417fbe365787bf745b7
+      internalID: 2023407713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPunchEffect-Sheet_2
+      name: NoGemUppercutEffect-Sheet 1_2
       rect:
         serializedVersion: 2
-        x: 136
+        x: 112
         y: 0
-        width: 68
-        height: 81
+        width: 56
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54ee79ffe36884db4a10ba8a05f8d99b
-      internalID: 1877947387
+      spriteID: 9b65faf8a26594ac5b5265448934e483
+      internalID: 224390054
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPunchEffect-Sheet_3
+      name: NoGemUppercutEffect-Sheet 1_3
       rect:
         serializedVersion: 2
-        x: 204
+        x: 168
         y: 0
-        width: 68
-        height: 81
+        width: 56
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f6cb4b60abf54b1e812a6c88402f4bd
-      internalID: 1184397763
+      spriteID: a5b6a2800257d4f5f81bbe6865adf217
+      internalID: 641771031
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPunchEffect-Sheet_4
+      name: NoGemUppercutEffect-Sheet 1_4
       rect:
         serializedVersion: 2
-        x: 272
+        x: 224
         y: 0
-        width: 68
-        height: 81
+        width: 56
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fd1f941b7c4e480b985adc77063a819
-      internalID: -21734078
+      spriteID: 2fe7da6c0ee194bb28a4fef39eb75f26
+      internalID: 1172405833
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemPunchEffect-Sheet_4: -21734078
-      NoGemPunchEffect-Sheet_0: 1239310273
-      NoGemPunchEffect-Sheet_2: 1877947387
-      NoGemPunchEffect-Sheet_1: -948311388
-      NoGemPunchEffect-Sheet_3: 1184397763
+      NoGemUppercutEffect-Sheet 1_2: 224390054
+      NoGemUppercutEffect-Sheet 1_1: 2023407713
+      NoGemUppercutEffect-Sheet 1_0: -593404691
+      NoGemUppercutEffect-Sheet 1_4: 1172405833
+      NoGemUppercutEffect-Sheet 1_3: 641771031
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
