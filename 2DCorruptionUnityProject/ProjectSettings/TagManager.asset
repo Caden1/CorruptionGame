@@ -11,6 +11,7 @@ TagManager:
   - NoGemUppercut
   - NoGemPunch
   - NoGemPush
+  - NoGemDashKick
   layers:
   - Default
   - TransparentFX

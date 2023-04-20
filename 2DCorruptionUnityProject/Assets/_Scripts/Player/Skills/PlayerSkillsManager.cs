@@ -7,6 +7,7 @@ public class PlayerSkillsManager
 	public GameObject noGemUppercutEffectClone { get; private set; }
 	public GameObject noGemPunchEffectClone { get; private set; }
 	public GameObject noGemPushEffectClone { get; private set; }
+	public GameObject noGemDashKickEffectClone { get; private set; }
 
 	public GameObject pureJumpEffectClone { get; private set; }
 	public GameObject pureDashEffectClone { get; private set; }
@@ -107,7 +108,7 @@ public class PlayerSkillsManager
 	public void SetupLeftBootSkill(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemsLeftBootSkills.SetupDash(isFacingRight);
+				noGemDashKickEffectClone = noGemsLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, dashEffect);
 				break;
 			case BootsGem.BootsGemState.Purity:
 				pureDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, dashEffect);

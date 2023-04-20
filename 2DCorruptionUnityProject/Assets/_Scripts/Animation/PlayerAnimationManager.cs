@@ -5,6 +5,7 @@ public class PlayerAnimationManager
 	private GameObject noGemUppercutEffect;
 	private GameObject noGemPunchEffect;
 	private GameObject noGemPushEffect;
+	private GameObject noGemDashKickEffect;
 
 	private GameObject pureJumpEffect;
 	private GameObject pureDashEffect;
@@ -14,6 +15,7 @@ public class PlayerAnimationManager
 	private CustomAnimation noGemUppercutEffectAnim;
 	private CustomAnimation noGemPunchEffectAnim;
 	private CustomAnimation noGemPushEffectAnim;
+	private CustomAnimation noGemDashKickEffectAnim;
 
 	private CustomAnimation pureJumpEffectAnim;
 	private CustomAnimation pureDashEffectAnim;
@@ -21,13 +23,14 @@ public class PlayerAnimationManager
 	private CustomAnimation purePullEffectAnim;
 
 	public PlayerAnimationManager(
-		GameObject noGemUppercutEffect, GameObject noGemPunchEffect, GameObject noGemPushEffect,
+		GameObject noGemUppercutEffect, GameObject noGemPunchEffect, GameObject noGemPushEffect, GameObject noGemDashKickEffect,
 		GameObject pureJumpEffect, GameObject pureDashEffect, GameObject pureMeleeEffect, GameObject purePullEffect,
-		Sprite[] noGemUppercutEffectSprites, Sprite[] noGemPunchEffectSprites, Sprite[] noGemPushEffectSprites,
+		Sprite[] noGemUppercutEffectSprites, Sprite[] noGemPunchEffectSprites, Sprite[] noGemPushEffectSprites, Sprite[] noGemDashKickEffectSprites,
 		Sprite[] pureJumpEffectSprites, Sprite[] pureDashEffectSprites, Sprite[] pureShieldEffectSprites, Sprite[] purePullEffectSprites) {
 		this.noGemUppercutEffect = noGemUppercutEffect;
 		this.noGemPunchEffect = noGemPunchEffect;
 		this.noGemPushEffect = noGemPushEffect;
+		this.noGemDashKickEffect = noGemDashKickEffect;
 		this.pureJumpEffect = pureJumpEffect;
 		this.pureDashEffect = pureDashEffect;
 		this.pureMeleeEffect = pureMeleeEffect;
@@ -35,6 +38,7 @@ public class PlayerAnimationManager
 		noGemUppercutEffectAnim = new CustomAnimation(noGemUppercutEffectSprites);
 		noGemPunchEffectAnim = new CustomAnimation(noGemPunchEffectSprites);
 		noGemPushEffectAnim = new CustomAnimation(noGemPushEffectSprites);
+		noGemDashKickEffectAnim = new CustomAnimation(noGemDashKickEffectSprites);
 		pureJumpEffectAnim = new CustomAnimation(pureJumpEffectSprites);
 		pureDashEffectAnim = new CustomAnimation(pureDashEffectSprites);
 		pureShieldEffectAnim = new CustomAnimation(pureShieldEffectSprites);
@@ -78,6 +82,7 @@ public class PlayerAnimationManager
 	public void ResetLeftBootSkillAnimationIndex() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
+				noGemDashKickEffectAnim.ResetIndexToZero();
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
@@ -213,7 +218,7 @@ public class PlayerAnimationManager
 	public GameObject GetDashEffect() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				break;
+				return noGemDashKickEffect;
 			case BootsGem.BootsGemState.Purity:
 				if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.None) {
 					return pureDashEffect;
@@ -384,6 +389,7 @@ public class PlayerAnimationManager
 	public void PlayLeftBootEffectAnimationOnceWithModifiedSpeed(GameObject clone, float animSpeed) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
+				noGemDashKickEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(clone.GetComponent<SpriteRenderer>(), animSpeed);
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (LeftBootModGem.leftBootModGemState == LeftBootModGem.LeftBootModGemState.None) {

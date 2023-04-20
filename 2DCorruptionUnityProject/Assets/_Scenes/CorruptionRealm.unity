@@ -3874,6 +3874,13 @@ MonoBehaviour:
   - {fileID: 1019074624, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
   - {fileID: 857054839, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
   noGemPushEffect: {fileID: 4495335826799877806, guid: 38fe0ddb1f4da4c3b99626d673e1250e, type: 3}
+  noGemDashKickEffectSprites:
+  - {fileID: 832448269, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
+  - {fileID: -604839404, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
+  - {fileID: 143126692, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
+  - {fileID: -2142867752, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
+  - {fileID: -410496519, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
+  noGemDashKickEffect: {fileID: 5079020799455052565, guid: 0fd8483aaa47f476abfc3bfd4d7706c6, type: 3}
   pureJumpEffectSprites:
   - {fileID: -1018892682, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
   - {fileID: 877710547, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}

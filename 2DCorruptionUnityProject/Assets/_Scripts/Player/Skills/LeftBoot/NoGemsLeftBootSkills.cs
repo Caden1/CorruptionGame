@@ -8,11 +8,12 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 	private float startingGravity;
 
 	public override void SetWithNoGems() {
+		float kickTime = 0.5f;
 		isInvulnerable = false;
 		dashVelocity = 8f;
-		secondsToDash = 0.5f;
+		secondsToDash = kickTime;
 		cooldown = 2f;
-		dashEffectCloneSec = 0.4f;
+		dashEffectCloneSec = kickTime;
 		dashDirection = new Vector2();
 		dashEffectPosition = new Vector2();
 	}
@@ -38,16 +39,17 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 	}
 
 	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect) {
-		throw new System.NotImplementedException();
-	}
-
-	public void SetupDash(bool isFacingRight) {
 		isInvulnerable = true;
 		if (isFacingRight) {
 			dashDirection = Vector2.right;
+			dashEffectPosition = new Vector2(playerBoxCollider.bounds.center.x, playerBoxCollider.bounds.center.y);
+			dashEffect.GetComponent<SpriteRenderer>().flipX = false;
 		} else {
 			dashDirection = Vector2.left;
+			dashEffectPosition = new Vector2(playerBoxCollider.bounds.center.x, playerBoxCollider.bounds.center.y);
+			dashEffect.GetComponent<SpriteRenderer>().flipX = true;
 		}
+		return Object.Instantiate(dashEffect, dashEffectPosition, dashEffect.transform.rotation);
 	}
 
 	public override void StartDash(Rigidbody2D playerRigidbody) {

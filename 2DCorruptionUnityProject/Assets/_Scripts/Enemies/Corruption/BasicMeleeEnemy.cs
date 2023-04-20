@@ -118,11 +118,20 @@ public class BasicMeleeEnemy : MonoBehaviour
 	//}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
-		float knockupUppercutVelocity = 4f;
+		float uppercutKnockupVelocity = 4f;
+		float kickDashKnockbackVelocity = 10f;
 		float punchKnockbackVelocity = 1.2f;
 		float pushbackVelocity = 5f;
 		if (collision.tag == "NoGemUppercut") {
-			transform.GetComponent<Rigidbody2D>().velocity = Vector2.up * knockupUppercutVelocity;
+			transform.GetComponent<Rigidbody2D>().velocity = Vector2.up * uppercutKnockupVelocity;
+			collision.GetComponent<BoxCollider2D>().enabled = false;
+		}
+		if (collision.tag == "NoGemDashKick") {
+			if (collision.GetComponent<SpriteRenderer>().flipX) {
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * kickDashKnockbackVelocity;
+			} else {
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * kickDashKnockbackVelocity;
+			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
 		}
 		if (collision.tag == "NoGemPunch") {

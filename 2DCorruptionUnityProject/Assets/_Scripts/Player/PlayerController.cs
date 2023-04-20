@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject noGemPunchEffect;
 	[SerializeField] private Sprite[] noGemPushEffectSprites;
 	[SerializeField] private GameObject noGemPushEffect;
+	[SerializeField] private Sprite[] noGemDashKickEffectSprites;
+	[SerializeField] private GameObject noGemDashKickEffect;
 
 	// Purity
 	[SerializeField] private Sprite[] pureJumpEffectSprites;
@@ -99,9 +101,9 @@ public class PlayerController : MonoBehaviour
 	private void Start() {
 		playerSkillsManager = new PlayerSkillsManager();
 		playerAnimationManager = new PlayerAnimationManager(
-			noGemUppercutEffect, noGemPunchEffect, noGemPushEffect,
+			noGemUppercutEffect, noGemPunchEffect, noGemPushEffect, noGemDashKickEffect,
 			pureJumpEffect, pureDashEffect, pureShieldEffect, purePullEffect,
-			noGemUppercutEffectSprites, noGemPunchEffectSprites, noGemPushEffectSprites,
+			noGemUppercutEffectSprites, noGemPunchEffectSprites, noGemPushEffectSprites, noGemDashKickEffectSprites,
 			pureJumpEffectSprites, pureDashEffectSprites, pureShieldEffectSprites, purePullEffectSprites);
 
 		Player.playerState = Player.PlayerState.Normal;
@@ -277,6 +279,19 @@ public class PlayerController : MonoBehaviour
 			}
 			playerSkillsManager.noGemUppercutEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
 			StartCoroutine(playerSkillsManager.DestroyJumpEffectClone(playerSkillsManager.noGemUppercutEffectClone, RightBootSkills.jumpEffectCloneSec));
+		}
+		if (playerSkillsManager.noGemDashKickEffectClone != null) {
+			float animSpeed = 0.04f;
+			float horizontalOffset;
+			float verticalOffset = 0f;
+			playerAnimationManager.PlayLeftBootEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemDashKickEffectClone, animSpeed);
+			if (isFacingRight) {
+				horizontalOffset = 0.53f;
+			} else {
+				horizontalOffset = -0.53f;
+			}
+			playerSkillsManager.noGemDashKickEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
+			StartCoroutine(playerSkillsManager.DestroyLeftBootEffectClone(playerSkillsManager.noGemDashKickEffectClone, LeftBootSkills.dashEffectCloneSec));
 		}
 		if (playerSkillsManager.noGemPunchEffectClone != null) {
 			float animSpeed = 0.02f;
