@@ -52,7 +52,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 			playerRigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, float verticalOffset) {
 		throw new System.NotImplementedException();
 	}
 

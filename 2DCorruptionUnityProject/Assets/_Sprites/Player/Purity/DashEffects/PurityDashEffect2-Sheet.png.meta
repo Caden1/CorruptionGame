@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 566d9475d671f4dbd8b0ec5359e4c180
+guid: 4f04ae20a8c4b41c1b9845cef28eb286
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,148 +117,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PurityNoDamDashEffect-Sheet_0
+      name: PurityDashEffect2-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 48
-      alignment: 9
-      pivot: {x: 0.9875, y: 0.5}
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d2e6e5c4bcc049859338c72b72ff1cd
-      internalID: -101338802
+      spriteID: f688ba799aeaa473a9aca845354ff5d7
+      internalID: 1706291691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurityNoDamDashEffect-Sheet_1
+      name: PurityDashEffect2-Sheet_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 64
         y: 0
-        width: 80
-        height: 48
-      alignment: 9
-      pivot: {x: 0.9875, y: 0.5}
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d008c38d7ece64b8d95b11cbd67ef281
-      internalID: -2137390846
+      spriteID: 92d392971b7ae4acdae783c5434c0482
+      internalID: -932168815
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurityNoDamDashEffect-Sheet_2
+      name: PurityDashEffect2-Sheet_2
       rect:
         serializedVersion: 2
-        x: 160
+        x: 128
         y: 0
-        width: 80
-        height: 48
-      alignment: 9
-      pivot: {x: 0.9875, y: 0.5}
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7249f1dd636674f6fba2e8bd2c6afd04
-      internalID: 493611036
+      spriteID: e3e8a8390be784361b62dcc291d92829
+      internalID: -1523221510
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurityNoDamDashEffect-Sheet_3
+      name: PurityDashEffect2-Sheet_3
       rect:
         serializedVersion: 2
-        x: 240
+        x: 192
         y: 0
-        width: 80
-        height: 48
-      alignment: 9
-      pivot: {x: 0.9875, y: 0.5}
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 696638f4bdee84d339f97ac18e4cddc6
-      internalID: 1293879938
+      spriteID: 2929279ba51dc4d3ebe454f5e9c5f3bd
+      internalID: -326912792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurityNoDamDashEffect-Sheet_4
+      name: PurityDashEffect2-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bc627f6761a747a7972ab6042f12086
+      internalID: -261743326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurityDashEffect2-Sheet_5
       rect:
         serializedVersion: 2
         x: 320
         y: 0
-        width: 80
-        height: 48
-      alignment: 9
-      pivot: {x: 0.9875, y: 0.5}
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebd7751c5287f41eca8347853c7d48fc
-      internalID: -1333556660
+      spriteID: 10932cbb2dcc84eecb1653601f2aae27
+      internalID: 1865159762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurityNoDamDashEffect-Sheet_5
+      name: PurityDashEffect2-Sheet_6
       rect:
         serializedVersion: 2
-        x: 400
+        x: 384
         y: 0
-        width: 80
-        height: 48
-      alignment: 9
-      pivot: {x: 0.9875, y: 0.5}
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bb6fcae194ce4c1ba689fe1bcb27dec
-      internalID: -1689413458
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurityNoDamDashEffect-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 0
-        width: 80
-        height: 48
-      alignment: 9
-      pivot: {x: 0.9875, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f0cbb02ccdfd841748e6fc7f95dbddfe
-      internalID: 1166926578
+      spriteID: eac88b39a7d8d41ef981bede6658081c
+      internalID: -625917663
       vertices: []
       indices: 
       edges: []
@@ -274,13 +274,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PurityNoDamDashEffect-Sheet_6: 1166926578
-      PurityNoDamDashEffect-Sheet_3: 1293879938
-      PurityNoDamDashEffect-Sheet_2: 493611036
-      PurityNoDamDashEffect-Sheet_4: -1333556660
-      PurityNoDamDashEffect-Sheet_5: -1689413458
-      PurityNoDamDashEffect-Sheet_1: -2137390846
-      PurityNoDamDashEffect-Sheet_0: -101338802
+      PurityDashEffect2-Sheet_3: -326912792
+      PurityDashEffect2-Sheet_1: -932168815
+      PurityDashEffect2-Sheet_2: -1523221510
+      PurityDashEffect2-Sheet_6: -625917663
+      PurityDashEffect2-Sheet_5: 1865159762
+      PurityDashEffect2-Sheet_0: 1706291691
+      PurityDashEffect2-Sheet_4: -261743326
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

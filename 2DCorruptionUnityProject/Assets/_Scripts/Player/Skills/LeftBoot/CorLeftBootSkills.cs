@@ -53,7 +53,7 @@ public class CorLeftBootSkills : LeftBootSkills
 		
 	}
 
-	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect) {
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect, Vector2 offset) {
 		throw new System.NotImplementedException();
 		//isInvulnerable = true;
 		//float xDashEffectOffset = 0.2f;

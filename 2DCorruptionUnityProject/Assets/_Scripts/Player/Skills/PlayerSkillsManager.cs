@@ -76,15 +76,17 @@ public class PlayerSkillsManager
 	}
 
 	public void SetupRightBootSkill(BoxCollider2D playerBoxCollider, LayerMask platformLayerMask, bool isFacingRight, GameObject jumpEffect) {
+		float verticalOffset = 0f;
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
 				noGemsRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, isFacingRight, jumpEffect);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
+				verticalOffset = 0.08f;
+				purityRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, verticalOffset);
 				break;
 			case BootsGem.BootsGemState.Corruption:
-				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask);
+				corRightBootSkills.SetupJump(playerBoxCollider, platformLayerMask, verticalOffset);
 				break;
 		}
 	}
@@ -106,12 +108,14 @@ public class PlayerSkillsManager
 	}
 
 	public void SetupLeftBootSkill(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect) {
+		Vector2 offset = Vector2.zero;
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemDashKickEffectClone = noGemsLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, dashEffect);
+				noGemDashKickEffectClone = noGemsLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, dashEffect, offset);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				pureDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, dashEffect);
+				offset = new Vector2(0.4f, 0.15f);
+				pureDashEffectClone = purityLeftBootSkills.SetupDash(isFacingRight, playerBoxCollider, dashEffect, offset);
 				break;
 			case BootsGem.BootsGemState.Corruption:
 				break;

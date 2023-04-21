@@ -90,23 +90,15 @@ public class PurityRightBootSkills : RightBootSkills
 			playerRigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, float verticalOffset) {
 		jumpVelocity = originalJumpVelocity;
-		if (isRocketBoosted) {
-			float verticalOffset = 0.13f;
-			effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y - verticalOffset);
-		} else {
-			effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
-		}
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + verticalOffset);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
 		} else if (numjumps > jumpCount) {
 			jumpCount++;
 			canJump = true;
-			if (isRocketBoosted) {
-				jumpVelocity += rocketBoostVelocityAddition;
-			}
 		}
 	}
 

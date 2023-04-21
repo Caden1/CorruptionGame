@@ -24,7 +24,7 @@ public abstract class LeftBootSkills : Skills
 
 	public abstract void SetEarthModifiers();
 
-	public abstract GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect);
+	public abstract GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect, Vector2 offset);
 
 	public abstract void StartDash(Rigidbody2D playerRigidbody);
 

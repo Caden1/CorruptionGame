@@ -83,8 +83,8 @@ public class CorRightBootSkills : RightBootSkills
 			playerRigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
-		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, float verticalOffset) {
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + verticalOffset);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;

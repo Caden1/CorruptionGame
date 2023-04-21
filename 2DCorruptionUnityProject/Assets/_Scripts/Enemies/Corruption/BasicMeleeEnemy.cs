@@ -20,6 +20,9 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private float startingGravity;
 	private float xRaomToPosition;
 	private float attackPosition;
+	private HealthSystem enemyHealth;
+	private float health = 10f;
+	private Transform healthBar;
 	private float attackJumpHeight = 2f;
 	private float roamSpeed = 0.5f;
 	private float roamDistance = 4f;
@@ -29,6 +32,8 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private float attackSpeed = 1f;
 
 	private void Start() {
+		enemyHealth = new HealthSystem(health);
+		healthBar = transform.GetChild(0).GetChild(1);
 		Physics2D.IgnoreCollision(playerObject.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
 		damageDealt = 10f;
 		// Starts enemy off moving left
@@ -125,6 +130,8 @@ public class BasicMeleeEnemy : MonoBehaviour
 		if (collision.tag == "NoGemUppercut") {
 			transform.GetComponent<Rigidbody2D>().velocity = Vector2.up * uppercutKnockupVelocity;
 			collision.GetComponent<BoxCollider2D>().enabled = false;
+			enemyHealth.TakeDamage(2f);
+			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 		if (collision.tag == "NoGemDashKick") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
@@ -133,6 +140,8 @@ public class BasicMeleeEnemy : MonoBehaviour
 				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * kickDashKnockbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
+			enemyHealth.TakeDamage(2f);
+			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 		if (collision.tag == "NoGemPunch") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
@@ -141,6 +150,8 @@ public class BasicMeleeEnemy : MonoBehaviour
 				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * punchKnockbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
+			enemyHealth.TakeDamage(1f);
+			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 		if (collision.tag == "NoGemPush") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
@@ -149,6 +160,8 @@ public class BasicMeleeEnemy : MonoBehaviour
 				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * pushbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
+			enemyHealth.TakeDamage(0.5f);
+			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 	}
 
