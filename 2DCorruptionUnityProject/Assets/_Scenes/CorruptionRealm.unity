@@ -3868,19 +3868,21 @@ MonoBehaviour:
   - {fileID: 328943392, guid: adafacb8d96b24888957953a87430613, type: 3}
   noGemPunchEffect: {fileID: 578216450966010632, guid: 3087fb26d250f436a8ce5ef19f0cd276, type: 3}
   noGemPushEffectSprites:
-  - {fileID: -413727761, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  - {fileID: 2097008819, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  - {fileID: -1099584967, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  - {fileID: 1019074624, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  - {fileID: 857054839, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  noGemPushEffect: {fileID: 4495335826799877806, guid: 38fe0ddb1f4da4c3b99626d673e1250e, type: 3}
+  - {fileID: 363135914, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  - {fileID: -1974815537, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  - {fileID: -349209320, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  - {fileID: -5494783, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  - {fileID: 404717093, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
+  noGemPushEffect: {fileID: 5042088503663235930, guid: 38fe0ddb1f4da4c3b99626d673e1250e, type: 3}
   noGemDashKickEffectSprites:
-  - {fileID: 832448269, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
-  - {fileID: -604839404, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
-  - {fileID: 143126692, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
-  - {fileID: -2142867752, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
-  - {fileID: -410496519, guid: 286bf07e59102416b8e4953e30e5e467, type: 3}
-  noGemDashKickEffect: {fileID: 5079020799455052565, guid: 0fd8483aaa47f476abfc3bfd4d7706c6, type: 3}
+  - {fileID: -1500999976, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
+  - {fileID: -1737842533, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
+  - {fileID: -119538246, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
+  - {fileID: -297930111, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
+  - {fileID: -578031156, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
+  - {fileID: -850699996, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
+  - {fileID: 335519715, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
+  noGemDashKickEffect: {fileID: 9107201645421092023, guid: 0fd8483aaa47f476abfc3bfd4d7706c6, type: 3}
   pureJumpEffectSprites:
   - {fileID: -1018892682, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
   - {fileID: 877710547, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}

@@ -283,12 +283,12 @@ public class PlayerController : MonoBehaviour
 		if (playerSkillsManager.noGemDashKickEffectClone != null) {
 			float animSpeed = 0.04f;
 			float horizontalOffset;
-			float verticalOffset = 0f;
+			float verticalOffset = -0.03f;
 			playerAnimationManager.PlayLeftBootEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemDashKickEffectClone, animSpeed);
 			if (isFacingRight) {
-				horizontalOffset = 0.53f;
+				horizontalOffset = 0.56f;
 			} else {
-				horizontalOffset = -0.53f;
+				horizontalOffset = -0.56f;
 			}
 			playerSkillsManager.noGemDashKickEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
 			StartCoroutine(playerSkillsManager.DestroyLeftBootEffectClone(playerSkillsManager.noGemDashKickEffectClone, LeftBootSkills.dashEffectCloneSec));

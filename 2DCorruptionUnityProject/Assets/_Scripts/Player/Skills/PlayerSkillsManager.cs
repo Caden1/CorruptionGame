@@ -136,7 +136,7 @@ public class PlayerSkillsManager
 		float offset = 0f;
 		switch (GlovesGem.glovesGemState) {
 			case GlovesGem.GlovesGemState.None:
-				offset = 0.18f;
+				offset = 0.35f;
 				noGemsLeftGloveSkills.SetupLeftGloveSkill(playerBoxCollider, leftGloveEffect, isFacingRight, offset);
 				break;
 			case GlovesGem.GlovesGemState.Purity:

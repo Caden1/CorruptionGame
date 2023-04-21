@@ -122,7 +122,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 69
+        width: 106
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27031935f766e4da09f9853c2cb98ed2
-      internalID: -413727761
+      spriteID: a2005e3c03e85421a8d91b0aa48baf31
+      internalID: 363135914
       vertices: []
       indices: 
       edges: []
@@ -141,9 +141,9 @@ TextureImporter:
       name: NoGemPushEffect-Sheet_1
       rect:
         serializedVersion: 2
-        x: 69
+        x: 106
         y: 0
-        width: 69
+        width: 106
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9545858b0c7274fd4879f898274bb4e5
-      internalID: 2097008819
+      spriteID: f3733a6096dad412ea3957f234b42111
+      internalID: -1974815537
       vertices: []
       indices: 
       edges: []
@@ -162,9 +162,9 @@ TextureImporter:
       name: NoGemPushEffect-Sheet_2
       rect:
         serializedVersion: 2
-        x: 138
+        x: 212
         y: 0
-        width: 69
+        width: 106
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b678adfc74b4548f19cbe7c1cf36b6d5
-      internalID: -1099584967
+      spriteID: f9e0cbff5023f42f1a9c5424ba1a4928
+      internalID: -349209320
       vertices: []
       indices: 
       edges: []
@@ -183,9 +183,9 @@ TextureImporter:
       name: NoGemPushEffect-Sheet_3
       rect:
         serializedVersion: 2
-        x: 207
+        x: 318
         y: 0
-        width: 69
+        width: 106
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 802a19bf050d74db18dd815e547ca769
-      internalID: 1019074624
+      spriteID: 7e3ddd8c22c4145219e11dff5439dc90
+      internalID: -5494783
       vertices: []
       indices: 
       edges: []
@@ -204,9 +204,9 @@ TextureImporter:
       name: NoGemPushEffect-Sheet_4
       rect:
         serializedVersion: 2
-        x: 276
+        x: 424
         y: 0
-        width: 69
+        width: 106
         height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -215,8 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6698fa1f70071425da26c5c3fa43decd
-      internalID: 857054839
+      spriteID: 7a55b9fd093c14bc3bb215ab98a23b09
+      internalID: 404717093
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemPushEffect-Sheet_1: 2097008819
-      NoGemPushEffect-Sheet_3: 1019074624
-      NoGemPushEffect-Sheet_0: -413727761
-      NoGemPushEffect-Sheet_2: -1099584967
-      NoGemPushEffect-Sheet_4: 857054839
+      NoGemPushEffect-Sheet_1: -1974815537
+      NoGemPushEffect-Sheet_3: -5494783
+      NoGemPushEffect-Sheet_0: 363135914
+      NoGemPushEffect-Sheet_2: -349209320
+      NoGemPushEffect-Sheet_4: 404717093
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
