@@ -16,6 +16,8 @@ public class CorLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetWithNoModifiers() {
+		damage = 4f;
+		kickDashKnockbackVelocity = 2f;
 		isInvulnerable = false;
 		dashVelocity = 8f;
 		secondsToDash = 0.5f;
@@ -29,16 +31,7 @@ public class CorLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetAirModifiers() {
-		isInvulnerable = false;
-		dashVelocity = 12f;
-		secondsToDash = 0.25f;
-		cooldown = 2f;
-		dashEffectCloneSec = 0.4f;
-		dashDirection = new Vector2();
-		dashEffectPosition = new Vector2();
-		damagingDashEffectClones = new List<GameObject>();
-		numSpikes = 4;
-		downwardLaunchVelocity = 4f;
+		
 	}
 
 	public override void SetFireModifiers() {

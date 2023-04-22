@@ -10,6 +10,8 @@ public class CorRightGloveSkills : RightGloveSkills
 
 	public override void SetWithNoModifiers() {
 		float punchSeconds = 0.2f;
+		damage = 5f;
+		punchKnockbackVelocity = 1.2f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
@@ -25,19 +27,7 @@ public class CorRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetAirModifiers() {
-		float punchSeconds = 0.2f;
-		canMelee = false;
-		isAnimating = false;
-		lockMovement = false;
-		animationSec = punchSeconds;
-		lockMovementSec = punchSeconds;
-		meleeEffectCloneSec = punchSeconds;
-		cooldown = punchSeconds;
-		hasForcedMovement = false;
-		forcedMovementVector = new Vector2();
-		forcedMovementVel = 0.5f;
-		forcedMovementSec = 0.1f;
-		attackOrigin = new Vector2();
+		
 	}
 
 	public override void SetFireModifiers() {

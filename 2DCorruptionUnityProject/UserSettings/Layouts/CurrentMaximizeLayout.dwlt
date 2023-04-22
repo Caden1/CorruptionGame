@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 11802
+  controlID: 3187
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 11803
+  controlID: 3188
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 11877
+  controlID: 3189
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -226,7 +226,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0cb0ffffb8b6ffff94b7ffffa0bfffff0afbffff
+      m_ExpandedIDs: 0afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -767,8 +767,8 @@ MonoBehaviour:
     y: 706
     width: 1519
     height: 271
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
@@ -816,22 +816,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_Prefabs/Enemies/Corruption
+    - Assets/_Scripts/Enemies
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/_Prefabs/Enemies/Corruption
+  - Assets/_Scripts/Enemies
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "/Users/cadenbarton/Desktop/Desktop - Caden\u2019s MacBook Air/Corruption/Repo/CorruptionGame/2DCorruptionUnityProject"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 78f20000
-    m_LastClickedID: 62072
-    m_ExpandedIDs: 0000000034690000366900003a6900003c6900003e690000406900004469000046690000486900007269000096d9000000ca9a3b
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: 96690000
+    m_LastClickedID: 27030
+    m_ExpandedIDs: 000000006a6900006c6900006e69000070690000726900007469000076690000786900007a690000806900008469000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -859,7 +859,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000034690000366900003a6900003c6900003e6900004069000044690000466900004869000000ca9a3b
+    m_ExpandedIDs: 000000006a6900006c6900006e69000070690000726900007469000076690000786900007a6900008469000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -6,6 +6,8 @@ public abstract class RightBootSkills : Skills
 {
 	public static bool canJump { get; protected set; }
 	public static bool canJumpCancel { get; protected set; }
+	public static float damage { get; protected set; }
+	public static float uppercutKnockupVelocity { get; protected set; }
 	public static float jumpEffectCloneSec { get; protected set; }
 	public static float jumpForgiveSeconds = 1f;
 	protected int numjumps;

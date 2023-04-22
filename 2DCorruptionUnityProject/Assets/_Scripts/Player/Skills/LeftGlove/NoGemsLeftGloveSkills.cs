@@ -6,6 +6,9 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 {
 	public override void SetWithNoGems() {
 		float pushSeconds = 0.3f;
+		damage = 0.5f;
+		pushbackVelocity = 5f;
+		pullSpeed = 0f;
 		canAttack = false;
 		isAnimating = false;
 		animationSec = pushSeconds;

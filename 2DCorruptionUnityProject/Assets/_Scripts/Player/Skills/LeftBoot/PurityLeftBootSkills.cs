@@ -11,6 +11,8 @@ public class PurityLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetWithNoModifiers() {
+		damage = 0f;
+		kickDashKnockbackVelocity = 0f;
 		isInvulnerable = false;
 		dashVelocity = 10f;
 		secondsToDash = 0.5f;
@@ -21,13 +23,7 @@ public class PurityLeftBootSkills : LeftBootSkills
 	}
 
 	public override void SetAirModifiers() {
-		isInvulnerable = false;
-		dashVelocity = 14f;
-		secondsToDash = 0.5f;
-		cooldown = 2f;
-		dashEffectCloneSec = 0.4f;
-		dashDirection = new Vector2();
-		dashEffectPosition = new Vector2();
+		
 	}
 
 	public override void SetFireModifiers() {

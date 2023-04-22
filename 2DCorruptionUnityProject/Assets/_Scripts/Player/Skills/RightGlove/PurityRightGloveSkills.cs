@@ -15,6 +15,8 @@ public class PurityRightGloveSkills : RightGloveSkills
 
 	public override void SetWithNoModifiers() {
 		float shieldSeconds = 0.5f;
+		damage = 0f;
+		punchKnockbackVelocity = 0f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
@@ -30,23 +32,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetAirModifiers() {
-		float shieldSeconds = 0.5f;
-		canMelee = false;
-		isAnimating = false;
-		lockMovement = false;
-		animationSec = shieldSeconds;
-		lockMovementSec = shieldSeconds;
-		meleeEffectCloneSec = shieldSeconds;
-		cooldown = shieldSeconds;
-		hasForcedMovement = false;
-		forcedMovementVector = new Vector2();
-		forcedMovementVel = 0.5f;
-		forcedMovementSec = 0.1f;
-		attackOrigin = new Vector2();
-		airClones = new List<GameObject>();
-		airVelocity = 5f;
-		airDistance = 5f;
-		airDirection = new Vector2();
+		
 	}
 
 	public override void SetFireModifiers() {
@@ -106,17 +92,17 @@ public class PurityRightGloveSkills : RightGloveSkills
 		Object.Destroy(meleeEffectClone);
 	}
 
-	public void LaunchAirMelee() {
-		if (airClones != null && airClones.Count > 0) {
-			for (int i = airClones.Count - 1; i >= 0; i--) {
-				if (airClones[i] != null) {
-					airClones[i].transform.Translate(airDirection * Time.deltaTime * airVelocity);
-					if (Vector2.Distance(attackOrigin, airClones[i].transform.position) > airDistance) {
-						Object.Destroy(airClones[i]);
-						airClones.RemoveAt(i);
-					}
-				}
-			}
-		}
-	}
+	//public void LaunchAirMelee() {
+	//	if (airClones != null && airClones.Count > 0) {
+	//		for (int i = airClones.Count - 1; i >= 0; i--) {
+	//			if (airClones[i] != null) {
+	//				airClones[i].transform.Translate(airDirection * Time.deltaTime * airVelocity);
+	//				if (Vector2.Distance(attackOrigin, airClones[i].transform.position) > airDistance) {
+	//					Object.Destroy(airClones[i]);
+	//					airClones.RemoveAt(i);
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 }

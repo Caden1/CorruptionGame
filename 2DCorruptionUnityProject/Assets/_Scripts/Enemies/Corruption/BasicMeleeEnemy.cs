@@ -123,58 +123,47 @@ public class BasicMeleeEnemy : MonoBehaviour
 	//}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
-		float uppercutKnockupVelocity = 4f;
-		float kickDashKnockbackVelocity = 10f;
-		float punchKnockbackVelocity = 1.2f;
-		float pushbackVelocity = 5f;
 		if (collision.tag == "NoGemUppercut") {
-			transform.GetComponent<Rigidbody2D>().velocity = Vector2.up * uppercutKnockupVelocity;
+			transform.GetComponent<Rigidbody2D>().velocity = Vector2.up * RightBootSkills.uppercutKnockupVelocity;
 			collision.GetComponent<BoxCollider2D>().enabled = false;
-			enemyHealth.TakeDamage(2f);
+			enemyHealth.TakeDamage(RightBootSkills.damage);
 			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 		if (collision.tag == "NoGemDashKick") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * kickDashKnockbackVelocity;
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftBootSkills.kickDashKnockbackVelocity;
 			} else {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * kickDashKnockbackVelocity;
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftBootSkills.kickDashKnockbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
-			enemyHealth.TakeDamage(2f);
+			enemyHealth.TakeDamage(LeftBootSkills.damage);
 			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 		if (collision.tag == "NoGemPunch") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * punchKnockbackVelocity;
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * RightGloveSkills.punchKnockbackVelocity;
 			} else {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * punchKnockbackVelocity;
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * RightGloveSkills.punchKnockbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
-			enemyHealth.TakeDamage(1f);
+			enemyHealth.TakeDamage(RightGloveSkills.damage);
 			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 		if (collision.tag == "NoGemPush") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * pushbackVelocity;
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftGloveSkills.pushbackVelocity;
 			} else {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * pushbackVelocity;
+				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftGloveSkills.pushbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
-			enemyHealth.TakeDamage(0.5f);
+			enemyHealth.TakeDamage(LeftGloveSkills.damage);
 			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 	}
 
 	private void OnTriggerStay2D(Collider2D collision) {
-		float pullSpeed = 5f;
 		if (collision.tag == "PurityOnlyPull") {
-			transform.position = Vector2.MoveTowards(transform.position, playerObject.transform.position, pullSpeed * Time.deltaTime);
+			transform.position = Vector2.MoveTowards(transform.position, playerObject.transform.position, LeftGloveSkills.pullSpeed * Time.deltaTime);
 		}
 	}
-
-	//private void OnTriggerEnter2D(Collider2D collision) {
-	//	if (collision.tag == "PurityOnlyPull") {
-	//		transform.position = Vector2.MoveTowards(transform.position, playerObject.transform.position, 20f * Time.deltaTime);
-	//	}
-	//}
 }

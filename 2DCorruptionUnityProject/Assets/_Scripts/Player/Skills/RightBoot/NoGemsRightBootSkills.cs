@@ -8,6 +8,8 @@ public class NoGemsRightBootSkills : RightBootSkills
 	private int jumpCount = 0;
 
 	public override void SetWithNoGems() {
+		damage = 1.5f;
+		uppercutKnockupVelocity = 2f;
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;

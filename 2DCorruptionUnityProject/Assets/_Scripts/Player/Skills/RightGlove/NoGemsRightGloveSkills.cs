@@ -26,6 +26,8 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 
 	public override void SetWithNoGems() {
 		float punchSeconds = 0.2f;
+		damage = 1f;
+		punchKnockbackVelocity = 1.2f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;

@@ -10,6 +10,9 @@ public class PurityLeftGloveSkills : LeftGloveSkills
 
 	public override void SetWithNoModifiers() {
 		float pullSeconds = 0.4f;
+		damage = 0f;
+		pushbackVelocity = 0f;
+		pullSpeed = 5f;
 		canAttack = false;
 		isAnimating = false;
 		animationSec = pullSeconds;

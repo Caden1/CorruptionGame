@@ -9,6 +9,8 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 
 	public override void SetWithNoGems() {
 		float kickTime = 0.5f;
+		damage = 2f;
+		kickDashKnockbackVelocity = 2f;
 		isInvulnerable = false;
 		dashVelocity = 8f;
 		secondsToDash = kickTime;

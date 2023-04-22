@@ -22,6 +22,8 @@ public class PurityRightBootSkills : RightBootSkills
 	}
 
 	public override void SetWithNoModifiers() {
+		damage = 0f;
+		uppercutKnockupVelocity = 0f;
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 2;
@@ -39,37 +41,11 @@ public class PurityRightBootSkills : RightBootSkills
 	}
 
 	public override void SetAirModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 3;
-		jumpGravity = 2f;
-		groundedPlayerGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 2f;
-		jumpVelocity = 10f;
-		jumpEffectCloneSec = 0.3f;
-		effectOrigin = new Vector2();
-		isRocketBoosted = false;
-		rocketBoostVelocityAddition = 0f;
-		originalJumpVelocity = jumpVelocity;
+		
 	}
 
 	public override void SetFireModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 2;
-		jumpGravity = 2f;
-		groundedPlayerGravity = 1f;
-		fallGravity = 2f;
-		archVelocityThreshold = 3f;
-		archGravity = 2f;
-		jumpVelocity = 10f;
-		jumpEffectCloneSec = 0.3f;
-		effectOrigin = new Vector2();
-		isRocketBoosted = true;
-		rocketBoostVelocityAddition = 5f;
-		originalJumpVelocity = jumpVelocity;
+		
 	}
 
 	public override void SetWaterModifiers() {

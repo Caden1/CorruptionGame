@@ -6,6 +6,9 @@ public abstract class LeftGloveSkills : Skills
 {
 	public static bool canAttack { get; protected set; }
 	public static bool isAnimating { get; protected set; }
+	public static float damage { get; protected set; }
+	public static float pushbackVelocity { get; protected set; }
+	public static float pullSpeed { get; protected set; }
 	public static float cooldownSec { get; protected set; }
 	public static float animationSec { get; protected set; }
 	public static float lockMovementSec { get; protected set; }

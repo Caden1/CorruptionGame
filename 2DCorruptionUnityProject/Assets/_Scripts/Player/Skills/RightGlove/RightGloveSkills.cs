@@ -6,6 +6,8 @@ public abstract class RightGloveSkills : Skills
 {
 	public static bool canMelee { get; protected set; }
 	public static bool isAnimating { get; protected set; }
+	public static float damage { get; protected set; }
+	public static float punchKnockbackVelocity { get; protected set; }
 	public static float forcedMovementSec { get; protected set; }
 	public static float cooldown { get; protected set; }
 	public static float animationSec { get; protected set; }

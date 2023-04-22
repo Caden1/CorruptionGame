@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class LeftBootSkills : Skills
 {
+	public static float damage { get; protected set; }
+	public static float kickDashKnockbackVelocity { get; protected set; }
 	public static float cooldown { get; protected set; }
 	public static float secondsToDash { get; protected set; }
 	public static float dashEffectCloneSec { get; protected set; }
