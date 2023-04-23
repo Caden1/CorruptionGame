@@ -19,15 +19,13 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private bool isMovingRight;
 	private float startingGravity;
 	private float xRaomToPosition;
-	private float attackPosition;
 	private HealthSystem enemyHealth;
 	private float health = 10f;
 	private Transform healthBar;
-	private float attackJumpHeight = 2f;
 	private float roamSpeed = 0.5f;
 	private float roamDistance = 4f;
 	private float chaseRange = 5f;
-	private float chaseSpeed = 1f;
+	private float chaseSpeed = 4f;
 	private float attackRange = 1f;
 	private float attackSpeed = 1f;
 
@@ -48,7 +46,6 @@ public class BasicMeleeEnemy : MonoBehaviour
 		}
 		enemyRigidbody = GetComponent<Rigidbody2D>();
 		startingGravity = enemyRigidbody.gravityScale;
-		attackPosition = transform.position.y + attackJumpHeight;
 		roamToPosition = new Vector2(xRaomToPosition, transform.position.y);
 		state = State.Roam;
 		animationState = AnimationState.Idle;
@@ -61,16 +58,16 @@ public class BasicMeleeEnemy : MonoBehaviour
 			case State.Roam:
 				animationState = AnimationState.Idle;
 				HorizontalRoam();
-				//LookForTarget();
+				LookForTarget();
 				break;
-			//case State.ChaseTarget:
-			//	animationState = AnimationState.Idle;
-			//	ChaseTarget();
-			//	break;
-			//case State.AttackTarget:
-			//	animationState = AnimationState.Attack;
-			//	AttackTarget();
-			//	break;
+			case State.ChaseTarget:
+				animationState = AnimationState.Idle;
+				ChaseTarget();
+				break;
+			case State.AttackTarget:
+				//animationState = AnimationState.Attack;
+				AttackTarget();
+				break;
 		}
 
 		switch (animationState) {
@@ -98,29 +95,26 @@ public class BasicMeleeEnemy : MonoBehaviour
 		}
 	}
 
-	//private void LookForTarget() {
-	//	if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= chaseRange) {
-	//		state = State.ChaseTarget;
-	//	}
-	//}
+	private void LookForTarget() {
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= chaseRange) {
+			state = State.ChaseTarget;
+		}
+	}
 
-	//private void ChaseTarget() {
-	//	Vector2 playerPosition = new Vector2(playerObject.transform.position.x, transform.position.y);
-	//	transform.position = Vector2.MoveTowards(transform.position, playerPosition, chaseSpeed * Time.deltaTime);
-	//	if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange)
-	//		state = State.AttackTarget;
-	//	else
-	//		state = State.Roam;
-	//}
+	private void ChaseTarget() {
+		Vector2 playerPosition = new Vector2(playerObject.transform.position.x, transform.position.y);
+		transform.position = Vector2.MoveTowards(transform.position, playerPosition, chaseSpeed * Time.deltaTime);
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange)
+			state = State.AttackTarget;
+		else
+			state = State.Roam;
+	}
 
-	//private void AttackTarget() {
-	//	enemyRigidbody.gravityScale = 0f;
-	//	transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, attackPosition), attackSpeed * Time.deltaTime);
-	//	if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > attackRange) {
-	//		enemyRigidbody.gravityScale = startingGravity;
-	//		state = State.ChaseTarget;
-	//	}
-	//}
+	private void AttackTarget() {
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > attackRange) {
+			state = State.ChaseTarget;
+		}
+	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.tag == "NoGemUppercut") {
