@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a44d84824613e44dc87e1e5982b4b8f3
+guid: b724061d4c77f442c91ab75a23b07a81
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet 1_0
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 112
+        width: 139
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e95f18c27baaf40efbbb9214a6afc12a
-      internalID: 1070663600
+      spriteID: 08fc62b19e4134d8f891c108c3b41379
+      internalID: -665276754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet 1_1
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 139
         y: 0
-        width: 80
-        height: 112
+        width: 139
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f73906a42308a4341862b011c859fa54
-      internalID: -290402864
+      spriteID: 313117adb5db84d7fa2673e3394e01a1
+      internalID: -675805596
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet 1_2
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_2
       rect:
         serializedVersion: 2
-        x: 160
+        x: 278
         y: 0
-        width: 80
-        height: 112
+        width: 139
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af4aab5bec3fc4b56aafd26588b4750d
-      internalID: 405752682
+      spriteID: 132ad31fc1fb74985a7e0039fb547605
+      internalID: -501759721
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet 1_3
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_3
       rect:
         serializedVersion: 2
-        x: 240
+        x: 417
         y: 0
-        width: 80
-        height: 112
+        width: 139
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7cdee716a542e447caaf89c25f69d8b7
-      internalID: -697251816
+      spriteID: 6db9361327b24466f92f974a38d67b50
+      internalID: -1213711676
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet 1_4
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_4
       rect:
         serializedVersion: 2
-        x: 320
+        x: 556
         y: 0
-        width: 80
-        height: 112
+        width: 139
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7f516ceb5f0944aabe529a8349f1f13
-      internalID: -305015531
+      spriteID: 00372f4404ae64e01a15daa34338b30d
+      internalID: -1576884519
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet 1_5
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_5
       rect:
         serializedVersion: 2
-        x: 400
+        x: 695
         y: 0
-        width: 80
-        height: 112
+        width: 139
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3194da06c72fb4b798bbb15c469e9818
-      internalID: -1557841750
+      spriteID: 2a353c6071f9f48f68905f5662a0d24b
+      internalID: 1963089829
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet 1_6
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_6
       rect:
         serializedVersion: 2
-        x: 480
+        x: 834
         y: 0
-        width: 80
-        height: 112
+        width: 139
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,20 +257,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e79e6679171a944a7aa19726179a50ea
-      internalID: -31894035
+      spriteID: 5661466d43b12409da22dae8305dc585
+      internalID: 1445901455
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet 1_7
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_7
       rect:
         serializedVersion: 2
-        x: 560
+        x: 973
         y: 0
-        width: 80
-        height: 112
+        width: 139
+        height: 98
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,8 +278,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0fa2d059b14246d085cbd993c9cfe65
-      internalID: 228598089
+      spriteID: 793fe29f19b344f5db7a9c43930e07df
+      internalID: -1061662150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 0
+        width: 139
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de5415baa40cc4eda9b9bafd783ca131
+      internalID: -1724052770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttackEffectCorBasicMeleeEnemy-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1251
+        y: 0
+        width: 139
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13869b50e25714097a8aa60e73861522
+      internalID: -794660761
       vertices: []
       indices: 
       edges: []
@@ -295,14 +337,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      IdleCorBasicMeleeEnemy-Sheet 1_6: -31894035
-      IdleCorBasicMeleeEnemy-Sheet 1_0: 1070663600
-      IdleCorBasicMeleeEnemy-Sheet 1_2: 405752682
-      IdleCorBasicMeleeEnemy-Sheet 1_4: -305015531
-      IdleCorBasicMeleeEnemy-Sheet 1_7: 228598089
-      IdleCorBasicMeleeEnemy-Sheet 1_3: -697251816
-      IdleCorBasicMeleeEnemy-Sheet 1_5: -1557841750
-      IdleCorBasicMeleeEnemy-Sheet 1_1: -290402864
+      AttackEffectCorBasicMeleeEnemy-Sheet_0: -665276754
+      AttackEffectCorBasicMeleeEnemy-Sheet_1: -675805596
+      AttackEffectCorBasicMeleeEnemy-Sheet_7: -1061662150
+      AttackEffectCorBasicMeleeEnemy-Sheet_8: -1724052770
+      AttackEffectCorBasicMeleeEnemy-Sheet_5: 1963089829
+      AttackEffectCorBasicMeleeEnemy-Sheet_6: 1445901455
+      AttackEffectCorBasicMeleeEnemy-Sheet_4: -1576884519
+      AttackEffectCorBasicMeleeEnemy-Sheet_3: -1213711676
+      AttackEffectCorBasicMeleeEnemy-Sheet_2: -501759721
+      AttackEffectCorBasicMeleeEnemy-Sheet_9: -794660761
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

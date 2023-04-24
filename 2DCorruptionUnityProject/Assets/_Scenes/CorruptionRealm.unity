@@ -472,17 +472,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: CorBasicMeleeEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1458274790481983325, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458274790481983325, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.382
+      value: 22.64
       objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.279
+      value: -11.356
       objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_LocalPosition.z

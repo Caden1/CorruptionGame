@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d1c48efdd6f744a41acf7fe92016bd92
+guid: 365c4c368ff2a40c6ab7c5d9dea2d7bd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,169 +117,253 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet_0
+      name: RoamCorBasicMeleeEnemy-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 112
-      alignment: 9
-      pivot: {x: 0.375, y: 0.42857143}
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49b8bc50349d14d12ba076138b2010c1
-      internalID: -1058682835
+      spriteID: 755f849ad08e844a4b5bbbcbb1a6f94d
+      internalID: -1475221431
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet_1
+      name: RoamCorBasicMeleeEnemy-Sheet_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 72
         y: 0
-        width: 80
-        height: 112
-      alignment: 9
-      pivot: {x: 0.375, y: 0.42857143}
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60e469df992c54b4098c54294a783f0e
-      internalID: -200516453
+      spriteID: 0c771295078b742fe904fac8646c93af
+      internalID: -2102894384
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet_2
+      name: RoamCorBasicMeleeEnemy-Sheet_2
       rect:
         serializedVersion: 2
-        x: 160
+        x: 144
         y: 0
-        width: 80
-        height: 112
-      alignment: 9
-      pivot: {x: 0.375, y: 0.42857143}
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e6c972eccaf96406fb3c3bf8e8cf3310
-      internalID: -1784488729
+      spriteID: 20f1c23203a2f47cab1f65a54e6696a0
+      internalID: 705106268
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet_3
+      name: RoamCorBasicMeleeEnemy-Sheet_3
       rect:
         serializedVersion: 2
-        x: 240
+        x: 216
         y: 0
-        width: 80
-        height: 112
-      alignment: 9
-      pivot: {x: 0.375, y: 0.42857143}
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b481b6085ce34fc28a694dd7c04579f
-      internalID: -115857073
+      spriteID: 0693cd9d6d1d64de99942703049a1861
+      internalID: 1526697787
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet_4
+      name: RoamCorBasicMeleeEnemy-Sheet_4
       rect:
         serializedVersion: 2
-        x: 320
+        x: 288
         y: 0
-        width: 80
-        height: 112
-      alignment: 9
-      pivot: {x: 0.375, y: 0.42857143}
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c67ae5c9b9674457ea1189a7aeb8801c
-      internalID: 927198715
+      spriteID: b2be565d1a2924271ab5e7b10674e922
+      internalID: -566511157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet_5
+      name: RoamCorBasicMeleeEnemy-Sheet_5
       rect:
         serializedVersion: 2
-        x: 400
+        x: 360
         y: 0
-        width: 80
-        height: 112
-      alignment: 9
-      pivot: {x: 0.375, y: 0.42857143}
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c78e7369c5f05460eb5a6d9045b83124
-      internalID: 2038563778
+      spriteID: da57f35eac1954474b739c85778f70ec
+      internalID: -855905408
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet_6
+      name: RoamCorBasicMeleeEnemy-Sheet_6
       rect:
         serializedVersion: 2
-        x: 480
+        x: 432
         y: 0
-        width: 80
-        height: 112
-      alignment: 9
-      pivot: {x: 0.375, y: 0.42857143}
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3317e289a4e1e4535a028e20f3fede9c
-      internalID: 1815473363
+      spriteID: 27bc38b32c3934d68b1c7e17cb284c6f
+      internalID: -1908378324
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleCorBasicMeleeEnemy-Sheet_7
+      name: RoamCorBasicMeleeEnemy-Sheet_7
       rect:
         serializedVersion: 2
-        x: 560
+        x: 504
         y: 0
-        width: 80
-        height: 112
-      alignment: 9
-      pivot: {x: 0.375, y: 0.42857143}
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70f90f2cd59a040a5a2734a952c3c3fb
-      internalID: 1127354058
+      spriteID: 7c8a09a4b5c7043d1976c25e4c7842e6
+      internalID: -2078067623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoamCorBasicMeleeEnemy-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1136cbd37e2e41999952c10db736d07
+      internalID: 1787269090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoamCorBasicMeleeEnemy-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 0
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faee157090e84432b810f4a14b77a8e0
+      internalID: 712533217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoamCorBasicMeleeEnemy-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d329faf06da2a4a82998f74fa14c0cad
+      internalID: -188270777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoamCorBasicMeleeEnemy-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 0
+        width: 72
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09302d9dfc23b438a9c9fdf9b2642d00
+      internalID: 469016030
       vertices: []
       indices: 
       edges: []
@@ -295,14 +379,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      IdleCorBasicMeleeEnemy-Sheet_7: 1127354058
-      IdleCorBasicMeleeEnemy-Sheet_1: -200516453
-      IdleCorBasicMeleeEnemy-Sheet_2: -1784488729
-      IdleCorBasicMeleeEnemy-Sheet_0: -1058682835
-      IdleCorBasicMeleeEnemy-Sheet_5: 2038563778
-      IdleCorBasicMeleeEnemy-Sheet_4: 927198715
-      IdleCorBasicMeleeEnemy-Sheet_6: 1815473363
-      IdleCorBasicMeleeEnemy-Sheet_3: -115857073
+      RoamCorBasicMeleeEnemy-Sheet_3: 1526697787
+      RoamCorBasicMeleeEnemy-Sheet_1: -2102894384
+      RoamCorBasicMeleeEnemy-Sheet_6: -1908378324
+      RoamCorBasicMeleeEnemy-Sheet_8: 1787269090
+      RoamCorBasicMeleeEnemy-Sheet_0: -1475221431
+      RoamCorBasicMeleeEnemy-Sheet_5: -855905408
+      RoamCorBasicMeleeEnemy-Sheet_9: 712533217
+      RoamCorBasicMeleeEnemy-Sheet_4: -566511157
+      RoamCorBasicMeleeEnemy-Sheet_11: 469016030
+      RoamCorBasicMeleeEnemy-Sheet_10: -188270777
+      RoamCorBasicMeleeEnemy-Sheet_2: 705106268
+      RoamCorBasicMeleeEnemy-Sheet_7: -2078067623
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

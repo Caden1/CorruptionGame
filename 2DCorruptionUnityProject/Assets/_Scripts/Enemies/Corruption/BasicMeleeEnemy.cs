@@ -5,50 +5,39 @@ using UnityEngine;
 public class BasicMeleeEnemy : MonoBehaviour
 {
 	public GameObject playerObject;
-	public float damageDealt { get; private set; }
-	private const string IDLE_ANIM = "Idle";
-	//private const string ATTACK_ANIM = "Attack";
+	private const string ROAM_ANIM = "Roam";
+	private const string ATTACK_ANIM = "Attack";
 	private enum State { Roam, ChaseTarget, AttackTarget }
 	private State state;
-	private enum AnimationState { Idle, Attack }
+	private enum AnimationState { Roam, Attack }
 	private AnimationState animationState;
 	private Animator enemyAnimator;
 	private CustomAnimation enemyAnimations;
 	private Rigidbody2D enemyRigidbody;
 	private Vector2 roamToPosition;
-	private bool isMovingRight;
-	private float startingGravity;
+	private Vector2 playerPosition;
 	private float xRaomToPosition;
+	private bool isMovingRight;
 	private HealthSystem enemyHealth;
 	private float health = 10f;
 	private Transform healthBar;
 	private float roamSpeed = 0.5f;
 	private float roamDistance = 4f;
 	private float chaseRange = 5f;
-	private float chaseSpeed = 4f;
-	private float attackRange = 1f;
-	private float attackSpeed = 1f;
+	private float chaseSpeed = 2f;
+	private float attackRange = 0.5f;
 
 	private void Start() {
 		enemyHealth = new HealthSystem(health);
 		healthBar = transform.GetChild(0).GetChild(1);
 		Physics2D.IgnoreCollision(playerObject.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
-		damageDealt = 10f;
-		// Starts enemy off moving left
-		if (transform.position.x >= 0f) {
-			xRaomToPosition = transform.position.x - roamDistance;
-			isMovingRight = false;
-			gameObject.GetComponent<SpriteRenderer>().flipX = true;
-		} else {
-			xRaomToPosition = transform.position.x + roamDistance;
-			isMovingRight = true;
-			gameObject.GetComponent<SpriteRenderer>().flipX = false;
-		}
-		enemyRigidbody = GetComponent<Rigidbody2D>();
-		startingGravity = enemyRigidbody.gravityScale;
+		isMovingRight = false;
+		xRaomToPosition = transform.position.x - roamDistance; // Starts enemy off moving left
 		roamToPosition = new Vector2(xRaomToPosition, transform.position.y);
+		playerPosition = new Vector2();
+		enemyRigidbody = GetComponent<Rigidbody2D>();
 		state = State.Roam;
-		animationState = AnimationState.Idle;
+		animationState = AnimationState.Roam;
 		enemyAnimator = GetComponent<Animator>();
 		enemyAnimations = new CustomAnimation(enemyAnimator);
 	}
@@ -56,61 +45,83 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private void Update() {
 		switch (state) {
 			case State.Roam:
-				animationState = AnimationState.Idle;
-				HorizontalRoam();
-				LookForTarget();
+				animationState = AnimationState.Roam;
+				Roam();
+				LookToChaseFromRoam();
 				break;
 			case State.ChaseTarget:
-				animationState = AnimationState.Idle;
+				animationState = AnimationState.Roam;
 				ChaseTarget();
+				LookToAttack();
+				LookToRoamFromChase();
 				break;
 			case State.AttackTarget:
-				//animationState = AnimationState.Attack;
+				animationState = AnimationState.Attack;
 				AttackTarget();
+				LookToChaseFromAttack();
 				break;
 		}
 
 		switch (animationState) {
-			case AnimationState.Idle:
-				enemyAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
+			case AnimationState.Roam:
+				enemyAnimations.PlayUnityAnimatorAnimation(ROAM_ANIM);
 				break;
 			case AnimationState.Attack:
-				//enemyAnimations.PlayUnityAnimatorAnimation(ATTACK_ANIM);
+				enemyAnimations.PlayUnityAnimatorAnimation(ATTACK_ANIM);
 				break;
 		}
 	}
 
-	private void HorizontalRoam() {
+	private void Roam() {
 		transform.position = Vector2.MoveTowards(transform.position, roamToPosition, roamSpeed * Time.deltaTime);
-		if (transform.position.x == roamToPosition.x) {
-			if (isMovingRight) {
+		if (isMovingRight) {
+			GetComponent<SpriteRenderer>().flipX = false;
+			if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y), roamToPosition) < 0.1f) {
 				roamToPosition.x -= roamDistance;
 				isMovingRight = false;
-				gameObject.GetComponent<SpriteRenderer>().flipX = true;
-			} else {
+			}
+		} else {
+			GetComponent<SpriteRenderer>().flipX = true;
+			if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y), roamToPosition) < 0.1f) {
 				roamToPosition.x += roamDistance;
 				isMovingRight = true;
-				gameObject.GetComponent<SpriteRenderer>().flipX = false;
 			}
 		}
 	}
 
-	private void LookForTarget() {
+	private void LookToChaseFromRoam() {
 		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= chaseRange) {
 			state = State.ChaseTarget;
 		}
 	}
 
 	private void ChaseTarget() {
-		Vector2 playerPosition = new Vector2(playerObject.transform.position.x, transform.position.y);
+		if ((transform.position.x - playerObject.transform.position.x) > 0f) {
+			GetComponent<SpriteRenderer>().flipX = true;
+		} else {
+			GetComponent<SpriteRenderer>().flipX = false;
+		}
+		playerPosition = new Vector2(playerObject.transform.position.x, transform.position.y);
 		transform.position = Vector2.MoveTowards(transform.position, playerPosition, chaseSpeed * Time.deltaTime);
-		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange)
+	}
+
+	private void LookToAttack() {
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange) {
 			state = State.AttackTarget;
-		else
+		}
+	}
+
+	private void LookToRoamFromChase() {
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > chaseRange) {
 			state = State.Roam;
+		}
 	}
 
 	private void AttackTarget() {
+		
+	}
+
+	private void LookToChaseFromAttack() {
 		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > attackRange) {
 			state = State.ChaseTarget;
 		}
@@ -118,16 +129,16 @@ public class BasicMeleeEnemy : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.tag == "NoGemUppercut") {
-			transform.GetComponent<Rigidbody2D>().velocity = Vector2.up * RightBootSkills.uppercutKnockupVelocity;
+			GetComponent<Rigidbody2D>().velocity = Vector2.up * RightBootSkills.uppercutKnockupVelocity;
 			collision.GetComponent<BoxCollider2D>().enabled = false;
 			enemyHealth.TakeDamage(RightBootSkills.damage);
 			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
 		}
 		if (collision.tag == "NoGemDashKick") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftBootSkills.kickDashKnockbackVelocity;
+				GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftBootSkills.kickDashKnockbackVelocity;
 			} else {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftBootSkills.kickDashKnockbackVelocity;
+				GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftBootSkills.kickDashKnockbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
 			enemyHealth.TakeDamage(LeftBootSkills.damage);
@@ -135,9 +146,9 @@ public class BasicMeleeEnemy : MonoBehaviour
 		}
 		if (collision.tag == "NoGemPunch") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * RightGloveSkills.punchKnockbackVelocity;
+				GetComponent<Rigidbody2D>().velocity = Vector2.left * RightGloveSkills.punchKnockbackVelocity;
 			} else {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * RightGloveSkills.punchKnockbackVelocity;
+				GetComponent<Rigidbody2D>().velocity = Vector2.right * RightGloveSkills.punchKnockbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
 			enemyHealth.TakeDamage(RightGloveSkills.damage);
@@ -145,9 +156,9 @@ public class BasicMeleeEnemy : MonoBehaviour
 		}
 		if (collision.tag == "NoGemPush") {
 			if (collision.GetComponent<SpriteRenderer>().flipX) {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftGloveSkills.pushbackVelocity;
+				GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftGloveSkills.pushbackVelocity;
 			} else {
-				transform.GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftGloveSkills.pushbackVelocity;
+				GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftGloveSkills.pushbackVelocity;
 			}
 			collision.GetComponent<BoxCollider2D>().enabled = false;
 			enemyHealth.TakeDamage(LeftGloveSkills.damage);
