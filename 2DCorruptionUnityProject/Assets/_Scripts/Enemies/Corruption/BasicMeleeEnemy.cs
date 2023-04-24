@@ -11,7 +11,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private Animator enemyAnimator;
 	private CustomAnimation attackEffectAnim;
 
-	private GameObject attackEffectClone;
+	private List<GameObject> attackEffectClones;
 
 	private bool canAttack;
 
@@ -50,6 +50,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 		enemyAnimations = new CustomAnimation(enemyAnimator);
 		attackEffectAnim = new CustomAnimation(attackEffectSprites);
 		canAttack = false;
+		attackEffectClones = new List<GameObject>();
 	}
 
 	private void Update() {
@@ -80,8 +81,14 @@ public class BasicMeleeEnemy : MonoBehaviour
 				break;
 		}
 
-		if (attackEffectClone != null) {
-			attackEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(attackEffectClone.GetComponent<SpriteRenderer>(), 0.067f);
+		if (attackEffectClones.Count > 1) {
+			attackEffectClones.Reverse();
+			for (int i = attackEffectClones.Count - 1; i > 0; i--) {
+				Destroy(attackEffectClones[i]);
+				attackEffectClones.RemoveAt(i);
+			}
+		} else if (attackEffectClones.Count > 0 && attackEffectClones[0] != null) {
+			attackEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(attackEffectClones[0].GetComponent<SpriteRenderer>(), 0.067f);
 		}
 	}
 
@@ -143,7 +150,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 				horizontalAttackOffset = 0.2f;
 				attackEffect.GetComponent<SpriteRenderer>().flipX = false;
 			}
-			attackEffectClone = Object.Instantiate(attackEffect, new Vector2(transform.position.x + horizontalAttackOffset, transform.position.y), attackEffect.transform.rotation);
+			attackEffectClones.Add(Object.Instantiate(attackEffect, new Vector2(transform.position.x + horizontalAttackOffset, transform.position.y), attackEffect.transform.rotation));
 			StartCoroutine(DestroyAttackEffectClone());
 			StartCoroutine(ResetAttackCapability());
 		}
@@ -152,16 +159,16 @@ public class BasicMeleeEnemy : MonoBehaviour
 
 	private void LookToChaseFromAttack() {
 		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > attackRange) {
-			if (attackEffectClone != null) {
-				Destroy(attackEffectClone);
-			}
 			state = State.ChaseTarget;
 		}
 	}
 
 	private IEnumerator DestroyAttackEffectClone() {
 		yield return new WaitForSeconds(0.8f);
-		Destroy(attackEffectClone);
+		if (attackEffectClones.Count > 0 && attackEffectClones[0] != null) {
+			Destroy(attackEffectClones[0]);
+		}
+		attackEffectClones.Clear();
 		animationState = AnimationState.Roam;
 	}
 
