@@ -12,6 +12,7 @@ TagManager:
   - NoGemPunch
   - NoGemPush
   - NoGemDashKick
+  - CorEnemyBasicMeleeAttack
   layers:
   - Default
   - TransparentFX
