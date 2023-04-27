@@ -6,10 +6,13 @@ public abstract class LeftGloveSkills : Skills
 {
 	public static bool canAttack { get; protected set; }
 	public static bool isAnimating { get; protected set; }
-	protected float animationSec;
-	protected float lockMovementSec;
-	protected float cooldownSec;
-	protected float pullEffectCloneSec;
+	public static float damage { get; protected set; }
+	public static float pushbackVelocity { get; protected set; }
+	public static float pullSpeed { get; protected set; }
+	public static float cooldownSec { get; protected set; }
+	public static float animationSec { get; protected set; }
+	public static float lockMovementSec { get; protected set; }
+	public static float leftGloveEffectCloneSec { get; protected set; }
 	protected float pullEffectZRotation;
 	protected Vector2 attackOrigin;
 
@@ -29,11 +32,9 @@ public abstract class LeftGloveSkills : Skills
 
 	public abstract GameObject PerformLeftGloveSkill(GameObject leftGloveEffect);
 
-	public abstract IEnumerator ResetAnimation();
+	public abstract void ResetAnimation();
 
-	public abstract IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions);
+	public abstract void TempLockMovement();
 
-	public abstract IEnumerator TempLockMovement();
-
-	public abstract IEnumerator DestroyEffectClone(GameObject effectClone);
+	public abstract void DestroyEffectClone(GameObject effectClone);
 }

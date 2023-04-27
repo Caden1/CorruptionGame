@@ -10,28 +10,22 @@ public class CorLeftGloveSkills : LeftGloveSkills
 
 	public override void SetWithNoModifiers() {
 		float pushSeconds = 0.3f;
+		damage = 1f;
+		pushbackVelocity = 5f;
+		pullSpeed = 0f;
 		canAttack = false;
 		isAnimating = false;
 		animationSec = pushSeconds;
 		lockMovement = false;
 		lockMovementSec = pushSeconds;
 		cooldownSec = 2f;
-		pullEffectCloneSec = pushSeconds;
+		leftGloveEffectCloneSec = pushSeconds;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
-		float pushSeconds = 0.3f;
-		canAttack = false;
-		isAnimating = false;
-		animationSec = pushSeconds;
-		lockMovement = false;
-		lockMovementSec = pushSeconds;
-		cooldownSec = 2f;
-		pullEffectCloneSec = pushSeconds;
-		pullEffectZRotation = 0f;
-		attackOrigin = new Vector2();
+		
 	}
 
 	public override void SetFireModifiers() {
@@ -68,24 +62,15 @@ public class CorLeftGloveSkills : LeftGloveSkills
 		return pullEffectClone;
 	}
 
-	public override IEnumerator ResetAnimation() {
-		yield return new WaitForSeconds(animationSec);
+	public override void ResetAnimation() {
 		isAnimating = false;
 	}
 
-	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(cooldownSec);
-		playerInputActions.Player.Ranged.Enable();
-	}
-
-	public override IEnumerator TempLockMovement() {
-		yield return new WaitForSeconds(lockMovementSec);
+	public override void TempLockMovement() {
 		lockMovement = false;
 	}
 
-	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
-		yield return new WaitForSeconds(pullEffectCloneSec);
+	public override void DestroyEffectClone(GameObject pullEffectClone) {
 		Object.Destroy(pullEffectClone);
 	}
 

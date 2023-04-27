@@ -11,7 +11,6 @@ public class CorRightBootSkills : RightBootSkills
 	private Vector2 attackOriginLeft;
 	private float attackDistance;
 	private float attackVelocity;
-	private float damage;
 	private int jumpCount = 0;
 
 	public override void SetWithNoGems() {
@@ -19,6 +18,8 @@ public class CorRightBootSkills : RightBootSkills
 	}
 
 	public override void SetWithNoModifiers() {
+		damage = 3f;
+		uppercutKnockupVelocity = 4f;
 		canJump = false;
 		canJumpCancel = false;
 		numjumps = 1;
@@ -34,30 +35,12 @@ public class CorRightBootSkills : RightBootSkills
 		attackOriginLeft = new Vector2();
 		attackDistance = 2f;
 		attackVelocity = 5f;
-		damage = 2f;
 		jumpEffectCloneSec = 0.3f;
 		effectOrigin = new Vector2();
 	}
 
 	public override void SetAirModifiers() {
-		canJump = false;
-		canJumpCancel = false;
-		numjumps = 1;
-		jumpGravity = 2f;
-		groundedPlayerGravity = 1f;
-		fallGravity = 3f;
-		archVelocityThreshold = 4f;
-		archGravity = 3f;
-		jumpVelocity = 10f;
-		attackClonesRight = new List<GameObject>();
-		attackClonesLeft = new List<GameObject>();
-		attackOriginRight = new Vector2();
-		attackOriginLeft = new Vector2();
-		attackDistance = 7f;
-		attackVelocity = 5f;
-		damage = 2f;
-		jumpEffectCloneSec = 0.3f;
-		effectOrigin = new Vector2();
+		
 	}
 
 	public override void SetFireModifiers() {
@@ -83,8 +66,8 @@ public class CorRightBootSkills : RightBootSkills
 			playerRigidbody.gravityScale = fallGravity;
 	}
 
-	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask) {
-		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y);
+	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, float verticalOffset) {
+		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + verticalOffset);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -185,8 +168,7 @@ public class CorRightBootSkills : RightBootSkills
 		canJumpCancel = false;
 	}
 
-	public override IEnumerator DestroyJumpEffectClone(GameObject jumpEffectClone) {
-		yield return new WaitForSeconds(jumpEffectCloneSec);
+	public override void DestroyJumpEffectClone(GameObject jumpEffectClone) {
 		Object.Destroy(jumpEffectClone);
 	}
 }

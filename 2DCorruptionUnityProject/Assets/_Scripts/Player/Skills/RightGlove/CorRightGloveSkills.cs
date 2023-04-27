@@ -10,13 +10,15 @@ public class CorRightGloveSkills : RightGloveSkills
 
 	public override void SetWithNoModifiers() {
 		float punchSeconds = 0.2f;
+		damage = 5f;
+		punchKnockbackVelocity = 1.2f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
 		animationSec = punchSeconds;
 		lockMovementSec = punchSeconds;
 		meleeEffectCloneSec = punchSeconds;
-		cooldownSec = punchSeconds;
+		cooldown = punchSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -25,19 +27,7 @@ public class CorRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetAirModifiers() {
-		float punchSeconds = 0.2f;
-		canMelee = false;
-		isAnimating = false;
-		lockMovement = false;
-		animationSec = punchSeconds;
-		lockMovementSec = punchSeconds;
-		meleeEffectCloneSec = punchSeconds;
-		cooldownSec = punchSeconds;
-		hasForcedMovement = false;
-		forcedMovementVector = new Vector2();
-		forcedMovementVel = 0.5f;
-		forcedMovementSec = 0.1f;
-		attackOrigin = new Vector2();
+		
 	}
 
 	public override void SetFireModifiers() {
@@ -74,29 +64,19 @@ public class CorRightGloveSkills : RightGloveSkills
 		return meleeEffectClone;
 	}
 
-	public override IEnumerator ResetAnimation() {
-		yield return new WaitForSeconds(animationSec);
-		isAnimating = false;
-	}
-
-	public override IEnumerator ResetForcedMovement() {
-		yield return new WaitForSeconds(forcedMovementSec);
+	public override void ResetForcedMovement() {
 		hasForcedMovement = false;
 	}
 
-	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(cooldownSec);
-		playerInputActions.Player.Melee.Enable();
+	public override void ResetAnimation() {
+		isAnimating = false;
 	}
 
-	public override IEnumerator DestroyEffectClone(GameObject meleeEffectClone) {
-		yield return new WaitForSeconds(meleeEffectCloneSec);
-		Object.Destroy(meleeEffectClone);
-	}
-
-	public override IEnumerator TempLockMovement() {
-		yield return new WaitForSeconds(lockMovementSec);
+	public override void TempLockMovement() {
 		lockMovement = false;
+	}
+
+	public override void DestroyEffectClone(GameObject meleeEffectClone) {
+		Object.Destroy(meleeEffectClone);
 	}
 }

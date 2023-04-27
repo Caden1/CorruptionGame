@@ -26,13 +26,15 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 
 	public override void SetWithNoGems() {
 		float punchSeconds = 0.2f;
+		damage = 1f;
+		punchKnockbackVelocity = 1.2f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
 		animationSec = punchSeconds;
 		lockMovementSec = punchSeconds;
 		meleeEffectCloneSec = punchSeconds;
-		cooldownSec = punchSeconds;
+		cooldown = punchSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -41,54 +43,40 @@ public class NoGemsRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetupMelee(GameObject meleeEffect, bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
-		throw new System.NotImplementedException();
-	}
-
-	public override GameObject PerformMelee(GameObject meleeEffect) {
-		throw new System.NotImplementedException();
-	}
-
-	public void SetupMelee(bool isFacingRight, Vector2 positionRight, Vector2 positionLeft) {
 		canMelee = true;
 		isAnimating = true;
 		lockMovement = true;
 		hasForcedMovement = true;
 		if (isFacingRight) {
+			meleeEffect.GetComponent<SpriteRenderer>().flipX = false;
 			attackOrigin = positionRight;
 			forcedMovementVector = new Vector2(forcedMovementVel, 0f);
 		} else {
+			meleeEffect.GetComponent<SpriteRenderer>().flipX = true;
 			attackOrigin = positionLeft;
 			forcedMovementVector = new Vector2(-forcedMovementVel, 0f);
 		}
 	}
 
-	public void PerformMelee() {
+	public override GameObject PerformMelee(GameObject meleeEffect) {
+		GameObject meleeEffectClone = Object.Instantiate(meleeEffect, attackOrigin, meleeEffect.transform.rotation);
 		canMelee = false;
+		return meleeEffectClone;
 	}
 
-	public override IEnumerator ResetAnimation() {
-		yield return new WaitForSeconds(animationSec);
+	public override void ResetAnimation() {
 		isAnimating = false;
 	}
 
-	public override IEnumerator ResetForcedMovement() {
-		yield return new WaitForSeconds(forcedMovementSec);
+	public override void ResetForcedMovement() {
 		hasForcedMovement = false;
 	}
 
-	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(cooldownSec);
-		playerInputActions.Player.Melee.Enable();
-	}
-
-	public override IEnumerator DestroyEffectClone(GameObject meleeEffectClone) {
-		yield return new WaitForSeconds(meleeEffectCloneSec);
-		Object.Destroy(meleeEffectClone);
-	}
-
-	public override IEnumerator TempLockMovement() {
-		yield return new WaitForSeconds(lockMovementSec);
+	public override void TempLockMovement() {
 		lockMovement = false;
+	}
+
+	public override void DestroyEffectClone(GameObject meleeEffectClone) {
+		Object.Destroy(meleeEffectClone);
 	}
 }

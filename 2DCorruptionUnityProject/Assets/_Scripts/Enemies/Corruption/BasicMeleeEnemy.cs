@@ -4,111 +4,216 @@ using UnityEngine;
 
 public class BasicMeleeEnemy : MonoBehaviour
 {
-	public float damageDealt { get; private set; }
-	private const string IDLE_ANIM = "Idle";
-	private const string ATTACK_ANIM = "Attack";
-	public GameObject playerObject;
-	private enum State { Roam, ChaseTarget, AttackTarget }
-	private State state;
-	private enum AnimationState { Idle, Attack }
-	private AnimationState animationState;
-	private Animator enemyAnimator;
+	[SerializeField] public GameObject playerObject;
+	[SerializeField] private GameObject attackHitBox;
+	private GameObject attackHitBoxClone;
+	private Vector2 rightSideAttackPosition;
+	private Vector2 leftSideAttackPosition;
 	private CustomAnimation enemyAnimations;
+	private Animator enemyAnimator;
+	private const string ROAM_ANIM = "Roam";
+	private const string ATTACK_ANIM = "Attack";
+	private const string IDLE_ANIM = "Idle";
+	private enum State { Roam, ChaseTarget, AttackTarget, Idle }
+	private State state;
+	private enum AnimationState { Roam, Attack, Idle }
+	private AnimationState animationState;
 	private Rigidbody2D enemyRigidbody;
 	private Vector2 roamToPosition;
-	private bool isMovingRight;
-	private float startingGravity;
+	private Vector2 playerPosition;
 	private float xRaomToPosition;
-	private float attackPosition;
-	private float attackJumpHeight = 2f;
-	private float roamSpeed = 2f;
-	private float roamDistance = 5f;
-	private float chaseRange = 10f;
-	private float chaseSpeed = 10f;
-	private float attackRange = 1.5f;
-	private float attackSpeed = 4f;
+	private bool isMovingRight;
+	private HealthSystem enemyHealth;
+	private float health = 10f;
+	private Transform healthBar;
+	private float roamSpeed = 0.5f;
+	private float roamDistance = 4f;
+	private float chaseRange = 5f;
+	private float chaseSpeed = 1.5f;
+	private float attackRange = 0.8f;
+	private bool canAttack = false;
 
 	private void Start() {
-		damageDealt = 10f;
-		// Starts enemy off moving left
-		if (transform.position.x >= 0f) {
-			xRaomToPosition = transform.position.x - roamDistance;
-			isMovingRight = false;
-		} else {
-			xRaomToPosition = transform.position.x + roamDistance;
-			isMovingRight = true;
-		}
-		enemyRigidbody = GetComponent<Rigidbody2D>();
-		startingGravity = enemyRigidbody.gravityScale;
-		attackPosition = transform.position.y + attackJumpHeight;
+		enemyHealth = new HealthSystem(health);
+		healthBar = transform.GetChild(0).GetChild(1);
+		Physics2D.IgnoreCollision(playerObject.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
+		isMovingRight = false;
+		xRaomToPosition = transform.position.x - roamDistance; // Starts enemy off moving left
 		roamToPosition = new Vector2(xRaomToPosition, transform.position.y);
+		playerPosition = new Vector2();
+		enemyRigidbody = GetComponent<Rigidbody2D>();
 		state = State.Roam;
-		animationState = AnimationState.Idle;
+		animationState = AnimationState.Roam;
 		enemyAnimator = GetComponent<Animator>();
 		enemyAnimations = new CustomAnimation(enemyAnimator);
 	}
 
 	private void Update() {
+		Debug.Log(state);
 		switch (state) {
 			case State.Roam:
-				animationState = AnimationState.Idle;
-				HorizontalRoam();
-				LookForTarget();
+				animationState = AnimationState.Roam;
+				Roam();
+				LookToChaseFromRoam();
 				break;
 			case State.ChaseTarget:
-				animationState = AnimationState.Idle;
+				animationState = AnimationState.Roam;
 				ChaseTarget();
+				LookToAttack();
+				LookToRoamFromChase();
 				break;
 			case State.AttackTarget:
 				animationState = AnimationState.Attack;
 				AttackTarget();
+				LookToChaseFromAttack();
+				break;
+			case State.Idle:
+				animationState = AnimationState.Idle;
+				StartCoroutine(LookWhatToDoFromIdleAfterSeconds());
 				break;
 		}
 
 		switch (animationState) {
-			case AnimationState.Idle:
-				enemyAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
+			case AnimationState.Roam:
+				enemyAnimations.PlayUnityAnimatorAnimation(ROAM_ANIM);
 				break;
 			case AnimationState.Attack:
 				enemyAnimations.PlayUnityAnimatorAnimation(ATTACK_ANIM);
 				break;
+			case AnimationState.Idle:
+				enemyAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
+				break;
 		}
 	}
 
-	private void HorizontalRoam() {
+	private void Roam() {
 		transform.position = Vector2.MoveTowards(transform.position, roamToPosition, roamSpeed * Time.deltaTime);
-		if (transform.position.x == roamToPosition.x) {
-			if (isMovingRight) {
+		if (isMovingRight) {
+			GetComponent<SpriteRenderer>().flipX = false;
+			if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y), roamToPosition) < 0.1f) {
 				roamToPosition.x -= roamDistance;
 				isMovingRight = false;
-			} else {
+			}
+		} else {
+			GetComponent<SpriteRenderer>().flipX = true;
+			if (Vector2.Distance(new Vector2(transform.position.x, transform.position.y), roamToPosition) < 0.1f) {
 				roamToPosition.x += roamDistance;
 				isMovingRight = true;
 			}
 		}
 	}
 
-	private void LookForTarget() {
+	private void LookToChaseFromRoam() {
 		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= chaseRange) {
 			state = State.ChaseTarget;
 		}
 	}
 
 	private void ChaseTarget() {
-		Vector2 playerPosition = new Vector2(playerObject.transform.position.x, transform.position.y);
+		if ((transform.position.x - playerObject.transform.position.x) > 0f) {
+			GetComponent<SpriteRenderer>().flipX = true;
+		} else {
+			GetComponent<SpriteRenderer>().flipX = false;
+		}
+		playerPosition = new Vector2(playerObject.transform.position.x, transform.position.y);
 		transform.position = Vector2.MoveTowards(transform.position, playerPosition, chaseSpeed * Time.deltaTime);
-		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange)
+	}
+
+	private void LookToAttack() {
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange) {
+			canAttack = true;
 			state = State.AttackTarget;
-		else
+		}
+	}
+
+	private void LookToRoamFromChase() {
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > chaseRange) {
 			state = State.Roam;
+		}
 	}
 
 	private void AttackTarget() {
-		enemyRigidbody.gravityScale = 0f;
-		transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, attackPosition), attackSpeed * Time.deltaTime);
+		if (canAttack) {
+			rightSideAttackPosition = transform.GetChild(1).position;
+			leftSideAttackPosition = transform.GetChild(2).position;
+			if (GetComponent<SpriteRenderer>().flipX) {
+				attackHitBoxClone = Object.Instantiate(attackHitBox, leftSideAttackPosition, attackHitBox.transform.rotation);
+			} else {
+				attackHitBoxClone = Object.Instantiate(attackHitBox, rightSideAttackPosition, attackHitBox.transform.rotation);
+			}
+			StartCoroutine(DestroyAttackHitBoxClone());
+			canAttack = false;
+		}
+	}
+
+	private void LookToChaseFromAttack() {
 		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) > attackRange) {
-			enemyRigidbody.gravityScale = startingGravity;
 			state = State.ChaseTarget;
+		}
+	}
+
+	private IEnumerator DestroyAttackHitBoxClone() {
+		yield return new WaitForSeconds(0.8f);
+		if (attackHitBoxClone != null) {
+			Destroy(attackHitBoxClone);
+		}
+		state = State.Idle;
+	}
+
+	private IEnumerator LookWhatToDoFromIdleAfterSeconds() {
+		yield return new WaitForSeconds(2f);
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange) {
+			canAttack = true;
+			state = State.AttackTarget;
+		} else if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= chaseRange) {
+			state = State.ChaseTarget;
+		} else {
+			state = State.Roam;
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision) {
+		if (collision.tag == "NoGemUppercut") {
+			GetComponent<Rigidbody2D>().velocity = Vector2.up * RightBootSkills.uppercutKnockupVelocity;
+			collision.GetComponent<BoxCollider2D>().enabled = false;
+			enemyHealth.TakeDamage(RightBootSkills.damage);
+			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
+		}
+		if (collision.tag == "NoGemDashKick") {
+			if (collision.GetComponent<SpriteRenderer>().flipX) {
+				GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftBootSkills.kickDashKnockbackVelocity;
+			} else {
+				GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftBootSkills.kickDashKnockbackVelocity;
+			}
+			collision.GetComponent<BoxCollider2D>().enabled = false;
+			enemyHealth.TakeDamage(LeftBootSkills.damage);
+			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
+		}
+		if (collision.tag == "NoGemPunch") {
+			if (collision.GetComponent<SpriteRenderer>().flipX) {
+				GetComponent<Rigidbody2D>().velocity = Vector2.left * RightGloveSkills.punchKnockbackVelocity;
+			} else {
+				GetComponent<Rigidbody2D>().velocity = Vector2.right * RightGloveSkills.punchKnockbackVelocity;
+			}
+			collision.GetComponent<BoxCollider2D>().enabled = false;
+			enemyHealth.TakeDamage(RightGloveSkills.damage);
+			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
+		}
+		if (collision.tag == "NoGemPush") {
+			if (collision.GetComponent<SpriteRenderer>().flipX) {
+				GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftGloveSkills.pushbackVelocity;
+			} else {
+				GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftGloveSkills.pushbackVelocity;
+			}
+			collision.GetComponent<BoxCollider2D>().enabled = false;
+			enemyHealth.TakeDamage(LeftGloveSkills.damage);
+			healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
+		}
+	}
+
+	private void OnTriggerStay2D(Collider2D collision) {
+		if (collision.tag == "PurityOnlyPull") {
+			transform.position = Vector2.MoveTowards(transform.position, playerObject.transform.position, LeftGloveSkills.pullSpeed * Time.deltaTime);
 		}
 	}
 }

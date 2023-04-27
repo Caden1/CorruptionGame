@@ -5,14 +5,19 @@ using static UnityEditor.FilePathAttribute;
 
 public class NoGemsLeftBootSkills : LeftBootSkills
 {
+	private float startingGravity;
+
 	public override void SetWithNoGems() {
+		float kickTime = 0.5f;
+		damage = 2f;
+		kickDashKnockbackVelocity = 2f;
 		isInvulnerable = false;
 		dashVelocity = 8f;
-		secondsToDash = 0.5f;
+		secondsToDash = kickTime;
 		cooldown = 2f;
-		dashEffectCloneSec = 0.4f;
+		dashEffectCloneSec = kickTime;
 		dashDirection = new Vector2();
-		noDamageDashEffectPosition = new Vector2();
+		dashEffectPosition = new Vector2();
 	}
 
 	public override void SetWithNoModifiers() {
@@ -35,37 +40,33 @@ public class NoGemsLeftBootSkills : LeftBootSkills
 		throw new System.NotImplementedException();
 	}
 
-	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject noDamageDashEffect, bool playerGroundedWhenDashing, GameObject damagingDashEffect) {
-		throw new System.NotImplementedException();
-	}
-
-	public void SetupDash(bool isFacingRight) {
+	public override GameObject SetupDash(bool isFacingRight, BoxCollider2D playerBoxCollider, GameObject dashEffect, Vector2 offset) {
 		isInvulnerable = true;
 		if (isFacingRight) {
 			dashDirection = Vector2.right;
+			dashEffectPosition = new Vector2(playerBoxCollider.bounds.center.x - offset.x, playerBoxCollider.bounds.center.y + offset.y);
+			dashEffect.GetComponent<SpriteRenderer>().flipX = false;
 		} else {
 			dashDirection = Vector2.left;
+			dashEffectPosition = new Vector2(playerBoxCollider.bounds.center.x + offset.x, playerBoxCollider.bounds.center.y + offset.y);
+			dashEffect.GetComponent<SpriteRenderer>().flipX = true;
 		}
+		return Object.Instantiate(dashEffect, dashEffectPosition, dashEffect.transform.rotation);
 	}
 
-	public override IEnumerator PerformDash(Rigidbody2D playerRigidbody) {
-		float startingGravity = playerRigidbody.gravityScale;
+	public override void StartDash(Rigidbody2D playerRigidbody) {
+		startingGravity = playerRigidbody.gravityScale;
 		playerRigidbody.gravityScale = 0f;
 		playerRigidbody.velocity = dashDirection * dashVelocity;
-		yield return new WaitForSeconds(secondsToDash);
+	}
+
+	public override void EndDash(Rigidbody2D playerRigidbody) {
 		playerRigidbody.gravityScale = startingGravity;
 		isInvulnerable = false;
 		Player.playerState = Player.PlayerState.Normal;
 	}
 
-	public override IEnumerator StartDashCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Dash.Disable();
-		yield return new WaitForSeconds(cooldown);
-		playerInputActions.Player.Dash.Enable();
-	}
-
-	public override IEnumerator DestroyDashEffectClone(GameObject dashEffectClone) {
-		yield return new WaitForSeconds(dashEffectCloneSec);
+	public override void DestroyDashEffectClone(GameObject dashEffectClone) {
 		Object.Destroy(dashEffectClone);
 	}
 }

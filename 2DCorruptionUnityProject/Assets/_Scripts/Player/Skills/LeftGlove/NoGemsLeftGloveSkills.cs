@@ -6,13 +6,16 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 {
 	public override void SetWithNoGems() {
 		float pushSeconds = 0.3f;
+		damage = 0.5f;
+		pushbackVelocity = 5f;
+		pullSpeed = 0f;
 		canAttack = false;
 		isAnimating = false;
 		animationSec = pushSeconds;
 		lockMovement = false;
 		lockMovementSec = pushSeconds;
 		cooldownSec = 2f;
-		pullEffectCloneSec = pushSeconds;
+		leftGloveEffectCloneSec = pushSeconds;
 		pullEffectZRotation = 0f;
 		attackOrigin = new Vector2();
 	}
@@ -37,42 +40,37 @@ public class NoGemsLeftGloveSkills : LeftGloveSkills
 		throw new System.NotImplementedException();
 	}
 
-	public void SetupLeftGloveSkill() {
+	public override void SetupLeftGloveSkill(BoxCollider2D boxCollider, GameObject leftGloveEffect, bool isFacingRight, float offset) {
 		canAttack = true;
 		isAnimating = true;
 		lockMovement = true;
-	}
-
-	public override void SetupLeftGloveSkill(BoxCollider2D boxCollider, GameObject leftGloveEffect, bool isFacingRight, float offset) {
-		throw new System.NotImplementedException();
+		Bounds playerBounds = boxCollider.bounds;
+		Vector2 attackRightPosition = new Vector2(playerBounds.max.x + offset, playerBounds.center.y);
+		Vector2 attackLeftPosition = new Vector2(playerBounds.min.x - offset, playerBounds.center.y);
+		if (isFacingRight) {
+			leftGloveEffect.GetComponent<SpriteRenderer>().flipX = false;
+			attackOrigin = attackRightPosition;
+		} else {
+			leftGloveEffect.GetComponent<SpriteRenderer>().flipX = true;
+			attackOrigin = attackLeftPosition;
+		}
 	}
 
 	public override GameObject PerformLeftGloveSkill(GameObject leftGloveEffect) {
-		throw new System.NotImplementedException();
-	}
-
-	public void PerformLeftGloveSkill() {
+		GameObject pushEffectClone = Object.Instantiate(leftGloveEffect, attackOrigin, leftGloveEffect.transform.rotation);
 		canAttack = false;
+		return pushEffectClone;
 	}
 
-	public override IEnumerator ResetAnimation() {
-		yield return new WaitForSeconds(animationSec);
+	public override void ResetAnimation() {
 		isAnimating = false;
 	}
 
-	public override IEnumerator StartLeftGloveSkillCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Ranged.Disable();
-		yield return new WaitForSeconds(cooldownSec);
-		playerInputActions.Player.Ranged.Enable();
-	}
-
-	public override IEnumerator TempLockMovement() {
-		yield return new WaitForSeconds(lockMovementSec);
+	public override void TempLockMovement() {
 		lockMovement = false;
 	}
 
-	public override IEnumerator DestroyEffectClone(GameObject pullEffectClone) {
-		yield return new WaitForSeconds(pullEffectCloneSec);
+	public override void DestroyEffectClone(GameObject pullEffectClone) {
 		Object.Destroy(pullEffectClone);
 	}
 }

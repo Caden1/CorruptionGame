@@ -15,13 +15,15 @@ public class PurityRightGloveSkills : RightGloveSkills
 
 	public override void SetWithNoModifiers() {
 		float shieldSeconds = 0.5f;
+		damage = 0f;
+		punchKnockbackVelocity = 0f;
 		canMelee = false;
 		isAnimating = false;
 		lockMovement = false;
 		animationSec = shieldSeconds;
 		lockMovementSec = shieldSeconds;
 		meleeEffectCloneSec = shieldSeconds;
-		cooldownSec = shieldSeconds;
+		cooldown = shieldSeconds;
 		hasForcedMovement = false;
 		forcedMovementVector = new Vector2();
 		forcedMovementVel = 0.5f;
@@ -30,23 +32,7 @@ public class PurityRightGloveSkills : RightGloveSkills
 	}
 
 	public override void SetAirModifiers() {
-		float shieldSeconds = 0.5f;
-		canMelee = false;
-		isAnimating = false;
-		lockMovement = false;
-		animationSec = shieldSeconds;
-		lockMovementSec = shieldSeconds;
-		meleeEffectCloneSec = shieldSeconds;
-		cooldownSec = shieldSeconds;
-		hasForcedMovement = false;
-		forcedMovementVector = new Vector2();
-		forcedMovementVel = 0.5f;
-		forcedMovementSec = 0.1f;
-		attackOrigin = new Vector2();
-		airClones = new List<GameObject>();
-		airVelocity = 5f;
-		airDistance = 5f;
-		airDirection = new Vector2();
+		
 	}
 
 	public override void SetFireModifiers() {
@@ -90,43 +76,33 @@ public class PurityRightGloveSkills : RightGloveSkills
 		canMelee = false;
 	}
 
-	public override IEnumerator ResetAnimation() {
-		yield return new WaitForSeconds(animationSec);
-		isAnimating = false;
-	}
-
-	public override IEnumerator ResetForcedMovement() {
-		yield return new WaitForSeconds(forcedMovementSec);
+	public override void ResetForcedMovement() {
 		hasForcedMovement = false;
 	}
 
-	public override IEnumerator StartMeleeCooldown(PlayerInputActions playerInputActions) {
-		playerInputActions.Player.Melee.Disable();
-		yield return new WaitForSeconds(cooldownSec);
-		playerInputActions.Player.Melee.Enable();
+	public override void ResetAnimation() {
+		isAnimating = false;
 	}
 
-	public override IEnumerator DestroyEffectClone(GameObject meleeEffectClone) {
-		yield return new WaitForSeconds(meleeEffectCloneSec);
-		Object.Destroy(meleeEffectClone);
-	}
-
-	public override IEnumerator TempLockMovement() {
-		yield return new WaitForSeconds(lockMovementSec);
+	public override void TempLockMovement() {
 		lockMovement = false;
 	}
 
-	public void LaunchAirMelee() {
-		if (airClones != null && airClones.Count > 0) {
-			for (int i = airClones.Count - 1; i >= 0; i--) {
-				if (airClones[i] != null) {
-					airClones[i].transform.Translate(airDirection * Time.deltaTime * airVelocity);
-					if (Vector2.Distance(attackOrigin, airClones[i].transform.position) > airDistance) {
-						Object.Destroy(airClones[i]);
-						airClones.RemoveAt(i);
-					}
-				}
-			}
-		}
+	public override void DestroyEffectClone(GameObject meleeEffectClone) {
+		Object.Destroy(meleeEffectClone);
 	}
+
+	//public void LaunchAirMelee() {
+	//	if (airClones != null && airClones.Count > 0) {
+	//		for (int i = airClones.Count - 1; i >= 0; i--) {
+	//			if (airClones[i] != null) {
+	//				airClones[i].transform.Translate(airDirection * Time.deltaTime * airVelocity);
+	//				if (Vector2.Distance(attackOrigin, airClones[i].transform.position) > airDistance) {
+	//					Object.Destroy(airClones[i]);
+	//					airClones.RemoveAt(i);
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 }
