@@ -1563,7 +1563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 479437359}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MeleePositionRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3382,7 +3382,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1031780422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MeleePositionLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3698,7 +3698,7 @@ GameObject:
   - component: {fileID: 1208835182}
   - component: {fileID: 1208835183}
   - component: {fileID: 1208835184}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6078,8 +6078,11 @@ MonoBehaviour:
   speed: 1.5
   distance: 6
   detectionRange: 3
-  verticalDetectionLimit: 2
+  verticalDetectionLimit: 1
   player: {fileID: 1208835180}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &1975149667
 GameObject:
   m_ObjectHideFlags: 0
