@@ -6079,10 +6079,10 @@ MonoBehaviour:
   distance: 6
   detectionRange: 3
   verticalDetectionLimit: 1
+  attackRange: 1
   player: {fileID: 1208835180}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 1024
+  currentState: 0
+  attackColliderPrefab: {fileID: 687997908488313195, guid: c6edf0ae7612b4f63b9b00cf9fe1d018, type: 3}
 --- !u!1 &1975149667
 GameObject:
   m_ObjectHideFlags: 0

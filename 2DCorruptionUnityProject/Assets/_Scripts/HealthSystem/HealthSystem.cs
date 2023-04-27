@@ -25,4 +25,8 @@ public class HealthSystem
         if (health > healthMax)
             health = healthMax;
 	}
+
+	public bool IsDead() {
+		return health <= 0;
+	}
 }
