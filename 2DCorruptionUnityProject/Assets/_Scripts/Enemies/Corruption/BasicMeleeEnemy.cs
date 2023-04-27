@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class BasicMeleeEnemy : MonoBehaviour
 {
-	public GameObject playerObject;
-	[SerializeField] private Sprite[] attackEffectSprites;
-	[SerializeField] private GameObject attackEffect;
+	[SerializeField] public GameObject playerObject;
+	[SerializeField] private GameObject attackHitBox;
+	private GameObject attackHitBoxClone;
+	private Vector2 rightSideAttackPosition;
+	private Vector2 leftSideAttackPosition;
 	private CustomAnimation enemyAnimations;
 	private Animator enemyAnimator;
-	private CustomAnimation attackEffectAnim;
-
-	private List<GameObject> attackEffectClones;
-
-	private bool canAttack;
-
 	private const string ROAM_ANIM = "Roam";
 	private const string ATTACK_ANIM = "Attack";
-	private enum State { Roam, ChaseTarget, AttackTarget }
+	private const string IDLE_ANIM = "Idle";
+	private enum State { Roam, ChaseTarget, AttackTarget, Idle }
 	private State state;
-	private enum AnimationState { Roam, Attack }
+	private enum AnimationState { Roam, Attack, Idle }
 	private AnimationState animationState;
 	private Rigidbody2D enemyRigidbody;
 	private Vector2 roamToPosition;
@@ -34,6 +31,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private float chaseRange = 5f;
 	private float chaseSpeed = 1.5f;
 	private float attackRange = 0.8f;
+	private bool canAttack = false;
 
 	private void Start() {
 		enemyHealth = new HealthSystem(health);
@@ -48,12 +46,10 @@ public class BasicMeleeEnemy : MonoBehaviour
 		animationState = AnimationState.Roam;
 		enemyAnimator = GetComponent<Animator>();
 		enemyAnimations = new CustomAnimation(enemyAnimator);
-		attackEffectAnim = new CustomAnimation(attackEffectSprites);
-		canAttack = false;
-		attackEffectClones = new List<GameObject>();
 	}
 
 	private void Update() {
+		Debug.Log(state);
 		switch (state) {
 			case State.Roam:
 				animationState = AnimationState.Roam;
@@ -67,8 +63,13 @@ public class BasicMeleeEnemy : MonoBehaviour
 				LookToRoamFromChase();
 				break;
 			case State.AttackTarget:
+				animationState = AnimationState.Attack;
 				AttackTarget();
 				LookToChaseFromAttack();
+				break;
+			case State.Idle:
+				animationState = AnimationState.Idle;
+				StartCoroutine(LookWhatToDoFromIdleAfterSeconds());
 				break;
 		}
 
@@ -79,16 +80,9 @@ public class BasicMeleeEnemy : MonoBehaviour
 			case AnimationState.Attack:
 				enemyAnimations.PlayUnityAnimatorAnimation(ATTACK_ANIM);
 				break;
-		}
-
-		if (attackEffectClones.Count > 1) {
-			attackEffectClones.Reverse();
-			for (int i = attackEffectClones.Count - 1; i > 0; i--) {
-				Destroy(attackEffectClones[i]);
-				attackEffectClones.RemoveAt(i);
-			}
-		} else if (attackEffectClones.Count > 0 && attackEffectClones[0] != null) {
-			attackEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(attackEffectClones[0].GetComponent<SpriteRenderer>(), 0.067f);
+			case AnimationState.Idle:
+				enemyAnimations.PlayUnityAnimatorAnimation(IDLE_ANIM);
+				break;
 		}
 	}
 
@@ -127,7 +121,6 @@ public class BasicMeleeEnemy : MonoBehaviour
 
 	private void LookToAttack() {
 		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange) {
-			attackEffectAnim.ResetIndexToZero();
 			canAttack = true;
 			state = State.AttackTarget;
 		}
@@ -141,20 +134,16 @@ public class BasicMeleeEnemy : MonoBehaviour
 
 	private void AttackTarget() {
 		if (canAttack) {
-			float horizontalAttackOffset = 0f;
-			animationState = AnimationState.Attack;
+			rightSideAttackPosition = transform.GetChild(1).position;
+			leftSideAttackPosition = transform.GetChild(2).position;
 			if (GetComponent<SpriteRenderer>().flipX) {
-				horizontalAttackOffset = -0.2f;
-				attackEffect.GetComponent<SpriteRenderer>().flipX = true;
+				attackHitBoxClone = Object.Instantiate(attackHitBox, leftSideAttackPosition, attackHitBox.transform.rotation);
 			} else {
-				horizontalAttackOffset = 0.2f;
-				attackEffect.GetComponent<SpriteRenderer>().flipX = false;
+				attackHitBoxClone = Object.Instantiate(attackHitBox, rightSideAttackPosition, attackHitBox.transform.rotation);
 			}
-			attackEffectClones.Add(Object.Instantiate(attackEffect, new Vector2(transform.position.x + horizontalAttackOffset, transform.position.y), attackEffect.transform.rotation));
-			StartCoroutine(DestroyAttackEffectClone());
-			StartCoroutine(ResetAttackCapability());
+			StartCoroutine(DestroyAttackHitBoxClone());
+			canAttack = false;
 		}
-		canAttack = false;
 	}
 
 	private void LookToChaseFromAttack() {
@@ -163,19 +152,24 @@ public class BasicMeleeEnemy : MonoBehaviour
 		}
 	}
 
-	private IEnumerator DestroyAttackEffectClone() {
+	private IEnumerator DestroyAttackHitBoxClone() {
 		yield return new WaitForSeconds(0.8f);
-		if (attackEffectClones.Count > 0 && attackEffectClones[0] != null) {
-			Destroy(attackEffectClones[0]);
+		if (attackHitBoxClone != null) {
+			Destroy(attackHitBoxClone);
 		}
-		attackEffectClones.Clear();
-		animationState = AnimationState.Roam;
+		state = State.Idle;
 	}
 
-	private IEnumerator ResetAttackCapability() {
+	private IEnumerator LookWhatToDoFromIdleAfterSeconds() {
 		yield return new WaitForSeconds(2f);
-		attackEffectAnim.ResetIndexToZero();
-		canAttack = true;
+		if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= attackRange) {
+			canAttack = true;
+			state = State.AttackTarget;
+		} else if (Mathf.Abs(transform.position.x - playerObject.transform.position.x) <= chaseRange) {
+			state = State.ChaseTarget;
+		} else {
+			state = State.Roam;
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {

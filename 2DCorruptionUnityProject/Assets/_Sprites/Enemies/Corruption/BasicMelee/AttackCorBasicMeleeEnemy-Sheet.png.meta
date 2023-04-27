@@ -122,17 +122,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41e0f52978ae0471f9ba61fa8f221d66
-      internalID: -498709344
+      spriteID: 452295f0106184b04ab2060dcf15b8d3
+      internalID: -193315811
       vertices: []
       indices: 
       edges: []
@@ -141,19 +141,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_1
       rect:
         serializedVersion: 2
-        x: 124
+        x: 320
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a792c008b0f04d0ea74578853f1aff8
-      internalID: 788051738
+      spriteID: ff6ad673c63cc4d87870f42cc4e39409
+      internalID: 1583708360
       vertices: []
       indices: 
       edges: []
@@ -162,19 +162,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_2
       rect:
         serializedVersion: 2
-        x: 248
+        x: 640
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f213707446e7a4f9797d1f17699212cc
-      internalID: -1787314486
+      spriteID: 96aacedfc07a54612941868b101a4a79
+      internalID: -414012502
       vertices: []
       indices: 
       edges: []
@@ -183,19 +183,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_3
       rect:
         serializedVersion: 2
-        x: 372
+        x: 960
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a40c87adb587b42d0ae09a533e6b4701
-      internalID: 540845762
+      spriteID: ba678b497a95c4edc8211f1259cf10a2
+      internalID: -640130687
       vertices: []
       indices: 
       edges: []
@@ -204,19 +204,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_4
       rect:
         serializedVersion: 2
-        x: 496
+        x: 1280
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83c50272eec5742be85c117fd35a949d
-      internalID: -93465779
+      spriteID: 1efaabf73493d4b5081c57166df2b90f
+      internalID: 302905480
       vertices: []
       indices: 
       edges: []
@@ -225,19 +225,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_5
       rect:
         serializedVersion: 2
-        x: 620
+        x: 1600
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33f1c6da128224945bd87bca03f7e409
-      internalID: -2090879425
+      spriteID: 9503efa338354485181db7c641f2aa58
+      internalID: -259685225
       vertices: []
       indices: 
       edges: []
@@ -246,19 +246,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_6
       rect:
         serializedVersion: 2
-        x: 744
+        x: 1920
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c994bced97b3247e7978046828b35146
-      internalID: 1848750412
+      spriteID: 8d2966748d12c401db253d2b6acfe7b8
+      internalID: 39320671
       vertices: []
       indices: 
       edges: []
@@ -267,19 +267,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_7
       rect:
         serializedVersion: 2
-        x: 868
+        x: 2240
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1df6d3ab7db14370a04694fc41ce267
-      internalID: 1793652264
+      spriteID: e59e347f71ef147dcaf65b2646b7c74b
+      internalID: -828313063
       vertices: []
       indices: 
       edges: []
@@ -288,19 +288,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_8
       rect:
         serializedVersion: 2
-        x: 992
+        x: 2560
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db64a1d6107364a00910a7988026f076
-      internalID: -1479434624
+      spriteID: eec5f51f1e9204198975bb3fc14f9ba0
+      internalID: -363383829
       vertices: []
       indices: 
       edges: []
@@ -309,19 +309,19 @@ TextureImporter:
       name: AttackCorBasicMeleeEnemy-Sheet_9
       rect:
         serializedVersion: 2
-        x: 1116
+        x: 2880
         y: 0
-        width: 124
-        height: 98
-      alignment: 9
-      pivot: {x: 0.33870968, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1523192e6c4ee41a1b9a2bc1db958fb4
-      internalID: -1173422229
+      spriteID: 58fdd562e3e9f40458519f5bf3e261a2
+      internalID: -130703679
       vertices: []
       indices: 
       edges: []
@@ -337,16 +337,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      AttackCorBasicMeleeEnemy-Sheet_0: -498709344
-      AttackCorBasicMeleeEnemy-Sheet_6: 1848750412
-      AttackCorBasicMeleeEnemy-Sheet_1: 788051738
-      AttackCorBasicMeleeEnemy-Sheet_5: -2090879425
-      AttackCorBasicMeleeEnemy-Sheet_3: 540845762
-      AttackCorBasicMeleeEnemy-Sheet_7: 1793652264
-      AttackCorBasicMeleeEnemy-Sheet_9: -1173422229
-      AttackCorBasicMeleeEnemy-Sheet_8: -1479434624
-      AttackCorBasicMeleeEnemy-Sheet_2: -1787314486
-      AttackCorBasicMeleeEnemy-Sheet_4: -93465779
+      AttackCorBasicMeleeEnemy-Sheet_0: -193315811
+      AttackCorBasicMeleeEnemy-Sheet_6: 39320671
+      AttackCorBasicMeleeEnemy-Sheet_1: 1583708360
+      AttackCorBasicMeleeEnemy-Sheet_5: -259685225
+      AttackCorBasicMeleeEnemy-Sheet_3: -640130687
+      AttackCorBasicMeleeEnemy-Sheet_7: -828313063
+      AttackCorBasicMeleeEnemy-Sheet_9: -130703679
+      AttackCorBasicMeleeEnemy-Sheet_8: -363383829
+      AttackCorBasicMeleeEnemy-Sheet_2: -414012502
+      AttackCorBasicMeleeEnemy-Sheet_4: 302905480
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
