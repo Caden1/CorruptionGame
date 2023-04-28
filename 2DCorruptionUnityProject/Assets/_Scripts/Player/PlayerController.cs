@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private UIDocument gemSwapUIDoc;
 	[SerializeField] private UIDocument healthBarUIDoc;
 
-	private HealthSystem playerHealth;
+	//private HealthSystem playerHealth;
 
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidbody;
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
 		meleeTransformRight = GetComponent<Transform>().GetChild(0);
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
 
-		playerHealth = new HealthSystem(100f);
+		//playerHealth = new HealthSystem(100f);
 
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
@@ -252,14 +252,14 @@ public class PlayerController : MonoBehaviour
 	}
 
 	// Placegolder for testing ------------
-	private void OnTriggerEnter2D(Collider2D collision) {
-		if (collision.tag == "Enemy") {
-			if (!Skills.isInvulnerable) {
-				playerHealth.TakeDamage(10f);
-				healthBarUI.DecreaseHealthBarSize(playerHealth.GetHealthPercentage());
-			}
-		}
-	}
+	//private void OnTriggerEnter2D(Collider2D collision) {
+	//	if (collision.tag == "Enemy") {
+	//		if (!Skills.isInvulnerable) {
+	//			playerHealth.TakeDamage(10f);
+	//			healthBarUI.DecreaseHealthBarSize(playerHealth.GetHealthPercentage());
+	//		}
+	//	}
+	//}
 	// ------------------------------------
 
 	private void PlayAndDestroyActiveClones() {

@@ -34,7 +34,7 @@ public class BasicMeleeEnemy : MonoBehaviour
 	private bool canAttack = false;
 
 	private void Start() {
-		enemyHealth = new HealthSystem(health);
+		//enemyHealth = new HealthSystem(health);
 		healthBar = transform.GetChild(0).GetChild(1);
 		Physics2D.IgnoreCollision(playerObject.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
 		isMovingRight = false;

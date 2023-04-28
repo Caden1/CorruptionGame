@@ -1,32 +1,37 @@
-using System;
+using UnityEngine;
 
-public class HealthSystem
+public class HealthSystem : MonoBehaviour
 {
-	private float health;
-    private float healthMax;
+    [SerializeField] private float maxHealth = 100.0f;
+    private float currentHealth;
 
-    public HealthSystem(float healthMax) {
-        this.healthMax = healthMax;
-		health = healthMax;
-    }
+	void Start() {
+		currentHealth = maxHealth;
+	}
 
     public float GetHealthPercentage() {
-        return health / healthMax;
+        return currentHealth / maxHealth;
     }
 
-    public void TakeDamage(float damageAmount) {
-        health -= damageAmount;
-        if (health < 0f)
-            health = 0f;
+    public void TakeDamage(float damage) {
+		currentHealth -= damage;
+		if (currentHealth <= 0f) {
+			currentHealth = 0f;
+		}
 	}
 
     public void Heal(float healAmount) {
-        health += healAmount;
-        if (health > healthMax)
-            health = healthMax;
+		currentHealth += healAmount;
+		if (currentHealth >= maxHealth) {
+			currentHealth = maxHealth;
+		}
 	}
 
 	public bool IsDead() {
-		return health <= 0;
+		return currentHealth <= 0;
+	}
+
+	public float GetCurrentHealth() {
+		return currentHealth;
 	}
 }
