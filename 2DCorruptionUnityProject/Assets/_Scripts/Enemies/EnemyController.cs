@@ -8,14 +8,16 @@ public class EnemyController : MonoBehaviour
 
 	private enum AnimationState { Moving, Chasing, Attacking, Idle }
 
-	public float speed = 2.0f;
-	public float distance = 5.0f;
+	public float walkSpeed = 1.5f;
+	public float runSpeed = 2f;
+	public float roamDistance = 5.0f;
 	public float detectionRange = 3.0f;
 	public float verticalDetectionLimit = 1.0f;
 	public float attackRange = 1.0f;
 	public float attackCooldown = 2.0f;
 	public Transform player;
 	public BoxCollider2D attackColliderPrefab;
+	[HideInInspector] public bool isBeingAttacked = false;
 
 	private EnemyState currentState;
 	private Vector2 startPoint;
@@ -27,21 +29,17 @@ public class EnemyController : MonoBehaviour
 	private Vector2 previousPosition;
 	private SpriteRenderer spriteRenderer;
 	private float nextAttackTime = 0.0f;
-	//private Transform healthBar;
-	//private float health = 10f;
-	//private HealthSystem enemyHealth;
 
 	void Start() {
+		Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		previousPosition = rb.position;
 		startPoint = rb.position;
-		endPoint = new Vector2(startPoint.x + distance, startPoint.y);
+		endPoint = new Vector2(startPoint.x + roamDistance, startPoint.y);
 		currentTarget = endPoint;
 		currentState = EnemyState.Roam;
-		//healthBar = transform.GetChild(0).GetChild(1);
-		//enemyHealth = new HealthSystem(health);
 	}
 
 	void Update() {
@@ -90,7 +88,7 @@ public class EnemyController : MonoBehaviour
 	}
 
 	void MoveBackAndForth() {
-		float step = speed * Time.deltaTime;
+		float step = walkSpeed * Time.deltaTime;
 
 		if (Vector2.Distance(rb.position, currentTarget) < step) {
 			currentTarget = currentTarget == startPoint ? endPoint : startPoint;
@@ -100,12 +98,11 @@ public class EnemyController : MonoBehaviour
 	}
 
 	void ChasePlayer() {
-		float step = speed * Time.deltaTime;
+		float step = runSpeed * Time.deltaTime;
 		rb.position = Vector2.MoveTowards(rb.position, player.position, step);
 	}
 
 	void AttackPlayer() {
-		rb.position = rb.position;
 		if (!isAttacking && Time.time >= nextAttackTime) {
 			UpdateAnimationState(AnimationState.Attacking);
 			StartCoroutine(InstantiateAttackCollider());
@@ -142,63 +139,19 @@ public class EnemyController : MonoBehaviour
 	}
 
 	void UpdateDirection() {
-		float deltaX = rb.position.x - previousPosition.x;
-
-		if (deltaX > 0) {
-			spriteRenderer.flipX = false;
-		} else if (deltaX < 0) {
-			spriteRenderer.flipX = true;
+		if (!isBeingAttacked) {
+			float deltaX = rb.position.x - previousPosition.x;
+			if (deltaX > 0) {
+				spriteRenderer.flipX = false;
+			} else if (deltaX < 0) {
+				spriteRenderer.flipX = true;
+			}
 		}
-
 		previousPosition = rb.position;
 	}
 
-	//private void OnTriggerEnter2D(Collider2D collision) {
-	//	if (collision.tag == "NoGemUppercut") {
-	//		GetComponent<Rigidbody2D>().velocity = Vector2.up * RightBootSkills.uppercutKnockupVelocity;
-	//		collision.GetComponent<BoxCollider2D>().enabled = false;
-	//		enemyHealth.TakeDamage(RightBootSkills.damage);
-	//		healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
-	//	}
-	//	if (collision.tag == "NoGemDashKick") {
-	//		if (collision.GetComponent<SpriteRenderer>().flipX) {
-	//			GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftBootSkills.kickDashKnockbackVelocity;
-	//		} else {
-	//			GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftBootSkills.kickDashKnockbackVelocity;
-	//		}
-	//		collision.GetComponent<BoxCollider2D>().enabled = false;
-	//		enemyHealth.TakeDamage(LeftBootSkills.damage);
-	//		healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
-	//	}
-	//	if (collision.tag == "NoGemPunch") {
-	//		if (collision.GetComponent<SpriteRenderer>().flipX) {
-	//			GetComponent<Rigidbody2D>().velocity = Vector2.left * RightGloveSkills.punchKnockbackVelocity;
-	//		} else {
-	//			GetComponent<Rigidbody2D>().velocity = Vector2.right * RightGloveSkills.punchKnockbackVelocity;
-	//		}
-	//		collision.GetComponent<BoxCollider2D>().enabled = false;
-	//		enemyHealth.TakeDamage(RightGloveSkills.damage);
-	//		healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
-	//	}
-	//	if (collision.tag == "NoGemPush") {
-	//		if (collision.GetComponent<SpriteRenderer>().flipX) {
-	//			GetComponent<Rigidbody2D>().velocity = Vector2.left * LeftGloveSkills.pushbackVelocity;
-	//		} else {
-	//			GetComponent<Rigidbody2D>().velocity = Vector2.right * LeftGloveSkills.pushbackVelocity;
-	//		}
-	//		collision.GetComponent<BoxCollider2D>().enabled = false;
-	//		enemyHealth.TakeDamage(LeftGloveSkills.damage);
-	//		healthBar.localScale = new Vector2(enemyHealth.GetHealthPercentage(), 1f);
-	//	}
-
-	//	if (enemyHealth.IsDead()) {
-	//		Destroy(this.gameObject);
-	//	}
-	//}
-
-	//private void OnTriggerStay2D(Collider2D collision) {
-	//	if (collision.tag == "PurityOnlyPull") {
-	//		transform.position = Vector2.MoveTowards(transform.position, player.position, LeftGloveSkills.pullSpeed * Time.deltaTime);
-	//	}
-	//}
+	public IEnumerator ResetIsBeingAttacked(float delay) {
+		yield return new WaitForSeconds(delay);
+		isBeingAttacked = false;
+	}
 }

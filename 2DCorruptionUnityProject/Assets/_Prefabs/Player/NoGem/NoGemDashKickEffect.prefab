@@ -126,3 +126,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compareTag: Enemy
   damage: 2
+  force: 5
