@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1458274790481983326}
   - component: {fileID: 1458274790481983325}
-  - component: {fileID: 1458274790481983327}
   - component: {fileID: 1458274790481983312}
   - component: {fileID: 1458274790481983313}
   - component: {fileID: 1458274790481983314}
-  m_Layer: 0
+  - component: {fileID: 6423983542953599596}
+  - component: {fileID: 7451603369272336498}
+  m_Layer: 7
   m_Name: CorBasicMeleeEnemy
-  m_TagString: BasicMeleeEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: 35652138, guid: 873804145a93b479c9bd5bafae4af729, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -89,20 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1458274790481983327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458274790481983324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f49700b740bdf4f6da23614aecb3776d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerObject: {fileID: 0}
-  attackHitBox: {fileID: 0}
 --- !u!61 &1458274790481983312
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -170,6 +157,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6423983542953599596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458274790481983324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad7bd32bcc0c46b3b7c9e816978bd2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 1.5
+  runSpeed: 2
+  roamDistance: 5
+  detectionRange: 3
+  verticalDetectionLimit: 1
+  attackRange: 1
+  attackCooldown: 2
+  player: {fileID: 0}
+  attackColliderPrefab: {fileID: 0}
+  isBeingAttacked: 0
+--- !u!114 &7451603369272336498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458274790481983324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50800aecef5747219e08766db9903b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1001 &1458274791954715685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -177,9 +199,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1458274790481983326}
     m_Modifications:
+    - target: {fileID: 5758206784940994077, guid: cede13ec3faf34d258ca9b6c3586c59d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758206784969350153, guid: cede13ec3faf34d258ca9b6c3586c59d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5758206785003639471, guid: cede13ec3faf34d258ca9b6c3586c59d, type: 3}
       propertyPath: m_Name
       value: EnemyHealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758206785003639471, guid: cede13ec3faf34d258ca9b6c3586c59d, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5758206785003639504, guid: cede13ec3faf34d258ca9b6c3586c59d, type: 3}
       propertyPath: m_RootOrder
@@ -224,6 +258,10 @@ PrefabInstance:
     - target: {fileID: 5758206785003639504, guid: cede13ec3faf34d258ca9b6c3586c59d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758206786452271632, guid: cede13ec3faf34d258ca9b6c3586c59d, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cede13ec3faf34d258ca9b6c3586c59d, type: 3}

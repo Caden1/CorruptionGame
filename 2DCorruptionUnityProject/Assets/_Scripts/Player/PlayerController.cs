@@ -50,9 +50,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Sprite corEarthGlove;
 
 	[SerializeField] private UIDocument gemSwapUIDoc;
-	[SerializeField] private UIDocument healthBarUIDoc;
-
-	private HealthSystem playerHealth;
 
 	private PlayerInputActions playerInputActions;
 	private Rigidbody2D playerRigidbody;
@@ -67,7 +64,6 @@ public class PlayerController : MonoBehaviour
 	private Vector2 moveDirection;
 
 	private SwapUI swapUI;
-	private HealthBarUI healthBarUI;
 
 	private Swap swap;
 
@@ -112,8 +108,6 @@ public class PlayerController : MonoBehaviour
 		meleeTransformRight = GetComponent<Transform>().GetChild(0);
 		meleeTransformLeft = GetComponent<Transform>().GetChild(1);
 
-		playerHealth = new HealthSystem(100f);
-
 		playerInputActions = new PlayerInputActions();
 		playerInputActions.Player.Enable();
 		playerRigidbody = GetComponent<Rigidbody2D>();
@@ -124,7 +118,6 @@ public class PlayerController : MonoBehaviour
 		playerAnimations = new CustomAnimation(playerAnimator);
 
 		swapUI = new SwapUI(gemSwapUIDoc);
-		healthBarUI = new HealthBarUI(healthBarUIDoc);
 		
 		swap = new Swap(swapUI,
 			playerSkillsManager.noGemsRightGloveSkills, playerSkillsManager.noGemsLeftGloveSkills, playerSkillsManager.noGemsRightBootSkills, playerSkillsManager.noGemsLeftBootSkills,
@@ -250,17 +243,6 @@ public class PlayerController : MonoBehaviour
 
 		swap.InitialGemState();
 	}
-
-	// Placegolder for testing ------------
-	private void OnTriggerEnter2D(Collider2D collision) {
-		if (collision.tag == "Enemy") {
-			if (!Skills.isInvulnerable) {
-				playerHealth.TakeDamage(10f);
-				healthBarUI.DecreaseHealthBarSize(playerHealth.GetHealthPercentage());
-			}
-		}
-	}
-	// ------------------------------------
 
 	private void PlayAndDestroyActiveClones() {
 		meleePositionRight = meleeTransformRight.position + meleePositionOffset;
@@ -442,4 +424,3 @@ public class PlayerController : MonoBehaviour
 		playerSkillsManager.PerformLeftGloveSkill(playerAnimationManager.GetLeftGloveEffect());
 	}
 }
-
