@@ -17,7 +17,7 @@ public abstract class RightBootSkills : Skills
 	protected float archVelocityThreshold;
 	protected float archGravity;
 	protected float jumpVelocity;
-	protected Vector2 effectOrigin;
+	protected Vector2 attackColliderOrigin;
 
 	public abstract void SetWithNoGems();
 

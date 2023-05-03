@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerAnimationManager
 {
-	private GameObject noGemUppercutEffect;
 	private GameObject noGemPunchEffect;
 	private GameObject noGemPushEffect;
 	private GameObject noGemDashKickEffect;
@@ -12,7 +11,6 @@ public class PlayerAnimationManager
 	private GameObject pureMeleeEffect;
 	private GameObject purePullEffect;
 
-	private CustomAnimation noGemUppercutEffectAnim;
 	private CustomAnimation noGemPunchEffectAnim;
 	private CustomAnimation noGemPushEffectAnim;
 	private CustomAnimation noGemDashKickEffectAnim;
@@ -23,11 +21,10 @@ public class PlayerAnimationManager
 	private CustomAnimation purePullEffectAnim;
 
 	public PlayerAnimationManager(
-		GameObject noGemUppercutEffect, GameObject noGemPunchEffect, GameObject noGemPushEffect, GameObject noGemDashKickEffect,
+		GameObject noGemPunchEffect, GameObject noGemPushEffect, GameObject noGemDashKickEffect,
 		GameObject pureJumpEffect, GameObject pureDashEffect, GameObject pureMeleeEffect, GameObject purePullEffect,
-		Sprite[] noGemUppercutEffectSprites, Sprite[] noGemPunchEffectSprites, Sprite[] noGemPushEffectSprites, Sprite[] noGemDashKickEffectSprites,
+		Sprite[] noGemPunchEffectSprites, Sprite[] noGemPushEffectSprites, Sprite[] noGemDashKickEffectSprites,
 		Sprite[] pureJumpEffectSprites, Sprite[] pureDashEffectSprites, Sprite[] pureShieldEffectSprites, Sprite[] purePullEffectSprites) {
-		this.noGemUppercutEffect = noGemUppercutEffect;
 		this.noGemPunchEffect = noGemPunchEffect;
 		this.noGemPushEffect = noGemPushEffect;
 		this.noGemDashKickEffect = noGemDashKickEffect;
@@ -35,7 +32,6 @@ public class PlayerAnimationManager
 		this.pureDashEffect = pureDashEffect;
 		this.pureMeleeEffect = pureMeleeEffect;
 		this.purePullEffect = purePullEffect;
-		noGemUppercutEffectAnim = new CustomAnimation(noGemUppercutEffectSprites);
 		noGemPunchEffectAnim = new CustomAnimation(noGemPunchEffectSprites);
 		noGemPushEffectAnim = new CustomAnimation(noGemPushEffectSprites);
 		noGemDashKickEffectAnim = new CustomAnimation(noGemDashKickEffectSprites);
@@ -48,7 +44,6 @@ public class PlayerAnimationManager
 	public void ResetRightBootSkillAnimationIndex() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemUppercutEffectAnim.ResetIndexToZero();
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
@@ -184,7 +179,6 @@ public class PlayerAnimationManager
 	public GameObject GetJumpEffect() {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				return noGemUppercutEffect;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {
 					return pureJumpEffect;
@@ -355,7 +349,6 @@ public class PlayerAnimationManager
 	public void PlayRightBootEffectAnimationOnceWithModifiedSpeed(GameObject clone, float animSpeed) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemUppercutEffectAnim.PlayCreatedAnimationOnceWithModifiedSpeed(clone.GetComponent<SpriteRenderer>(), animSpeed);
 				break;
 			case BootsGem.BootsGemState.Purity:
 				if (RightBootModGem.rightBootModGemState == RightBootModGem.RightBootModGemState.None) {

@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
 	private PlayerAnimationManager playerAnimationManager;
 
 	// No Gem
-	[SerializeField] private Sprite[] noGemUppercutEffectSprites;
-	[SerializeField] private GameObject noGemUppercutEffect;
+	[SerializeField] private BoxCollider2D noGemJumpAttackPrefab;
+
 	[SerializeField] private Sprite[] noGemPunchEffectSprites;
 	[SerializeField] private GameObject noGemPunchEffect;
 	[SerializeField] private Sprite[] noGemPushEffectSprites;
@@ -97,9 +97,9 @@ public class PlayerController : MonoBehaviour
 	private void Start() {
 		playerSkillsManager = new PlayerSkillsManager();
 		playerAnimationManager = new PlayerAnimationManager(
-			noGemUppercutEffect, noGemPunchEffect, noGemPushEffect, noGemDashKickEffect,
+			noGemPunchEffect, noGemPushEffect, noGemDashKickEffect,
 			pureJumpEffect, pureDashEffect, pureShieldEffect, purePullEffect,
-			noGemUppercutEffectSprites, noGemPunchEffectSprites, noGemPushEffectSprites, noGemDashKickEffectSprites,
+			noGemPunchEffectSprites, noGemPushEffectSprites, noGemDashKickEffectSprites,
 			pureJumpEffectSprites, pureDashEffectSprites, pureShieldEffectSprites, purePullEffectSprites);
 
 		Player.playerState = Player.PlayerState.Normal;
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
 		playerAnimations = new CustomAnimation(playerAnimator);
 
 		swapUI = new SwapUI(gemSwapUIDoc);
-		
+
 		swap = new Swap(swapUI,
 			playerSkillsManager.noGemsRightGloveSkills, playerSkillsManager.noGemsLeftGloveSkills, playerSkillsManager.noGemsRightBootSkills, playerSkillsManager.noGemsLeftBootSkills,
 			playerSkillsManager.corRightGloveSkills, playerSkillsManager.corLeftGloveSkills, playerSkillsManager.corRightBootSkills, playerSkillsManager.corLeftBootSkills,
@@ -157,9 +157,6 @@ public class PlayerController : MonoBehaviour
 					swap.RotateModGemsCounterclockwise();
 				if (playerInputActions.Player.RotateClockwise.WasPressedThisFrame())
 					swap.RotateModGemsClockwise();
-				break;
-			case Player.PlayerState.Dash:
-				//SetupLeftBootSkill();
 				break;
 		}
 
@@ -249,18 +246,9 @@ public class PlayerController : MonoBehaviour
 		meleePositionLeft = meleeTransformLeft.position - meleePositionOffset;
 
 		// No Gem
-		if (playerSkillsManager.noGemUppercutEffectClone != null) {
-			float animSpeed = 0.05f;
-			float horizontalOffset;
-			float verticalOffset = 0.15f;
-			playerAnimationManager.PlayRightBootEffectAnimationOnceWithModifiedSpeed(playerSkillsManager.noGemUppercutEffectClone, animSpeed);
-			if (isFacingRight) {
-				horizontalOffset = 0.25f;
-			} else {
-				horizontalOffset = -0.25f;
-			}
-			playerSkillsManager.noGemUppercutEffectClone.transform.position = new Vector2(transform.position.x + horizontalOffset, transform.position.y + verticalOffset);
-			StartCoroutine(playerSkillsManager.DestroyJumpEffectClone(playerSkillsManager.noGemUppercutEffectClone, RightBootSkills.jumpEffectCloneSec));
+		if (playerSkillsManager.noGemJumpAttackClone != null) {
+			playerSkillsManager.noGemJumpAttackClone.transform.position = new Vector2(transform.position.x, transform.position.y);
+			StartCoroutine(playerSkillsManager.DestroyJumpEffectClone(playerSkillsManager.noGemJumpAttackClone, RightBootSkills.jumpEffectCloneSec));
 		}
 		if (playerSkillsManager.noGemDashKickEffectClone != null) {
 			float animSpeed = 0.04f;

@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3d538ac09808475c9f876a5e20534e4
-      internalID: -977365602
+      spriteID: fedb5f0b25ee5407181944a1e8a4c5cb
+      internalID: 1873932930
       vertices: []
       indices: 
       edges: []
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6fa7df055947c410baaf06716f9c59f4
-      internalID: -219208446
+      spriteID: d3b8f762c6fa34a4d9fa88cdaeab2609
+      internalID: 1952670614
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e24f30da98b04b8c99aa239bedc9517
-      internalID: -1778115289
+      spriteID: 3a9ef2302df0241588812e22879e5186
+      internalID: -1906448963
       vertices: []
       indices: 
       edges: []
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a026d612f064c446db29a333ebbed7e9
-      internalID: 135973306
+      spriteID: 2f61a10bb131d49a7ae24a2564114db0
+      internalID: -353571916
       vertices: []
       indices: 
       edges: []
@@ -215,8 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24762fb38b74648b8938c3094893597e
-      internalID: -1689872130
+      spriteID: 67392b4b5434a451c8fcc8b86eb499bb
+      internalID: -522583631
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemUppercutJump-Sheet_1: -219208446
-      NoGemUppercutJump-Sheet_4: -1689872130
-      NoGemUppercutJump-Sheet_3: 135973306
-      NoGemUppercutJump-Sheet_2: -1778115289
-      NoGemUppercutJump-Sheet_0: -977365602
+      NoGemUppercutJump-Sheet_1: 1952670614
+      NoGemUppercutJump-Sheet_4: -522583631
+      NoGemUppercutJump-Sheet_3: -353571916
+      NoGemUppercutJump-Sheet_2: -1906448963
+      NoGemUppercutJump-Sheet_0: 1873932930
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

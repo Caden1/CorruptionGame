@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSkillsManager
 {
-	public GameObject noGemUppercutEffectClone { get; private set; }
+	public GameObject noGemJumpAttackClone { get; private set; }
+
 	public GameObject noGemPunchEffectClone { get; private set; }
 	public GameObject noGemPushEffectClone { get; private set; }
 	public GameObject noGemDashKickEffectClone { get; private set; }
@@ -153,13 +154,13 @@ public class PlayerSkillsManager
 		}
 	}
 
-	public void PerformRightBootSkill(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
+	public void PerformRightBootSkill(Rigidbody2D playerRigidbody, GameObject attackCollider) {
 		switch (BootsGem.bootsGemState) {
 			case BootsGem.BootsGemState.None:
-				noGemUppercutEffectClone = noGemsRightBootSkills.PerformJump(playerRigidbody, jumpEffect);
+				noGemJumpAttackClone = noGemsRightBootSkills.PerformJump(playerRigidbody, attackCollider);
 				break;
 			case BootsGem.BootsGemState.Purity:
-				pureJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, jumpEffect);
+				pureJumpEffectClone = purityRightBootSkills.PerformJump(playerRigidbody, attackCollider);
 				break;
 			case BootsGem.BootsGemState.Corruption:
 				break;

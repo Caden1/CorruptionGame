@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.FilePathAttribute;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class NoGemsRightBootSkills : RightBootSkills
 {
@@ -20,7 +21,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 		archGravity = 3f;
 		jumpVelocity = 10f;
 		jumpEffectCloneSec = 0.4f;
-		effectOrigin = new Vector2();
+		attackColliderOrigin = new Vector2();
 	}
 
 	public override void SetWithNoModifiers() {
@@ -59,12 +60,8 @@ public class NoGemsRightBootSkills : RightBootSkills
 	}
 
 	public void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, bool isFacingRight, GameObject jumpEffect) {
-		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.center.y);
-		if (isFacingRight) {
-			jumpEffect.GetComponent<SpriteRenderer>().flipX = false;
-		} else {
-			jumpEffect.GetComponent<SpriteRenderer>().flipX = true;
-		}
+		SpriteRenderer spriteRenderer = jumpEffect.GetComponent<SpriteRenderer>();
+		attackColliderOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.center.y);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -77,7 +74,7 @@ public class NoGemsRightBootSkills : RightBootSkills
 	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
-		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
+		return Object.Instantiate(jumpEffect, attackColliderOrigin, jumpEffect.transform.rotation);
 	}
 
 	public override void SetupJumpCancel() {

@@ -3928,13 +3928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51043e129809645a6b113eb4d9d7825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noGemUppercutEffectSprites:
-  - {fileID: -593404691, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  - {fileID: 2023407713, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  - {fileID: 224390054, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  - {fileID: 641771031, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  - {fileID: 1172405833, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  noGemUppercutEffect: {fileID: 4505152087020100711, guid: c1d246b556bf84f67965a437cce40edd, type: 3}
+  noGemJumpAttackPrefab: {fileID: 4505152087020101528, guid: c1d246b556bf84f67965a437cce40edd, type: 3}
   noGemPunchEffectSprites:
   - {fileID: 143973410, guid: adafacb8d96b24888957953a87430613, type: 3}
   - {fileID: -898987861, guid: adafacb8d96b24888957953a87430613, type: 3}
