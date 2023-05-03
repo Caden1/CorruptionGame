@@ -34,7 +34,7 @@ public class PurityRightBootSkills : RightBootSkills
 		archGravity = 2f;
 		jumpVelocity = 10f;
 		jumpEffectCloneSec = 0.3f;
-		effectOrigin = new Vector2();
+		attackColliderOrigin = new Vector2();
 		isRocketBoosted = false;
 		rocketBoostVelocityAddition = 0f;
 		originalJumpVelocity = jumpVelocity;
@@ -68,7 +68,7 @@ public class PurityRightBootSkills : RightBootSkills
 
 	public override void SetupJump(BoxCollider2D boxCollider, LayerMask layerMask, float verticalOffset) {
 		jumpVelocity = originalJumpVelocity;
-		effectOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + verticalOffset);
+		attackColliderOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + verticalOffset);
 		if (UtilsClass.IsBoxColliderGrounded(boxCollider, layerMask)) {
 			jumpCount = 1;
 			canJump = true;
@@ -81,7 +81,7 @@ public class PurityRightBootSkills : RightBootSkills
 	public override GameObject PerformJump(Rigidbody2D playerRigidbody, GameObject jumpEffect) {
 		playerRigidbody.velocity = Vector2.up * jumpVelocity;
 		canJump = false;
-		return Object.Instantiate(jumpEffect, effectOrigin, jumpEffect.transform.rotation);
+		return Object.Instantiate(jumpEffect, attackColliderOrigin, jumpEffect.transform.rotation);
 	}
 
 	//public override GameObject SetupEarthJump(Vector2 moveDirection, GameObject effect, BoxCollider2D boxCollider) {

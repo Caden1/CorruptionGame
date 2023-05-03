@@ -122,17 +122,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 61
-        height: 126
-      alignment: 9
-      pivot: {x: 0.49180326, y: 0.49206352}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f48293592f4147f78dbde10cc722f7b
-      internalID: -147809217
+      spriteID: fedb5f0b25ee5407181944a1e8a4c5cb
+      internalID: 1873932930
       vertices: []
       indices: 
       edges: []
@@ -141,19 +141,19 @@ TextureImporter:
       name: NoGemUppercutJump-Sheet_1
       rect:
         serializedVersion: 2
-        x: 61
+        x: 320
         y: 0
-        width: 61
-        height: 126
-      alignment: 9
-      pivot: {x: 0.49180326, y: 0.49206352}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cef98cde40fda4c3da81fb4fd5d52499
-      internalID: -573768596
+      spriteID: d3b8f762c6fa34a4d9fa88cdaeab2609
+      internalID: 1952670614
       vertices: []
       indices: 
       edges: []
@@ -162,19 +162,19 @@ TextureImporter:
       name: NoGemUppercutJump-Sheet_2
       rect:
         serializedVersion: 2
-        x: 122
+        x: 640
         y: 0
-        width: 61
-        height: 126
-      alignment: 9
-      pivot: {x: 0.49180326, y: 0.49206352}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd5d0488ba29746a197d72f48996df86
-      internalID: -367870739
+      spriteID: 3a9ef2302df0241588812e22879e5186
+      internalID: -1906448963
       vertices: []
       indices: 
       edges: []
@@ -183,19 +183,19 @@ TextureImporter:
       name: NoGemUppercutJump-Sheet_3
       rect:
         serializedVersion: 2
-        x: 183
+        x: 960
         y: 0
-        width: 61
-        height: 126
-      alignment: 9
-      pivot: {x: 0.49180326, y: 0.49206352}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c682c8188efba4296892c271a02635a8
-      internalID: 723619088
+      spriteID: 2f61a10bb131d49a7ae24a2564114db0
+      internalID: -353571916
       vertices: []
       indices: 
       edges: []
@@ -204,19 +204,19 @@ TextureImporter:
       name: NoGemUppercutJump-Sheet_4
       rect:
         serializedVersion: 2
-        x: 244
+        x: 1280
         y: 0
-        width: 61
-        height: 126
-      alignment: 9
-      pivot: {x: 0.49180326, y: 0.49206352}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51e99166926e84db2a5b843af42fb5bb
-      internalID: -537576963
+      spriteID: 67392b4b5434a451c8fcc8b86eb499bb
+      internalID: -522583631
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemUppercutJump-Sheet_1: -573768596
-      NoGemUppercutJump-Sheet_4: -537576963
-      NoGemUppercutJump-Sheet_3: 723619088
-      NoGemUppercutJump-Sheet_2: -367870739
-      NoGemUppercutJump-Sheet_0: -147809217
+      NoGemUppercutJump-Sheet_1: 1952670614
+      NoGemUppercutJump-Sheet_4: -522583631
+      NoGemUppercutJump-Sheet_3: -353571916
+      NoGemUppercutJump-Sheet_2: -1906448963
+      NoGemUppercutJump-Sheet_0: 1873932930
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cbea8e03d32db4d31b9ef6fc8608b0f8
+guid: 0adeb2a4a5cc94d3ca79a5bd6686e18b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,106 +117,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NoGemPush-Sheet_0
+      name: NoGemPush-Sheet 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 69
-        height: 128
-      alignment: 9
-      pivot: {x: 0.3188406, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07f218b48664849d8a764775f6954988
-      internalID: -973368705
+      spriteID: 15f5fa30c4dcf42959c5ffe86e331636
+      internalID: 619842574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPush-Sheet_1
+      name: NoGemPush-Sheet 1_1
       rect:
         serializedVersion: 2
-        x: 69
+        x: 320
         y: 0
-        width: 69
-        height: 128
-      alignment: 9
-      pivot: {x: 0.3188406, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5cca9e24b1d64bb9a37574535cf3a27
-      internalID: 1139783566
+      spriteID: 4c4728d4f11dc47bebe633b5e996a6e3
+      internalID: -528013949
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPush-Sheet_2
+      name: NoGemPush-Sheet 1_2
       rect:
         serializedVersion: 2
-        x: 138
+        x: 640
         y: 0
-        width: 69
-        height: 128
-      alignment: 9
-      pivot: {x: 0.3188406, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d0572398254a4603a21df753ab68544
-      internalID: 2046038867
+      spriteID: ad035b62ce051456ea58ec0c188cbbbf
+      internalID: 838509865
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPush-Sheet_3
+      name: NoGemPush-Sheet 1_3
       rect:
         serializedVersion: 2
-        x: 207
+        x: 960
         y: 0
-        width: 69
-        height: 128
-      alignment: 9
-      pivot: {x: 0.3188406, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0db6eb73f6a0f46e0983db5bcf04935c
-      internalID: 111782651
+      spriteID: 213d349849dfe4526975a20d27f52ca0
+      internalID: -1946096062
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NoGemPush-Sheet_4
+      name: NoGemPush-Sheet 1_4
       rect:
         serializedVersion: 2
-        x: 276
+        x: 1280
         y: 0
-        width: 69
-        height: 128
-      alignment: 9
-      pivot: {x: 0.3188406, y: 0.5}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 434f7037474ee4224842201aafa05cc6
-      internalID: -1665656834
+      spriteID: 35a358a028abb40b6a6268fa48060d01
+      internalID: -283117905
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemPush-Sheet_3: 111782651
-      NoGemPush-Sheet_4: -1665656834
-      NoGemPush-Sheet_1: 1139783566
-      NoGemPush-Sheet_2: 2046038867
-      NoGemPush-Sheet_0: -973368705
+      NoGemPush-Sheet 1_1: -528013949
+      NoGemPush-Sheet 1_3: -1946096062
+      NoGemPush-Sheet 1_4: -283117905
+      NoGemPush-Sheet 1_0: 619842574
+      NoGemPush-Sheet 1_2: 838509865
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

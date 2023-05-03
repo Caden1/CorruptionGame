@@ -122,17 +122,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 126
-      alignment: 9
-      pivot: {x: 0.34375, y: 0.50793654}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ca0bafb8348e4761803df9b1743b1f8
-      internalID: -1187277723
+      spriteID: 3f62354bc53c9465f8cd4b53045f87a6
+      internalID: -1814961856
       vertices: []
       indices: 
       edges: []
@@ -141,19 +141,19 @@ TextureImporter:
       name: NoGemPunch-Sheet_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 320
         y: 0
-        width: 64
-        height: 126
-      alignment: 9
-      pivot: {x: 0.34375, y: 0.50793654}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab20a8a20ecf74c5fad3e361bc1e2eaf
-      internalID: -410518710
+      spriteID: a0721edf2ab72475daffffcfa622f4db
+      internalID: -2060037309
       vertices: []
       indices: 
       edges: []
@@ -162,19 +162,19 @@ TextureImporter:
       name: NoGemPunch-Sheet_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 640
         y: 0
-        width: 64
-        height: 126
-      alignment: 9
-      pivot: {x: 0.34375, y: 0.50793654}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d998e43b0960a43829d156c989a6ba9b
-      internalID: 649315331
+      spriteID: 43ff99b6f4f2346fca8b89d73f08a45d
+      internalID: 895696532
       vertices: []
       indices: 
       edges: []
@@ -183,19 +183,19 @@ TextureImporter:
       name: NoGemPunch-Sheet_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 960
         y: 0
-        width: 64
-        height: 126
-      alignment: 9
-      pivot: {x: 0.34375, y: 0.50793654}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d27941be57c444aa8ad53c33eb9945dd
-      internalID: 256677994
+      spriteID: 07168a43091114400b293ecfaae82d39
+      internalID: -1405399942
       vertices: []
       indices: 
       edges: []
@@ -204,19 +204,19 @@ TextureImporter:
       name: NoGemPunch-Sheet_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 1280
         y: 0
-        width: 64
-        height: 126
-      alignment: 9
-      pivot: {x: 0.34375, y: 0.50793654}
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9432b6c8b41db4216873732ba5895239
-      internalID: 417539642
+      spriteID: 3f71ef512e19546608f190d1fb6b09e3
+      internalID: -979415102
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      NoGemPunch-Sheet_4: 417539642
-      NoGemPunch-Sheet_2: 649315331
-      NoGemPunch-Sheet_3: 256677994
-      NoGemPunch-Sheet_1: -410518710
-      NoGemPunch-Sheet_0: -1187277723
+      NoGemPunch-Sheet_4: -979415102
+      NoGemPunch-Sheet_2: 895696532
+      NoGemPunch-Sheet_3: -1405399942
+      NoGemPunch-Sheet_1: -2060037309
+      NoGemPunch-Sheet_0: -1814961856
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -3821,12 +3821,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 973731696, guid: 86301c7160c1b4862b4449960151d0ef, type: 3}
+  m_Sprite: {fileID: 1205876415, guid: 86301c7160c1b4862b4449960151d0ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.43, y: 1.28}
+  m_Size: {x: 3.2, y: 1.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3840,7 +3840,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208835178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.39, y: -13.144, z: 0}
+  m_LocalPosition: {x: 32.252, y: -13.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3882,18 +3882,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.065}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.43, y: 1.28}
-    newSize: {x: 0.43, y: 1.28}
+    oldSize: {x: 3.2, y: 1.8}
+    newSize: {x: 3.2, y: 1.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.35, y: 1.26}
+  m_Size: {x: 0.3, y: 1.25}
   m_EdgeRadius: 0
 --- !u!50 &1208835183
 Rigidbody2D:
@@ -3928,13 +3928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51043e129809645a6b113eb4d9d7825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noGemUppercutEffectSprites:
-  - {fileID: -593404691, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  - {fileID: 2023407713, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  - {fileID: 224390054, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  - {fileID: 641771031, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  - {fileID: 1172405833, guid: c0b79ea518fc54c03b6388308abc6ed3, type: 3}
-  noGemUppercutEffect: {fileID: 4505152087020100711, guid: c1d246b556bf84f67965a437cce40edd, type: 3}
+  noGemJumpAttackPrefab: {fileID: 4505152087020101528, guid: c1d246b556bf84f67965a437cce40edd, type: 3}
   noGemPunchEffectSprites:
   - {fileID: 143973410, guid: adafacb8d96b24888957953a87430613, type: 3}
   - {fileID: -898987861, guid: adafacb8d96b24888957953a87430613, type: 3}
