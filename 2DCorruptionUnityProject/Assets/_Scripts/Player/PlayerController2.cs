@@ -7,8 +7,6 @@ public class PlayerController2 : MonoBehaviour
 	private PlayerInputActions inputActions;
 
 	private float horizontalInput;
-	private bool isJumping;
-	private bool isDashing;
 
 	private void Awake() {
 		characterMovement = GetComponent<CharacterMovement>();
@@ -23,29 +21,22 @@ public class PlayerController2 : MonoBehaviour
 		inputActions.Disable();
 	}
 
-	private void Start() {
-		inputActions.Player.Movement.performed += ctx => {
-			Vector2 inputValue = ctx.ReadValue<Vector2>();
-			horizontalInput = inputValue.x;
-		};
-		inputActions.Player.Movement.canceled += ctx => horizontalInput = 0;
+	private void Update() {
+		if (!characterMovement.IsDashing) {
+			Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
+			float horizontalInput = movementInput.x;
 
-		inputActions.Player.Jump.performed += ctx => isJumping = true;
-		inputActions.Player.Dash.performed += ctx => isDashing = true;
+			if (Mathf.Abs(horizontalInput) > 0.1f) {
+				characterMovement.WalkingState.SetDirection(horizontalInput);
+				characterMovement.TransitionToState(characterMovement.WalkingState);
+			} else {
+				characterMovement.TransitionToState(characterMovement.IdleState);
+			}
+		}
 	}
 
-
-	private void Update() {
-		characterMovement.Move(horizontalInput);
-
-		if (isJumping) {
-			characterMovement.Jump();
-			isJumping = false;
-		}
-
-		if (isDashing) {
-			characterMovement.Dash(horizontalInput);
-			isDashing = false;
-		}
+	private void Start() {
+		inputActions.Player.Jump.performed += ctx => characterMovement.TransitionToState(characterMovement.JumpingState);
+		inputActions.Player.Dash.performed += ctx => characterMovement.TransitionToState(new DashingState(characterMovement, characterMovement.LastFacingDirection));
 	}
 }

@@ -15,3 +15,7 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 5
   dashForce: 5
+  dashDuration: 0.5
+  numberOfJumps: 1
+  meleeDamage: 0
+  rangedDamage: 0
