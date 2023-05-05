@@ -12,13 +12,15 @@ public class WalkingState : CharacterState
 		moveDirection = direction;
 	}
 
-	public override void EnterState() { }
-
 	public override void FixedUpdate() {
 		float moveSpeed = characterMovement.GemController.GetRightFootGem().moveSpeed;
 		characterMovement.Rb.velocity = new Vector2(moveDirection * moveSpeed, characterMovement.Rb.velocity.y);
-
-		// Update the last facing direction
 		characterMovement.LastFacingDirection = moveDirection > 0 ? 1 : -1;
 	}
+
+	//public override void EnterState() { }
+
+	//public override void Update() { }
+
+	//public override void ExitState() { }
 }

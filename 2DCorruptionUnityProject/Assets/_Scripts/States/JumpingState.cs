@@ -11,24 +11,16 @@ public class JumpingState : CharacterState
 	public override void EnterState() {
 		remainingJumps = characterMovement.GemController.GetRightFootGem().numberOfJumps;
 
-		Jump();
-	}
-
-	public override void Update() {
-		if (remainingJumps > 0 && Input.GetButtonDown("Jump")) {
-			Jump();
-		}
-
-		if (characterMovement.Rb.velocity.y <= 0) {
-			characterMovement.TransitionToState(characterMovement.IdleState);
-		}
-	}
-
-	private void Jump() {
 		float jumpForce = characterMovement.GemController.GetRightFootGem().jumpForce;
 		characterMovement.Rb.velocity = new Vector2(characterMovement.Rb.velocity.x, 0);
 		characterMovement.Rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
 		remainingJumps--;
 	}
+
+	//public override void Update() {}
+
+	//public override void FixedUpdate() { }
+
+	//public override void ExitState() { }
 }
 
