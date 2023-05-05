@@ -18,9 +18,9 @@ public class WalkingState : CharacterState
 		characterMovement.LastFacingDirection = moveDirection > 0 ? 1 : -1;
 	}
 
+	//public override void ExitState() { }
+
 	//public override void EnterState() { }
 
 	//public override void Update() { }
-
-	//public override void ExitState() { }
 }

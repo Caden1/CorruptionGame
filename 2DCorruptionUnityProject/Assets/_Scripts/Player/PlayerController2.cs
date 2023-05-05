@@ -31,19 +31,21 @@ public class PlayerController2 : MonoBehaviour
 	private void Update() {
 		//Debug.Log(characterMovement.Rb.velocity.y);
 		Debug.Log(characterMovement.CurrentState);
-		if (!characterMovement.IsDashing) {
-			PerformWalk();
-		}
-	}
 
-	private void PerformWalk() {
-		Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
-		float horizontalInput = movementInput.x;
-		if (Mathf.Abs(horizontalInput) > 0.1f) {
-			characterMovement.WalkingState.SetDirection(horizontalInput);
-			characterMovement.TransitionToState(characterMovement.WalkingState);
-		} else {
-			characterMovement.TransitionToState(characterMovement.IdleState);
+		if (!characterMovement.IsDashing) {
+			Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
+			float horizontalInput = movementInput.x;
+			if (Mathf.Abs(horizontalInput) > 0.1f) {
+				characterMovement.WalkingState.SetDirection(horizontalInput);
+				characterMovement.TransitionToState(characterMovement.WalkingState);
+			}
+			if (characterMovement.Rb.velocity.y < 0f) {
+				characterMovement.TransitionToState(characterMovement.FallingState);
+			}
+
+			if (characterMovement.IsGrounded()) {
+				characterMovement.TransitionToState(characterMovement.IdleState);
+			}
 		}
 	}
 
@@ -52,7 +54,9 @@ public class PlayerController2 : MonoBehaviour
 	}
 
 	private void Jump_canceled(InputAction.CallbackContext ctx) {
-		characterMovement.TransitionToState(characterMovement.FallingState);
+		if (characterMovement.Rb.velocity.y > 0) {
+			characterMovement.Rb.velocity = new Vector2(characterMovement.Rb.velocity.x, characterMovement.Rb.velocity.y * 0f);
+		}
 	}
 
 	private void Dash_performed(InputAction.CallbackContext ctx) {

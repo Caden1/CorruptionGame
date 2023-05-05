@@ -5,7 +5,9 @@ public class CharacterMovement : MonoBehaviour
 	private GemController gemController;
 
 	public LayerMask groundLayer;
+
 	public bool IsDashing { get; set; }
+
 	public Rigidbody2D Rb { get; private set; }
 	public GemController GemController => gemController;
 	public CharacterState CurrentState { get; private set; }
@@ -27,6 +29,8 @@ public class CharacterMovement : MonoBehaviour
 	}
 
 	private void Start() {
+		IsDashing = false;
+
 		CurrentState = IdleState;
 		CurrentState.EnterState();
 	}
