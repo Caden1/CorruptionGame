@@ -6,8 +6,7 @@ public class PlayerController2 : MonoBehaviour
 {
 	private CharacterMovement characterMovement;
 	private PlayerInputActions inputActions;
-
-	private float horizontalInput;
+	private float horizontalInput = 0f;
 
 	private void Awake() {
 		characterMovement = GetComponent<CharacterMovement>();
@@ -32,34 +31,66 @@ public class PlayerController2 : MonoBehaviour
 		//Debug.Log(characterMovement.Rb.velocity.y);
 		Debug.Log(characterMovement.CurrentState);
 
-		if (!characterMovement.IsDashing) {
-			Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
-			float horizontalInput = movementInput.x;
-			if (Mathf.Abs(horizontalInput) > 0.1f) {
-				characterMovement.WalkingState.SetDirection(horizontalInput);
-				characterMovement.TransitionToState(characterMovement.WalkingState);
+		Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
+		horizontalInput = movementInput.x;
+		if (Mathf.Abs(horizontalInput) > 0.1f) {
+			PerformHorizontalMovemement();
+			if (characterMovement.IsGrounded()
+				&& characterMovement.CurrentState != PlayerMovementState.Jumping) {
+				PerformRun();
 			}
-			if (characterMovement.Rb.velocity.y < 0f) {
-				characterMovement.TransitionToState(characterMovement.FallingState);
-			}
+		} else if (characterMovement.IsGrounded()
+			&& characterMovement.CurrentState != PlayerMovementState.Jumping) {
+			PerformIdle();
+		}
 
-			if (characterMovement.IsGrounded()) {
-				characterMovement.TransitionToState(characterMovement.IdleState);
-			}
+		if (characterMovement.Rb.velocity.y < 0f) {
+			PerformFall();
 		}
 	}
 
 	private void Jump_performed(InputAction.CallbackContext ctx) {
-		characterMovement.TransitionToState(characterMovement.JumpingState);
+		if (!characterMovement.IsDashing) {
+			characterMovement.CanJump = true;
+			characterMovement.TransitionToState(PlayerMovementState.Jumping);
+		}
 	}
 
 	private void Jump_canceled(InputAction.CallbackContext ctx) {
-		if (characterMovement.Rb.velocity.y > 0) {
-			characterMovement.Rb.velocity = new Vector2(characterMovement.Rb.velocity.x, characterMovement.Rb.velocity.y * 0f);
+		if (!characterMovement.IsDashing) {
+			if (characterMovement.Rb.velocity.y > 0) {
+				characterMovement.Rb.velocity = new Vector2(characterMovement.Rb.velocity.x, characterMovement.Rb.velocity.y * 0f);
+			}
 		}
 	}
 
 	private void Dash_performed(InputAction.CallbackContext ctx) {
-		characterMovement.TransitionToState(new DashingState(characterMovement, characterMovement.LastFacingDirection));
+		characterMovement.IsDashing = true;
+		characterMovement.SetDashDuration(characterMovement.GemController.GetLeftFootGem().dashDuration);
+		characterMovement.TransitionToState(PlayerMovementState.Dashing);
+	}
+
+	private void PerformHorizontalMovemement() {
+		if (!characterMovement.IsDashing) {
+			float moveSpeed = characterMovement.GemController.GetRightFootGem().moveSpeed;
+			characterMovement.Rb.velocity = new Vector2(horizontalInput * moveSpeed, characterMovement.Rb.velocity.y);
+			characterMovement.LastFacingDirection = horizontalInput > 0 ? 1 : -1;
+		}
+	}
+
+	private void PerformIdle() {
+		if (!characterMovement.IsDashing) {
+			characterMovement.TransitionToState(PlayerMovementState.Idle);
+		}
+	}
+
+	private void PerformRun() {
+		characterMovement.TransitionToState(PlayerMovementState.Running);
+	}
+
+	private void PerformFall() {
+		if (!characterMovement.IsDashing) {
+			characterMovement.TransitionToState(PlayerMovementState.Falling);
+		}
 	}
 }

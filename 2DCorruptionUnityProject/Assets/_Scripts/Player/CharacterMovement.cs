@@ -1,52 +1,67 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CharacterMovement : MonoBehaviour
 {
-	private GemController gemController;
-
 	public LayerMask groundLayer;
 
-	public bool IsDashing { get; set; }
-
+	public GemController GemController { get; private set; }
 	public Rigidbody2D Rb { get; private set; }
-	public GemController GemController => gemController;
-	public CharacterState CurrentState { get; private set; }
-	public IdleState IdleState { get; private set; }
-	public WalkingState WalkingState { get; private set; }
-	public JumpingState JumpingState { get; private set; }
-	public FallingState FallingState { get; private set; }
-
+	public PlayerMovementState CurrentState { get; private set; }
 	public float LastFacingDirection { get; set; } = 1;
+	public bool CanJump { get; set; } = false;
+	public bool IsDashing { get; set; } = false;
+
+	private float dashForce;
+	private float dashDuration;
+	private float originalGravityScale;
 
 	private void Awake() {
-		gemController = GetComponent<GemController>();
+		GemController = GetComponent<GemController>();
 		Rb = GetComponent<Rigidbody2D>();
-
-		IdleState = new IdleState(this);
-		WalkingState = new WalkingState(this);
-		JumpingState = new JumpingState(this);
-		FallingState = new FallingState(this);
-	}
-
-	private void Start() {
-		IsDashing = false;
-
-		CurrentState = IdleState;
-		CurrentState.EnterState();
-	}
-
-	private void Update() {
-		CurrentState.Update();
+		CurrentState = PlayerMovementState.Idle;
+		originalGravityScale = Rb.gravityScale;
 	}
 
 	private void FixedUpdate() {
-		CurrentState.FixedUpdate();
+		switch (CurrentState) {
+			case PlayerMovementState.Idle:
+				Rb.velocity = new Vector2(0, Rb.velocity.y);
+				break;
+			case PlayerMovementState.Running:
+				// Walking state logic
+				break;
+			case PlayerMovementState.Jumping:
+				if (CanJump) {
+					//int remainingJumps = GemController.GetRightFootGem().numberOfJumps;
+					float jumpForce = GemController.GetRightFootGem().jumpForce;
+					Rb.velocity = new Vector2(Rb.velocity.x, 0);
+					Rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+					//remainingJumps--;
+					CanJump = false;
+				}
+				break;
+			case PlayerMovementState.Falling:
+				// Falling state logic
+				break;
+			case PlayerMovementState.Dashing:
+				if (IsDashing) {
+					dashForce = GemController.GetLeftFootGem().dashForce;
+					Rb.gravityScale = 0f;
+					Rb.velocity = new Vector2(LastFacingDirection * dashForce, 0f);
+					StartCoroutine(StopDashAfterSeconds());
+				}
+				break;
+		}
 	}
 
-	public void TransitionToState(CharacterState newState) {
-		CurrentState.ExitState();
+	public void SetDashDuration(float dashDuration) {
+		this.dashDuration = dashDuration;
+	}
+
+	public void TransitionToState(PlayerMovementState newState) {
 		CurrentState = newState;
-		CurrentState.EnterState();
 	}
 
 	public bool IsGrounded() {
@@ -60,4 +75,9 @@ public class CharacterMovement : MonoBehaviour
 		}
 	}
 
+	private IEnumerator StopDashAfterSeconds() {
+		yield return new WaitForSeconds(dashDuration);
+		Rb.gravityScale = originalGravityScale;
+		IsDashing = false;
+	}
 }
