@@ -4,13 +4,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController2 : MonoBehaviour
 {
-	private PlayerSkillController characterMovement;
+	private PlayerSkillController skillController;
 	private PlayerInputActions inputActions;
 	private float horizontalInput = 0f;
 
 	private void Awake() {
-		characterMovement = GetComponent<PlayerSkillController>();
+		skillController = GetComponent<PlayerSkillController>();
 		inputActions = new PlayerInputActions();
+	}
+
+	private void Start() {
+		skillController.TransitionToState(skillController.IdleSkillState);
 	}
 
 	private void OnEnable() {
@@ -28,79 +32,70 @@ public class PlayerController2 : MonoBehaviour
 	}
 
 	private void Update() {
-		//Debug.Log(characterMovement.Rb.velocity.y);
-		//Debug.Log(characterMovement.CurrentState);
-
 		Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
 		horizontalInput = movementInput.x;
 		if (Mathf.Abs(horizontalInput) > 0.1f) {
 			PerformHorizontalMovemement();
-			if (characterMovement.IsGrounded()
-				&& characterMovement.CurrentBaseState != BasePlayerState.Jumping) {
+			if (skillController.IsGrounded() && !skillController.IsJumping) {
 				PerformRun();
 			}
-		} else if (characterMovement.IsGrounded()
-			&& characterMovement.CurrentBaseState != BasePlayerState.Jumping) {
+		} else if (skillController.IsGrounded() && !skillController.IsJumping) {
 			PerformIdle();
-		} else if (characterMovement.CurrentBaseState == BasePlayerState.Jumping
-			|| characterMovement.CurrentBaseState == BasePlayerState.Falling) {
-			characterMovement.Rb.velocity = new Vector2(0f, characterMovement.Rb.velocity.y);
+		} else if (skillController.IsJumping || skillController.IsFalling) {
+			skillController.Rb.velocity = new Vector2(0f, skillController.Rb.velocity.y);
 		}
 
-		if (characterMovement.Rb.velocity.y < 0f) {
+		if (skillController.Rb.velocity.y < 0f) {
 			PerformFall();
 		}
 	}
 
 	private void Jump_performed(InputAction.CallbackContext ctx) {
-		if (!characterMovement.IsDashing) {
-			characterMovement.CanJump = true;
-			characterMovement.TransitionToState(BasePlayerState.Jumping);
+		if (!skillController.IsDashing) {
+			skillController.TransitionToState(skillController.JumpingSkillState);
 		}
 	}
 
 	private void Jump_canceled(InputAction.CallbackContext ctx) {
-		if (!characterMovement.IsDashing) {
-			if (characterMovement.Rb.velocity.y > 0) {
-				characterMovement.Rb.velocity = new Vector2(characterMovement.Rb.velocity.x, characterMovement.Rb.velocity.y * 0f);
+		if (!skillController.IsDashing) {
+			if (skillController.Rb.velocity.y > 0) {
+				skillController.Rb.velocity = new Vector2(skillController.Rb.velocity.x, skillController.Rb.velocity.y * 0f);
 			}
 		}
 	}
 
 	private void Dash_performed(InputAction.CallbackContext ctx) {
-		characterMovement.CanDash = true;
-		characterMovement.IsDashing = true;
-		characterMovement.TransitionToState(BasePlayerState.Dashing);
+		skillController.TransitionToState(skillController.DashingSkillState);
 	}
 
 	private void PerformHorizontalMovemement() {
-		if (!characterMovement.IsDashing) {
-			float moveSpeed = characterMovement.GemController.GetRightFootGem().moveSpeed;
+		if (!skillController.IsDashing) {
+			float moveSpeed = skillController.GemController.GetRightFootGem().moveSpeed;
 			if (horizontalInput > 0) {
 				GetComponent<SpriteRenderer>().flipX = false;
 			} else {
 				GetComponent<SpriteRenderer>().flipX = true;
 			}
-			characterMovement.Rb.velocity = new Vector2(horizontalInput * moveSpeed, characterMovement.Rb.velocity.y);
-			characterMovement.LastFacingDirection = horizontalInput > 0 ? 1 : -1;
+			skillController.Rb.velocity = new Vector2(horizontalInput * moveSpeed, skillController.Rb.velocity.y);
+			skillController.LastFacingDirection = horizontalInput > 0 ? 1 : -1;
 		}
 	}
 
 	private void PerformIdle() {
-		if (!characterMovement.IsDashing) {
-			characterMovement.TransitionToState(BasePlayerState.Idle);
+		if (!skillController.IsDashing) {
+			skillController.TransitionToState(skillController.IdleSkillState);
 		}
 	}
 
 	private void PerformRun() {
-		if (!characterMovement.IsDashing) {
-			characterMovement.TransitionToState(BasePlayerState.Running);
+		if (!skillController.IsDashing) {
+			skillController.TransitionToState(skillController.RunningSkillState);
 		}
 	}
 
 	private void PerformFall() {
-		if (!characterMovement.IsDashing) {
-			characterMovement.TransitionToState(BasePlayerState.Falling);
+		if (!skillController.IsDashing) {
+			skillController.TransitionToState(skillController.FallingSkillState);
 		}
 	}
 }

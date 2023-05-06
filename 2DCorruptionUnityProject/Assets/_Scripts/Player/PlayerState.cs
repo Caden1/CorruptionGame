@@ -1,14 +1,3 @@
-public enum BasePlayerState
-{
-	Idle,
-	Running,
-	Falling,
-	Jumping,
-	Dashing,
-	RightGlove,
-	LeftGlove
-}
-
 public enum PurityCorruptionGem
 {
 	None,
