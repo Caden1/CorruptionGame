@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class JumpingSkillState : PlayerSkillStateBase
 {
-	public JumpingSkillState(PlayerSkillController playerSkillController) : base(playerSkillController) { }
+	int numberOfJumps = 0;
+
+	public JumpingSkillState(PlayerSkillController playerSkillController, PlayerInputActions inputActions)
+		: base(playerSkillController, inputActions) { }
 
 	public override void EnterState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem) {
 		InitializeState(purCorGem, elemModGem);
@@ -14,6 +17,7 @@ public class JumpingSkillState : PlayerSkillStateBase
 		switch (skillController.CurrentPurCorGemState) {
 			case PurityCorruptionGem.None:
 				jumpForce = skillController.GemController.GetRightFootGem().jumpForce;
+				numberOfJumps = skillController.GemController.GetRightFootGem().numberOfJumps;
 				break;
 			case PurityCorruptionGem.Purity:
 				break;
@@ -39,6 +43,13 @@ public class JumpingSkillState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
-		
+		// From Jumping player can Fall, Dash, RightGlove, LeftGlove
+		if (inputActions.Player.Jump.WasReleasedThisFrame() && skillController.Rb.velocity.y > 0f) {
+			skillController.Rb.velocity = new Vector2(skillController.Rb.velocity.x, 0f);
+			// Transition to Fall State handled in PlayerController
+		}
+		if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
+			skillController.TransitionToState(skillController.DashingSkillState);
+		}
 	}
 }

@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerSkillController : MonoBehaviour
 {
+	private PlayerInputActions inputActions;
+
 	public LayerMask groundLayer;
 
 	public PurityCorruptionGem CurrentPurCorGemState { get; set; }
@@ -19,19 +21,24 @@ public class PlayerSkillController : MonoBehaviour
 	public GemController GemController { get; private set; }
 	public Rigidbody2D Rb { get; private set; }
 
-	public float HorizontalInput { get; set; }
 	public float LastFacingDirection { get; set; } = 1;
+	public bool CanDash { get; set; } = true;
+	public bool IsDashing { get; set; } = false;
 
 	private void Awake() {
 		GemController = GetComponent<GemController>();
 		Rb = GetComponent<Rigidbody2D>();
 		animationController = GetComponent<PlayerAnimationController>();
+	}
 
-		IdleSkillState = new IdleSkillState(this);
-		RunningSkillState = new RunningSkillState(this);
-		JumpingSkillState = new JumpingSkillState(this);
-		FallingSkillState = new FallingSkillState(this);
-		DashingSkillState = new DashingSkillState(this);
+	public void SetInputActionsInitializeStateClasses(PlayerInputActions inputActions) {
+		this.inputActions = inputActions;
+
+		IdleSkillState = new IdleSkillState(this, inputActions);
+		RunningSkillState = new RunningSkillState(this, inputActions);
+		JumpingSkillState = new JumpingSkillState(this, inputActions);
+		FallingSkillState = new FallingSkillState(this, inputActions);
+		DashingSkillState = new DashingSkillState(this, inputActions);
 		DashingSkillState.StartCoroutine = StartCoroutineWrapper;
 	}
 
@@ -50,6 +57,7 @@ public class PlayerSkillController : MonoBehaviour
 		CurrentPurCorGemState = newPurCorGemState;
 		CurrentElemModGemState = newElemModGemState;
 		CurrentSkillState.EnterState(CurrentPurCorGemState, CurrentElemModGemState);
+		Update();
 	}
 
 	public bool IsGrounded() {
