@@ -2,22 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingSkillState : PlayerSkillState
+public class FallingSkillState : PlayerSkillStateBase
 {
-	private readonly PlayerSkillController skillController;
-
-	public FallingSkillState(PlayerSkillController playerSkillController) : base(playerSkillController) {
-		this.skillController = playerSkillController;
-	}
+	public FallingSkillState(PlayerSkillController playerSkillController) : base(playerSkillController) { }
 
 	public override void EnterState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem) {
-		skillController.IsFalling = true;
 		skillController.animationController.ExecuteFallAnim();
 	}
 
-	public override void FixedUpdate() {
-		//if () {
-		//	skillController.IsFalling = false;
-		//}
+	public override void UpdateState() {
+		
 	}
 }

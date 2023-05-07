@@ -18,84 +18,46 @@ public class PlayerController2 : MonoBehaviour
 	}
 
 	private void OnEnable() {
-		inputActions.Player.Jump.performed += Jump_performed;
-		inputActions.Player.Jump.canceled += Jump_canceled;
-		inputActions.Player.Dash.performed += Dash_performed;
-		inputActions.Enable();
+		inputActions.Player.Enable();
 	}
 
 	private void OnDisable() {
-		inputActions.Player.Jump.performed -= Jump_performed;
-		inputActions.Player.Jump.canceled -= Jump_canceled;
-		inputActions.Player.Dash.performed -= Dash_performed;
-		inputActions.Disable();
+		inputActions.Player.Disable();
 	}
 
 	private void Update() {
 		Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
 		horizontalInput = movementInput.x;
+		skillController.HorizontalInput = horizontalInput;
 		if (Mathf.Abs(horizontalInput) > 0.1f) {
 			PerformHorizontalMovemement();
-			if (skillController.IsGrounded() && !skillController.IsJumping) {
-				PerformRun();
-			}
-		} else if (skillController.IsGrounded() && !skillController.IsJumping) {
-			PerformIdle();
-		} else if (skillController.IsJumping || skillController.IsFalling) {
-			skillController.Rb.velocity = new Vector2(0f, skillController.Rb.velocity.y);
 		}
 
-		if (skillController.Rb.velocity.y < 0f) {
-			PerformFall();
-		}
-	}
-
-	private void Jump_performed(InputAction.CallbackContext ctx) {
-		if (!skillController.IsDashing) {
+		if (Mathf.Abs(horizontalInput) > 0.1f && skillController.IsGrounded()) {
+			skillController.TransitionToState(skillController.RunningSkillState);
+		} else if (inputActions.Player.Jump.WasPressedThisFrame()) {
 			skillController.TransitionToState(skillController.JumpingSkillState);
+		} else if (inputActions.Player.Jump.WasReleasedThisFrame() && skillController.Rb.velocity.y > 0) {
+			skillController.Rb.velocity = new Vector2(skillController.Rb.velocity.x, skillController.Rb.velocity.y * 0f);
+		} else if (inputActions.Player.Dash.WasPressedThisFrame()) {
+			skillController.TransitionToState(skillController.DashingSkillState);
+		} else if (skillController.Rb.velocity.y < 0f) {
+			skillController.TransitionToState(skillController.FallingSkillState);
+		} else {
+			skillController.TransitionToState(skillController.IdleSkillState);
 		}
-	}
 
-	private void Jump_canceled(InputAction.CallbackContext ctx) {
-		if (!skillController.IsDashing) {
-			if (skillController.Rb.velocity.y > 0) {
-				skillController.Rb.velocity = new Vector2(skillController.Rb.velocity.x, skillController.Rb.velocity.y * 0f);
-			}
-		}
-	}
-
-	private void Dash_performed(InputAction.CallbackContext ctx) {
-		skillController.TransitionToState(skillController.DashingSkillState);
+		skillController.CurrentSkillState.UpdateState();
 	}
 
 	private void PerformHorizontalMovemement() {
-		if (!skillController.IsDashing) {
-			float moveSpeed = skillController.GemController.GetRightFootGem().moveSpeed;
-			if (horizontalInput > 0) {
-				GetComponent<SpriteRenderer>().flipX = false;
-			} else {
-				GetComponent<SpriteRenderer>().flipX = true;
-			}
-			skillController.Rb.velocity = new Vector2(horizontalInput * moveSpeed, skillController.Rb.velocity.y);
-			skillController.LastFacingDirection = horizontalInput > 0 ? 1 : -1;
+		float moveSpeed = skillController.GemController.GetRightFootGem().moveSpeed;
+		if (horizontalInput > 0) {
+			GetComponent<SpriteRenderer>().flipX = false;
+		} else {
+			GetComponent<SpriteRenderer>().flipX = true;
 		}
-	}
-
-	private void PerformIdle() {
-		if (!skillController.IsDashing) {
-			skillController.TransitionToState(skillController.IdleSkillState);
-		}
-	}
-
-	private void PerformRun() {
-		if (!skillController.IsDashing) {
-			skillController.TransitionToState(skillController.RunningSkillState);
-		}
-	}
-
-	private void PerformFall() {
-		if (!skillController.IsDashing) {
-			skillController.TransitionToState(skillController.FallingSkillState);
-		}
+		skillController.Rb.velocity = new Vector2(horizontalInput * moveSpeed, skillController.Rb.velocity.y);
+		skillController.LastFacingDirection = horizontalInput > 0 ? 1 : -1;
 	}
 }

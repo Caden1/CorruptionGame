@@ -1,23 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashingSkillState : PlayerSkillState
+public class DashingSkillState : PlayerSkillStateBase
 {
-	private readonly PlayerSkillController skillController;
+	private float dashForce;
+	private float dashDuration;
+	private float originalGravityScale;
+	public delegate void CoroutineStarterDelegate(IEnumerator coroutine);
+	public CoroutineStarterDelegate StartCoroutine;
 
-	public DashingSkillState(PlayerSkillController playerSkillController) : base(playerSkillController) {
-		this.skillController = playerSkillController;
-	}
+	public DashingSkillState(PlayerSkillController playerSkillController) : base(playerSkillController) { }
 
 	public override void EnterState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem) {
-		skillController.IsDashing = true;
+		InitializeState(purCorGem, elemModGem);
 		skillController.animationController.ExecuteDashAnim();
+		dashForce = skillController.GemController.GetLeftFootGem().dashForce;
+		dashDuration = skillController.GemController.GetLeftFootGem().dashDuration;
+		originalGravityScale = skillController.Rb.gravityScale;
+		skillController.Rb.gravityScale = 0f;
+		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
+		StartCoroutine(StopDashAfterSeconds());
 	}
 
-	public override void FixedUpdate() {
-		//if () {
-		//	skillController.IsDashing = false;
-		//}
+	private IEnumerator StopDashAfterSeconds() {
+		yield return new WaitForSeconds(dashDuration);
+		skillController.Rb.gravityScale = originalGravityScale;
 	}
+
+	public override void UpdateState() { }
 }
