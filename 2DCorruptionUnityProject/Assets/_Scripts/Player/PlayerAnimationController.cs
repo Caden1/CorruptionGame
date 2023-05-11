@@ -51,16 +51,4 @@ public class PlayerAnimationController : MonoBehaviour
 	private void SetBool(string parameterName, bool value) {
 		animator.SetBool(parameterName, value);
 	}
-
-	private void SetTrigger(string triggerName) {
-		animator.SetTrigger(triggerName);
-	}
-
-	private void ResetTrigger(string triggerName) {
-		animator.ResetTrigger(triggerName);
-	}
-
-	private void SetFloat(string parameterName, float value) {
-		animator.SetFloat(parameterName, value);
-	}
 }

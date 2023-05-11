@@ -55,7 +55,14 @@ public class DashingSkillState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
-
+		// After Dash player can Idle, Run, Fall, RightGlove, LeftGlove
+		if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded) {
+			skillController.TransitionToState(skillController.IdleSkillState);
+		} else if (Mathf.Abs(skillController.Rb.velocity.x) > 0.1f && skillController.IsGrounded) {
+			skillController.TransitionToState(skillController.RunningSkillState);
+		} else if (skillController.Rb.velocity.y < 0f) {
+			skillController.TransitionToState(skillController.FallingSkillState);
+		}
 	}
 
 	private IEnumerator StopDashAfterSeconds() {

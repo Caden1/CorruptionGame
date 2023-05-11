@@ -43,13 +43,20 @@ public class JumpingSkillState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
-		// From Jumping player can Fall, Dash, RightGlove, LeftGlove
+		// Jump Cancel
 		if (inputActions.Player.Jump.WasReleasedThisFrame() && skillController.Rb.velocity.y > 0f) {
 			skillController.Rb.velocity = new Vector2(skillController.Rb.velocity.x, 0f);
-			// Transition to Fall State handled in PlayerController
 		}
-		if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
+
+		// From Jumping player can Idle, Run, Fall, Dash, RightGlove, LeftGlove
+		if (Mathf.Abs(skillController.Rb.velocity.x) > 0.1f && skillController.IsGrounded) {
+			skillController.TransitionToState(skillController.RunningSkillState);
+		} else if (skillController.Rb.velocity.y < 0f) {
+			skillController.TransitionToState(skillController.FallingSkillState);
+		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
 			skillController.TransitionToState(skillController.DashingSkillState);
+		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded) {
+			skillController.TransitionToState(skillController.IdleSkillState);
 		}
 	}
 }

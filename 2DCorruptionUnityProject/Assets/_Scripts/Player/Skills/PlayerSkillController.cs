@@ -24,6 +24,8 @@ public class PlayerSkillController : MonoBehaviour
 	public float LastFacingDirection { get; set; } = 1;
 	public bool CanDash { get; set; } = true;
 	public bool IsDashing { get; set; } = false;
+	public bool IsGrounded { get; set; } = true;
+
 
 	private void Awake() {
 		GemController = GetComponent<GemController>();
@@ -57,17 +59,10 @@ public class PlayerSkillController : MonoBehaviour
 		CurrentPurCorGemState = newPurCorGemState;
 		CurrentElemModGemState = newElemModGemState;
 		CurrentSkillState.EnterState(CurrentPurCorGemState, CurrentElemModGemState);
-		Update();
 	}
 
-	public bool IsGrounded() {
-		RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.9f, groundLayer);
-		return hit.collider != null;
-	}
-
-	public void StopJump() {
-		if (Rb.velocity.y > 0) {
-			Rb.velocity = new Vector2(Rb.velocity.x, Rb.velocity.y * 0f);
-		}
-	}
+	//public bool IsGrounded() {
+	//	RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.9f, groundLayer);
+	//	return hit.collider != null;
+	//}
 }

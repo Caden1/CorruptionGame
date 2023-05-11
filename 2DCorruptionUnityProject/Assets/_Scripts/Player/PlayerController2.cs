@@ -27,15 +27,23 @@ public class PlayerController2 : MonoBehaviour
 	}
 
 	private void Update() {
+		Debug.Log(skillController.IsGrounded);
+
+		if (!skillController.IsDashing) {
+			if (Mathf.Abs(skillController.Rb.velocity.y) > 0f) {
+				skillController.IsGrounded = false;
+			} else {
+				skillController.IsGrounded = true;
+			}
+		}
+
 		if (!skillController.IsDashing) {
 			Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
 			horizontalInput = movementInput.x;
 			if (Mathf.Abs(horizontalInput) > 0.1f) {
 				PerformHorizontalMovemement();
-			}
-
-			if (skillController.Rb.velocity.y < 0f) {
-				skillController.TransitionToState(skillController.FallingSkillState);
+			} else {
+				skillController.Rb.velocity = new Vector2(0f, skillController.Rb.velocity.y);
 			}
 		}
 	}
