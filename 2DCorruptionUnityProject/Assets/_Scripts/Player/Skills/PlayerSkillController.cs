@@ -20,17 +20,18 @@ public class PlayerSkillController : MonoBehaviour
 	public DashingSkillState DashingSkillState { get; set; }
 	public GemController GemController { get; private set; }
 	public Rigidbody2D Rb { get; private set; }
+	public GroundCheck GroundCheck { get; private set; }
 
 	public float LastFacingDirection { get; set; } = 1;
 	public bool CanDash { get; set; } = true;
 	public bool IsDashing { get; set; } = false;
-	public bool IsGrounded { get; set; } = true;
 
 
 	private void Awake() {
 		GemController = GetComponent<GemController>();
 		Rb = GetComponent<Rigidbody2D>();
 		animationController = GetComponent<PlayerAnimationController>();
+		GroundCheck = GetComponent<GroundCheck>();
 	}
 
 	public void SetInputActionsInitializeStateClasses(PlayerInputActions inputActions) {
@@ -49,7 +50,9 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	private void Update() {
-		CurrentSkillState.UpdateState();
+		if (!IsDashing) {
+			CurrentSkillState.UpdateState();
+		}
 	}
 
 	public void TransitionToState(PlayerSkillStateBase newState,
@@ -61,8 +64,7 @@ public class PlayerSkillController : MonoBehaviour
 		CurrentSkillState.EnterState(CurrentPurCorGemState, CurrentElemModGemState);
 	}
 
-	//public bool IsGrounded() {
-	//	RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.9f, groundLayer);
-	//	return hit.collider != null;
-	//}
+	public bool IsGrounded() {
+		return GroundCheck.IsGrounded();
+	}
 }

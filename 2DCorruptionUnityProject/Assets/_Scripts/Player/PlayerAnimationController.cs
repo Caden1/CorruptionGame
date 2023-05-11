@@ -9,46 +9,22 @@ public class PlayerAnimationController : MonoBehaviour
 	}
 
 	public void ExecuteIdleAnim() {
-		SetBool("IsIdle", true);
-		SetBool("IsRunning", false);
-		SetBool("IsJumping", false);
-		SetBool("IsFalling", false);
-		SetBool("IsDashing", false);
+		animator.Play("Idle");
 	}
 
 	public void ExecuteRunAnim() {
-		SetBool("IsRunning", true);
-		SetBool("IsIdle", false);
-		SetBool("IsJumping", false);
-		SetBool("IsFalling", false);
-		SetBool("IsDashing", false);
+		animator.Play("Run");
 	}
 
 	public void ExecuteJumpAnim() {
-		SetBool("IsJumping", true);
-		SetBool("IsIdle", false);
-		SetBool("IsRunning", false);
-		SetBool("IsFalling", false);
-		SetBool("IsDashing", false);
+		animator.Play("NoGemUppercutJump");
 	}
 
 	public void ExecuteFallAnim() {
-		SetBool("IsFalling", true);
-		SetBool("IsJumping", false);
-		SetBool("IsIdle", false);
-		SetBool("IsRunning", false);
-		SetBool("IsDashing", false);
+		animator.Play("Fall");
 	}
 
 	public void ExecuteDashAnim() {
-		SetBool("IsDashing", true);
-		SetBool("IsFalling", false);
-		SetBool("IsJumping", false);
-		SetBool("IsIdle", false);
-		SetBool("IsRunning", false);
-	}
-
-	private void SetBool(string parameterName, bool value) {
-		animator.SetBool(parameterName, value);
+		animator.Play("NoGemKickDash");
 	}
 }

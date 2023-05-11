@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class JumpingSkillState : PlayerSkillStateBase
 {
-	int numberOfJumps = 0;
-
 	public JumpingSkillState(PlayerSkillController playerSkillController, PlayerInputActions inputActions)
 		: base(playerSkillController, inputActions) { }
 
@@ -17,7 +15,6 @@ public class JumpingSkillState : PlayerSkillStateBase
 		switch (skillController.CurrentPurCorGemState) {
 			case PurityCorruptionGem.None:
 				jumpForce = skillController.GemController.GetRightFootGem().jumpForce;
-				numberOfJumps = skillController.GemController.GetRightFootGem().numberOfJumps;
 				break;
 			case PurityCorruptionGem.Purity:
 				break;
@@ -39,7 +36,7 @@ public class JumpingSkillState : PlayerSkillStateBase
 				break;
 		}
 
-		skillController.Rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+		skillController.Rb.velocity = new Vector2(0, jumpForce);
 	}
 
 	public override void UpdateState() {
@@ -48,15 +45,11 @@ public class JumpingSkillState : PlayerSkillStateBase
 			skillController.Rb.velocity = new Vector2(skillController.Rb.velocity.x, 0f);
 		}
 
-		// From Jumping player can Idle, Run, Fall, Dash, RightGlove, LeftGlove
-		if (Mathf.Abs(skillController.Rb.velocity.x) > 0.1f && skillController.IsGrounded) {
-			skillController.TransitionToState(skillController.RunningSkillState);
-		} else if (skillController.Rb.velocity.y < 0f) {
+		// From Jumping player can Fall, Dash, RightGlove, LeftGlove
+		if (skillController.Rb.velocity.y < 0f) {
 			skillController.TransitionToState(skillController.FallingSkillState);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
 			skillController.TransitionToState(skillController.DashingSkillState);
-		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded) {
-			skillController.TransitionToState(skillController.IdleSkillState);
 		}
 	}
 }
