@@ -17,7 +17,7 @@ public class PlayerAnimationController : MonoBehaviour
 	}
 
 	public void ExecuteJumpAnim() {
-		animator.Play("NoGemUppercutJump");
+		animator.Play("NoGemKneeJump");
 	}
 
 	public void ExecuteFallAnim() {
