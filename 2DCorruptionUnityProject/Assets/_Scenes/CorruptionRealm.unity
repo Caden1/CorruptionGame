@@ -2960,11 +2960,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.396883
+      value: 20.675
       objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.368
+      value: -10.965
       objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3002,6 +3002,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1208835180}
+    - target: {fileID: 6423983542953599596, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6423983542953599596, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: attackColliderPrefab
       value: 
@@ -4161,7 +4165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.359
+      value: -10.979
       objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983326, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_LocalPosition.z
