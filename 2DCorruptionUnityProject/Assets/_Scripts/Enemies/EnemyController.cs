@@ -29,6 +29,7 @@ public class EnemyController : MonoBehaviour
 	private Vector2 previousPosition;
 	private SpriteRenderer spriteRenderer;
 	private float nextAttackTime = 0.0f;
+	private bool isIdle = false;
 
 	void Start() {
 		Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
@@ -49,8 +50,12 @@ public class EnemyController : MonoBehaviour
 
 		switch (currentState) {
 			case EnemyState.Roam:
-				MoveBackAndForth();
-				UpdateAnimationState(AnimationState.Moving);
+				if (!isIdle) {
+					MoveBackAndForth();
+					UpdateAnimationState(AnimationState.Moving);
+				} else {
+					UpdateAnimationState(AnimationState.Idle);
+				}
 				if (IsPlayerInRange()) {
 					currentState = EnemyState.ChasePlayer;
 				}
@@ -91,10 +96,17 @@ public class EnemyController : MonoBehaviour
 		float step = walkSpeed * Time.deltaTime;
 
 		if (Vector2.Distance(rb.position, currentTarget) < step) {
-			currentTarget = currentTarget == startPoint ? endPoint : startPoint;
+			StartCoroutine(SwitchDirection());
 		} else {
 			rb.position = Vector2.MoveTowards(rb.position, currentTarget, step);
 		}
+	}
+
+	IEnumerator SwitchDirection() {
+		isIdle = true;
+		yield return new WaitForSeconds(1.35f);
+		currentTarget = currentTarget == startPoint ? endPoint : startPoint;
+		isIdle = false;
 	}
 
 	void ChasePlayer() {
@@ -113,10 +125,10 @@ public class EnemyController : MonoBehaviour
 	void UpdateAnimationState(AnimationState animationState) {
 		switch (animationState) {
 			case AnimationState.Moving:
-				animator.Play("Roam");
+				animator.Play("Walk");
 				break;
 			case AnimationState.Chasing:
-				animator.Play("Roam");
+				animator.Play("Walk");
 				break;
 			case AnimationState.Attacking:
 				animator.Play("Attack");
