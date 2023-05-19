@@ -41,9 +41,9 @@ public class PlayerController2 : MonoBehaviour
 	private void PerformHorizontalMovemement() {
 		float moveSpeed = skillController.GemController.GetRightFootGem().moveSpeed;
 		if (horizontalInput > 0) {
-			GetComponent<SpriteRenderer>().flipX = false;
-		} else {
 			GetComponent<SpriteRenderer>().flipX = true;
+		} else {
+			GetComponent<SpriteRenderer>().flipX = false;
 		}
 		skillController.Rb.velocity = new Vector2(horizontalInput * moveSpeed, skillController.Rb.velocity.y);
 		skillController.LastFacingDirection = horizontalInput > 0 ? 1 : -1;
