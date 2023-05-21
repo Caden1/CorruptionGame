@@ -3131,7 +3131,7 @@ MonoBehaviour:
   attackRange: 1
   attackCooldown: 2
   player: {fileID: 1208835180}
-  attackColliderPrefab: {fileID: 687997908488313195, guid: c6edf0ae7612b4f63b9b00cf9fe1d018, type: 3}
+  attackEffectPrefab: {fileID: 3411532929460867468, guid: 6b050216da2f64da28f3195eb1272077, type: 3}
   isBeingAttacked: 0
 --- !u!1001 &1824119984
 PrefabInstance:

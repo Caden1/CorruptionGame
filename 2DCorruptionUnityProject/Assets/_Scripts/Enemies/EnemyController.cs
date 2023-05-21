@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour
 	public float attackRange = 1.0f;
 	public float attackCooldown = 2.0f;
 	public Transform player;
-	public BoxCollider2D attackColliderPrefab;
+	public GameObject attackEffectPrefab;
 	[HideInInspector] public bool isBeingAttacked = false;
 
 	private EnemyState currentState;
@@ -117,7 +117,7 @@ public class EnemyController : MonoBehaviour
 	void AttackPlayer() {
 		if (!isAttacking && Time.time >= nextAttackTime) {
 			UpdateAnimationState(AnimationState.Attacking);
-			StartCoroutine(InstantiateAttackCollider());
+			StartCoroutine(InstantiateAttackEffect());
 			nextAttackTime = Time.time + attackCooldown;
 		}
 	}
@@ -139,15 +139,19 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
-	IEnumerator InstantiateAttackCollider() {
+	IEnumerator InstantiateAttackEffect() {
 		isAttacking = true;
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.4f);
 		float direction = spriteRenderer.flipX ? -1.0f : 1.0f;
 		Vector2 offset = new Vector2(direction * 0.84f, 0.3f);
-		BoxCollider2D attackCollider = Instantiate(attackColliderPrefab, (Vector2)transform.position + offset, transform.rotation);
-		yield return new WaitForSeconds(0.3f);
-		Destroy(attackCollider.gameObject);
+		GameObject attackEffectClone = Instantiate(attackEffectPrefab, (Vector2)transform.position + offset, transform.rotation);
+		SpriteRenderer attackEffectSprite = attackEffectClone.GetComponent<SpriteRenderer>();
+		if (attackEffectSprite != null) {
+			attackEffectSprite.flipX = spriteRenderer.flipX;
+		}
 		isAttacking = false;
+		yield return new WaitForSeconds(0.1f);
+		Destroy(attackEffectClone);
 	}
 
 	void UpdateDirection() {
