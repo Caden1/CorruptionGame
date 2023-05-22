@@ -13,6 +13,7 @@ public class PlayerSkillController : MonoBehaviour
 
 	public PlayerSkillStateBase CurrentSkillState { get; private set; }
 	public PlayerAnimationController animationController { get; set; }
+	public PlayerEffectController effectController { get; set; }
 	public IdleSkillState IdleSkillState { get; set; }
 	public RunningSkillState RunningSkillState { get; set; }
 	public JumpingSkillState JumpingSkillState { get; set; }
@@ -31,6 +32,7 @@ public class PlayerSkillController : MonoBehaviour
 		GemController = GetComponent<GemController>();
 		Rb = GetComponent<Rigidbody2D>();
 		animationController = GetComponent<PlayerAnimationController>();
+		effectController = GetComponent<PlayerEffectController>();
 		GroundCheck = GetComponent<GroundCheck>();
 	}
 

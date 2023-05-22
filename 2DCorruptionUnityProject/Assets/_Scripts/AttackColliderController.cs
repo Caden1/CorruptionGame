@@ -6,6 +6,7 @@ public class AttackColliderController : MonoBehaviour
 	public string compareTag;
 	public float damage = 10.0f;
 	public float force = 5.0f;
+	public float lifeTime = 1.0f;
 
 	private SpriteRenderer playerSpriteRenderer;
 	private GameObject playerGO;
@@ -26,6 +27,7 @@ public class AttackColliderController : MonoBehaviour
 
 	private void Start() {
 		healthBarUI = new HealthBarUI(healthBarUIDoc);
+		Destroy(gameObject, lifeTime);
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -48,6 +50,7 @@ public class AttackColliderController : MonoBehaviour
 
 					if (tag == "NoGemUppercut") {
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, force), ForceMode2D.Impulse);
+						Destroy(gameObject);
 					} else if (tag == "NoGemPunch" || tag == "NoGemDashKick" || tag == "NoGemPush") {
 						float forceDirectionX = playerSpriteRenderer.flipX ? -1f : 1f;
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
