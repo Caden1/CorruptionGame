@@ -21,8 +21,8 @@ public class JumpingSkillState : PlayerSkillStateBase
 		switch (skillController.CurrentPurCorGemState) {
 			case PurityCorruptionGem.None:
 				jumpForce = skillController.GemController.GetRightFootGem().jumpForce;
-				xOffset = 0.3f;
-				yOffset = 0f;
+				xOffset = 0.4f;
+				yOffset = 0.12f;
 				break;
 			case PurityCorruptionGem.Purity:
 				break;
@@ -51,7 +51,7 @@ public class JumpingSkillState : PlayerSkillStateBase
 		skillController.Rb.velocity = new Vector2(0, jumpForce);
 		jumpFacingDirection = skillController.LastFacingDirection;
 		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
-		activeEffectClone = skillController.effectController.GetNoGemJumpKneeEffectClone(effectPosition);
+		activeEffectClone = skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
 	}
 
 	public override void UpdateState() {

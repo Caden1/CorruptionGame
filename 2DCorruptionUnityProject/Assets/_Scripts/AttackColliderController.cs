@@ -48,11 +48,10 @@ public class AttackColliderController : MonoBehaviour
 						healthBar.localScale = new Vector2(health.GetHealthPercentage(), 1f);
 					}
 
-					if (tag == "NoGemUppercut") {
+					if (tag == "CorJumpKnee") {
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, force), ForceMode2D.Impulse);
-						Destroy(gameObject);
-					} else if (tag == "NoGemPunch" || tag == "NoGemDashKick" || tag == "NoGemPush") {
-						float forceDirectionX = playerSpriteRenderer.flipX ? -1f : 1f;
+					} else if (tag == "CorKickDash") {
+						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					} else if (tag == "PurityOnlyPull") {
 						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
