@@ -41,8 +41,7 @@ public class AttackColliderController : MonoBehaviour
 					healthBar = other.transform.GetChild(0).GetChild(1);
 					EnemyController enemyController = other.GetComponent<EnemyController>();
 					if (enemyController != null) {
-						enemyController.isBeingAttacked = true;
-						enemyController.StartCoroutine(enemyController.ResetIsBeingAttacked(1f));
+						enemyController.TakeDamage();
 					}
 					if (healthBar != null) {
 						healthBar.localScale = new Vector2(health.GetHealthPercentage(), 1f);
