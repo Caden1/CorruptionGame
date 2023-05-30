@@ -28,8 +28,8 @@ public class EnemyController : MonoBehaviour
 	private bool isAttacking = false;
 	private Vector2 previousPosition;
 	private SpriteRenderer spriteRenderer;
-	private float nextAttackTime = 0.0f;
-	private float takeDamageEndTime = 0f;
+	private bool isTakingDamage = false;
+	private bool isInAttackCooldown = false;
 	private bool isIdle = false;
 
 	void Start() {
@@ -42,18 +42,9 @@ public class EnemyController : MonoBehaviour
 		endPoint = new Vector2(startPoint.x + roamDistance, startPoint.y);
 		currentTarget = endPoint;
 		currentState = EnemyState.Roam;
-		takeDamageEndTime = Time.time;
 	}
 
 	void Update() {
-		if (IsPlayerInAttackRange() && !isAttacking && Time.time < nextAttackTime) {
-			UpdateAnimationState(AnimationState.Idle);
-		}
-
-		if (currentState == EnemyState.TakeDamage && Time.time > takeDamageEndTime) {
-			currentState = EnemyState.Roam;
-		}
-
 		switch (currentState) {
 			case EnemyState.Roam:
 				if (!isIdle) {
@@ -62,14 +53,14 @@ public class EnemyController : MonoBehaviour
 				} else {
 					UpdateAnimationState(AnimationState.Idle);
 				}
-				if (IsPlayerInRange()) {
+				if (IsPlayerInChaseRange()) {
 					currentState = EnemyState.ChasePlayer;
 				}
 				break;
 			case EnemyState.ChasePlayer:
 				ChasePlayer();
 				UpdateAnimationState(AnimationState.Chasing);
-				if (!IsPlayerInRange()) {
+				if (!IsPlayerInChaseRange()) {
 					currentState = EnemyState.Roam;
 				} else if (IsPlayerInAttackRange()) {
 					currentState = EnemyState.AttackPlayer;
@@ -82,60 +73,21 @@ public class EnemyController : MonoBehaviour
 				}
 				break;
 			case EnemyState.TakeDamage:
+				StartCoroutine(TakeDamage());
 				UpdateAnimationState(AnimationState.TakeDamage);
 				break;
+		}
+
+		if (IsPlayerInAttackRange() && !isAttacking && isInAttackCooldown) {
+			UpdateAnimationState(AnimationState.Idle);
 		}
 
 		UpdateDirection();
 	}
 
-	public void TakeDamage() {
-		if (currentState != EnemyState.TakeDamage) {
-			currentState = EnemyState.TakeDamage;
-			takeDamageEndTime = Time.time + takeDamageDuration;
-		}
-	}
-
-	bool IsPlayerInRange() {
-		float horizontalDistance = Vector2.Distance(new Vector2(rb.position.x, 0), new Vector2(player.position.x, 0));
-		float verticalDistance = Mathf.Abs(rb.position.y - player.position.y);
-
-		return horizontalDistance <= detectionRange && verticalDistance <= verticalDetectionLimit;
-	}
-
-	bool IsPlayerInAttackRange() {
-		float distanceToPlayer = Vector2.Distance(rb.position, player.position);
-		return distanceToPlayer <= attackRange;
-	}
-
-	void MoveBackAndForth() {
-		float step = walkSpeed * Time.deltaTime;
-
-		if (Vector2.Distance(rb.position, currentTarget) < step) {
-			StartCoroutine(SwitchDirection());
-		} else {
-			rb.position = Vector2.MoveTowards(rb.position, currentTarget, step);
-		}
-	}
-
-	IEnumerator SwitchDirection() {
-		isIdle = true;
-		yield return new WaitForSeconds(1.35f);
-		currentTarget = currentTarget == startPoint ? endPoint : startPoint;
-		isIdle = false;
-	}
-
-	void ChasePlayer() {
-		float step = runSpeed * Time.deltaTime;
-		rb.position = Vector2.MoveTowards(rb.position, player.position, step);
-	}
-
-	void AttackPlayer() {
-		if (!isAttacking && Time.time >= nextAttackTime) {
-			UpdateAnimationState(AnimationState.Attacking);
-			StartCoroutine(InstantiateAttackEffect());
-			nextAttackTime = Time.time + attackCooldown;
-		}
+	// Called from the AttackColliderController script
+	public void SetEnemyStateToTakeDamage() {
+		currentState = EnemyState.TakeDamage;
 	}
 
 	void UpdateAnimationState(AnimationState animationState) {
@@ -158,6 +110,60 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
+	void MoveBackAndForth() {
+		float step = walkSpeed * Time.deltaTime;
+
+		if (Vector2.Distance(rb.position, currentTarget) < step) {
+			StartCoroutine(SwitchDirection());
+		} else {
+			rb.position = Vector2.MoveTowards(rb.position, currentTarget, step);
+		}
+	}
+
+	void UpdateDirection() {
+		if (!isTakingDamage) {
+			float deltaX = rb.position.x - previousPosition.x;
+			if (deltaX > 0) {
+				spriteRenderer.flipX = false;
+			} else if (deltaX < 0) {
+				spriteRenderer.flipX = true;
+			}
+		}
+		previousPosition = rb.position;
+	}
+
+	IEnumerator SwitchDirection() {
+		isIdle = true;
+		yield return new WaitForSeconds(1.35f);
+		currentTarget = currentTarget == startPoint ? endPoint : startPoint;
+		isIdle = false;
+	}
+
+	bool IsPlayerInChaseRange() {
+		float horizontalDistance = Vector2.Distance(new Vector2(rb.position.x, 0), new Vector2(player.position.x, 0));
+		float verticalDistance = Mathf.Abs(rb.position.y - player.position.y);
+
+		return horizontalDistance <= detectionRange && verticalDistance <= verticalDetectionLimit;
+	}
+
+	void ChasePlayer() {
+		float step = runSpeed * Time.deltaTime;
+		rb.position = Vector2.MoveTowards(rb.position, player.position, step);
+	}
+
+	bool IsPlayerInAttackRange() {
+		float distanceToPlayer = Vector2.Distance(rb.position, player.position);
+		return distanceToPlayer <= attackRange;
+	}
+
+	void AttackPlayer() {
+		if (!isAttacking && !isInAttackCooldown) {
+			UpdateAnimationState(AnimationState.Attacking);
+			StartCoroutine(InstantiateAttackEffect());
+			StartCoroutine(AttackCooldown());
+		}
+	}
+
 	IEnumerator InstantiateAttackEffect() {
 		isAttacking = true;
 		yield return new WaitForSeconds(0.4f);
@@ -173,15 +179,26 @@ public class EnemyController : MonoBehaviour
 		Destroy(attackEffectClone);
 	}
 
-	void UpdateDirection() {
-		if (currentState != EnemyState.TakeDamage) {
-			float deltaX = rb.position.x - previousPosition.x;
-			if (deltaX > 0) {
-				spriteRenderer.flipX = false;
-			} else if (deltaX < 0) {
-				spriteRenderer.flipX = true;
-			}
+	IEnumerator AttackCooldown() {
+		isInAttackCooldown = true;
+		yield return new WaitForSeconds(attackCooldown);
+		isInAttackCooldown = false;
+	}
+
+	IEnumerator TakeDamage() {
+		isTakingDamage = true;
+		yield return new WaitForSeconds(takeDamageDuration);
+		isTakingDamage = false;
+		ExecuteNextState();
+	}
+
+	private void ExecuteNextState() {
+		if (IsPlayerInAttackRange()) {
+			currentState = EnemyState.AttackPlayer;
+		} else if (IsPlayerInChaseRange()) {
+			currentState = EnemyState.ChasePlayer;
+		} else if (!IsPlayerInChaseRange()) {
+			currentState = EnemyState.Roam;
 		}
-		previousPosition = rb.position;
 	}
 }
