@@ -15,7 +15,7 @@ public class PlayerController2 : MonoBehaviour
 	}
 
 	private void Start() {
-		skillController.TransitionToState(skillController.IdleSkillState);
+		skillController.TransitionToState(PlayerStateType.Idle);
 	}
 
 	private void OnEnable() {

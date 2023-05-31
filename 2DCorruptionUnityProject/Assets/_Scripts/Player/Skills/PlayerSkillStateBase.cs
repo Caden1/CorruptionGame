@@ -16,6 +16,8 @@ public abstract class PlayerSkillStateBase
 
 	public abstract void UpdateState();
 
+	public abstract void ExitState();
+
 	protected void InitializeState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem) {
 		skillController.CurrentPurCorGemState = purCorGem;
 		skillController.CurrentElemModGemState = elemModGem;

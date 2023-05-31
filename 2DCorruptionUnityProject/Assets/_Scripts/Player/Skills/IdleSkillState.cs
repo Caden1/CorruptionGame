@@ -15,12 +15,14 @@ public class IdleSkillState : PlayerSkillStateBase
 	public override void UpdateState() {
 		// From Idle player can Run, Jump, Dash, RightGlove, LeftGlove
 		if (Mathf.Abs(skillController.Rb.velocity.x) > 0f && skillController.IsGrounded()) {
-			skillController.TransitionToState(skillController.RunningSkillState);
+			skillController.TransitionToState(PlayerStateType.Running);
 		} else if (inputActions.Player.Jump.WasPressedThisFrame() && skillController.IsGrounded()) {
-			skillController.FallingSkillState.ResetNumberOfJumps();
-			skillController.TransitionToState(skillController.JumpingSkillState);
+			skillController.ResetNumberOfJumps();
+			skillController.TransitionToState(PlayerStateType.Jumping);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
-			skillController.TransitionToState(skillController.DashingSkillState);
+			skillController.TransitionToState(PlayerStateType.Dashing);
 		}
 	}
+
+	public override void ExitState() { }
 }

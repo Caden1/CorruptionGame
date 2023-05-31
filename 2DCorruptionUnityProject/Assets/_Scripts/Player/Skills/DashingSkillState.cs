@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class DashingSkillState : PlayerSkillStateBase
 {
-	public delegate void CoroutineStarterDelegate(IEnumerator coroutine);
-	public CoroutineStarterDelegate StartCoroutine;
-
 	private float instantiateEffectDelay = 0.1f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
@@ -59,21 +56,23 @@ public class DashingSkillState : PlayerSkillStateBase
 		}
 
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
-		StartCoroutine(StopDashAfterSeconds());
-		StartCoroutine(DashCooldown());
-		StartCoroutine(InstantiateEffectWithDelay());
+		skillController.StartStateCoroutine(StopDashAfterSeconds());
+		skillController.StartStateCoroutine(DashCooldown());
+		skillController.StartStateCoroutine(InstantiateEffectWithDelay());
 	}
 
 	public override void UpdateState() {
 		// After Dash player can Idle, Run, Fall, RightGlove, LeftGlove
 		if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
-			skillController.TransitionToState(skillController.IdleSkillState);
+			skillController.TransitionToState(PlayerStateType.Idle);
 		} else if (Mathf.Abs(skillController.Rb.velocity.x) > 0.1f && skillController.IsGrounded()) {
-			skillController.TransitionToState(skillController.RunningSkillState);
+			skillController.TransitionToState(PlayerStateType.Running);
 		} else if (skillController.Rb.velocity.y < 0f) {
-			skillController.TransitionToState(skillController.FallingSkillState);
+			skillController.TransitionToState(PlayerStateType.Falling);
 		}
 	}
+
+	public override void ExitState() { }
 
 	private IEnumerator StopDashAfterSeconds() {
 		yield return new WaitForSeconds(dashDuration);

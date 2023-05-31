@@ -73,9 +73,11 @@ public class JumpingSkillState : PlayerSkillStateBase
 			if (activeEffectClone != null) {
 				Object.Destroy(activeEffectClone);
 			}
-			skillController.TransitionToState(skillController.FallingSkillState);
+			skillController.TransitionToState(PlayerStateType.Falling);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
-			skillController.TransitionToState(skillController.DashingSkillState);
+			skillController.TransitionToState(PlayerStateType.Dashing);
 		}
 	}
+
+	public override void ExitState() { }
 }

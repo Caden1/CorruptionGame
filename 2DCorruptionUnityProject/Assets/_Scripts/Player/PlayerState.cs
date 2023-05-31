@@ -1,3 +1,12 @@
+public enum PlayerStateType
+{
+	Idle,
+	Running,
+	Jumping,
+	Falling,
+	Dashing
+}
+
 public enum PurityCorruptionGem
 {
 	None,
