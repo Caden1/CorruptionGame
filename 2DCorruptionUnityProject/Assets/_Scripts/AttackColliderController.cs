@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,6 +13,7 @@ public class AttackColliderController : MonoBehaviour
 	private GameObject playerGO;
 	private HealthBarUI healthBarUI;
 	private UIDocument healthBarUIDoc;
+	private PlayerSkillController playerSkillController;
 
 	private void Awake() {
 		GameObject healthBarDocGO = GameObject.FindWithTag("HealthBarUIDocument");
@@ -23,6 +25,8 @@ public class AttackColliderController : MonoBehaviour
 		if (playerGO != null) {
 			playerSpriteRenderer = playerGO.GetComponent<SpriteRenderer>();
 		}
+
+		playerSkillController = playerGO.GetComponent<PlayerSkillController>();
 	}
 
 	private void Start() {
@@ -62,7 +66,7 @@ public class AttackColliderController : MonoBehaviour
 				} else if (compareTag == "Player") {
 					healthBarUI.DecreaseHealthBarSize(health.GetHealthPercentage());
 					if (health.IsDead()) {
-						// Player death
+						playerSkillController.IsDying = true;
 					}
 				}
 			}

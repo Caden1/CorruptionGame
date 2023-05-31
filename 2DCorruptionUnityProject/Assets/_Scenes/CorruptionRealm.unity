@@ -2051,6 +2051,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  deathSeconds: 1.2
 --- !u!114 &1208835189
 MonoBehaviour:
   m_ObjectHideFlags: 0

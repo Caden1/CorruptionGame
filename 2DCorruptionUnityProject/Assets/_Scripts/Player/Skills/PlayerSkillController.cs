@@ -7,6 +7,7 @@ public class PlayerSkillController : MonoBehaviour
 	private PlayerInputActions inputActions;
 
 	public LayerMask groundLayer;
+	public float deathSeconds = 1.0f;
 
 	public PurityCorruptionGem CurrentPurCorGemState { get; set; }
 	public ElementalModifierGem CurrentElemModGemState { get; set; }
@@ -26,7 +27,7 @@ public class PlayerSkillController : MonoBehaviour
 	public float LastFacingDirection { get; set; } = 1;
 	public bool CanDash { get; set; } = true;
 	public bool IsDashing { get; set; } = false;
-
+	public bool IsDying { get; set; } = false;
 
 	private void Awake() {
 		GemController = GetComponent<GemController>();
@@ -52,8 +53,12 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	private void Update() {
-		if (!IsDashing) {
-			CurrentSkillState.UpdateState();
+		if (!IsDying) {
+			if (!IsDashing) {
+				CurrentSkillState.UpdateState();
+			}
+		} else {
+			PlayerDeath();
 		}
 	}
 
@@ -68,5 +73,17 @@ public class PlayerSkillController : MonoBehaviour
 
 	public bool IsGrounded() {
 		return GroundCheck.IsGrounded();
+	}
+
+	private void PlayerDeath() {
+		animationController.ExecuteDeathAnim();
+		Rb.gravityScale = 0f;
+		GetComponent<BoxCollider2D>().enabled = false;
+		StartCoroutine(DestroyPlayerAfterSec());
+	}
+
+	private IEnumerator DestroyPlayerAfterSec() {
+		yield return new WaitForSeconds(deathSeconds);
+		Destroy(gameObject);
 	}
 }

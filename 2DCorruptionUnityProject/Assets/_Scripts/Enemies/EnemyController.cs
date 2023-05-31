@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -20,6 +21,7 @@ public class EnemyController : MonoBehaviour
 	public Transform player;
 	public GameObject attackEffectPrefab;
 
+	private PlayerSkillController playerSkillController;
 	private EnemyState currentState;
 	private Vector2 startPoint;
 	private Vector2 endPoint;
@@ -43,50 +45,55 @@ public class EnemyController : MonoBehaviour
 		endPoint = new Vector2(startPoint.x + roamDistance, startPoint.y);
 		currentTarget = endPoint;
 		currentState = EnemyState.Roam;
+		playerSkillController = player.GetComponent<PlayerSkillController>();
 	}
 
 	void Update() {
-		if (currentState != EnemyState.Dying) {
-			if (!isTakingDamage) {
-				switch (currentState) {
-					case EnemyState.Roam:
-						if (!isIdle) {
-							MoveBackAndForth();
-							UpdateAnimationState(AnimationState.Moving);
-						} else {
-							UpdateAnimationState(AnimationState.Idle);
-						}
-						if (IsPlayerInChaseRange()) {
-							currentState = EnemyState.ChasePlayer;
-						}
-						break;
-					case EnemyState.ChasePlayer:
-						ChasePlayer();
-						UpdateAnimationState(AnimationState.Chasing);
-						if (!IsPlayerInChaseRange()) {
-							currentState = EnemyState.Roam;
-						} else if (IsPlayerInAttackRange()) {
-							currentState = EnemyState.AttackPlayer;
-						}
-						break;
-					case EnemyState.AttackPlayer:
-						AttackPlayer();
-						if (!IsPlayerInAttackRange()) {
-							currentState = EnemyState.ChasePlayer;
-						}
-						break;
-					case EnemyState.TakeDamage:
-						StartCoroutine(TakeDamage());
-						UpdateAnimationState(AnimationState.TakeDamage);
-						break;
-				}
+		if (!playerSkillController.IsDying) {
+			if (currentState != EnemyState.Dying) {
+				if (!isTakingDamage) {
+					switch (currentState) {
+						case EnemyState.Roam:
+							if (!isIdle) {
+								MoveBackAndForth();
+								UpdateAnimationState(AnimationState.Moving);
+							} else {
+								UpdateAnimationState(AnimationState.Idle);
+							}
+							if (IsPlayerInChaseRange()) {
+								currentState = EnemyState.ChasePlayer;
+							}
+							break;
+						case EnemyState.ChasePlayer:
+							ChasePlayer();
+							UpdateAnimationState(AnimationState.Chasing);
+							if (!IsPlayerInChaseRange()) {
+								currentState = EnemyState.Roam;
+							} else if (IsPlayerInAttackRange()) {
+								currentState = EnemyState.AttackPlayer;
+							}
+							break;
+						case EnemyState.AttackPlayer:
+							AttackPlayer();
+							if (!IsPlayerInAttackRange()) {
+								currentState = EnemyState.ChasePlayer;
+							}
+							break;
+						case EnemyState.TakeDamage:
+							StartCoroutine(TakeDamage());
+							UpdateAnimationState(AnimationState.TakeDamage);
+							break;
+					}
 
-				if (IsPlayerInAttackRange() && !isAttacking && isInAttackCooldown) {
-					UpdateAnimationState(AnimationState.Idle);
-				}
+					if (IsPlayerInAttackRange() && !isAttacking && isInAttackCooldown) {
+						UpdateAnimationState(AnimationState.Idle);
+					}
 
-				UpdateDirection();
+					UpdateDirection();
+				}
 			}
+		} else {
+			UpdateAnimationState(AnimationState.Idle);
 		}
 	}
 

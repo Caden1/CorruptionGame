@@ -27,4 +27,8 @@ public class PlayerAnimationController : MonoBehaviour
 	public void ExecuteDashAnim() {
 		animator.Play("NoGemKickDash");
 	}
+
+	public void ExecuteDeathAnim() {
+		animator.Play("Death");
+	}
 }
