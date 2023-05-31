@@ -6,6 +6,16 @@ TagManager:
   tags:
   - Enemy
   - Projectile
+  - BasicMeleeEnemy
+  - PurityOnlyPull
+  - NoGemUppercut
+  - NoGemPunch
+  - NoGemPush
+  - NoGemDashKick
+  - CorEnemyBasicMeleeAttack
+  - HealthBarUIDocument
+  - CorKickDash
+  - CorJumpKnee
   layers:
   - Default
   - TransparentFX
@@ -15,9 +25,9 @@ TagManager:
   - UI
   - Platform
   - Enemy
-  - 
-  - 
-  - 
+  - CameraBoundary
+  - Player
+  - Wall
   - 
   - 
   - 
