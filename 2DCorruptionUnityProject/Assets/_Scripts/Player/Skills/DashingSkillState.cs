@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +7,14 @@ public class DashingSkillState : PlayerSkillStateBase
 	public delegate void CoroutineStarterDelegate(IEnumerator coroutine);
 	public CoroutineStarterDelegate StartCoroutine;
 
+	private float instantiateEffectDelay = 0.1f;
+	private float xOffset = 0f;
+	private float yOffset = 0f;
 	private float dashForce;
 	private float dashDuration;
 	private float dashCooldown;
 	private float originalGravityScale;
+	private GameObject activeEffectClone;
 
 	public DashingSkillState(PlayerSkillController playerSkillController, PlayerInputActions inputActions)
 		: base(playerSkillController, inputActions) { }
@@ -29,6 +32,8 @@ public class DashingSkillState : PlayerSkillStateBase
 				dashForce = skillController.GemController.GetLeftFootGem().dashForce;
 				dashDuration = skillController.GemController.GetLeftFootGem().dashDuration;
 				dashCooldown = skillController.GemController.GetLeftFootGem().dashCooldown;
+				xOffset = 1.15f;
+				yOffset = -0.05f;
 				break;
 			case PurityCorruptionGem.Purity:
 				break;
@@ -49,9 +54,14 @@ public class DashingSkillState : PlayerSkillStateBase
 				break;
 		}
 
+		if (skillController.LastFacingDirection < 0) {
+			xOffset *= -1;
+		}
+
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		StartCoroutine(StopDashAfterSeconds());
 		StartCoroutine(DashCooldown());
+		StartCoroutine(InstantiateEffectWithDelay());
 	}
 
 	public override void UpdateState() {
@@ -69,10 +79,19 @@ public class DashingSkillState : PlayerSkillStateBase
 		yield return new WaitForSeconds(dashDuration);
 		skillController.Rb.gravityScale = originalGravityScale;
 		skillController.IsDashing = false;
+		if (activeEffectClone != null) {
+			Object.Destroy(activeEffectClone);
+		}
 	}
 
 	private IEnumerator DashCooldown() {
 		yield return new WaitForSeconds(dashCooldown);
 		skillController.CanDash = true;
+	}
+
+	private IEnumerator InstantiateEffectWithDelay() {
+		yield return new WaitForSeconds(instantiateEffectDelay);
+		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
+		activeEffectClone = skillController.effectController.GetCorDashKickEffectClone(effectPosition);
 	}
 }

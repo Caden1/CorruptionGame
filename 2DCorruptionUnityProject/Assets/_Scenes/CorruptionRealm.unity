@@ -1862,14 +1862,13 @@ GameObject:
   - component: {fileID: 1208835181}
   - component: {fileID: 1208835182}
   - component: {fileID: 1208835183}
-  - component: {fileID: 1208835184}
   - component: {fileID: 1208835185}
   - component: {fileID: 1208835186}
   - component: {fileID: 1208835187}
-  - component: {fileID: 1208835188}
   - component: {fileID: 1208835189}
   - component: {fileID: 1208835190}
   - component: {fileID: 1208835191}
+  - component: {fileID: 1208835192}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -2012,90 +2011,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1208835184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1208835178}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51043e129809645a6b113eb4d9d7825f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noGemJumpAttackPrefab: {fileID: 4505152087020101528, guid: c1d246b556bf84f67965a437cce40edd, type: 3}
-  noGemPunchEffectSprites:
-  - {fileID: 143973410, guid: adafacb8d96b24888957953a87430613, type: 3}
-  - {fileID: -898987861, guid: adafacb8d96b24888957953a87430613, type: 3}
-  - {fileID: 719509592, guid: adafacb8d96b24888957953a87430613, type: 3}
-  - {fileID: -418835168, guid: adafacb8d96b24888957953a87430613, type: 3}
-  - {fileID: 328943392, guid: adafacb8d96b24888957953a87430613, type: 3}
-  noGemPunchEffect: {fileID: 578216450966010632, guid: 3087fb26d250f436a8ce5ef19f0cd276, type: 3}
-  noGemPushEffectSprites:
-  - {fileID: 363135914, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  - {fileID: -1974815537, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  - {fileID: -349209320, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  - {fileID: -5494783, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  - {fileID: 404717093, guid: b6b5ea2a1489147e48d796048afc86de, type: 3}
-  noGemPushEffect: {fileID: 5042088503663235930, guid: 38fe0ddb1f4da4c3b99626d673e1250e, type: 3}
-  noGemDashKickEffectSprites:
-  - {fileID: -1500999976, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
-  - {fileID: -1737842533, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
-  - {fileID: -119538246, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
-  - {fileID: -297930111, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
-  - {fileID: -578031156, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
-  - {fileID: -850699996, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
-  - {fileID: 335519715, guid: 7e3c30d556987481d94015a4c1e96a59, type: 3}
-  noGemDashKickEffect: {fileID: 9107201645421092023, guid: 0fd8483aaa47f476abfc3bfd4d7706c6, type: 3}
-  pureJumpEffectSprites:
-  - {fileID: -1018892682, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
-  - {fileID: 877710547, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
-  - {fileID: -2110232044, guid: 177a9e3bae8db436188b2c08a85e444e, type: 3}
-  pureJumpEffect: {fileID: 2451221978831533218, guid: 4905bb865bcb54a4ca5e433a35b6452a, type: 3}
-  pureDashEffectSprites:
-  - {fileID: 1706291691, guid: 4f04ae20a8c4b41c1b9845cef28eb286, type: 3}
-  - {fileID: -932168815, guid: 4f04ae20a8c4b41c1b9845cef28eb286, type: 3}
-  - {fileID: -1523221510, guid: 4f04ae20a8c4b41c1b9845cef28eb286, type: 3}
-  - {fileID: -326912792, guid: 4f04ae20a8c4b41c1b9845cef28eb286, type: 3}
-  - {fileID: -261743326, guid: 4f04ae20a8c4b41c1b9845cef28eb286, type: 3}
-  - {fileID: 1865159762, guid: 4f04ae20a8c4b41c1b9845cef28eb286, type: 3}
-  - {fileID: -625917663, guid: 4f04ae20a8c4b41c1b9845cef28eb286, type: 3}
-  pureDashEffect: {fileID: 4427356089548850153, guid: 841396cb6f44945adaa68e50cd51a4de, type: 3}
-  pureShieldEffectSprites:
-  - {fileID: -32737858, guid: dadfeb51f6a8648e39d49de9c0b2eb31, type: 3}
-  - {fileID: 855969097, guid: dadfeb51f6a8648e39d49de9c0b2eb31, type: 3}
-  - {fileID: -75831857, guid: dadfeb51f6a8648e39d49de9c0b2eb31, type: 3}
-  - {fileID: 1581357789, guid: dadfeb51f6a8648e39d49de9c0b2eb31, type: 3}
-  pureShieldEffect: {fileID: 1172981230446101837, guid: b368ad920e65548829d02dc20c95dc34, type: 3}
-  purePullEffectSprites:
-  - {fileID: 127162685, guid: 59082b327b5e34aacbe0fb2d2721c074, type: 3}
-  - {fileID: 920007315, guid: 59082b327b5e34aacbe0fb2d2721c074, type: 3}
-  - {fileID: -125938834, guid: 59082b327b5e34aacbe0fb2d2721c074, type: 3}
-  - {fileID: 847328410, guid: 59082b327b5e34aacbe0fb2d2721c074, type: 3}
-  - {fileID: -1698506751, guid: 59082b327b5e34aacbe0fb2d2721c074, type: 3}
-  purePullEffect: {fileID: 416480035247262565, guid: 50dc1178e80124612970e3f137a14752, type: 3}
-  pureOnlyBoot: {fileID: 21300000, guid: 4874b012a704d470cb7a565ccbcf7f53, type: 3}
-  pureAirBoot: {fileID: 21300000, guid: 5725b047ab2d74e788f4544f5c7f9dbb, type: 3}
-  pureFireBoot: {fileID: 21300000, guid: a9dd22fe9f82a45bfbe2893ad5275c58, type: 3}
-  pureWaterBoot: {fileID: 21300000, guid: 06c18487add0a4beea893ec274ecdc21, type: 3}
-  pureEarthBoot: {fileID: 21300000, guid: eff73be920f0b49e2bab8f29d6989a9d, type: 3}
-  pureOnlyGlove: {fileID: 21300000, guid: 51d9b536942d1475984d5d8d715c9f18, type: 3}
-  pureAirGlove: {fileID: 21300000, guid: 0b35e0ed5d94344e598f343468ad1b19, type: 3}
-  pureFireGlove: {fileID: 21300000, guid: 252c5ece1e0a84e08bf5a04a5c8fbd8f, type: 3}
-  pureWaterGlove: {fileID: 21300000, guid: 043a5e8f95bd34d05a9241be99eeaa49, type: 3}
-  pureEarthGlove: {fileID: 21300000, guid: bb3d07ac4f89545518197861f0228fab, type: 3}
-  corOnlyBoot: {fileID: 21300000, guid: a31a15abed5bf43b29c569513e0f0bad, type: 3}
-  corAirBoot: {fileID: 21300000, guid: 50bcc44ac539e477aae8a37a611fa108, type: 3}
-  corFireBoot: {fileID: 21300000, guid: e4297dfef17fb40b1b2904095c79e426, type: 3}
-  corWaterBoot: {fileID: 21300000, guid: f8572264f6c4d453fbd8fce2ba667fc9, type: 3}
-  corEarthBoot: {fileID: 21300000, guid: 0264112c292084e74b9089fe4378cb98, type: 3}
-  corOnlyGlove: {fileID: 21300000, guid: 97cdd49ae4d2b486e93a9bba14bc3512, type: 3}
-  corAirGlove: {fileID: 21300000, guid: 38e69eb47c6de46efb649989b300ea75, type: 3}
-  corFireGlove: {fileID: 21300000, guid: 758f9a06b57b945438440e67a8214ee9, type: 3}
-  corWaterGlove: {fileID: 21300000, guid: 333efb438e24f4b229209aefdf1da0ab, type: 3}
-  corEarthGlove: {fileID: 21300000, guid: f9b5e9383d4084fe9a403587a263c5af, type: 3}
-  gemSwapUIDoc: {fileID: 855522571}
 --- !u!114 &1208835185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2136,18 +2051,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &1208835188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1208835178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1f5e11c56c8045bd8dddbe6777abe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  deathSeconds: 1.2
 --- !u!114 &1208835189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2205,6 +2109,20 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &1208835192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208835178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d223411e5b919456fba8bd78d86f0e60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  corJumpKneeEffectPrefab: {fileID: 3674239864049006427, guid: 950feec3d4b7d4a86bb64b31d4dab017, type: 3}
+  corDashKickEffectPrefab: {fileID: 3031732302554129639, guid: 6c80a61fa61664c8d9c0fa97dbc069df, type: 3}
 --- !u!1 &1242416417
 GameObject:
   m_ObjectHideFlags: 3
@@ -2300,6 +2218,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1350824883}
     m_Modifications:
+    - target: {fileID: 1458274790481983312, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983324, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_Name
       value: CorBasicMeleeEnemy
@@ -3130,9 +3052,10 @@ MonoBehaviour:
   verticalDetectionLimit: 1
   attackRange: 1
   attackCooldown: 2
+  takeDamageDuration: 0.5
+  deathSeconds: 0.5
   player: {fileID: 1208835180}
-  attackColliderPrefab: {fileID: 687997908488313195, guid: c6edf0ae7612b4f63b9b00cf9fe1d018, type: 3}
-  isBeingAttacked: 0
+  attackEffectPrefab: {fileID: 3411532929460867468, guid: 6b050216da2f64da28f3195eb1272077, type: 3}
 --- !u!1001 &1824119984
 PrefabInstance:
   m_ObjectHideFlags: 0

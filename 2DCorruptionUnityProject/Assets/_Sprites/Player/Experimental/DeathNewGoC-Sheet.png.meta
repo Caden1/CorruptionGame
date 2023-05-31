@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: da7b76846003c4380a4510eaec80357b
+guid: efbb55914b8a1461bb72eefe639ec1f6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_0
+      name: DeathNewGoC-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff358c2302a3a450d968aa8698187329
-      internalID: 1344882347
+      spriteID: 9304721e80852419aaf6b6af0baecd90
+      internalID: 926916727
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_1
+      name: DeathNewGoC-Sheet_1
       rect:
         serializedVersion: 2
         x: 320
@@ -152,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13cd60161ea644a799b433937794d07e
-      internalID: 750901126
+      spriteID: 93309ba812abc436ea6d0b1131a4989f
+      internalID: -59141119
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_2
+      name: DeathNewGoC-Sheet_2
       rect:
         serializedVersion: 2
         x: 640
@@ -173,14 +173,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 508a83410f08d4d849887e7aa070fec8
-      internalID: 1852831711
+      spriteID: 1951798ba45714a038821a49469317d4
+      internalID: -1539245076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_3
+      name: DeathNewGoC-Sheet_3
       rect:
         serializedVersion: 2
         x: 960
@@ -194,14 +194,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a02116030706949a99aad5b5fefeed5c
-      internalID: -1483765032
+      spriteID: 7e8735ed1ddbd4f4dbd3cc039117c6a1
+      internalID: 1621687882
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_4
+      name: DeathNewGoC-Sheet_4
       rect:
         serializedVersion: 2
         x: 1280
@@ -215,14 +215,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58f05d26eff6b4567a0fc86a387c20be
-      internalID: -2029220857
+      spriteID: 2821e8ebcc59e4a93bfbf0785c482b26
+      internalID: -76066996
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_5
+      name: DeathNewGoC-Sheet_5
       rect:
         serializedVersion: 2
         x: 1600
@@ -236,14 +236,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02eaaca636f4d48589b942941c517bae
-      internalID: 1431757234
+      spriteID: e859255b5222e4547a89e1fe29e6204a
+      internalID: -1507658750
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_6
+      name: DeathNewGoC-Sheet_6
       rect:
         serializedVersion: 2
         x: 1920
@@ -257,8 +257,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b16d1a9c2bae43e0a3d79e3adcce676
-      internalID: -1092882849
+      spriteID: 86f0700f54f9c4a1c984c1b2c4c0156c
+      internalID: 1901624317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathNewGoC-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d41be2354c61846388e76b9dadb7524e
+      internalID: 2090055831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathNewGoC-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebe5c7582b2bb4e2ca5384bfbe6ae1ab
+      internalID: -751095197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathNewGoC-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f06e931ab71e94387bcbc0680180788a
+      internalID: -1920318925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathNewGoC-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1446405a9c20443f885686718f31a591
+      internalID: 507465588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeathNewGoC-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 3520
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a1785edd5a4248f882892c5f9a3b5cc
+      internalID: -298654401
       vertices: []
       indices: 
       edges: []
@@ -274,13 +379,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      AttackCorMelee-Sheet_0: 1344882347
-      AttackCorMelee-Sheet_5: 1431757234
-      AttackCorMelee-Sheet_6: -1092882849
-      AttackCorMelee-Sheet_4: -2029220857
-      AttackCorMelee-Sheet_2: 1852831711
-      AttackCorMelee-Sheet_3: -1483765032
-      AttackCorMelee-Sheet_1: 750901126
+      DeathNewGoC-Sheet_4: -76066996
+      DeathNewGoC-Sheet_3: 1621687882
+      DeathNewGoC-Sheet_9: -1920318925
+      DeathNewGoC-Sheet_2: -1539245076
+      DeathNewGoC-Sheet_10: 507465588
+      DeathNewGoC-Sheet_11: -298654401
+      DeathNewGoC-Sheet_7: 2090055831
+      DeathNewGoC-Sheet_5: -1507658750
+      DeathNewGoC-Sheet_6: 1901624317
+      DeathNewGoC-Sheet_1: -59141119
+      DeathNewGoC-Sheet_0: 926916727
+      DeathNewGoC-Sheet_8: -751095197
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

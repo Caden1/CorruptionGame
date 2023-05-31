@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: da7b76846003c4380a4510eaec80357b
+guid: a999d48c7714c49098f5aee0149c73fb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_0
+      name: DeathCorMelee-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff358c2302a3a450d968aa8698187329
-      internalID: 1344882347
+      spriteID: 11b3b4bbe04ec4df8908137c6603af0e
+      internalID: -219677307
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_1
+      name: DeathCorMelee-Sheet_1
       rect:
         serializedVersion: 2
         x: 320
@@ -152,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13cd60161ea644a799b433937794d07e
-      internalID: 750901126
+      spriteID: fba20f4cb1e4e49c983505a7c469324c
+      internalID: -760323263
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_2
+      name: DeathCorMelee-Sheet_2
       rect:
         serializedVersion: 2
         x: 640
@@ -173,14 +173,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 508a83410f08d4d849887e7aa070fec8
-      internalID: 1852831711
+      spriteID: 98ef185f6f7824a6c91471ef44fbaadd
+      internalID: 178208187
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_3
+      name: DeathCorMelee-Sheet_3
       rect:
         serializedVersion: 2
         x: 960
@@ -194,14 +194,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a02116030706949a99aad5b5fefeed5c
-      internalID: -1483765032
+      spriteID: 76cde45af5b314033be556c820878ae8
+      internalID: -1274853511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_4
+      name: DeathCorMelee-Sheet_4
       rect:
         serializedVersion: 2
         x: 1280
@@ -215,14 +215,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58f05d26eff6b4567a0fc86a387c20be
-      internalID: -2029220857
+      spriteID: 33ee4bf35e58949a3b39bb98e351a31e
+      internalID: 901505819
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_5
+      name: DeathCorMelee-Sheet_5
       rect:
         serializedVersion: 2
         x: 1600
@@ -236,14 +236,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02eaaca636f4d48589b942941c517bae
-      internalID: 1431757234
+      spriteID: 3151c6c2c1ed1402b86c8939607d6056
+      internalID: 810632466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackCorMelee-Sheet_6
+      name: DeathCorMelee-Sheet_6
       rect:
         serializedVersion: 2
         x: 1920
@@ -257,8 +257,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b16d1a9c2bae43e0a3d79e3adcce676
-      internalID: -1092882849
+      spriteID: e64ec92e3bb65432987190802ed0fd25
+      internalID: 1625255210
       vertices: []
       indices: 
       edges: []
@@ -274,13 +274,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      AttackCorMelee-Sheet_0: 1344882347
-      AttackCorMelee-Sheet_5: 1431757234
-      AttackCorMelee-Sheet_6: -1092882849
-      AttackCorMelee-Sheet_4: -2029220857
-      AttackCorMelee-Sheet_2: 1852831711
-      AttackCorMelee-Sheet_3: -1483765032
-      AttackCorMelee-Sheet_1: 750901126
+      DeathCorMelee-Sheet_6: 1625255210
+      DeathCorMelee-Sheet_5: 810632466
+      DeathCorMelee-Sheet_1: -760323263
+      DeathCorMelee-Sheet_4: 901505819
+      DeathCorMelee-Sheet_0: -219677307
+      DeathCorMelee-Sheet_3: -1274853511
+      DeathCorMelee-Sheet_2: 178208187
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

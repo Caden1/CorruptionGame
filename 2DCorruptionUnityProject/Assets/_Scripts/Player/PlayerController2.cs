@@ -27,13 +27,15 @@ public class PlayerController2 : MonoBehaviour
 	}
 
 	private void Update() {
-		if (!skillController.IsDashing) {
-			Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
-			horizontalInput = movementInput.x;
-			if (Mathf.Abs(horizontalInput) > 0.1f) {
-				PerformHorizontalMovemement();
-			} else {
-				skillController.Rb.velocity = new Vector2(0f, skillController.Rb.velocity.y);
+		if (!skillController.IsDying) {
+			if (!skillController.IsDashing) {
+				Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
+				horizontalInput = movementInput.x;
+				if (Mathf.Abs(horizontalInput) > 0.1f) {
+					PerformHorizontalMovemement();
+				} else {
+					skillController.Rb.velocity = new Vector2(0f, skillController.Rb.velocity.y);
+				}
 			}
 		}
 	}
