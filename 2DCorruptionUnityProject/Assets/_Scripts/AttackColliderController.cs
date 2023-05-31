@@ -32,6 +32,7 @@ public class AttackColliderController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (compareTag != null && other.CompareTag(compareTag)) {
+			EnemyController enemyController = other.GetComponent<EnemyController>();
 			Health health = other.GetComponent<Health>();
 			Transform healthBar = null;
 				
@@ -39,7 +40,6 @@ public class AttackColliderController : MonoBehaviour
 				health.TakeDamage(damage);
 				if (compareTag == "Enemy") {
 					healthBar = other.transform.GetChild(0).GetChild(1);
-					EnemyController enemyController = other.GetComponent<EnemyController>();
 					if (enemyController != null) {
 						enemyController.SetEnemyStateToTakeDamage();
 					}
@@ -56,12 +56,14 @@ public class AttackColliderController : MonoBehaviour
 						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					}
+					if (health.IsDead()) {
+						enemyController.SetEnemyStateToDying();
+					}
 				} else if (compareTag == "Player") {
 					healthBarUI.DecreaseHealthBarSize(health.GetHealthPercentage());
-				}
-
-				if (health.IsDead()) {
-					Destroy(other.gameObject);
+					if (health.IsDead()) {
+						// Player death
+					}
 				}
 			}
 		}

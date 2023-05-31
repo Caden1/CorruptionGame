@@ -2217,6 +2217,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1350824883}
     m_Modifications:
+    - target: {fileID: 1458274790481983312, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1458274790481983324, guid: 9e5f688ac0b794df59330e9f06095232, type: 3}
       propertyPath: m_Name
       value: CorBasicMeleeEnemy
@@ -3048,6 +3052,7 @@ MonoBehaviour:
   attackRange: 1
   attackCooldown: 2
   takeDamageDuration: 0.5
+  deathSeconds: 0.5
   player: {fileID: 1208835180}
   attackEffectPrefab: {fileID: 3411532929460867468, guid: 6b050216da2f64da28f3195eb1272077, type: 3}
 --- !u!1001 &1824119984

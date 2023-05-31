@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-	private enum EnemyState { Roam, ChasePlayer, AttackPlayer, TakeDamage }
+	private enum EnemyState { Roam, ChasePlayer, AttackPlayer, TakeDamage, Dying }
 
-	private enum AnimationState { Moving, Chasing, Attacking, Idle, TakeDamage }
+	private enum AnimationState { Moving, Chasing, Attacking, Idle, TakeDamage, Death }
 
 	public float walkSpeed = 1.5f;
 	public float runSpeed = 2f;
@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
 	public float attackRange = 1.0f;
 	public float attackCooldown = 2.0f;
 	public float takeDamageDuration = 0.5f;
+	public float deathSeconds = 1f;
 	public Transform player;
 	public GameObject attackEffectPrefab;
 
@@ -45,49 +46,60 @@ public class EnemyController : MonoBehaviour
 	}
 
 	void Update() {
-		switch (currentState) {
-			case EnemyState.Roam:
-				if (!isIdle) {
-					MoveBackAndForth();
-					UpdateAnimationState(AnimationState.Moving);
-				} else {
+		if (currentState != EnemyState.Dying) {
+			if (!isTakingDamage) {
+				switch (currentState) {
+					case EnemyState.Roam:
+						if (!isIdle) {
+							MoveBackAndForth();
+							UpdateAnimationState(AnimationState.Moving);
+						} else {
+							UpdateAnimationState(AnimationState.Idle);
+						}
+						if (IsPlayerInChaseRange()) {
+							currentState = EnemyState.ChasePlayer;
+						}
+						break;
+					case EnemyState.ChasePlayer:
+						ChasePlayer();
+						UpdateAnimationState(AnimationState.Chasing);
+						if (!IsPlayerInChaseRange()) {
+							currentState = EnemyState.Roam;
+						} else if (IsPlayerInAttackRange()) {
+							currentState = EnemyState.AttackPlayer;
+						}
+						break;
+					case EnemyState.AttackPlayer:
+						AttackPlayer();
+						if (!IsPlayerInAttackRange()) {
+							currentState = EnemyState.ChasePlayer;
+						}
+						break;
+					case EnemyState.TakeDamage:
+						StartCoroutine(TakeDamage());
+						UpdateAnimationState(AnimationState.TakeDamage);
+						break;
+				}
+
+				if (IsPlayerInAttackRange() && !isAttacking && isInAttackCooldown) {
 					UpdateAnimationState(AnimationState.Idle);
 				}
-				if (IsPlayerInChaseRange()) {
-					currentState = EnemyState.ChasePlayer;
-				}
-				break;
-			case EnemyState.ChasePlayer:
-				ChasePlayer();
-				UpdateAnimationState(AnimationState.Chasing);
-				if (!IsPlayerInChaseRange()) {
-					currentState = EnemyState.Roam;
-				} else if (IsPlayerInAttackRange()) {
-					currentState = EnemyState.AttackPlayer;
-				}
-				break;
-			case EnemyState.AttackPlayer:
-				AttackPlayer();
-				if (!IsPlayerInAttackRange()) {
-					currentState = EnemyState.ChasePlayer;
-				}
-				break;
-			case EnemyState.TakeDamage:
-				StartCoroutine(TakeDamage());
-				UpdateAnimationState(AnimationState.TakeDamage);
-				break;
-		}
 
-		if (IsPlayerInAttackRange() && !isAttacking && isInAttackCooldown) {
-			UpdateAnimationState(AnimationState.Idle);
+				UpdateDirection();
+			}
 		}
-
-		UpdateDirection();
 	}
 
 	// Called from the AttackColliderController script
 	public void SetEnemyStateToTakeDamage() {
 		currentState = EnemyState.TakeDamage;
+	}
+
+	// Called from the AttackColliderController script
+	public void SetEnemyStateToDying() {
+		currentState = EnemyState.Dying;
+		UpdateAnimationState(AnimationState.Death);
+		Death();
 	}
 
 	void UpdateAnimationState(AnimationState animationState) {
@@ -107,6 +119,9 @@ public class EnemyController : MonoBehaviour
 			case AnimationState.TakeDamage:
 				animator.Play("TakingDamage");
 				break;
+			case AnimationState.Death:
+				animator.Play("Death");
+				break;
 		}
 	}
 
@@ -121,13 +136,11 @@ public class EnemyController : MonoBehaviour
 	}
 
 	void UpdateDirection() {
-		if (!isTakingDamage) {
-			float deltaX = rb.position.x - previousPosition.x;
-			if (deltaX > 0) {
-				spriteRenderer.flipX = false;
-			} else if (deltaX < 0) {
-				spriteRenderer.flipX = true;
-			}
+		float deltaX = rb.position.x - previousPosition.x;
+		if (deltaX > 0) {
+			spriteRenderer.flipX = false;
+		} else if (deltaX < 0) {
+			spriteRenderer.flipX = true;
 		}
 		previousPosition = rb.position;
 	}
@@ -193,12 +206,25 @@ public class EnemyController : MonoBehaviour
 	}
 
 	private void ExecuteNextState() {
-		if (IsPlayerInAttackRange()) {
-			currentState = EnemyState.AttackPlayer;
-		} else if (IsPlayerInChaseRange()) {
-			currentState = EnemyState.ChasePlayer;
-		} else if (!IsPlayerInChaseRange()) {
-			currentState = EnemyState.Roam;
+		if (currentState != EnemyState.Dying) {
+			if (IsPlayerInAttackRange()) {
+				currentState = EnemyState.AttackPlayer;
+			} else if (IsPlayerInChaseRange()) {
+				currentState = EnemyState.ChasePlayer;
+			} else if (!IsPlayerInChaseRange()) {
+				currentState = EnemyState.Roam;
+			}
 		}
+	}
+
+	private void Death() {
+		GetComponent<Rigidbody2D>().gravityScale = 0f;
+		GetComponent<BoxCollider2D>().enabled = false;
+		StartCoroutine(DestroyAfterSec());
+	}
+
+	IEnumerator DestroyAfterSec() {
+		yield return new WaitForSeconds(deathSeconds);
+		Destroy(gameObject);
 	}
 }
