@@ -4,17 +4,52 @@ public enum PlayerStateType
 	Running,
 	Jumping,
 	Falling,
-	Dashing
+	Dashing,
+	Pushing
 }
 
-public enum PurityCorruptionGem
+public enum HandsBaseGemState
 {
 	None,
 	Purity,
 	Corruption
 }
 
-public enum ElementalModifierGem
+public enum FeetBaseGemState
+{
+	None,
+	Purity,
+	Corruption
+}
+
+public enum RightHandElementalModifierGemState
+{
+	None,
+	Air,
+	Fire,
+	Earth,
+	Water
+}
+
+public enum LeftHandElementalModifierGemState
+{
+	None,
+	Air,
+	Fire,
+	Earth,
+	Water
+}
+
+public enum RightFootElementalModifierGemState
+{
+	None,
+	Air,
+	Fire,
+	Earth,
+	Water
+}
+
+public enum LeftFootElementalModifierGemState
 {
 	None,
 	Air,

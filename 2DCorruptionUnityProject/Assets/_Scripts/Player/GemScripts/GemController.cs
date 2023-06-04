@@ -4,22 +4,24 @@ using System;
 
 public class GemController : MonoBehaviour
 {
-	// Reference to the gem assets
-	public BaseGem purityGem;
+	// Reference to the scriptable objects gem assets
+	// Assigned in the inspector
 	public BaseGem noGem;
+	public BaseGem purityGem;
 	public BaseGem corruptionGem;
 	public ModifierGem airGem;
 	public ModifierGem fireGem;
 	public ModifierGem waterGem;
 	public ModifierGem earthGem;
 
+	// Event for when gems change
+	public event Action OnGemsChanged;
+
 	[System.Serializable]
 	public struct BaseGemConfiguration
 	{
-		public BaseGem rightHandGem;
-		public BaseGem leftHandGem;
-		public BaseGem rightFootGem;
-		public BaseGem leftFootGem;
+		public BaseGem baseHandsGem;
+		public BaseGem baseFeetGem;
 	}
 
 	[System.Serializable]
@@ -34,15 +36,10 @@ public class GemController : MonoBehaviour
 	public BaseGemConfiguration currentBaseGemConfiguration;
 	public ModifierGemConfiguration currentModifierGemConfiguration;
 
-	// Event for when gems change
-	public event Action OnGemsChanged;
-
 	private void Start() {
 		// Initialize the starting configuration for Base Gems
-		currentBaseGemConfiguration.rightHandGem = noGem;
-		currentBaseGemConfiguration.leftHandGem = noGem;
-		currentBaseGemConfiguration.rightFootGem = purityGem;
-		currentBaseGemConfiguration.leftFootGem = purityGem;
+		currentBaseGemConfiguration.baseHandsGem = noGem;
+		currentBaseGemConfiguration.baseFeetGem = purityGem;
 
 		// Initialize the starting configuration for Modifier Gems
 		currentModifierGemConfiguration.rightHandGem = null;
@@ -51,35 +48,34 @@ public class GemController : MonoBehaviour
 		currentModifierGemConfiguration.leftFootGem = null;
 	}
 
-	public BaseGem GetRightHandGem() {
-		return currentBaseGemConfiguration.rightHandGem;
+	public BaseGem GetBaseHandsGem() {
+		return currentBaseGemConfiguration.baseHandsGem;
 	}
 
-	public BaseGem GetLeftHandGem() {
-		return currentBaseGemConfiguration.leftHandGem;
+	public BaseGem GetBaseFeetGem() {
+		return currentBaseGemConfiguration.baseFeetGem;
 	}
 
-	public BaseGem GetRightFootGem() {
-		return currentBaseGemConfiguration.rightFootGem;
+	public ModifierGem GetRightHandModifierGem() {
+		return currentModifierGemConfiguration.rightHandGem;
 	}
 
-	public BaseGem GetLeftFootGem() {
-		return currentBaseGemConfiguration.leftFootGem;
+	public ModifierGem GetLeftHandModifierGem() {
+		return currentModifierGemConfiguration.leftHandGem;
 	}
 
-	public ModifierGem[] GetModifierGems() {
-		return new ModifierGem[]
-		{
-			currentModifierGemConfiguration.rightHandGem,
-			currentModifierGemConfiguration.leftHandGem,
-			currentModifierGemConfiguration.rightFootGem,
-			currentModifierGemConfiguration.leftFootGem
-		};
+	public ModifierGem GetRightFootModifierGem() {
+		return currentModifierGemConfiguration.rightFootGem;
+	}
+
+	public ModifierGem GetLeftFootModifierGem() {
+		return currentModifierGemConfiguration.leftFootGem;
 	}
 
 	public void SwapGems() {
-		// Swap logic for the base gems
-
+		BaseGem baseHandsGemTemp = currentBaseGemConfiguration.baseHandsGem;
+		currentBaseGemConfiguration.baseHandsGem = currentBaseGemConfiguration.baseFeetGem;
+		currentBaseGemConfiguration.baseFeetGem = baseHandsGemTemp;
 		InvokeOnGemsChanged();
 	}
 
@@ -95,7 +91,6 @@ public class GemController : MonoBehaviour
 		InvokeOnGemsChanged();
 	}
 
-	// Invoke the OnGemsChanged event
 	protected void InvokeOnGemsChanged() {
 		OnGemsChanged?.Invoke();
 	}

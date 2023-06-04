@@ -13,8 +13,12 @@ public class PlayerSkillController : MonoBehaviour
 	public LayerMask groundLayer;
 	public float deathSeconds = 1.0f;
 
-	public PurityCorruptionGem CurrentPurCorGemState { get; set; }
-	public ElementalModifierGem CurrentElemModGemState { get; set; }
+	public HandsBaseGemState CurrentHandsBaseGemState { get; set; }
+	public FeetBaseGemState CurrentFeetBaseGemState { get; set; }
+	public RightHandElementalModifierGemState CurrentRightHandElementalModifierGemState { get; set; }
+	public LeftHandElementalModifierGemState CurrentLeftHandElementalModifierGemState { get; set; }
+	public RightFootElementalModifierGemState CurrentRightFootElementalModifierGemState { get; set; }
+	public LeftFootElementalModifierGemState CurrentLeftFootElementalModifierGemState { get; set; }
 
 	public PlayerAnimationController animationController { get; set; }
 	public PlayerEffectController effectController { get; set; }
@@ -26,24 +30,40 @@ public class PlayerSkillController : MonoBehaviour
 	public float LastFacingDirection { get; set; } = 1;
 	public bool CanDash { get; set; } = true;
 	public bool IsDashing { get; set; } = false;
+	public bool CanPush { get; set; } = true;
+	public bool IsPushing { get; set; } = false;
 	public bool IsDying { get; set; } = false;
 
 	private void Awake() {
 		GemController = GetComponent<GemController>();
+		GemController.OnGemsChanged += HandleGemChange;
 		Rb = GetComponent<Rigidbody2D>();
 		animationController = GetComponent<PlayerAnimationController>();
 		effectController = GetComponent<PlayerEffectController>();
 		GroundCheck = GetComponent<GroundCheck>();
-		states.Add(PlayerStateType.Idle, new IdleSkillState(this, inputActions));
-		states.Add(PlayerStateType.Running, new RunningSkillState(this, inputActions));
-		states.Add(PlayerStateType.Jumping, new JumpingSkillState(this, inputActions));
-		states.Add(PlayerStateType.Falling, new FallingSkillState(this, inputActions));
-		states.Add(PlayerStateType.Dashing, new DashingSkillState(this, inputActions));
+		states.Add(PlayerStateType.Idle, new IdleSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Running, new RunningSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Jumping, new JumpingSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Falling, new FallingSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Dashing, new DashingSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Pushing, new PushingSkillState(this, inputActions, GemController));
+	}
+
+	private void OnDestroy() {
+		GemController.OnGemsChanged -= HandleGemChange;
 	}
 
 	private void Start() {
 		// Set the initial state
-		TransitionToState(PlayerStateType.Idle);
+		TransitionToState(
+			PlayerStateType.Idle,
+			HandsBaseGemState.None,
+			FeetBaseGemState.Purity,
+			RightHandElementalModifierGemState.None,
+			LeftHandElementalModifierGemState.None,
+			RightFootElementalModifierGemState.None,
+			LeftFootElementalModifierGemState.None
+			);
 	}
 
 	public void SetInputActionsInitializeStateClasses(PlayerInputActions inputActions) {
@@ -62,7 +82,7 @@ public class PlayerSkillController : MonoBehaviour
 
 	private void Update() {
 		if (!IsDying) {
-			if (!IsDashing) {
+			if (!IsDashing && !IsPushing) {
 				currentState?.UpdateState();
 			}
 		} else {
@@ -70,14 +90,31 @@ public class PlayerSkillController : MonoBehaviour
 		}
 	}
 
-	public void TransitionToState(PlayerStateType newState,
-		PurityCorruptionGem newPurCorGemState = PurityCorruptionGem.None,
-		ElementalModifierGem newElemModGemState = ElementalModifierGem.None) {
+	public void TransitionToState(
+		PlayerStateType newState,
+		HandsBaseGemState newHandsBaseGemState,
+		FeetBaseGemState newFeetBaseGemState,
+		RightHandElementalModifierGemState newRightHandElementalModifierGemState,
+		LeftHandElementalModifierGemState newLeftHandElementalModifierGemState,
+		RightFootElementalModifierGemState newRightFootElementalModifierGemState,
+		LeftFootElementalModifierGemState newLeftFootElementalModifierGemState
+		) {
 		currentState?.ExitState();
 		currentState = states[newState];
-		CurrentPurCorGemState = newPurCorGemState;
-		CurrentElemModGemState = newElemModGemState;
-		currentState.EnterState(CurrentPurCorGemState, CurrentElemModGemState);
+		CurrentHandsBaseGemState = newHandsBaseGemState;
+		CurrentFeetBaseGemState = newFeetBaseGemState;
+		CurrentRightHandElementalModifierGemState = newRightHandElementalModifierGemState;
+		CurrentLeftHandElementalModifierGemState = newLeftHandElementalModifierGemState;
+		CurrentRightFootElementalModifierGemState = newRightFootElementalModifierGemState;
+		CurrentLeftFootElementalModifierGemState = newLeftFootElementalModifierGemState;
+		currentState.EnterState(
+			CurrentHandsBaseGemState,
+			CurrentFeetBaseGemState,
+			CurrentRightHandElementalModifierGemState,
+			CurrentLeftHandElementalModifierGemState,
+			CurrentRightFootElementalModifierGemState,
+			CurrentLeftFootElementalModifierGemState
+			);
 	}
 
 	public bool IsGrounded() {
@@ -96,27 +133,57 @@ public class PlayerSkillController : MonoBehaviour
 		Destroy(gameObject);
 	}
 
+	private void HandleGemChange() {
+		UpdatePlayerAbilities();
+	}
+
+	private void UpdatePlayerAbilities() {
+		BaseGem handsBaseGem = GemController.GetBaseHandsGem();
+		BaseGem feetbaseGem = GemController.GetBaseFeetGem();
+		ModifierGem rightHandModifierGem = GemController.GetRightHandModifierGem();
+		ModifierGem leftHandModifierGem = GemController.GetLeftHandModifierGem();
+		ModifierGem rightFootModifierGem = GemController.GetRightFootModifierGem();
+		ModifierGem leftFootModifierGem = GemController.GetLeftFootModifierGem();
+
+		// Here, use the properties of the Gems to modify the player's abilities.
+	}
+
 	public void ResetNumberOfJumps() {
-		switch (CurrentPurCorGemState) {
-			case PurityCorruptionGem.None:
-				numberOfJumps = GemController.GetRightFootGem().numberOfJumps;
+		switch (CurrentFeetBaseGemState) {
+			case FeetBaseGemState.None:
+				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
-			case PurityCorruptionGem.Purity:
+			case FeetBaseGemState.Purity:
+				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
-			case PurityCorruptionGem.Corruption:
+			case FeetBaseGemState.Corruption:
+				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
 		}
 
-		switch (CurrentElemModGemState) {
-			case ElementalModifierGem.None:
+		switch (CurrentRightFootElementalModifierGemState) {
+			case RightFootElementalModifierGemState.None:
 				break;
-			case ElementalModifierGem.Air:
+			case RightFootElementalModifierGemState.Air:
 				break;
-			case ElementalModifierGem.Fire:
+			case RightFootElementalModifierGemState.Fire:
 				break;
-			case ElementalModifierGem.Water:
+			case RightFootElementalModifierGemState.Water:
 				break;
-			case ElementalModifierGem.Earth:
+			case RightFootElementalModifierGemState.Earth:
+				break;
+		}
+
+		switch (CurrentLeftFootElementalModifierGemState) {
+			case LeftFootElementalModifierGemState.None:
+				break;
+			case LeftFootElementalModifierGemState.Air:
+				break;
+			case LeftFootElementalModifierGemState.Fire:
+				break;
+			case LeftFootElementalModifierGemState.Water:
+				break;
+			case LeftFootElementalModifierGemState.Earth:
 				break;
 		}
 	}

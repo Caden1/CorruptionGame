@@ -31,4 +31,8 @@ public class PlayerAnimationController : MonoBehaviour
 	public void ExecuteDeathAnim() {
 		animator.Play("Death");
 	}
+
+	public void ExecutePushAnim() {
+		animator.Play("PurityOnlyPush");
+	}
 }

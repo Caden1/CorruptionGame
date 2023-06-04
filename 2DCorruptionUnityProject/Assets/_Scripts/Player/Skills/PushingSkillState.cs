@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunningSkillState : PlayerSkillStateBase
+public class PushingSkillState : PlayerSkillStateBase
 {
-	public RunningSkillState(
+	private float pushForce;
+	private float pushDuration;
+	private float pushCooldown;
+
+	public PushingSkillState(
 		PlayerSkillController playerSkillController,
 		PlayerInputActions inputActions,
 		GemController gemController
@@ -27,16 +31,61 @@ public class RunningSkillState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		skillController.animationController.ExecuteRunAnim();
+		skillController.IsPushing = true;
+		skillController.CanPush = false;
+		skillController.animationController.ExecutePushAnim();
+
+		// Only need hands base gem for Push
+		switch (handsBaseGemState) {
+			case HandsBaseGemState.None:
+				pushForce = skillController.GemController.GetBaseHandsGem().pushForce;
+				pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
+				pushCooldown = skillController.GemController.GetBaseHandsGem().pushCooldown;
+				break;
+			case HandsBaseGemState.Purity:
+				pushForce = skillController.GemController.GetBaseHandsGem().pushForce;
+				pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
+				pushCooldown = skillController.GemController.GetBaseHandsGem().pushCooldown;
+				break;
+			case HandsBaseGemState.Corruption:
+				break;
+		}
+
+		// Right hand controls Push
+		switch (rightHandElementalModifierGemState) {
+			case RightHandElementalModifierGemState.None:
+				break;
+			case RightHandElementalModifierGemState.Air:
+				break;
+			case RightHandElementalModifierGemState.Fire:
+				break;
+			case RightHandElementalModifierGemState.Water:
+				break;
+			case RightHandElementalModifierGemState.Earth:
+				break;
+		}
+
+		skillController.StartStateCoroutine(StopPushAnimAfterSeconds());
+		skillController.StartStateCoroutine(PushCooldown());
 	}
 
 	public override void UpdateState() {
-		// From Running player can Swap, Idle, Jump, Fall, Dash, Push
+		// AFTER Pushing player can Swap, Idle, Run, Jump, Fall, Dash
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			gemController.SwapGems();
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Idle,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (Mathf.Abs(skillController.Rb.velocity.x) > 0f && skillController.IsGrounded()) {
+			skillController.TransitionToState(
+				PlayerStateType.Running,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,
@@ -75,18 +124,18 @@ public class RunningSkillState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
-			skillController.TransitionToState(
-				PlayerStateType.Pushing,
-				skillController.CurrentHandsBaseGemState,
-				skillController.CurrentFeetBaseGemState,
-				skillController.CurrentRightHandElementalModifierGemState,
-				skillController.CurrentLeftHandElementalModifierGemState,
-				skillController.CurrentRightFootElementalModifierGemState,
-				skillController.CurrentLeftFootElementalModifierGemState
-				);
 		}
 	}
 
 	public override void ExitState() { }
+
+	private IEnumerator StopPushAnimAfterSeconds() {
+		yield return new WaitForSeconds(pushDuration);
+		skillController.IsPushing = false;
+	}
+
+	private IEnumerator PushCooldown() {
+		yield return new WaitForSeconds(pushCooldown);
+		skillController.CanPush = true;
+	}
 }

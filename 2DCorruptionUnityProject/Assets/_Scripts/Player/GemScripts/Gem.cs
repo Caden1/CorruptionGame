@@ -9,6 +9,7 @@ public class Gem : ScriptableObject
 	public float dashForce;
 	public float dashCooldown;
 	public float dashDuration;
-	public float meleeDamage;
-	public float rangedDamage;
+	public float pushForce;
+	public float pushDuration;
+	public float pushCooldown;
 }

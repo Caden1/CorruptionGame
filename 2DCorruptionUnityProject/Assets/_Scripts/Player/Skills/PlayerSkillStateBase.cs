@@ -6,20 +6,44 @@ public abstract class PlayerSkillStateBase
 {
 	protected PlayerSkillController skillController;
 	protected PlayerInputActions inputActions;
+	protected GemController gemController;
 
-	protected PlayerSkillStateBase(PlayerSkillController playerSkillController, PlayerInputActions inputActions) {
+	protected PlayerSkillStateBase(
+		PlayerSkillController playerSkillController,
+		PlayerInputActions inputActions,
+		GemController gemController
+		) {
 		skillController = playerSkillController;
 		this.inputActions = inputActions;
+		this.gemController = gemController;
 	}
 
-	public abstract void EnterState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem);
+	public abstract void EnterState(
+		HandsBaseGemState handsBaseGemState,
+		FeetBaseGemState feetBaseGemState,
+		RightHandElementalModifierGemState rightHandElementalModifierGemState,
+		LeftHandElementalModifierGemState leftHandElementalModifierGemState,
+		RightFootElementalModifierGemState rightFootElementalModifierGemState,
+		LeftFootElementalModifierGemState leftFootElementalModifierGemState
+		);
 
 	public abstract void UpdateState();
 
 	public abstract void ExitState();
 
-	protected void InitializeState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem) {
-		skillController.CurrentPurCorGemState = purCorGem;
-		skillController.CurrentElemModGemState = elemModGem;
+	protected void InitializeState(
+		HandsBaseGemState handsBaseGemState,
+		FeetBaseGemState feetBaseGemState,
+		RightHandElementalModifierGemState rightHandElementalModifierGemState,
+		LeftHandElementalModifierGemState leftHandElementalModifierGemState,
+		RightFootElementalModifierGemState rightFootElementalModifierGemState,
+		LeftFootElementalModifierGemState leftFootElementalModifierGemState
+		) {
+		skillController.CurrentHandsBaseGemState = handsBaseGemState;
+		skillController.CurrentFeetBaseGemState = feetBaseGemState;
+		skillController.CurrentRightHandElementalModifierGemState = rightHandElementalModifierGemState;
+		skillController.CurrentLeftHandElementalModifierGemState = leftHandElementalModifierGemState;
+		skillController.CurrentRightFootElementalModifierGemState = rightFootElementalModifierGemState;
+		skillController.CurrentLeftFootElementalModifierGemState = leftFootElementalModifierGemState;
 	}
 }

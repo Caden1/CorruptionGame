@@ -13,41 +13,61 @@ public class DashingSkillState : PlayerSkillStateBase
 	private float originalGravityScale;
 	private GameObject activeEffectClone;
 
-	public DashingSkillState(PlayerSkillController playerSkillController, PlayerInputActions inputActions)
-		: base(playerSkillController, inputActions) { }
+	public DashingSkillState(
+		PlayerSkillController playerSkillController,
+		PlayerInputActions inputActions,
+		GemController gemController
+		)
+		: base(playerSkillController, inputActions, gemController) { }
 
-	public override void EnterState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem) {
-		InitializeState(purCorGem, elemModGem);
+	public override void EnterState(
+		HandsBaseGemState handsBaseGemState,
+		FeetBaseGemState feetBaseGemState,
+		RightHandElementalModifierGemState rightHandElementalModifierGemState,
+		LeftHandElementalModifierGemState leftHandElementalModifierGemState,
+		RightFootElementalModifierGemState rightFootElementalModifierGemState,
+		LeftFootElementalModifierGemState leftFootElementalModifierGemState
+		) {
+		InitializeState(
+			handsBaseGemState,
+			feetBaseGemState,
+			rightHandElementalModifierGemState,
+			leftHandElementalModifierGemState,
+			rightFootElementalModifierGemState,
+			leftFootElementalModifierGemState
+			);
 		skillController.IsDashing = true;
 		skillController.CanDash = false;
 		skillController.animationController.ExecuteDashAnim();
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
-		switch (skillController.CurrentPurCorGemState) {
-			case PurityCorruptionGem.None:
-				dashForce = skillController.GemController.GetLeftFootGem().dashForce;
-				dashDuration = skillController.GemController.GetLeftFootGem().dashDuration;
-				dashCooldown = skillController.GemController.GetLeftFootGem().dashCooldown;
+		// Only need feet base gem for Dashing
+		switch (feetBaseGemState) {
+			case FeetBaseGemState.None:
+				break;
+			case FeetBaseGemState.Purity:
+				dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
+				dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
+				dashCooldown = skillController.GemController.GetBaseFeetGem().dashCooldown;
 				xOffset = 1.15f;
 				yOffset = -0.05f;
 				break;
-			case PurityCorruptionGem.Purity:
-				break;
-			case PurityCorruptionGem.Corruption:
+			case FeetBaseGemState.Corruption:
 				break;
 		}
 
-		switch (skillController.CurrentElemModGemState) {
-			case ElementalModifierGem.None:
+		// Left foot controls Dashing
+		switch (leftFootElementalModifierGemState) {
+			case LeftFootElementalModifierGemState.None:
 				break;
-			case ElementalModifierGem.Air:
+			case LeftFootElementalModifierGemState.Air:
 				break;
-			case ElementalModifierGem.Fire:
+			case LeftFootElementalModifierGemState.Fire:
 				break;
-			case ElementalModifierGem.Water:
+			case LeftFootElementalModifierGemState.Water:
 				break;
-			case ElementalModifierGem.Earth:
+			case LeftFootElementalModifierGemState.Earth:
 				break;
 		}
 
@@ -62,13 +82,49 @@ public class DashingSkillState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
-		// After Dash player can Idle, Run, Fall, RightGlove, LeftGlove
-		if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
-			skillController.TransitionToState(PlayerStateType.Idle);
+		// AFTER Dash player can Swap, Idle, Run, Fall, Push
+		if (inputActions.Player.Swap.WasPressedThisFrame()) {
+			gemController.SwapGems();
+		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
+			skillController.TransitionToState(
+				PlayerStateType.Idle,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
 		} else if (Mathf.Abs(skillController.Rb.velocity.x) > 0.1f && skillController.IsGrounded()) {
-			skillController.TransitionToState(PlayerStateType.Running);
+			skillController.TransitionToState(
+				PlayerStateType.Running,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
 		} else if (skillController.Rb.velocity.y < 0f) {
-			skillController.TransitionToState(PlayerStateType.Falling);
+			skillController.TransitionToState(
+				PlayerStateType.Falling,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
+			skillController.TransitionToState(
+				PlayerStateType.Pushing,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
 		}
 	}
 

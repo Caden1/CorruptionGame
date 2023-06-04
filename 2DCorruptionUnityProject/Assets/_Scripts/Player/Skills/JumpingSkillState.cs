@@ -10,37 +10,57 @@ public class JumpingSkillState : PlayerSkillStateBase
 	private GameObject activeEffectClone;
 	private float jumpFacingDirection;
 
-	public JumpingSkillState(PlayerSkillController playerSkillController, PlayerInputActions inputActions)
-		: base(playerSkillController, inputActions) { }
+	public JumpingSkillState(
+		PlayerSkillController playerSkillController,
+		PlayerInputActions inputActions,
+		GemController gemController
+		)
+		: base(playerSkillController, inputActions, gemController) { }
 
-	public override void EnterState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem) {
-		InitializeState(purCorGem, elemModGem);
+	public override void EnterState(
+		HandsBaseGemState handsBaseGemState,
+		FeetBaseGemState feetBaseGemState,
+		RightHandElementalModifierGemState rightHandElementalModifierGemState,
+		LeftHandElementalModifierGemState leftHandElementalModifierGemState,
+		RightFootElementalModifierGemState rightFootElementalModifierGemState,
+		LeftFootElementalModifierGemState leftFootElementalModifierGemState
+		) {
+		InitializeState(
+			handsBaseGemState,
+			feetBaseGemState,
+			rightHandElementalModifierGemState,
+			leftHandElementalModifierGemState,
+			rightFootElementalModifierGemState,
+			leftFootElementalModifierGemState
+			);
 		float jumpForce = 0f;
 		skillController.animationController.ExecuteJumpAnim();
 
-		switch (skillController.CurrentPurCorGemState) {
-			case PurityCorruptionGem.None:
-				jumpForce = skillController.GemController.GetRightFootGem().jumpForce;
+		// Only need feet base gem for Jumping
+		switch (feetBaseGemState) {
+			case FeetBaseGemState.None:
+				break;
+			case FeetBaseGemState.Purity:
+				jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
 				xOffset = 0.4f;
 				yOffset = 0.12f;
 				break;
-			case PurityCorruptionGem.Purity:
-				break;
-			case PurityCorruptionGem.Corruption:
+			case FeetBaseGemState.Corruption:
 				break;
 		}
 
-		switch (skillController.CurrentElemModGemState) {
-			case ElementalModifierGem.None:
+		// Right foot controls Jumping
+		switch (rightFootElementalModifierGemState) {
+			case RightFootElementalModifierGemState.None:
 				jumpForce += 0f;
 				break;
-			case ElementalModifierGem.Air:
+			case RightFootElementalModifierGemState.Air:
 				break;
-			case ElementalModifierGem.Fire:
+			case RightFootElementalModifierGemState.Fire:
 				break;
-			case ElementalModifierGem.Water:
+			case RightFootElementalModifierGemState.Water:
 				break;
-			case ElementalModifierGem.Earth:
+			case RightFootElementalModifierGemState.Earth:
 				break;
 		}
 
@@ -67,15 +87,44 @@ public class JumpingSkillState : PlayerSkillStateBase
 			skillController.Rb.velocity = new Vector2(skillController.Rb.velocity.x, 0f);
 		}
 
-		// From Jumping player can Fall, Dash, RightGlove, LeftGlove
-		if (skillController.Rb.velocity.y < 0f) {
+		// From Jumping player can Swap, Fall, Dash, Push
+		if (inputActions.Player.Swap.WasPressedThisFrame()) {
+			gemController.SwapGems();
+		} else if (skillController.Rb.velocity.y < 0f) {
 			// If player starts falling, destroy the effect
 			if (activeEffectClone != null) {
 				Object.Destroy(activeEffectClone);
 			}
-			skillController.TransitionToState(PlayerStateType.Falling);
+
+			skillController.TransitionToState(
+				PlayerStateType.Falling,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
-			skillController.TransitionToState(PlayerStateType.Dashing);
+			skillController.TransitionToState(
+				PlayerStateType.Dashing,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
+			skillController.TransitionToState(
+				PlayerStateType.Pushing,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
 		}
 	}
 
