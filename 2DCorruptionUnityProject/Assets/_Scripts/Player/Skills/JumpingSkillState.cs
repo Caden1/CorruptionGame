@@ -37,22 +37,29 @@ public class JumpingSkillState : PlayerSkillStateBase
 		skillController.animationController.ExecuteJumpAnim();
 
 		// Only need feet base gem for Jumping
+		jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
+				activeEffectClone = null;
 				break;
 			case FeetBaseGemState.Purity:
-				jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
-				xOffset = 0.4f;
-				yOffset = 0.12f;
+				activeEffectClone = null;
 				break;
 			case FeetBaseGemState.Corruption:
+				xOffset = 0.4f;
+				yOffset = 0.12f;
+				jumpFacingDirection = skillController.LastFacingDirection;
+				if (jumpFacingDirection < 0) {
+					xOffset *= -1;
+				}
+				Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
+				activeEffectClone = skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
 				break;
 		}
 
 		// Right foot controls Jumping
 		switch (rightFootElementalModifierGemState) {
 			case RightFootElementalModifierGemState.None:
-				jumpForce += 0f;
 				break;
 			case RightFootElementalModifierGemState.Air:
 				break;
@@ -64,14 +71,7 @@ public class JumpingSkillState : PlayerSkillStateBase
 				break;
 		}
 
-		if (skillController.LastFacingDirection < 0) {
-			xOffset *= -1;
-		}
-
 		skillController.Rb.velocity = new Vector2(0, jumpForce);
-		jumpFacingDirection = skillController.LastFacingDirection;
-		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
-		activeEffectClone = skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
 	}
 
 	public override void UpdateState() {

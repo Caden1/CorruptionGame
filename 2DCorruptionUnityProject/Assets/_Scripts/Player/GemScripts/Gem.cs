@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Gem", menuName = "Gems/Gem")]
 public class Gem : ScriptableObject
 {
+	public string gemName;
 	public float moveSpeed;
 	public float jumpForce;
 	public int numberOfJumps;

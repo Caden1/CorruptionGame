@@ -57,7 +57,7 @@ public class PlayerSkillController : MonoBehaviour
 		// Set the initial state
 		TransitionToState(
 			PlayerStateType.Idle,
-			HandsBaseGemState.None,
+			HandsBaseGemState.Corruption,
 			FeetBaseGemState.Purity,
 			RightHandElementalModifierGemState.None,
 			LeftHandElementalModifierGemState.None,
@@ -146,6 +146,34 @@ public class PlayerSkillController : MonoBehaviour
 		ModifierGem leftFootModifierGem = GemController.GetLeftFootModifierGem();
 
 		// Here, use the properties of the Gems to modify the player's abilities.
+		switch (handsBaseGem.gemName) {
+			case "None":
+				CurrentHandsBaseGemState = HandsBaseGemState.None;
+				break;
+			case "Corruption":
+				CurrentHandsBaseGemState = HandsBaseGemState.Corruption;
+				break;
+			case "Purity":
+				CurrentHandsBaseGemState = HandsBaseGemState.Purity;
+				break;
+		}
+
+		switch (feetbaseGem.gemName) {
+			case "None":
+				CurrentFeetBaseGemState = FeetBaseGemState.None;
+				break;
+			case "Corruption":
+				CurrentFeetBaseGemState = FeetBaseGemState.Corruption;
+				break;
+			case "Purity":
+				CurrentFeetBaseGemState = FeetBaseGemState.Purity;
+				break;
+		}
+
+		Debug.Log("handsBaseGem=" + handsBaseGem.gemName);
+		Debug.Log("feetbaseGem=" + feetbaseGem.gemName);
+		Debug.Log("CurrentHandsBaseGemState=" + CurrentHandsBaseGemState);
+		Debug.Log("CurrentFeetBaseGemState=" + CurrentFeetBaseGemState);
 	}
 
 	public void ResetNumberOfJumps() {

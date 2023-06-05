@@ -2064,18 +2064,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867aa5809e483489b9a3d9d2d0912a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purityGem: {fileID: 11400000, guid: 1b7ad610a8cf4457eaa1498a3bc7ff6f, type: 2}
   noGem: {fileID: 11400000, guid: 0225ec2d4850a4460b6908a983d88c7b, type: 2}
-  corruptionGem: {fileID: 0}
+  purityGem: {fileID: 11400000, guid: 1b7ad610a8cf4457eaa1498a3bc7ff6f, type: 2}
+  corruptionGem: {fileID: 11400000, guid: dab8a807354114461b481fb4f0e456b7, type: 2}
   airGem: {fileID: 0}
   fireGem: {fileID: 0}
   waterGem: {fileID: 0}
   earthGem: {fileID: 0}
   currentBaseGemConfiguration:
-    rightHandGem: {fileID: 0}
-    leftHandGem: {fileID: 0}
-    rightFootGem: {fileID: 0}
-    leftFootGem: {fileID: 0}
+    baseHandsGem: {fileID: 0}
+    baseFeetGem: {fileID: 0}
   currentModifierGemConfiguration:
     rightHandGem: {fileID: 0}
     leftHandGem: {fileID: 0}

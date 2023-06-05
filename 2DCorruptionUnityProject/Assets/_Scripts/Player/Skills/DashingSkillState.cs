@@ -36,6 +36,7 @@ public class DashingSkillState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
+		bool instantiateDamageEffect = false;
 		skillController.IsDashing = true;
 		skillController.CanDash = false;
 		skillController.animationController.ExecuteDashAnim();
@@ -43,17 +44,18 @@ public class DashingSkillState : PlayerSkillStateBase
 		skillController.Rb.gravityScale = 0f;
 
 		// Only need feet base gem for Dashing
+		dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
+		dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
+		dashCooldown = skillController.GemController.GetBaseFeetGem().dashCooldown;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
-				dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
-				dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
-				dashCooldown = skillController.GemController.GetBaseFeetGem().dashCooldown;
-				xOffset = 1.15f;
-				yOffset = -0.05f;
 				break;
 			case FeetBaseGemState.Corruption:
+				xOffset = 1.15f;
+				yOffset = -0.05f;
+				instantiateDamageEffect = true;
 				break;
 		}
 
@@ -78,7 +80,9 @@ public class DashingSkillState : PlayerSkillStateBase
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		skillController.StartStateCoroutine(StopDashAfterSeconds());
 		skillController.StartStateCoroutine(DashCooldown());
-		skillController.StartStateCoroutine(InstantiateEffectWithDelay());
+		if (instantiateDamageEffect) {
+			skillController.StartStateCoroutine(InstantiateEffectWithDelay());
+		}
 	}
 
 	public override void UpdateState() {

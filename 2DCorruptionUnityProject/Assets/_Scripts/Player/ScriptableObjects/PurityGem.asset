@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4354132d6aac747f498393437b464e94, type: 3}
-  m_Name: BaseNoGem
+  m_Name: PurityGem
   m_EditorClassIdentifier: 
+  gemName: Purity
   moveSpeed: 4
   jumpForce: 8
-  numberOfJumps: 1
-  dashForce: 7
+  numberOfJumps: 2
+  dashForce: 10
   dashCooldown: 2
   dashDuration: 0.5
-  pushForce: 2
+  pushForce: 5
   pushDuration: 1
   pushCooldown: 2
