@@ -38,7 +38,7 @@ public class GemController : MonoBehaviour
 
 	private void Start() {
 		// Initialize the starting configuration for Base Gems
-		currentBaseGemConfiguration.baseHandsGem = noGem;
+		currentBaseGemConfiguration.baseHandsGem = corruptionGem;
 		currentBaseGemConfiguration.baseFeetGem = purityGem;
 
 		// Initialize the starting configuration for Modifier Gems

@@ -169,11 +169,6 @@ public class PlayerSkillController : MonoBehaviour
 				CurrentFeetBaseGemState = FeetBaseGemState.Purity;
 				break;
 		}
-
-		Debug.Log("handsBaseGem=" + handsBaseGem.gemName);
-		Debug.Log("feetbaseGem=" + feetbaseGem.gemName);
-		Debug.Log("CurrentHandsBaseGemState=" + CurrentHandsBaseGemState);
-		Debug.Log("CurrentFeetBaseGemState=" + CurrentFeetBaseGemState);
 	}
 
 	public void ResetNumberOfJumps() {

@@ -36,16 +36,13 @@ public class PushingSkillState : PlayerSkillStateBase
 		skillController.animationController.ExecutePushAnim();
 
 		// Only need hands base gem for Push
+		pushForce = skillController.GemController.GetBaseHandsGem().pushForce;
+		pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
+		pushCooldown = skillController.GemController.GetBaseHandsGem().pushCooldown;
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
-				pushForce = skillController.GemController.GetBaseHandsGem().pushForce;
-				pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
-				pushCooldown = skillController.GemController.GetBaseHandsGem().pushCooldown;
 				break;
 			case HandsBaseGemState.Purity:
-				pushForce = skillController.GemController.GetBaseHandsGem().pushForce;
-				pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
-				pushCooldown = skillController.GemController.GetBaseHandsGem().pushCooldown;
 				break;
 			case HandsBaseGemState.Corruption:
 				break;
