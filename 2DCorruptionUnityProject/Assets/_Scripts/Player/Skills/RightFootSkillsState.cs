@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class JumpingSkillState : PlayerSkillStateBase
+public class RightFootSkillsState : PlayerSkillStateBase
 {
 	private float xOffset = 0f;
 	private float yOffset = 0f;
 	private GameObject activeEffectClone;
 	private float jumpFacingDirection;
 
-	public JumpingSkillState(
+	public RightFootSkillsState(
 		PlayerSkillController playerSkillController,
 		PlayerInputActions inputActions,
 		GemController gemController
@@ -36,7 +36,7 @@ public class JumpingSkillState : PlayerSkillStateBase
 		float jumpForce = 0f;
 		skillController.animationController.ExecuteJumpAnim();
 
-		// Only need feet base gem for Jumping
+		// Feet base gem
 		jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
@@ -57,7 +57,7 @@ public class JumpingSkillState : PlayerSkillStateBase
 				break;
 		}
 
-		// Right foot controls Jumping
+		// Right foot mod gem
 		switch (rightFootElementalModifierGemState) {
 			case RightFootElementalModifierGemState.None:
 				break;
@@ -107,7 +107,7 @@ public class JumpingSkillState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
 			skillController.TransitionToState(
-				PlayerStateType.Dashing,
+				PlayerStateType.LeftFoot,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,
@@ -117,7 +117,7 @@ public class JumpingSkillState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
 			skillController.TransitionToState(
-				PlayerStateType.Pushing,
+				PlayerStateType.RightHand,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,

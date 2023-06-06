@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PushingSkillState : PlayerSkillStateBase
+public class RightHandSkillsState : PlayerSkillStateBase
 {
 	private float pushForce;
 	private float pushDuration;
 	private float pushCooldown;
 
-	public PushingSkillState(
+	public RightHandSkillsState(
 		PlayerSkillController playerSkillController,
 		PlayerInputActions inputActions,
 		GemController gemController
@@ -33,7 +33,6 @@ public class PushingSkillState : PlayerSkillStateBase
 			);
 		skillController.IsPushing = true;
 		skillController.CanPush = false;
-		skillController.animationController.ExecutePushAnim();
 
 		// Only need hands base gem for Push
 		pushForce = skillController.GemController.GetBaseHandsGem().pushForce;
@@ -43,6 +42,7 @@ public class PushingSkillState : PlayerSkillStateBase
 			case HandsBaseGemState.None:
 				break;
 			case HandsBaseGemState.Purity:
+				skillController.animationController.ExecutePushAnim();
 				break;
 			case HandsBaseGemState.Corruption:
 				break;
@@ -93,7 +93,7 @@ public class PushingSkillState : PlayerSkillStateBase
 		} else if (inputActions.Player.Jump.WasPressedThisFrame() && skillController.IsGrounded()) {
 			skillController.ResetNumberOfJumps();
 			skillController.TransitionToState(
-				PlayerStateType.Jumping,
+				PlayerStateType.RightFoot,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,
@@ -113,7 +113,7 @@ public class PushingSkillState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
 			skillController.TransitionToState(
-				PlayerStateType.Dashing,
+				PlayerStateType.LeftFoot,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,

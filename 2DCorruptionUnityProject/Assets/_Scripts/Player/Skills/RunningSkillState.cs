@@ -47,7 +47,7 @@ public class RunningSkillState : PlayerSkillStateBase
 		} else if (inputActions.Player.Jump.WasPressedThisFrame() && skillController.IsGrounded()) {
 			skillController.ResetNumberOfJumps();
 			skillController.TransitionToState(
-				PlayerStateType.Jumping,
+				PlayerStateType.RightFoot,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,
@@ -67,7 +67,7 @@ public class RunningSkillState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
 			skillController.TransitionToState(
-				PlayerStateType.Dashing,
+				PlayerStateType.LeftFoot,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,
@@ -77,7 +77,7 @@ public class RunningSkillState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
 			skillController.TransitionToState(
-				PlayerStateType.Pushing,
+				PlayerStateType.RightHand,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,

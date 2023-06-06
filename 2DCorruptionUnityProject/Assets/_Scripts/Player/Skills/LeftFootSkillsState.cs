@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashingSkillState : PlayerSkillStateBase
+public class LeftFootSkillsState : PlayerSkillStateBase
 {
 	private float instantiateEffectDelay = 0.1f;
 	private float xOffset = 0f;
@@ -13,7 +13,7 @@ public class DashingSkillState : PlayerSkillStateBase
 	private float originalGravityScale;
 	private GameObject activeEffectClone;
 
-	public DashingSkillState(
+	public LeftFootSkillsState(
 		PlayerSkillController playerSkillController,
 		PlayerInputActions inputActions,
 		GemController gemController
@@ -43,7 +43,7 @@ public class DashingSkillState : PlayerSkillStateBase
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
-		// Only need feet base gem for Dashing
+		// Feet base gem
 		dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
 		dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
 		dashCooldown = skillController.GemController.GetBaseFeetGem().dashCooldown;
@@ -59,7 +59,7 @@ public class DashingSkillState : PlayerSkillStateBase
 				break;
 		}
 
-		// Left foot controls Dashing
+		// Left foot mod gem
 		switch (leftFootElementalModifierGemState) {
 			case LeftFootElementalModifierGemState.None:
 				break;
@@ -121,7 +121,7 @@ public class DashingSkillState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
 			skillController.TransitionToState(
-				PlayerStateType.Pushing,
+				PlayerStateType.RightHand,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,

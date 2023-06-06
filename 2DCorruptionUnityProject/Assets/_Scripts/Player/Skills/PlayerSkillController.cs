@@ -43,10 +43,11 @@ public class PlayerSkillController : MonoBehaviour
 		GroundCheck = GetComponent<GroundCheck>();
 		states.Add(PlayerStateType.Idle, new IdleSkillState(this, inputActions, GemController));
 		states.Add(PlayerStateType.Running, new RunningSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.Jumping, new JumpingSkillState(this, inputActions, GemController));
 		states.Add(PlayerStateType.Falling, new FallingSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.Dashing, new DashingSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.Pushing, new PushingSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.RightFoot, new RightFootSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.LeftFoot, new LeftFootSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.RightHand, new RightHandSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.LeftHand, new LeftHandSkillsState(this, inputActions, GemController));
 	}
 
 	private void OnDestroy() {

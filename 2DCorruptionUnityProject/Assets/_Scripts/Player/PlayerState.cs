@@ -2,10 +2,11 @@ public enum PlayerStateType
 {
 	Idle,
 	Running,
-	Jumping,
 	Falling,
-	Dashing,
-	Pushing
+	RightFoot,
+	LeftFoot,
+	RightHand,
+	LeftHand
 }
 
 public enum HandsBaseGemState
