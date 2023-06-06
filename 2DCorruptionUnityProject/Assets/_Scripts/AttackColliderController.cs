@@ -59,6 +59,9 @@ public class AttackColliderController : MonoBehaviour
 					} else if (tag == "PurityOnlyPull") {
 						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+					} else if (tag == "PushEffect") {
+						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
+						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					}
 					if (health.IsDead()) {
 						enemyController.SetEnemyStateToDying();

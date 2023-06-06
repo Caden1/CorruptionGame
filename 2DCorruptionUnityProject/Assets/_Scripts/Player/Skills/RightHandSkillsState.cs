@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class RightHandSkillsState : PlayerSkillStateBase
 {
-	private float pushForce;
+	private float instantiateEffectDelay = 0.35f;
+	private float xOffset = 0f;
+	private float yOffset = 0f;
 	private float pushDuration;
 	private float pushCooldown;
+	private GameObject activeEffectClone;
 
 	public RightHandSkillsState(
 		PlayerSkillController playerSkillController,
@@ -31,17 +34,20 @@ public class RightHandSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
+		bool instantiatePurityPushEffect = false;
 		skillController.IsPushing = true;
 		skillController.CanPush = false;
 
 		// Only need hands base gem for Push
-		pushForce = skillController.GemController.GetBaseHandsGem().pushForce;
 		pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
 		pushCooldown = skillController.GemController.GetBaseHandsGem().pushCooldown;
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
 				break;
 			case HandsBaseGemState.Purity:
+				xOffset = 0.87f;
+				yOffset = 0f;
+				instantiatePurityPushEffect = true;
 				skillController.animationController.ExecutePushAnim();
 				break;
 			case HandsBaseGemState.Corruption:
@@ -62,8 +68,15 @@ public class RightHandSkillsState : PlayerSkillStateBase
 				break;
 		}
 
+		if (skillController.LastFacingDirection < 0) {
+			xOffset *= -1;
+		}
+
 		skillController.StartStateCoroutine(StopPushAnimAfterSeconds());
 		skillController.StartStateCoroutine(PushCooldown());
+		if (instantiatePurityPushEffect) {
+			skillController.StartStateCoroutine(InstantiateEffectWithDelay());
+		}
 	}
 
 	public override void UpdateState() {
@@ -129,10 +142,19 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	private IEnumerator StopPushAnimAfterSeconds() {
 		yield return new WaitForSeconds(pushDuration);
 		skillController.IsPushing = false;
+		if (activeEffectClone != null) {
+			Object.Destroy(activeEffectClone);
+		}
 	}
 
 	private IEnumerator PushCooldown() {
 		yield return new WaitForSeconds(pushCooldown);
 		skillController.CanPush = true;
+	}
+
+	private IEnumerator InstantiateEffectWithDelay() {
+		yield return new WaitForSeconds(instantiateEffectDelay);
+		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
+		activeEffectClone = skillController.effectController.GetPurityPushEffectClone(effectPosition);
 	}
 }

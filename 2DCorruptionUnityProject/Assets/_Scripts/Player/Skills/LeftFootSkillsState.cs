@@ -36,7 +36,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		bool instantiateDamageEffect = false;
+		bool instantiateCorDamageEffect = false;
 		skillController.IsDashing = true;
 		skillController.CanDash = false;
 		skillController.animationController.ExecuteDashAnim();
@@ -55,7 +55,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 			case FeetBaseGemState.Corruption:
 				xOffset = 1.15f;
 				yOffset = -0.05f;
-				instantiateDamageEffect = true;
+				instantiateCorDamageEffect = true;
 				break;
 		}
 
@@ -80,7 +80,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		skillController.StartStateCoroutine(StopDashAfterSeconds());
 		skillController.StartStateCoroutine(DashCooldown());
-		if (instantiateDamageEffect) {
+		if (instantiateCorDamageEffect) {
 			skillController.StartStateCoroutine(InstantiateEffectWithDelay());
 		}
 	}

@@ -19,6 +19,5 @@ MonoBehaviour:
   dashForce: 10
   dashCooldown: 2
   dashDuration: 0.5
-  pushForce: 5
-  pushDuration: 1
+  pushDuration: 0.7
   pushCooldown: 2

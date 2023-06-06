@@ -16,6 +16,7 @@ TagManager:
   - HealthBarUIDocument
   - CorKickDash
   - CorJumpKnee
+  - PushEffect
   layers:
   - Default
   - TransparentFX
