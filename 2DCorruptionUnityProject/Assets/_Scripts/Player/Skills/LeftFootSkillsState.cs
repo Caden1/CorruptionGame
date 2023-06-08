@@ -86,7 +86,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
-		// AFTER Dash player can Swap, Idle, Run, Fall, Push
+		// AFTER Dash player can Swap, Idle, Run, Fall, RightFoot, RightHand, LeftHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			gemController.SwapGems();
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
@@ -119,9 +119,30 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
+		} else if (inputActions.Player.Jump.WasPressedThisFrame() && skillController.IsGrounded()) {
+			skillController.ResetNumberOfJumps();
+			skillController.TransitionToState(
+				PlayerStateType.RightFoot,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
 			skillController.TransitionToState(
 				PlayerStateType.RightHand,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
+			skillController.TransitionToState(
+				PlayerStateType.LeftHand,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,

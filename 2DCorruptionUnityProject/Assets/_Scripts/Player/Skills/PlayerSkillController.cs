@@ -32,6 +32,8 @@ public class PlayerSkillController : MonoBehaviour
 	public bool IsDashing { get; set; } = false;
 	public bool CanPush { get; set; } = true;
 	public bool IsPushing { get; set; } = false;
+	public bool CanPull { get; set; } = true;
+	public bool IsPulling { get; set; } = false;
 	public bool IsDying { get; set; } = false;
 
 	private void Awake() {
@@ -83,7 +85,7 @@ public class PlayerSkillController : MonoBehaviour
 
 	private void Update() {
 		if (!IsDying) {
-			if (!IsDashing && !IsPushing) {
+			if (!IsDashing && !IsPushing && !IsPulling) {
 				currentState?.UpdateState();
 			}
 		} else {

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class LeftHandSkillsState : PlayerSkillStateBase
 {
-    public LeftHandSkillsState(
+	private float pullDuration;
+	private float pullCooldown;
+
+	public LeftHandSkillsState(
 		PlayerSkillController playerSkillController,
 		PlayerInputActions inputActions,
 		GemController gemController
@@ -26,12 +29,17 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
+		skillController.IsPulling = true;
+		skillController.CanPull = false;
 
 		// Hands base gem
+		pullDuration = skillController.GemController.GetBaseHandsGem().pullDuration;
+		pullCooldown = skillController.GemController.GetBaseHandsGem().pullCooldown;
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
 				break;
 			case HandsBaseGemState.Purity:
+				skillController.animationController.ExecutePullAnim();
 				break;
 			case HandsBaseGemState.Corruption:
 				break;
@@ -50,11 +58,88 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			case LeftHandElementalModifierGemState.Earth:
 				break;
 		}
+
+		skillController.StartStateCoroutine(StopPullAnimAfterSeconds());
+		skillController.StartStateCoroutine(PullCooldown());
 	}
 
 	public override void UpdateState() {
-
+		// AFTER LeftHand player can Swap, Idle, Run, Fall, RightFoot, LeftFoot, RightHand
+		if (inputActions.Player.Swap.WasPressedThisFrame()) {
+			gemController.SwapGems();
+		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
+			skillController.TransitionToState(
+				PlayerStateType.Idle,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (Mathf.Abs(skillController.Rb.velocity.x) > 0f && skillController.IsGrounded()) {
+			skillController.TransitionToState(
+				PlayerStateType.Running,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (skillController.Rb.velocity.y < 0f) {
+			skillController.TransitionToState(
+				PlayerStateType.Falling,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Jump.WasPressedThisFrame() && skillController.IsGrounded()) {
+			skillController.ResetNumberOfJumps();
+			skillController.TransitionToState(
+				PlayerStateType.RightFoot,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
+			skillController.TransitionToState(
+				PlayerStateType.LeftFoot,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
+			skillController.TransitionToState(
+				PlayerStateType.RightHand,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		}
 	}
 
 	public override void ExitState() { }
+
+	private IEnumerator StopPullAnimAfterSeconds() {
+		yield return new WaitForSeconds(pullDuration);
+		skillController.IsPulling = false;
+	}
+
+	private IEnumerator PullCooldown() {
+		yield return new WaitForSeconds(pullCooldown);
+		skillController.CanPull = true;
+	}
 }

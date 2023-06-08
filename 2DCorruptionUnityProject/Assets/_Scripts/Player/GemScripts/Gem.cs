@@ -12,4 +12,6 @@ public class Gem : ScriptableObject
 	public float dashDuration;
 	public float pushDuration;
 	public float pushCooldown;
+	public float pullDuration;
+	public float pullCooldown;
 }

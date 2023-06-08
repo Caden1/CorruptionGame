@@ -87,7 +87,8 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			skillController.Rb.velocity = new Vector2(skillController.Rb.velocity.x, 0f);
 		}
 
-		// From Jumping player can Swap, Fall, Dash, Push
+		// From Jumping player can Swap, Fall, LeftFoot, RightHand, LeftHand
+		//		NOTE: Double Jump is handled in FallingSkillState class
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			gemController.SwapGems();
 		} else if (skillController.Rb.velocity.y < 0f) {
@@ -115,9 +116,19 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
+		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
 			skillController.TransitionToState(
 				PlayerStateType.RightHand,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
+			skillController.TransitionToState(
+				PlayerStateType.LeftHand,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,

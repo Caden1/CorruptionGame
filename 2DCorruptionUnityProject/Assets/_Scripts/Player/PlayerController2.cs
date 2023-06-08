@@ -26,7 +26,7 @@ public class PlayerController2 : MonoBehaviour
 		// Horizontal movement is done here
 		// This is so states don't interfere with things like left and right movement while in the air
 		if (!skillController.IsDying) {
-			if (!skillController.IsDashing && !skillController.IsPushing) {
+			if (!skillController.IsDashing && !skillController.IsPushing && !skillController.IsPulling) {
 				Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
 				horizontalInput = movementInput.x;
 				if (Mathf.Abs(horizontalInput) > 0.1f) {

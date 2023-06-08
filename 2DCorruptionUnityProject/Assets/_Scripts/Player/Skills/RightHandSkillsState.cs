@@ -38,7 +38,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		skillController.IsPushing = true;
 		skillController.CanPush = false;
 
-		// Only need hands base gem for Push
+		// Hands base gem
 		pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
 		pushCooldown = skillController.GemController.GetBaseHandsGem().pushCooldown;
 		switch (handsBaseGemState) {
@@ -54,7 +54,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 				break;
 		}
 
-		// Right hand controls Push
+		// Right hand mod gem
 		switch (rightHandElementalModifierGemState) {
 			case RightHandElementalModifierGemState.None:
 				break;
@@ -80,7 +80,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
-		// AFTER Pushing player can Swap, Idle, Run, Jump, Fall, Dash
+		// AFTER RightHand player can Swap, Idle, Run, Fall, RightFoot, LeftFoot, LeftHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			gemController.SwapGems();
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
@@ -127,6 +127,16 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
 			skillController.TransitionToState(
 				PlayerStateType.LeftFoot,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
+			skillController.TransitionToState(
+				PlayerStateType.LeftHand,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,

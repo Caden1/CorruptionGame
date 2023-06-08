@@ -31,7 +31,8 @@ public class FallingSkillState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
-		// From Falling player can Swap, Idle, Run, Jump (if more than 1 available), Dash, Push
+		// From Running player can Swap, Idle, Run, RightFoot (if more than 1 jump available),
+		//		LeftFoot, RightHand, LeftHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			gemController.SwapGems();
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
@@ -75,9 +76,19 @@ public class FallingSkillState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPush) {
+		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
 			skillController.TransitionToState(
 				PlayerStateType.RightHand,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
+			skillController.TransitionToState(
+				PlayerStateType.LeftHand,
 				skillController.CurrentHandsBaseGemState,
 				skillController.CurrentFeetBaseGemState,
 				skillController.CurrentRightHandElementalModifierGemState,
