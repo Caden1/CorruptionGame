@@ -77,9 +77,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 	public override void UpdateState() {
 		// If player turns around, destroy the effect
 		if (jumpFacingDirection != skillController.LastFacingDirection) {
-			if (activeEffectClone != null) {
-				Object.Destroy(activeEffectClone);
-			}
+			DestroyActiveEffectClone();
 		}
 
 		// Jump Cancel
@@ -90,13 +88,10 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		// From Jumping player can Swap, Fall, LeftFoot, RightHand, LeftHand
 		//		NOTE: Double Jump is handled in FallingSkillState class
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
+			DestroyActiveEffectClone();
 			gemController.SwapGems();
 		} else if (skillController.Rb.velocity.y < 0f) {
-			// If player starts falling, destroy the effect
-			if (activeEffectClone != null) {
-				Object.Destroy(activeEffectClone);
-			}
-
+			DestroyActiveEffectClone();
 			skillController.TransitionToState(
 				PlayerStateType.Falling,
 				skillController.CurrentHandsBaseGemState,
@@ -107,6 +102,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
+			DestroyActiveEffectClone();
 			skillController.TransitionToState(
 				PlayerStateType.LeftFoot,
 				skillController.CurrentHandsBaseGemState,
@@ -117,6 +113,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
+			DestroyActiveEffectClone();
 			skillController.TransitionToState(
 				PlayerStateType.RightHand,
 				skillController.CurrentHandsBaseGemState,
@@ -127,6 +124,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
+			DestroyActiveEffectClone();
 			skillController.TransitionToState(
 				PlayerStateType.LeftHand,
 				skillController.CurrentHandsBaseGemState,
@@ -140,4 +138,10 @@ public class RightFootSkillsState : PlayerSkillStateBase
 	}
 
 	public override void ExitState() { }
+
+	private void DestroyActiveEffectClone() {
+		if (activeEffectClone != null) {
+			Object.Destroy(activeEffectClone);
+		}
+	}
 }

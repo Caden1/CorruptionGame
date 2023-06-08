@@ -6,6 +6,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 {
 	private float pullDuration;
 	private float pullCooldown;
+	private float originalGravityScale;
 
 	public LeftHandSkillsState(
 		PlayerSkillController playerSkillController,
@@ -31,6 +32,8 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			);
 		skillController.IsPulling = true;
 		skillController.CanPull = false;
+		originalGravityScale = skillController.Rb.gravityScale;
+		skillController.Rb.gravityScale = 0f;
 
 		// Hands base gem
 		pullDuration = skillController.GemController.GetBaseHandsGem().pullDuration;
@@ -59,6 +62,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				break;
 		}
 
+		skillController.Rb.velocity = new Vector2(0f, 0f);
 		skillController.StartStateCoroutine(StopPullAnimAfterSeconds());
 		skillController.StartStateCoroutine(PullCooldown());
 	}
@@ -135,6 +139,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 
 	private IEnumerator StopPullAnimAfterSeconds() {
 		yield return new WaitForSeconds(pullDuration);
+		skillController.Rb.gravityScale = originalGravityScale;
 		skillController.IsPulling = false;
 	}
 

@@ -9,6 +9,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	private float yOffset = 0f;
 	private float pushDuration;
 	private float pushCooldown;
+	private float originalGravityScale;
 	private GameObject activeEffectClone;
 
 	public RightHandSkillsState(
@@ -37,6 +38,8 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		bool instantiatePurityPushEffect = false;
 		skillController.IsPushing = true;
 		skillController.CanPush = false;
+		originalGravityScale = skillController.Rb.gravityScale;
+		skillController.Rb.gravityScale = 0f;
 
 		// Hands base gem
 		pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
@@ -72,6 +75,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 			xOffset *= -1;
 		}
 
+		skillController.Rb.velocity = new Vector2(0f, 0f);
 		skillController.StartStateCoroutine(StopPushAnimAfterSeconds());
 		skillController.StartStateCoroutine(PushCooldown());
 		if (instantiatePurityPushEffect) {
@@ -151,6 +155,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 
 	private IEnumerator StopPushAnimAfterSeconds() {
 		yield return new WaitForSeconds(pushDuration);
+		skillController.Rb.gravityScale = originalGravityScale;
 		skillController.IsPushing = false;
 		if (activeEffectClone != null) {
 			Object.Destroy(activeEffectClone);
