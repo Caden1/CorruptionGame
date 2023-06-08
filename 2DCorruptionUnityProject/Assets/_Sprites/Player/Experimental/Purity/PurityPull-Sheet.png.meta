@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1254db0a6e90641b7b357e2b9f17991b
-      internalID: 294931425
+      spriteID: e7469eed6d7d74a16a1248aab9e81004
+      internalID: -571142971
       vertices: []
       indices: 
       edges: []
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72e626a3103964c00ab5af15ba3aaeb8
-      internalID: -1739629375
+      spriteID: 56de265fc439a4168b1235ed9a000aed
+      internalID: -2063505580
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 850e0a323010241e48557b1e954c80e0
-      internalID: -74699482
+      spriteID: b468e2346b8cd44629a736b16a7df22a
+      internalID: -1253845395
       vertices: []
       indices: 
       edges: []
@@ -194,8 +194,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5229c75ec73ca4b34a9aa4def4acee5b
-      internalID: -1459338
+      spriteID: e1d0f14e591ac4f66ab8808c89a0958a
+      internalID: -1988682107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurityPull-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c84ba46c8bb24368975bff030b76a8c
+      internalID: -325283303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurityPull-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8b88b2e5134845dbb056530c3a76293
+      internalID: -1926492470
       vertices: []
       indices: 
       edges: []
@@ -211,10 +253,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PurityPull-Sheet_0: 294931425
-      PurityPull-Sheet_3: -1459338
-      PurityPull-Sheet_1: -1739629375
-      PurityPull-Sheet_2: -74699482
+      PurityPull-Sheet_0: -571142971
+      PurityPull-Sheet_3: -1988682107
+      PurityPull-Sheet_4: -325283303
+      PurityPull-Sheet_1: -2063505580
+      PurityPull-Sheet_2: -1253845395
+      PurityPull-Sheet_5: -1926492470
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -49,7 +49,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 				break;
 			case HandsBaseGemState.Purity:
 				xOffset = 0.87f;
-				yOffset = 0f;
+				yOffset = -0.06f;
 				instantiatePurityPushEffect = true;
 				skillController.animationController.ExecutePushAnim();
 				break;

@@ -56,9 +56,9 @@ public class AttackColliderController : MonoBehaviour
 					} else if (tag == "CorKickDash") {
 						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
-					} else if (tag == "PurityOnlyPull") {
+					} else if (tag == "PullEffect") {
 						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					} else if (tag == "PushEffect") {
 						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
@@ -71,18 +71,6 @@ public class AttackColliderController : MonoBehaviour
 					if (health.IsDead()) {
 						playerSkillController.IsDying = true;
 					}
-				}
-			}
-		}
-	}
-
-	private void OnTriggerStay2D(Collider2D other) {
-		if (compareTag != null && other.CompareTag(compareTag)) {
-			if (compareTag == "Enemy") {
-				if (tag == "PurityOnlyPull") {
-					float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-					float step = force * Time.deltaTime;
-					other.GetComponent<Rigidbody2D>().position = Vector2.MoveTowards(other.GetComponent<Rigidbody2D>().position, playerGO.GetComponent<Rigidbody2D>().position, step);
 				}
 			}
 		}

@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class LeftHandSkillsState : PlayerSkillStateBase
 {
+	private float effectDestroySeconds = 0.1f;
+	private float xOffset = 0f;
+	private float yOffset = 0f;
 	private float pullDuration;
 	private float pullCooldown;
 	private float originalGravityScale;
+	private GameObject activeEffectClone;
 
 	public LeftHandSkillsState(
 		PlayerSkillController playerSkillController,
@@ -30,6 +34,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
+		bool instantiatePurityPullEffect = false;
 		skillController.IsPulling = true;
 		skillController.CanPull = false;
 		originalGravityScale = skillController.Rb.gravityScale;
@@ -42,6 +47,9 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			case HandsBaseGemState.None:
 				break;
 			case HandsBaseGemState.Purity:
+				xOffset = 1.4f;
+				yOffset = -0.06f;
+				instantiatePurityPullEffect = true;
 				skillController.animationController.ExecutePullAnim();
 				break;
 			case HandsBaseGemState.Corruption:
@@ -62,9 +70,18 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				break;
 		}
 
+		if (skillController.LastFacingDirection < 0) {
+			xOffset *= -1;
+		}
+
 		skillController.Rb.velocity = new Vector2(0f, 0f);
 		skillController.StartStateCoroutine(StopPullAnimAfterSeconds());
 		skillController.StartStateCoroutine(PullCooldown());
+		if (instantiatePurityPullEffect) {
+			Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
+			activeEffectClone = skillController.effectController.GetPurityPullEffectClone(effectPosition);
+		}
+		skillController.StartStateCoroutine(DestroyEffectAfterSeconds());
 	}
 
 	public override void UpdateState() {
@@ -146,5 +163,12 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 	private IEnumerator PullCooldown() {
 		yield return new WaitForSeconds(pullCooldown);
 		skillController.CanPull = true;
+	}
+
+	private IEnumerator DestroyEffectAfterSeconds() {
+		yield return new WaitForSeconds(effectDestroySeconds);
+		if (activeEffectClone != null) {
+			Object.Destroy(activeEffectClone);
+		}
 	}
 }

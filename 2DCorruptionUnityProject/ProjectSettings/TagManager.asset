@@ -17,6 +17,7 @@ TagManager:
   - CorKickDash
   - CorJumpKnee
   - PushEffect
+  - PullEffect
   layers:
   - Default
   - TransparentFX

@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f0b78a1817384529a5b03f3c69a69bb
-      internalID: -346909107
+      spriteID: 7c9061dc0a6204bac9cd1b6179dc918a
+      internalID: 475887504
       vertices: []
       indices: 
       edges: []
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e5ee4534fb59467a9ceb04f2c4319d3
-      internalID: 1507734409
+      spriteID: 973c1bba4936f42f198de0a1809a3f26
+      internalID: 970444404
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11ed28136a5f84c4ea1a1d6a2bc7ed9a
-      internalID: 1547392879
+      spriteID: e8631b82a89e34b70b84ad95263403c5
+      internalID: 1977132142
       vertices: []
       indices: 
       edges: []
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ad25606f01554044ba235a789cef66d
-      internalID: 1345035272
+      spriteID: 1861a6b60699246cb9c4329e2a81e362
+      internalID: -666015032
       vertices: []
       indices: 
       edges: []
@@ -215,8 +215,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ab9e5e0b46034b779578707e915c4b8
-      internalID: 1335561276
+      spriteID: b6a33d5b740b84f13b08cd9ce10da788
+      internalID: 40574561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurityPush-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c52899e5f2c6430c9b306e21bca8086
+      internalID: -1567008650
       vertices: []
       indices: 
       edges: []
@@ -232,11 +253,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PurityPush-Sheet_2: 1547392879
-      PurityPush-Sheet_3: 1345035272
-      PurityPush-Sheet_1: 1507734409
-      PurityPush-Sheet_4: 1335561276
-      PurityPush-Sheet_0: -346909107
+      PurityPush-Sheet_2: 1977132142
+      PurityPush-Sheet_5: -1567008650
+      PurityPush-Sheet_3: -666015032
+      PurityPush-Sheet_1: 970444404
+      PurityPush-Sheet_4: 40574561
+      PurityPush-Sheet_0: 475887504
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
