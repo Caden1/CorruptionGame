@@ -7,8 +7,10 @@ public class RightFootSkillsState : PlayerSkillStateBase
 {
 	private float xOffset = 0f;
 	private float yOffset = 0f;
-	private GameObject activeEffectClone;
+	private float purityEffectLifetime = 0.1f;
 	private float jumpFacingDirection;
+	private GameObject activeCorEffect;
+	private GameObject activePurityEffect;
 
 	public RightFootSkillsState(
 		PlayerSkillController playerSkillController,
@@ -33,27 +35,37 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		float jumpForce = 0f;
-		skillController.animationController.ExecuteJumpAnim();
+		Vector2 effectPosition = new Vector2();
+		activeCorEffect = null;
+		activePurityEffect = null;
 
 		// Feet base gem
-		jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
+		float jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
-				activeEffectClone = null;
 				break;
 			case FeetBaseGemState.Purity:
-				activeEffectClone = null;
+				skillController.animationController.ExecutePurityJumpAnim();
+				xOffset = 0f;
+				yOffset = -0.8f;
+				effectPosition = new Vector2(
+					skillController.transform.position.x + xOffset,
+					skillController.transform.position.y + yOffset);
+				activePurityEffect = skillController.effectController.GetPurityOnlyJumpEffectClone(effectPosition);
+				skillController.StartStateCoroutine(DestroyActivePurityEffectAfterSeconds());
 				break;
 			case FeetBaseGemState.Corruption:
+				skillController.animationController.ExecuteJumpAnim();
 				xOffset = 0.4f;
 				yOffset = 0.12f;
 				jumpFacingDirection = skillController.LastFacingDirection;
 				if (jumpFacingDirection < 0) {
 					xOffset *= -1;
 				}
-				Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
-				activeEffectClone = skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				effectPosition = new Vector2(
+					skillController.transform.position.x + xOffset,
+					skillController.transform.position.y + yOffset);
+				activeCorEffect = skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
 				break;
 		}
 
@@ -77,7 +89,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 	public override void UpdateState() {
 		// If player turns around, destroy the effect
 		if (jumpFacingDirection != skillController.LastFacingDirection) {
-			DestroyActiveEffectClone();
+			DestroyActiveCorEffectClone();
 		}
 
 		// Jump Cancel
@@ -88,10 +100,10 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		// From Jumping player can Swap, Fall, LeftFoot, RightHand, LeftHand
 		//		NOTE: Double Jump is handled in FallingSkillState class
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			DestroyActiveEffectClone();
+			DestroyActiveCorEffectClone();
 			gemController.SwapGems();
 		} else if (skillController.Rb.velocity.y < 0f) {
-			DestroyActiveEffectClone();
+			DestroyActiveCorEffectClone();
 			skillController.TransitionToState(
 				PlayerStateType.Falling,
 				skillController.CurrentHandsBaseGemState,
@@ -102,7 +114,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
-			DestroyActiveEffectClone();
+			DestroyActiveCorEffectClone();
 			skillController.TransitionToState(
 				PlayerStateType.LeftFoot,
 				skillController.CurrentHandsBaseGemState,
@@ -113,7 +125,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
-			DestroyActiveEffectClone();
+			DestroyActiveCorEffectClone();
 			skillController.TransitionToState(
 				PlayerStateType.RightHand,
 				skillController.CurrentHandsBaseGemState,
@@ -124,7 +136,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
-			DestroyActiveEffectClone();
+			DestroyActiveCorEffectClone();
 			skillController.TransitionToState(
 				PlayerStateType.LeftHand,
 				skillController.CurrentHandsBaseGemState,
@@ -139,9 +151,16 @@ public class RightFootSkillsState : PlayerSkillStateBase
 
 	public override void ExitState() { }
 
-	private void DestroyActiveEffectClone() {
-		if (activeEffectClone != null) {
-			Object.Destroy(activeEffectClone);
+	private void DestroyActiveCorEffectClone() {
+		if (activeCorEffect != null) {
+			Object.Destroy(activeCorEffect);
+		}
+	}
+
+	private IEnumerator DestroyActivePurityEffectAfterSeconds() {
+		yield return new WaitForSeconds(purityEffectLifetime);
+		if (activePurityEffect != null) {
+			Object.Destroy(activePurityEffect);
 		}
 	}
 }

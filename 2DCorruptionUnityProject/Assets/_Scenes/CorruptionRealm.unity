@@ -2123,6 +2123,7 @@ MonoBehaviour:
   corDashKickEffectPrefab: {fileID: 3031732302554129639, guid: 6c80a61fa61664c8d9c0fa97dbc069df, type: 3}
   purityPushEffectPrefab: {fileID: 2750129355746689548, guid: 74ae77abe454047ca9b89b9156ac9e5a, type: 3}
   purityPullEffectPrefab: {fileID: 1399147483156514911, guid: bc3ae3720c9c84c25971a1e3e7dbe50b, type: 3}
+  purityOnlyJumpEffectPrefab: {fileID: 6602515415818370632, guid: e63bf29a69fa74922ae33d1464509a1f, type: 3}
 --- !u!1 &1242416417
 GameObject:
   m_ObjectHideFlags: 3
