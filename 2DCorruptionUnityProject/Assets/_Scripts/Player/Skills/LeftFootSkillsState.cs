@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LeftFootSkillsState : PlayerSkillStateBase
 {
-	private float instantiateEffectDelay = 0.1f;
+	private float instantiateCorEffectDelay = 0.1f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
 	private float dashForce;
@@ -36,10 +36,8 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		bool instantiateCorDamageEffect = false;
 		skillController.IsDashing = true;
 		skillController.CanDash = false;
-		skillController.animationController.ExecuteDashAnim();
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
@@ -51,11 +49,17 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
+				skillController.animationController.ExecutePurityDashAnim();
+				xOffset = 0f;
+				yOffset = -0.8f;
+				Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
+				activeEffectClone = skillController.effectController.GetPurityOnlyDashEffectClone(effectPosition);
 				break;
 			case FeetBaseGemState.Corruption:
+				skillController.animationController.ExecuteDashAnim();
 				xOffset = 1.15f;
 				yOffset = -0.05f;
-				instantiateCorDamageEffect = true;
+				skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
 				break;
 		}
 
@@ -80,9 +84,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		skillController.StartStateCoroutine(StopDashAfterSeconds());
 		skillController.StartStateCoroutine(DashCooldown());
-		if (instantiateCorDamageEffect) {
-			skillController.StartStateCoroutine(InstantiateEffectWithDelay());
-		}
 	}
 
 	public override void UpdateState() {
@@ -169,8 +170,8 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		skillController.CanDash = true;
 	}
 
-	private IEnumerator InstantiateEffectWithDelay() {
-		yield return new WaitForSeconds(instantiateEffectDelay);
+	private IEnumerator InstantiateCorEffectWithDelay() {
+		yield return new WaitForSeconds(instantiateCorEffectDelay);
 		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
 		activeEffectClone = skillController.effectController.GetCorDashKickEffectClone(effectPosition);
 	}
