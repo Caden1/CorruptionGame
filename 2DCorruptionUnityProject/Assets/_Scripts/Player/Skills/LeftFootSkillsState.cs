@@ -5,6 +5,7 @@ using UnityEngine;
 public class LeftFootSkillsState : PlayerSkillStateBase
 {
 	private float instantiateCorEffectDelay = 0.1f;
+	private float executePurityAnimPart2Delay = 0.15f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
 	private float dashForce;
@@ -49,11 +50,8 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityDashAnim();
-				xOffset = 0f;
-				yOffset = -0.8f;
-				Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
-				activeEffectClone = skillController.effectController.GetPurityOnlyDashEffectClone(effectPosition);
+				skillController.animationController.ExecutePurityDashPart1Anim();
+				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Corruption:
 				skillController.animationController.ExecuteDashAnim();
@@ -174,5 +172,10 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
 		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
 		activeEffectClone = skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+	}
+
+	private IEnumerator ExecutePurityAnimPart2WithDelay() {
+		yield return new WaitForSeconds(executePurityAnimPart2Delay);
+		skillController.animationController.ExecutePurityDashPart2Anim();
 	}
 }

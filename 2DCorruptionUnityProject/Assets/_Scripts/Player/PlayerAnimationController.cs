@@ -44,7 +44,11 @@ public class PlayerAnimationController : MonoBehaviour
 		animator.Play("PurityOnlyJump");
 	}
 
-	public void ExecutePurityDashAnim() {
-		animator.Play("PurityOnlyDash");
+	public void ExecutePurityDashPart1Anim() {
+		animator.Play("PurityOnlyDashPart1");
+	}
+
+	public void ExecutePurityDashPart2Anim() {
+		animator.Play("PurityOnlyDashPart2");
 	}
 }

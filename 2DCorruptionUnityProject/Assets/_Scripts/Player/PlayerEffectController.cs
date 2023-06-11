@@ -8,7 +8,6 @@ public class PlayerEffectController : MonoBehaviour
 	[SerializeField] private GameObject purityPushEffectPrefab;
 	[SerializeField] private GameObject purityPullEffectPrefab;
 	[SerializeField] private GameObject purityOnlyJumpEffectPrefab;
-	[SerializeField] private GameObject purityOnlyDashEffectPrefab;
 
 	public GameObject GetCorJumpKneeEffectClone(Vector2 position) {
 		GameObject effectInstance = Instantiate(corJumpKneeEffectPrefab, position, Quaternion.identity);
@@ -57,17 +56,6 @@ public class PlayerEffectController : MonoBehaviour
 			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
 		}
 		animator.Play("PurityOnlyJumpEffect");
-
-		return effectInstance;
-	}
-
-	public GameObject GetPurityOnlyDashEffectClone(Vector2 position) {
-		GameObject effectInstance = Instantiate(purityOnlyDashEffectPrefab, position, Quaternion.identity);
-		Animator animator = effectInstance.GetComponent<Animator>();
-		if (GetComponent<SpriteRenderer>().flipX) {
-			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
-		}
-		animator.Play("PurityOnlyDashEffect");
 
 		return effectInstance;
 	}
