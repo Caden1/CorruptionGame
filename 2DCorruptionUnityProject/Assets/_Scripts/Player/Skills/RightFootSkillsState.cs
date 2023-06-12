@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 
 public class RightFootSkillsState : PlayerSkillStateBase
 {
+	private float executePurityAnimPart2Delay = 0.3f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
 	private float jumpFacingDirection;
 	private GameObject activeCorEffect;
-	private GameObject activePurityEffect;
 
 	public RightFootSkillsState(
 		PlayerSkillController playerSkillController,
@@ -36,7 +36,6 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			);
 		Vector2 effectPosition = new Vector2();
 		activeCorEffect = null;
-		activePurityEffect = null;
 
 		// Feet base gem
 		float jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
@@ -44,13 +43,13 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityJumpAnim();
+				skillController.animationController.ExecutePurityJumpPart1Anim();
+				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 				xOffset = 0f;
 				yOffset = -0.8f;
 				effectPosition = new Vector2(
 					skillController.transform.position.x + xOffset,
 					skillController.transform.position.y + yOffset);
-				activePurityEffect = skillController.effectController.GetPurityOnlyJumpEffectClone(effectPosition);
 				break;
 			case FeetBaseGemState.Corruption:
 				skillController.animationController.ExecuteJumpAnim();
@@ -99,11 +98,9 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		//		NOTE: Double Jump is handled in FallingSkillState class
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			DestroyActiveCorEffect();
-			DestroyActivePurityEffect();
 			gemController.SwapGems();
 		} else if (skillController.Rb.velocity.y < 0f) {
 			DestroyActiveCorEffect();
-			DestroyActivePurityEffect();
 			skillController.TransitionToState(
 				PlayerStateType.Falling,
 				skillController.CurrentHandsBaseGemState,
@@ -115,7 +112,6 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
 			DestroyActiveCorEffect();
-			DestroyActivePurityEffect();
 			skillController.TransitionToState(
 				PlayerStateType.LeftFoot,
 				skillController.CurrentHandsBaseGemState,
@@ -127,7 +123,6 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
 			DestroyActiveCorEffect();
-			DestroyActivePurityEffect();
 			skillController.TransitionToState(
 				PlayerStateType.RightHand,
 				skillController.CurrentHandsBaseGemState,
@@ -139,7 +134,6 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				);
 		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
 			DestroyActiveCorEffect();
-			DestroyActivePurityEffect();
 			skillController.TransitionToState(
 				PlayerStateType.LeftHand,
 				skillController.CurrentHandsBaseGemState,
@@ -160,9 +154,8 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		}
 	}
 
-	private void DestroyActivePurityEffect() {
-		if (activePurityEffect != null) {
-			Object.Destroy(activePurityEffect);
-		}
+	private IEnumerator ExecutePurityAnimPart2WithDelay() {
+		yield return new WaitForSeconds(executePurityAnimPart2Delay);
+		skillController.animationController.ExecutePurityJumpPart2Anim();
 	}
 }

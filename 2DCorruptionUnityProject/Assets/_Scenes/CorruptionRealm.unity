@@ -2124,7 +2124,6 @@ MonoBehaviour:
   purityPushEffectPrefab: {fileID: 2750129355746689548, guid: 74ae77abe454047ca9b89b9156ac9e5a, type: 3}
   purityPullEffectPrefab: {fileID: 1399147483156514911, guid: bc3ae3720c9c84c25971a1e3e7dbe50b, type: 3}
   purityOnlyJumpEffectPrefab: {fileID: 1552586314886738824, guid: 4f327be4764df45faa194a861599aedc, type: 3}
-  purityOnlyDashEffectPrefab: {fileID: 7515619021185758602, guid: 4af0e7dfe14b94efd82390bffe533c17, type: 3}
 --- !u!1 &1242416417
 GameObject:
   m_ObjectHideFlags: 3

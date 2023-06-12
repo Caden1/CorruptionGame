@@ -40,8 +40,12 @@ public class PlayerAnimationController : MonoBehaviour
 		animator.Play("PurityOnlyPull");
 	}
 
-	public void ExecutePurityJumpAnim() {
-		animator.Play("PurityOnlyJump");
+	public void ExecutePurityJumpPart1Anim() {
+		animator.Play("PurityOnlyJumpPart1");
+	}
+
+	public void ExecutePurityJumpPart2Anim() {
+		animator.Play("PurityOnlyJumpPart2");
 	}
 
 	public void ExecutePurityDashPart1Anim() {
