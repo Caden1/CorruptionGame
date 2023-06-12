@@ -2121,9 +2121,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corJumpKneeEffectPrefab: {fileID: 3674239864049006427, guid: 950feec3d4b7d4a86bb64b31d4dab017, type: 3}
   corDashKickEffectPrefab: {fileID: 3031732302554129639, guid: 6c80a61fa61664c8d9c0fa97dbc069df, type: 3}
+  corMeleeEffectPrefab: {fileID: 4413780547161758160, guid: eb7f1a922f8fb40b988ff61bbda1377e, type: 3}
   purityPushEffectPrefab: {fileID: 2750129355746689548, guid: 74ae77abe454047ca9b89b9156ac9e5a, type: 3}
   purityPullEffectPrefab: {fileID: 1399147483156514911, guid: bc3ae3720c9c84c25971a1e3e7dbe50b, type: 3}
-  purityOnlyJumpEffectPrefab: {fileID: 1552586314886738824, guid: 4f327be4764df45faa194a861599aedc, type: 3}
 --- !u!1 &1242416417
 GameObject:
   m_ObjectHideFlags: 3

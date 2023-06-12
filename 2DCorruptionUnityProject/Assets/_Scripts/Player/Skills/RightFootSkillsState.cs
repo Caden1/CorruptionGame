@@ -121,7 +121,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
+		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanUseRightHandSkill) {
 			DestroyActiveCorEffect();
 			skillController.TransitionToState(
 				PlayerStateType.RightHand,
@@ -132,7 +132,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanUseLeftHandSkill) {
 			DestroyActiveCorEffect();
 			skillController.TransitionToState(
 				PlayerStateType.LeftHand,

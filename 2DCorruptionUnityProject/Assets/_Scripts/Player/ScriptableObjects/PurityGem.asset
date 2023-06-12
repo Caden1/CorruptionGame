@@ -19,7 +19,7 @@ MonoBehaviour:
   dashForce: 10
   dashCooldown: 2
   dashDuration: 0.5
-  pushDuration: 0.6
-  pushCooldown: 2
-  pullDuration: 0.6
-  pullCooldown: 2
+  rightHandSkillDuration: 0.6
+  rightHandSkillCooldown: 2
+  leftHandSkillDuration: 0.6
+  leftHandSkillCooldown: 2

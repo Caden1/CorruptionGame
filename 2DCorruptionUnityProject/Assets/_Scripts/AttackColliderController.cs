@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 
 public class AttackColliderController : MonoBehaviour
 {
+	// These can be set in the Inspector
 	public string compareTag;
 	public float damage = 10.0f;
 	public float force = 5.0f;
@@ -60,6 +61,9 @@ public class AttackColliderController : MonoBehaviour
 						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					} else if (tag == "PushEffect") {
+						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
+						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+					} else if (tag == "CorMeleeEffect") {
 						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					}

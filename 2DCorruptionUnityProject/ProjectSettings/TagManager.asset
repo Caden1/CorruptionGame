@@ -18,6 +18,7 @@ TagManager:
   - CorJumpKnee
   - PushEffect
   - PullEffect
+  - CorMeleeEffect
   layers:
   - Default
   - TransparentFX

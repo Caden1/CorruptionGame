@@ -55,4 +55,8 @@ public class PlayerAnimationController : MonoBehaviour
 	public void ExecutePurityDashPart2Anim() {
 		animator.Play("PurityOnlyDashPart2");
 	}
+
+	public void ExecuteCorruptionOnlyMeleeAnim() {
+		animator.Play("CorruptionOnlyMelee");
+	}
 }

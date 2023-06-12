@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class RightHandSkillsState : PlayerSkillStateBase
 {
-	private float instantiateEffectDelay = 0.35f;
+	private float instantiatePurityEffectDelay = 0.35f;
+	private float instantiateCorEffectDelay = 0.25f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
-	private float pushDuration;
-	private float pushCooldown;
+	private float rightHandSkillDuration;
+	private float rightHandSkillCooldown;
 	private float originalGravityScale;
 	private GameObject activeEffectClone;
 
@@ -36,14 +37,15 @@ public class RightHandSkillsState : PlayerSkillStateBase
 			leftFootElementalModifierGemState
 			);
 		bool instantiatePurityPushEffect = false;
-		skillController.IsPushing = true;
-		skillController.CanPush = false;
+		bool instantiateCorMeleeEffect = false;
+		skillController.IsUsingRightHandSkill = true;
+		skillController.CanUseRightHandSkill = false;
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
 		// Hands base gem
-		pushDuration = skillController.GemController.GetBaseHandsGem().pushDuration;
-		pushCooldown = skillController.GemController.GetBaseHandsGem().pushCooldown;
+		rightHandSkillDuration = skillController.GemController.GetBaseHandsGem().rightHandSkillDuration;
+		rightHandSkillCooldown = skillController.GemController.GetBaseHandsGem().rightHandSkillCooldown;
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
 				break;
@@ -54,6 +56,10 @@ public class RightHandSkillsState : PlayerSkillStateBase
 				skillController.animationController.ExecutePushAnim();
 				break;
 			case HandsBaseGemState.Corruption:
+				xOffset = 0.5f;
+				yOffset = 0.2f;
+				instantiateCorMeleeEffect = true;
+				skillController.animationController.ExecuteCorruptionOnlyMeleeAnim();
 				break;
 		}
 
@@ -76,10 +82,12 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		}
 
 		skillController.Rb.velocity = new Vector2(0f, 0f);
-		skillController.StartStateCoroutine(StopPushAnimAfterSeconds());
-		skillController.StartStateCoroutine(PushCooldown());
+		skillController.StartStateCoroutine(StopAnimAfterSeconds());
+		skillController.StartStateCoroutine(Cooldown());
 		if (instantiatePurityPushEffect) {
-			skillController.StartStateCoroutine(InstantiateEffectWithDelay());
+			skillController.StartStateCoroutine(InstantiatePurityEffectWithDelay());
+		} else if (instantiateCorMeleeEffect) {
+			skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
 		}
 	}
 
@@ -138,7 +146,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanPull) {
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanUseLeftHandSkill) {
 			skillController.TransitionToState(
 				PlayerStateType.LeftHand,
 				skillController.CurrentHandsBaseGemState,
@@ -153,23 +161,29 @@ public class RightHandSkillsState : PlayerSkillStateBase
 
 	public override void ExitState() { }
 
-	private IEnumerator StopPushAnimAfterSeconds() {
-		yield return new WaitForSeconds(pushDuration);
+	private IEnumerator StopAnimAfterSeconds() {
+		yield return new WaitForSeconds(rightHandSkillDuration);
 		skillController.Rb.gravityScale = originalGravityScale;
-		skillController.IsPushing = false;
+		skillController.IsUsingRightHandSkill = false;
 		if (activeEffectClone != null) {
 			Object.Destroy(activeEffectClone);
 		}
 	}
 
-	private IEnumerator PushCooldown() {
-		yield return new WaitForSeconds(pushCooldown);
-		skillController.CanPush = true;
+	private IEnumerator Cooldown() {
+		yield return new WaitForSeconds(rightHandSkillCooldown);
+		skillController.CanUseRightHandSkill = true;
 	}
 
-	private IEnumerator InstantiateEffectWithDelay() {
-		yield return new WaitForSeconds(instantiateEffectDelay);
+	private IEnumerator InstantiatePurityEffectWithDelay() {
+		yield return new WaitForSeconds(instantiatePurityEffectDelay);
 		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
 		activeEffectClone = skillController.effectController.GetPurityPushEffectClone(effectPosition);
+	}
+
+	private IEnumerator InstantiateCorEffectWithDelay() {
+		yield return new WaitForSeconds(instantiateCorEffectDelay);
+		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
+		activeEffectClone = skillController.effectController.GetCorMeleeEffectClone(effectPosition);
 	}
 }

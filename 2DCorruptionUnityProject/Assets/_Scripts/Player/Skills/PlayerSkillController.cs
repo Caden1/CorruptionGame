@@ -30,10 +30,10 @@ public class PlayerSkillController : MonoBehaviour
 	public float LastFacingDirection { get; set; } = 1;
 	public bool CanDash { get; set; } = true;
 	public bool IsDashing { get; set; } = false;
-	public bool CanPush { get; set; } = true;
-	public bool IsPushing { get; set; } = false;
-	public bool CanPull { get; set; } = true;
-	public bool IsPulling { get; set; } = false;
+	public bool CanUseRightHandSkill { get; set; } = true;
+	public bool IsUsingRightHandSkill { get; set; } = false;
+	public bool CanUseLeftHandSkill { get; set; } = true;
+	public bool IsUsingLeftHandSkill { get; set; } = false;
 	public bool IsDying { get; set; } = false;
 
 	private void Awake() {
@@ -85,7 +85,7 @@ public class PlayerSkillController : MonoBehaviour
 
 	private void Update() {
 		if (!IsDying) {
-			if (!IsDashing && !IsPushing && !IsPulling) {
+			if (!IsDashing && !IsUsingRightHandSkill && !IsUsingLeftHandSkill) {
 				currentState?.UpdateState();
 			}
 		} else {

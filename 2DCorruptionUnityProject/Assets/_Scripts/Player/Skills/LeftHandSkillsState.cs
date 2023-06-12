@@ -35,14 +35,14 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			leftFootElementalModifierGemState
 			);
 		bool instantiatePurityPullEffect = false;
-		skillController.IsPulling = true;
-		skillController.CanPull = false;
+		skillController.IsUsingLeftHandSkill = true;
+		skillController.CanUseLeftHandSkill = false;
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
 		// Hands base gem
-		pullDuration = skillController.GemController.GetBaseHandsGem().pullDuration;
-		pullCooldown = skillController.GemController.GetBaseHandsGem().pullCooldown;
+		pullDuration = skillController.GemController.GetBaseHandsGem().leftHandSkillDuration;
+		pullCooldown = skillController.GemController.GetBaseHandsGem().leftHandSkillCooldown;
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
 				break;
@@ -139,7 +139,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanPush) {
+		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanUseRightHandSkill) {
 			skillController.TransitionToState(
 				PlayerStateType.RightHand,
 				skillController.CurrentHandsBaseGemState,
@@ -157,12 +157,12 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 	private IEnumerator StopPullAnimAfterSeconds() {
 		yield return new WaitForSeconds(pullDuration);
 		skillController.Rb.gravityScale = originalGravityScale;
-		skillController.IsPulling = false;
+		skillController.IsUsingLeftHandSkill = false;
 	}
 
 	private IEnumerator PullCooldown() {
 		yield return new WaitForSeconds(pullCooldown);
-		skillController.CanPull = true;
+		skillController.CanUseLeftHandSkill = true;
 	}
 
 	private IEnumerator DestroyEffectAfterSeconds() {

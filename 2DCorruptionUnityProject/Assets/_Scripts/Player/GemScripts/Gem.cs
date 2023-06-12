@@ -10,8 +10,8 @@ public class Gem : ScriptableObject
 	public float dashForce;
 	public float dashCooldown;
 	public float dashDuration;
-	public float pushDuration;
-	public float pushCooldown;
-	public float pullDuration;
-	public float pullCooldown;
+	public float rightHandSkillDuration;
+	public float rightHandSkillCooldown;
+	public float leftHandSkillDuration;
+	public float leftHandSkillCooldown;
 }
