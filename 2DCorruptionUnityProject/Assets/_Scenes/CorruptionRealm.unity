@@ -3057,7 +3057,7 @@ MonoBehaviour:
   takeDamageDuration: 0.5
   deathSeconds: 0.5
   player: {fileID: 1208835180}
-  attackEffectPrefab: {fileID: 3411532929460867468, guid: 6b050216da2f64da28f3195eb1272077, type: 3}
+  attackEffectPrefab: {fileID: 1727787814334629875, guid: c5b517ad50280465aaf1fda139fafd84, type: 3}
 --- !u!1001 &1824119984
 PrefabInstance:
   m_ObjectHideFlags: 0
