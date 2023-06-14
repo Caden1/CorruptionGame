@@ -31,4 +31,36 @@ public class PlayerAnimationController : MonoBehaviour
 	public void ExecuteDeathAnim() {
 		animator.Play("Death");
 	}
+
+	public void ExecutePushAnim() {
+		animator.Play("PurityOnlyPush");
+	}
+
+	public void ExecutePullAnim() {
+		animator.Play("PurityOnlyPull");
+	}
+
+	public void ExecutePurityJumpPart1Anim() {
+		animator.Play("PurityOnlyJumpPart1");
+	}
+
+	public void ExecutePurityJumpPart2Anim() {
+		animator.Play("PurityOnlyJumpPart2");
+	}
+
+	public void ExecutePurityDashPart1Anim() {
+		animator.Play("PurityOnlyDashPart1");
+	}
+
+	public void ExecutePurityDashPart2Anim() {
+		animator.Play("PurityOnlyDashPart2");
+	}
+
+	public void ExecuteCorruptionOnlyMeleeAnim() {
+		animator.Play("CorruptionOnlyMelee");
+	}
+
+	public void ExecuteCorruptionOnlyRangedAnim() {
+		animator.Play("CorruptionOnlyRanged");
+	}
 }

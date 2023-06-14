@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4354132d6aac747f498393437b464e94, type: 3}
   m_Name: NoGem
   m_EditorClassIdentifier: 
+  gemName: None
   moveSpeed: 4
-  jumpForce: 5
+  jumpForce: 8
   numberOfJumps: 1
-  dashForce: 7
-  dashCooldown: 2
-  dashDuration: 0.5
-  meleeDamage: 0
-  rangedDamage: 0
+  dashForce: 0
+  dashCooldown: 0
+  dashDuration: 0
+  pushForce: 0
+  pushDuration: 0
+  pushCooldown: 0

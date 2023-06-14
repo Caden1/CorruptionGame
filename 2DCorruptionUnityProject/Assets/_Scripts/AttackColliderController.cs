@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 
 public class AttackColliderController : MonoBehaviour
 {
+	// These can be set in the Inspector
 	public string compareTag;
 	public float damage = 10.0f;
 	public float force = 5.0f;
@@ -43,23 +44,28 @@ public class AttackColliderController : MonoBehaviour
 			if (health != null) {
 				health.TakeDamage(damage);
 				if (compareTag == "Enemy") {
+					float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 					healthBar = other.transform.GetChild(0).GetChild(1);
+
 					if (enemyController != null) {
 						enemyController.SetEnemyStateToTakeDamage();
 					}
+
 					if (healthBar != null) {
 						healthBar.localScale = new Vector2(health.GetHealthPercentage(), 1f);
 					}
 
 					if (tag == "CorJumpKnee") {
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, force), ForceMode2D.Impulse);
-					} else if (tag == "CorKickDash") {
-						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
-					} else if (tag == "PurityOnlyPull") {
-						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						other.GetComponent<Rigidbody2D>().AddForce(
+							new Vector2(0f, force), ForceMode2D.Impulse);
+					} else if (tag == "PullEffect") {
+						other.GetComponent<Rigidbody2D>().AddForce(
+							new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
+					} else {
+						other.GetComponent<Rigidbody2D>().AddForce(
+							new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					}
+
 					if (health.IsDead()) {
 						enemyController.SetEnemyStateToDying();
 					}
@@ -68,18 +74,6 @@ public class AttackColliderController : MonoBehaviour
 					if (health.IsDead()) {
 						playerSkillController.IsDying = true;
 					}
-				}
-			}
-		}
-	}
-
-	private void OnTriggerStay2D(Collider2D other) {
-		if (compareTag != null && other.CompareTag(compareTag)) {
-			if (compareTag == "Enemy") {
-				if (tag == "PurityOnlyPull") {
-					float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-					float step = force * Time.deltaTime;
-					other.GetComponent<Rigidbody2D>().position = Vector2.MoveTowards(other.GetComponent<Rigidbody2D>().position, playerGO.GetComponent<Rigidbody2D>().position, step);
 				}
 			}
 		}

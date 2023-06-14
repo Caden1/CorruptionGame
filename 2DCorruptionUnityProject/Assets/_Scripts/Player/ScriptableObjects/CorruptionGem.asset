@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4354132d6aac747f498393437b464e94, type: 3}
+  m_Name: CorruptionGem
+  m_EditorClassIdentifier: 
+  gemName: Corruption
+  moveSpeed: 4
+  jumpForce: 8
+  numberOfJumps: 1
+  dashForce: 6
+  dashCooldown: 2
+  dashDuration: 0.5
+  rightHandSkillDuration: 0.35
+  rightHandSkillCooldown: 0.36
+  leftHandSkillDuration: 0.3
+  leftHandSkillCooldown: 0.31
