@@ -3048,16 +3048,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 1.5
-  runSpeed: 2
+  runSpeed: 3
   roamDistance: 5
   detectionRange: 3
+  aggroingDetectionRange: 10
+  aggroDetectionDuration: 4
   verticalDetectionLimit: 1
-  attackRange: 1
+  attackRange: 0.8
   attackCooldown: 2
   takeDamageDuration: 0.5
   deathSeconds: 0.5
   player: {fileID: 1208835180}
-  attackEffectPrefab: {fileID: 3411532929460867468, guid: 6b050216da2f64da28f3195eb1272077, type: 3}
+  attackEffectPrefab: {fileID: 1727787814334629875, guid: c5b517ad50280465aaf1fda139fafd84, type: 3}
 --- !u!1001 &1824119984
 PrefabInstance:
   m_ObjectHideFlags: 0
