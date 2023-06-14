@@ -4,53 +4,100 @@ using UnityEngine;
 
 public class FallingSkillState : PlayerSkillStateBase
 {
-	private int numberOfJumps = 0;
+	public FallingSkillState(
+		PlayerSkillController playerSkillController,
+		PlayerInputActions inputActions,
+		GemController gemController
+		)
+		: base(playerSkillController, inputActions, gemController) { }
 
-	public FallingSkillState(PlayerSkillController playerSkillController, PlayerInputActions inputActions)
-		: base(playerSkillController, inputActions) { }
-
-	public override void EnterState(PurityCorruptionGem purCorGem, ElementalModifierGem elemModGem) {
-		InitializeState(purCorGem, elemModGem);
+	public override void EnterState(
+		HandsBaseGemState handsBaseGemState,
+		FeetBaseGemState feetBaseGemState,
+		RightHandElementalModifierGemState rightHandElementalModifierGemState,
+		LeftHandElementalModifierGemState leftHandElementalModifierGemState,
+		RightFootElementalModifierGemState rightFootElementalModifierGemState,
+		LeftFootElementalModifierGemState leftFootElementalModifierGemState
+		) {
+		InitializeState(
+			handsBaseGemState,
+			feetBaseGemState,
+			rightHandElementalModifierGemState,
+			leftHandElementalModifierGemState,
+			rightFootElementalModifierGemState,
+			leftFootElementalModifierGemState
+			);
 		skillController.animationController.ExecuteFallAnim();
 	}
 
 	public override void UpdateState() {
-		// From Falling player can Idle, Run, Jump (if more than 1 available), Dash, RightGlove, LeftGlove
-		if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
-			skillController.TransitionToState(skillController.IdleSkillState);
+		// From Running player can Swap, Idle, Run, RightFoot (if more than 1 jump available),
+		//		LeftFoot, RightHand, LeftHand
+		if (inputActions.Player.Swap.WasPressedThisFrame()) {
+			gemController.SwapGems();
+		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
+			skillController.TransitionToState(
+				PlayerStateType.Idle,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
 		} else if (Mathf.Abs(skillController.Rb.velocity.x) > 0.1f && skillController.IsGrounded()) {
-			skillController.TransitionToState(skillController.RunningSkillState);
-		} else if (inputActions.Player.Jump.WasPressedThisFrame() && numberOfJumps > 1) {
-			numberOfJumps--;
-			skillController.TransitionToState(skillController.JumpingSkillState);
+			skillController.TransitionToState(
+				PlayerStateType.Running,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Jump.WasPressedThisFrame() && skillController.numberOfJumps > 1) {
+			skillController.numberOfJumps--;
+			skillController.TransitionToState(
+				PlayerStateType.RightFoot,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
 		} else if (inputActions.Player.Dash.WasPressedThisFrame() && skillController.CanDash) {
-			skillController.TransitionToState(skillController.DashingSkillState);
+			skillController.TransitionToState(
+				PlayerStateType.LeftFoot,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Melee.WasPressedThisFrame() && skillController.CanUseRightHandSkill) {
+			skillController.TransitionToState(
+				PlayerStateType.RightHand,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
+		} else if (inputActions.Player.Ranged.WasPressedThisFrame() && skillController.CanUseLeftHandSkill) {
+			skillController.TransitionToState(
+				PlayerStateType.LeftHand,
+				skillController.CurrentHandsBaseGemState,
+				skillController.CurrentFeetBaseGemState,
+				skillController.CurrentRightHandElementalModifierGemState,
+				skillController.CurrentLeftHandElementalModifierGemState,
+				skillController.CurrentRightFootElementalModifierGemState,
+				skillController.CurrentLeftFootElementalModifierGemState
+				);
 		}
 	}
 
-	public void ResetNumberOfJumps() {
-		switch (skillController.CurrentPurCorGemState) {
-			case PurityCorruptionGem.None:
-				numberOfJumps = skillController.GemController.GetRightFootGem().numberOfJumps;
-				break;
-			case PurityCorruptionGem.Purity:
-				break;
-			case PurityCorruptionGem.Corruption:
-				break;
-		}
-
-		switch (skillController.CurrentElemModGemState) {
-			case ElementalModifierGem.None:
-				break;
-			case ElementalModifierGem.Air:
-				break;
-			case ElementalModifierGem.Fire:
-				break;
-			case ElementalModifierGem.Water:
-				break;
-			case ElementalModifierGem.Earth:
-				break;
-		}
-	}
-
+	public override void ExitState() { }
 }

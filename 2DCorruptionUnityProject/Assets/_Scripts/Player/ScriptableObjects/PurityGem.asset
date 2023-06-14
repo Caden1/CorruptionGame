@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4354132d6aac747f498393437b464e94, type: 3}
   m_Name: PurityGem
   m_EditorClassIdentifier: 
+  gemName: Purity
   moveSpeed: 4
   jumpForce: 8
   numberOfJumps: 2
-  dashForce: 7
+  dashForce: 10
   dashCooldown: 2
   dashDuration: 0.5
-  meleeDamage: 0
-  rangedDamage: 0
+  rightHandSkillDuration: 0.6
+  rightHandSkillCooldown: 2
+  leftHandSkillDuration: 0.6
+  leftHandSkillCooldown: 2

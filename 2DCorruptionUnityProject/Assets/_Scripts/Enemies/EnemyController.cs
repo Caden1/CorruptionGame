@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
 	public float runSpeed = 2f;
 	public float roamDistance = 5.0f;
 	public float detectionRange = 3.0f;
+	public float aggroingDetectionRange = 5.0f;
+	public float aggroDetectionDuration = 5.0f;
 	public float verticalDetectionLimit = 1.0f;
 	public float attackRange = 1.0f;
 	public float attackCooldown = 2.0f;
@@ -51,7 +53,7 @@ public class EnemyController : MonoBehaviour
 	void Update() {
 		if (!playerSkillController.IsDying) {
 			if (currentState != EnemyState.Dying) {
-				if (!isTakingDamage) {
+				if (!isTakingDamage && !isAttacking) {
 					switch (currentState) {
 						case EnemyState.Roam:
 							if (!isIdle) {
@@ -81,6 +83,7 @@ public class EnemyController : MonoBehaviour
 							break;
 						case EnemyState.TakeDamage:
 							StartCoroutine(TakeDamage());
+							StartCoroutine(TempAggroDetectionRange());
 							UpdateAnimationState(AnimationState.TakeDamage);
 							break;
 					}
@@ -177,25 +180,39 @@ public class EnemyController : MonoBehaviour
 	}
 
 	void AttackPlayer() {
-		if (!isAttacking && !isInAttackCooldown) {
+		if (!isInAttackCooldown) {
+			UpdateDirectionBeforeAttack();
 			UpdateAnimationState(AnimationState.Attacking);
 			StartCoroutine(InstantiateAttackEffect());
 			StartCoroutine(AttackCooldown());
 		}
 	}
 
+	void UpdateDirectionBeforeAttack() {
+		float playerDistance = rb.position.x - player.position.x;
+		if (playerDistance > 0) {
+			spriteRenderer.flipX = true;
+		} else if (playerDistance < 0) {
+			spriteRenderer.flipX = false;
+		}
+	}
+
 	IEnumerator InstantiateAttackEffect() {
+		float xOffset = 0.6f;
+		float yOffset = 0.25f;
+		float secondsBeforeInstantiating = 0.4f;
+		float destroyEffectAfterSeconds = 0.15f;
 		isAttacking = true;
-		yield return new WaitForSeconds(0.4f);
+		yield return new WaitForSeconds(secondsBeforeInstantiating);
 		float direction = spriteRenderer.flipX ? -1.0f : 1.0f;
-		Vector2 offset = new Vector2(direction * 0.84f, 0.3f);
+		Vector2 offset = new Vector2(direction * xOffset, yOffset);
 		GameObject attackEffectClone = Instantiate(attackEffectPrefab, (Vector2)transform.position + offset, transform.rotation);
 		SpriteRenderer attackEffectSprite = attackEffectClone.GetComponent<SpriteRenderer>();
 		if (attackEffectSprite != null) {
 			attackEffectSprite.flipX = spriteRenderer.flipX;
 		}
 		isAttacking = false;
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(destroyEffectAfterSeconds);
 		Destroy(attackEffectClone);
 	}
 
@@ -210,6 +227,13 @@ public class EnemyController : MonoBehaviour
 		yield return new WaitForSeconds(takeDamageDuration);
 		isTakingDamage = false;
 		ExecuteNextState();
+	}
+
+	IEnumerator TempAggroDetectionRange() {
+		float previousDetectionRange = detectionRange;
+		detectionRange = aggroingDetectionRange;
+		yield return new WaitForSeconds(aggroDetectionDuration);
+		detectionRange = previousDetectionRange;
 	}
 
 	private void ExecuteNextState() {

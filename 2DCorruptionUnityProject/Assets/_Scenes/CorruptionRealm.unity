@@ -2064,18 +2064,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867aa5809e483489b9a3d9d2d0912a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purityGem: {fileID: 11400000, guid: 1b7ad610a8cf4457eaa1498a3bc7ff6f, type: 2}
   noGem: {fileID: 11400000, guid: 0225ec2d4850a4460b6908a983d88c7b, type: 2}
-  corruptionGem: {fileID: 0}
+  purityGem: {fileID: 11400000, guid: 1b7ad610a8cf4457eaa1498a3bc7ff6f, type: 2}
+  corruptionGem: {fileID: 11400000, guid: dab8a807354114461b481fb4f0e456b7, type: 2}
   airGem: {fileID: 0}
   fireGem: {fileID: 0}
   waterGem: {fileID: 0}
   earthGem: {fileID: 0}
   currentBaseGemConfiguration:
-    rightHandGem: {fileID: 0}
-    leftHandGem: {fileID: 0}
-    rightFootGem: {fileID: 0}
-    leftFootGem: {fileID: 0}
+    baseHandsGem: {fileID: 0}
+    baseFeetGem: {fileID: 0}
   currentModifierGemConfiguration:
     rightHandGem: {fileID: 0}
     leftHandGem: {fileID: 0}
@@ -2123,6 +2121,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corJumpKneeEffectPrefab: {fileID: 3674239864049006427, guid: 950feec3d4b7d4a86bb64b31d4dab017, type: 3}
   corDashKickEffectPrefab: {fileID: 3031732302554129639, guid: 6c80a61fa61664c8d9c0fa97dbc069df, type: 3}
+  corMeleeEffectPrefab: {fileID: 4413780547161758160, guid: eb7f1a922f8fb40b988ff61bbda1377e, type: 3}
+  corRangedEffectPrefab: {fileID: 8130530187458246319, guid: 3e64840ef82bc4fc18e2855652b12ba2, type: 3}
+  purityPushEffectPrefab: {fileID: 2750129355746689548, guid: 74ae77abe454047ca9b89b9156ac9e5a, type: 3}
+  purityPullEffectPrefab: {fileID: 1399147483156514911, guid: bc3ae3720c9c84c25971a1e3e7dbe50b, type: 3}
 --- !u!1 &1242416417
 GameObject:
   m_ObjectHideFlags: 3
@@ -3046,16 +3048,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 1.5
-  runSpeed: 2
+  runSpeed: 3
   roamDistance: 5
   detectionRange: 3
+  aggroingDetectionRange: 10
+  aggroDetectionDuration: 4
   verticalDetectionLimit: 1
-  attackRange: 1
+  attackRange: 0.8
   attackCooldown: 2
   takeDamageDuration: 0.5
   deathSeconds: 0.5
   player: {fileID: 1208835180}
-  attackEffectPrefab: {fileID: 3411532929460867468, guid: 6b050216da2f64da28f3195eb1272077, type: 3}
+  attackEffectPrefab: {fileID: 1727787814334629875, guid: c5b517ad50280465aaf1fda139fafd84, type: 3}
 --- !u!1001 &1824119984
 PrefabInstance:
   m_ObjectHideFlags: 0

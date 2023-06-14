@@ -14,10 +14,6 @@ public class PlayerController2 : MonoBehaviour
 		skillController.SetInputActionsInitializeStateClasses(inputActions);
 	}
 
-	private void Start() {
-		skillController.TransitionToState(skillController.IdleSkillState);
-	}
-
 	private void OnEnable() {
 		inputActions.Player.Enable();
 	}
@@ -27,8 +23,10 @@ public class PlayerController2 : MonoBehaviour
 	}
 
 	private void Update() {
+		// Horizontal movement is done here
+		// This is so states don't interfere with things like left and right movement while in the air
 		if (!skillController.IsDying) {
-			if (!skillController.IsDashing) {
+			if (!skillController.IsDashing && !skillController.IsUsingRightHandSkill && !skillController.IsUsingLeftHandSkill) {
 				Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>();
 				horizontalInput = movementInput.x;
 				if (Mathf.Abs(horizontalInput) > 0.1f) {
@@ -41,7 +39,7 @@ public class PlayerController2 : MonoBehaviour
 	}
 
 	private void PerformHorizontalMovemement() {
-		float moveSpeed = skillController.GemController.GetRightFootGem().moveSpeed;
+		float moveSpeed = skillController.GemController.GetBaseFeetGem().moveSpeed;
 		if (horizontalInput > 0) {
 			GetComponent<SpriteRenderer>().flipX = true;
 		} else {
