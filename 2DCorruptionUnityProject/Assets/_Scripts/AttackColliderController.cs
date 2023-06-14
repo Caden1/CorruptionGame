@@ -44,29 +44,28 @@ public class AttackColliderController : MonoBehaviour
 			if (health != null) {
 				health.TakeDamage(damage);
 				if (compareTag == "Enemy") {
+					float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 					healthBar = other.transform.GetChild(0).GetChild(1);
+
 					if (enemyController != null) {
 						enemyController.SetEnemyStateToTakeDamage();
 					}
+
 					if (healthBar != null) {
 						healthBar.localScale = new Vector2(health.GetHealthPercentage(), 1f);
 					}
 
 					if (tag == "CorJumpKnee") {
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, force), ForceMode2D.Impulse);
-					} else if (tag == "CorKickDash") {
-						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						other.GetComponent<Rigidbody2D>().AddForce(
+							new Vector2(0f, force), ForceMode2D.Impulse);
 					} else if (tag == "PullEffect") {
-						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
-					} else if (tag == "PushEffect") {
-						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
-					} else if (tag == "CorMeleeEffect") {
-						float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
-						other.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						other.GetComponent<Rigidbody2D>().AddForce(
+							new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
+					} else {
+						other.GetComponent<Rigidbody2D>().AddForce(
+							new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					}
+
 					if (health.IsDead()) {
 						enemyController.SetEnemyStateToDying();
 					}

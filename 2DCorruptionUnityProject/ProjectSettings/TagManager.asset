@@ -19,6 +19,7 @@ TagManager:
   - PushEffect
   - PullEffect
   - CorMeleeEffect
+  - CoreRangedEffect
   layers:
   - Default
   - TransparentFX

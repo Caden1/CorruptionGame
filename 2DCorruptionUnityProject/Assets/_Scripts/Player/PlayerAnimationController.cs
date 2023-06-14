@@ -59,4 +59,8 @@ public class PlayerAnimationController : MonoBehaviour
 	public void ExecuteCorruptionOnlyMeleeAnim() {
 		animator.Play("CorruptionOnlyMelee");
 	}
+
+	public void ExecuteCorruptionOnlyRangedAnim() {
+		animator.Play("CorruptionOnlyRanged");
+	}
 }
