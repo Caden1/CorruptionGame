@@ -3048,11 +3048,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 1.5
-  runSpeed: 2
+  runSpeed: 3
   roamDistance: 5
   detectionRange: 3
+  aggroingDetectionRange: 10
+  aggroDetectionDuration: 4
   verticalDetectionLimit: 1
-  attackRange: 1
+  attackRange: 0.8
   attackCooldown: 2
   takeDamageDuration: 0.5
   deathSeconds: 0.5

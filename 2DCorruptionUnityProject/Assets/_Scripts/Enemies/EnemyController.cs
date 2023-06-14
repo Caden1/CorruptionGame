@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
 	public float runSpeed = 2f;
 	public float roamDistance = 5.0f;
 	public float detectionRange = 3.0f;
+	public float aggroingDetectionRange = 5.0f;
+	public float aggroDetectionDuration = 5.0f;
 	public float verticalDetectionLimit = 1.0f;
 	public float attackRange = 1.0f;
 	public float attackCooldown = 2.0f;
@@ -81,6 +83,7 @@ public class EnemyController : MonoBehaviour
 							break;
 						case EnemyState.TakeDamage:
 							StartCoroutine(TakeDamage());
+							StartCoroutine(TempAggroDetectionRange());
 							UpdateAnimationState(AnimationState.TakeDamage);
 							break;
 					}
@@ -178,14 +181,24 @@ public class EnemyController : MonoBehaviour
 
 	void AttackPlayer() {
 		if (!isInAttackCooldown) {
+			UpdateDirectionBeforeAttack();
 			UpdateAnimationState(AnimationState.Attacking);
 			StartCoroutine(InstantiateAttackEffect());
 			StartCoroutine(AttackCooldown());
 		}
 	}
 
+	void UpdateDirectionBeforeAttack() {
+		float playerDistance = rb.position.x - player.position.x;
+		if (playerDistance > 0) {
+			spriteRenderer.flipX = true;
+		} else if (playerDistance < 0) {
+			spriteRenderer.flipX = false;
+		}
+	}
+
 	IEnumerator InstantiateAttackEffect() {
-		float xOffset = 0.7f;
+		float xOffset = 0.6f;
 		float yOffset = 0.25f;
 		float secondsBeforeInstantiating = 0.4f;
 		float destroyEffectAfterSeconds = 0.15f;
@@ -214,6 +227,13 @@ public class EnemyController : MonoBehaviour
 		yield return new WaitForSeconds(takeDamageDuration);
 		isTakingDamage = false;
 		ExecuteNextState();
+	}
+
+	IEnumerator TempAggroDetectionRange() {
+		float previousDetectionRange = detectionRange;
+		detectionRange = aggroingDetectionRange;
+		yield return new WaitForSeconds(aggroDetectionDuration);
+		detectionRange = previousDetectionRange;
 	}
 
 	private void ExecuteNextState() {
