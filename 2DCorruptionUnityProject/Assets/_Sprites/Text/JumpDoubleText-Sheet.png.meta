@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 11ff22b348d9c405cbe4ebe05b8dbfbe
+guid: 7f5ebe943212b46a29999e4a4f16f2d6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_0
+      name: JumpDoubleText
       rect:
         serializedVersion: 2
         x: 0
@@ -125,20 +125,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd246e38c8104493792f19d47d644968
-      internalID: -758882020
+      spriteID: 67d8bb3c75e314d84ad38b27b3d2c0a1
+      internalID: -847502010
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_1
+      name: JumpDoubleText-Sheet_1
       rect:
         serializedVersion: 2
         x: 640
@@ -146,20 +146,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6004cdc8ea8a248b0869266ed14eaca0
-      internalID: 779109757
+      spriteID: 6282ed27fbf2d4c9caa6151c1f88bee4
+      internalID: 1700450060
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_2
+      name: JumpDoubleText-Sheet_2
       rect:
         serializedVersion: 2
         x: 1280
@@ -167,20 +167,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4737106c877194d6c93bc3dab0c3faeb
-      internalID: 1337953979
+      spriteID: 459333d4dedf848fb933695cc848041a
+      internalID: -1838133318
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_3
+      name: JumpDoubleText-Sheet_3
       rect:
         serializedVersion: 2
         x: 1920
@@ -188,20 +188,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 515d893dd08cf4575933d45f3fbba8b4
-      internalID: -647076010
+      spriteID: b24fc5ff1e6774c1daeea75da34bdea9
+      internalID: -1219850459
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_4
+      name: JumpDoubleText-Sheet_4
       rect:
         serializedVersion: 2
         x: 2560
@@ -209,20 +209,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7fe40b83e4d14cfcabc606d420b7c16
-      internalID: -428185255
+      spriteID: 832375c1493ae4c9fa7a646d6c536237
+      internalID: -1140603759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_5
+      name: JumpDoubleText-Sheet_5
       rect:
         serializedVersion: 2
         x: 3200
@@ -230,20 +230,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2919c0c09ef604cbdbc48cbadda02ee7
-      internalID: -2033544433
+      spriteID: fe16fe1d777bd40da986cfe0211aacb4
+      internalID: 458524884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_6
+      name: JumpDoubleText-Sheet_6
       rect:
         serializedVersion: 2
         x: 3840
@@ -251,20 +251,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c88d17c6d01f4ebcba042a8ad7ab8b0
-      internalID: 1228956721
+      spriteID: 65d82070be0134716903628d9ab09556
+      internalID: -1398539822
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_7
+      name: JumpDoubleText-Sheet_7
       rect:
         serializedVersion: 2
         x: 4480
@@ -272,20 +272,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15cf16a9a6e1c44b09d564ca8230da19
-      internalID: -1570162569
+      spriteID: d5c3ca789dbed4d728f44a1a1eb7b196
+      internalID: 571934875
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_8
+      name: JumpDoubleText-Sheet_8
       rect:
         serializedVersion: 2
         x: 5120
@@ -293,20 +293,20 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fec6cdf28b385494c858d9fa8906598a
-      internalID: 258878255
+      spriteID: d8b6342112bd54f3c9107825218d831d
+      internalID: -374074122
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: JumpHoldText-Sheet_9
+      name: JumpDoubleText-Sheet_9
       rect:
         serializedVersion: 2
         x: 5760
@@ -314,14 +314,56 @@ TextureImporter:
         width: 640
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d166c3a53ff4c4624b1d5d6eaae0d3a6
-      internalID: -139223532
+      spriteID: 37e7608a680344104878595d11bc579a
+      internalID: -1948879020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JumpDoubleText-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 6400
+        y: 0
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5725eb8c06620493fa0ad176a0eeb984
+      internalID: -393878464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JumpDoubleText-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 7040
+        y: 0
+        width: 640
+        height: 360
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cee5abbb87854d4cb284921a83f8394
+      internalID: 1558551901
       vertices: []
       indices: 
       edges: []
@@ -337,16 +379,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      JumpHoldText-Sheet_5: -2033544433
-      JumpHoldText-Sheet_3: -647076010
-      JumpHoldText-Sheet_9: -139223532
-      JumpHoldText-Sheet_7: -1570162569
-      JumpHoldText-Sheet_8: 258878255
-      JumpHoldText-Sheet_0: -758882020
-      JumpHoldText-Sheet_2: 1337953979
-      JumpHoldText-Sheet_6: 1228956721
-      JumpHoldText-Sheet_4: -428185255
-      JumpHoldText-Sheet_1: 779109757
+      JumpDoubleText-Sheet_8: -374074122
+      JumpDoubleText-Sheet_9: -1948879020
+      JumpDoubleText-Sheet_10: -393878464
+      JumpDoubleText-Sheet_2: -1838133318
+      JumpDoubleText-Sheet_1: 1700450060
+      JumpDoubleText-Sheet_5: 458524884
+      JumpDoubleText-Sheet_7: 571934875
+      JumpDoubleText-Sheet_6: -1398539822
+      JumpDoubleText-Sheet_11: 1558551901
+      JumpDoubleText-Sheet_4: -1140603759
+      JumpDoubleText: -847502010
+      JumpDoubleText-Sheet_3: -1219850459
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
