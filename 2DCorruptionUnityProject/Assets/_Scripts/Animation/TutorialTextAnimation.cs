@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class TutorialTextAnimation : MonoBehaviour
 {
-	public Sprite[] Sprites;
+	public Sprite[] KeyboardSprites;
+	public Sprite[] ControllerSprites;
 	public float[] SwapIntervals;
 
+	private Sprite[] Sprites;
 	private SpriteRenderer spriteRenderer;
 	private int currentIndex = 0;
 	private float swapTimer = 0;
@@ -16,6 +18,16 @@ public class TutorialTextAnimation : MonoBehaviour
 
 	private void Start() {
 		spriteRenderer = GetComponent<SpriteRenderer>();
+
+		// Subscribe to InputManager event
+		InputManager.instance.OnInputDeviceChanged += UpdateSprites;
+
+		UpdateSprites(InputManager.instance.currentDevice);
+	}
+
+	private void OnDestroy() {
+		// Unsubscribe from InputManager event when the object is destroyed
+		InputManager.instance.OnInputDeviceChanged -= UpdateSprites;
 	}
 
 	private void Update() {
@@ -32,6 +44,15 @@ public class TutorialTextAnimation : MonoBehaviour
 				swapTimer += Time.deltaTime;
 			}
 		}
+	}
+
+	private void UpdateSprites(InputManager.InputDevice device) {
+		if (device == InputManager.InputDevice.Controller) {
+			Sprites = ControllerSprites;
+		} else {
+			Sprites = KeyboardSprites;
+		}
+		currentIndex = 0;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
