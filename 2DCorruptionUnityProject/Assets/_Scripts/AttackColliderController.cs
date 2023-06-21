@@ -32,7 +32,9 @@ public class AttackColliderController : MonoBehaviour
 
 	private void Start() {
 		healthBarUI = new HealthBarUI(healthBarUIDoc);
-		Destroy(gameObject, lifeTime);
+		if (lifeTime > 0f) {
+			Destroy(gameObject, lifeTime);
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -40,11 +42,11 @@ public class AttackColliderController : MonoBehaviour
 			EnemyController enemyController = other.GetComponent<EnemyController>();
 			Health health = other.GetComponent<Health>();
 			Transform healthBar = null;
-				
+			float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
+
 			if (health != null) {
 				health.TakeDamage(damage);
 				if (compareTag == "Enemy") {
-					float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
 					healthBar = other.transform.GetChild(0).GetChild(1);
 
 					if (enemyController != null) {
@@ -73,6 +75,11 @@ public class AttackColliderController : MonoBehaviour
 					healthBarUI.DecreaseHealthBarSize(health.GetHealthPercentage());
 					if (health.IsDead()) {
 						playerSkillController.IsDying = true;
+					}
+
+					if (tag == "CorDamagingCrystal") {
+						playerGO.GetComponent<Rigidbody2D>().AddForce(
+							new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
 					}
 				}
 			}

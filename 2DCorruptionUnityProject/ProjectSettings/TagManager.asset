@@ -20,6 +20,7 @@ TagManager:
   - PullEffect
   - CorMeleeEffect
   - CoreRangedEffect
+  - CorDamagingCrystal
   layers:
   - Default
   - TransparentFX
