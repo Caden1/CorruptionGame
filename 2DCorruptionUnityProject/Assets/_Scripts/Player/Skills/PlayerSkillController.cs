@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -24,10 +25,13 @@ public class PlayerSkillController : MonoBehaviour
 	public PlayerEffectController effectController { get; set; }
 	public GemController GemController { get; private set; }
 	public Rigidbody2D Rb { get; private set; }
+	public SpriteRenderer SpriteRend { get; private set; }
 	public GroundCheck GroundCheck { get; private set; }
 
+	public float OriginalGravity { get; private set; }
 	public int numberOfJumps { get; set; } = 0;
 	public float LastFacingDirection { get; set; } = 1;
+	public bool IsImmune { get; set; } = false;
 	public bool CanDash { get; set; } = true;
 	public bool IsDashing { get; set; } = false;
 	public bool CanUseRightHandSkill { get; set; } = true;
@@ -35,11 +39,14 @@ public class PlayerSkillController : MonoBehaviour
 	public bool CanUseLeftHandSkill { get; set; } = true;
 	public bool IsUsingLeftHandSkill { get; set; } = false;
 	public bool IsDying { get; set; } = false;
+	public bool HasForceApplied { get; set; } = false;
 
 	private void Awake() {
 		GemController = GetComponent<GemController>();
 		GemController.OnGemsChanged += HandleGemChange;
 		Rb = GetComponent<Rigidbody2D>();
+		SpriteRend = GetComponent<SpriteRenderer>();
+		OriginalGravity = GetComponent<Rigidbody2D>().gravityScale;
 		animationController = GetComponent<PlayerAnimationController>();
 		effectController = GetComponent<PlayerEffectController>();
 		GroundCheck = GetComponent<GroundCheck>();
@@ -85,7 +92,7 @@ public class PlayerSkillController : MonoBehaviour
 
 	private void Update() {
 		if (!IsDying) {
-			if (!IsDashing && !IsUsingRightHandSkill && !IsUsingLeftHandSkill) {
+			if (!IsDashing && !IsUsingRightHandSkill && !IsUsingLeftHandSkill && !HasForceApplied) {
 				currentState?.UpdateState();
 			}
 		} else {
