@@ -109,6 +109,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (skillController.Rb.velocity.y < 0f) {
+			skillController.ResetNumberOfJumps();
 			skillController.TransitionToState(
 				PlayerStateType.Falling,
 				skillController.CurrentHandsBaseGemState,

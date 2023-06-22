@@ -98,8 +98,7 @@ public class AttackColliderController : MonoBehaviour
 							playerSkillController.IsDying = true;
 						}
 						playerForceTimer = 0.4f;
-						// Change to a HasForceApplied animation
-						playerSkillController.animationController.ExecuteJumpAnim();
+						playerSkillController.animationController.ExecuteHasForceAppliedAnim();
 						playerSkillController.HasForceApplied = true;
 						playerSkillController.IsImmune = true;
 						playerSkillController.Rb.velocity = new Vector2(0f, 0f);

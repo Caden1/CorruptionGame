@@ -63,4 +63,8 @@ public class PlayerAnimationController : MonoBehaviour
 	public void ExecuteCorruptionOnlyRangedAnim() {
 		animator.Play("CorruptionOnlyRanged");
 	}
+
+	public void ExecuteHasForceAppliedAnim() {
+		animator.Play("HasForceApplied");
+	}
 }

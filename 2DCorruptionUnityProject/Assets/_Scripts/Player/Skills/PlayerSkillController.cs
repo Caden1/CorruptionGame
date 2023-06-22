@@ -29,7 +29,7 @@ public class PlayerSkillController : MonoBehaviour
 	public GroundCheck GroundCheck { get; private set; }
 
 	public float OriginalGravity { get; private set; }
-	public int numberOfJumps { get; set; } = 0;
+	public int NumberOfJumps { get; set; } = 0;
 	public float LastFacingDirection { get; set; } = 1;
 	public bool IsImmune { get; set; } = false;
 	public bool CanDash { get; set; } = true;
@@ -184,13 +184,13 @@ public class PlayerSkillController : MonoBehaviour
 	public void ResetNumberOfJumps() {
 		switch (CurrentFeetBaseGemState) {
 			case FeetBaseGemState.None:
-				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
+				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
 			case FeetBaseGemState.Purity:
-				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
+				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
 			case FeetBaseGemState.Corruption:
-				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
+				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
 		}
 
@@ -204,19 +204,6 @@ public class PlayerSkillController : MonoBehaviour
 			case RightFootElementalModifierGemState.Water:
 				break;
 			case RightFootElementalModifierGemState.Earth:
-				break;
-		}
-
-		switch (CurrentLeftFootElementalModifierGemState) {
-			case LeftFootElementalModifierGemState.None:
-				break;
-			case LeftFootElementalModifierGemState.Air:
-				break;
-			case LeftFootElementalModifierGemState.Fire:
-				break;
-			case LeftFootElementalModifierGemState.Water:
-				break;
-			case LeftFootElementalModifierGemState.Earth:
 				break;
 		}
 	}

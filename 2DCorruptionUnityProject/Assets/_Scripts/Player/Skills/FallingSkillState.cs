@@ -55,8 +55,8 @@ public class FallingSkillState : PlayerSkillStateBase
 				skillController.CurrentRightFootElementalModifierGemState,
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
-		} else if (inputActions.Player.Jump.WasPressedThisFrame() && skillController.numberOfJumps > 1) {
-			skillController.numberOfJumps--;
+		} else if (inputActions.Player.Jump.WasPressedThisFrame() && skillController.NumberOfJumps > 1) {
+			skillController.NumberOfJumps--;
 			skillController.TransitionToState(
 				PlayerStateType.RightFoot,
 				skillController.CurrentHandsBaseGemState,
