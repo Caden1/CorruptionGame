@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1027
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Hierarchy
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 11959
+  controlID: 6249
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 11960
+  controlID: 6250
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 12088
+  controlID: 6251
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -400,10 +400,10 @@ MonoBehaviour:
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 3}
+      scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 9ed2ffffded6ffffd4dbffff38e0ffffdeecffff8cfaffffd8faffff0afbffffa0640000b4640000bc650000
+      m_ExpandedIDs: 74faffff0afbffffba650000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -707,9 +707,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -19.079084, y: -28.488663, z: 1286.0891}
+    m_Target: {x: -7.9295144, y: -27.725697, z: 1700.5928}
     speed: 2
-    m_Value: {x: -19.079084, y: -28.488663, z: 1286.0891}
+    m_Value: {x: -7.825054, y: -27.422976, z: 1879.811}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -760,9 +760,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 9.5431595
+    m_Target: 11.634801
     speed: 2
-    m_Value: 9.5431595
+    m_Value: 12.879794
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -966,9 +966,9 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 479e8f534152540878ac2df5d574d48e, type: 2}
+  m_AnimatorController: {fileID: 9100000, guid: 8671885945dac448d9f2b9513e4876e7, type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 851280020650578682, guid: 479e8f534152540878ac2df5d574d48e, type: 2}
+  - m_Target: {fileID: 3712485917808215242, guid: 8671885945dac448d9f2b9513e4876e7, type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
   stateMachineGraphGUI: {fileID: 0}
@@ -1022,22 +1022,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/_Prefabs/Realms/CorruptionRealm/ScenePieces/Other
+    - Assets/_Scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/_Prefabs/Realms/CorruptionRealm/ScenePieces/Other
+  - Assets/_Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "/Users/cadenbarton/Desktop/Desktop - Caden\u2019s MacBook Air/Corruption/Repo/CorruptionGame/2DCorruptionUnityProject"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 335}
-    m_SelectedIDs: a46b0000
-    m_LastClickedID: 27556
-    m_ExpandedIDs: 000000003a6b00003c6b00003e6b0000406b0000426b0000446b0000466b0000486b00004a6b00004c6b00004e6b0000506b0000526b0000546b0000566b0000586b00005a6b00005c6b00005e6b0000606b0000626b0000646b0000666b0000686b00006a6b00006c6b00006e6b0000706b0000726b0000746b0000766b0000786b00007e6b000000ca9a3b
+    scrollPos: {x: 0, y: 527}
+    m_SelectedIDs: 7e6b0000
+    m_LastClickedID: 27518
+    m_ExpandedIDs: 00000000606b0000626b0000646b0000666b0000686b00006a6b00006c6b00006e6b0000706b0000726b0000746b0000766b0000786b00007a6b00007c6b00007e6b0000806b0000826b0000846b0000866b0000886b00008a6b00008c6b00008e6b0000906b0000926b0000946b0000966b0000986b00009a6b00009c6b00009e6b0000c86b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1065,7 +1065,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003a6b00003c6b00003e6b0000406b0000426b0000446b0000466b0000486b00004a6b00004c6b00004e6b0000506b0000526b0000546b0000566b0000586b00005a6b00005c6b00005e6b0000606b0000626b0000646b0000666b0000686b00006a6b00006c6b00006e6b0000706b0000726b0000746b0000766b0000786b000000ca9a3b
+    m_ExpandedIDs: 00000000606b0000626b0000646b0000666b0000686b00006a6b00006c6b00006e6b0000706b0000726b0000746b0000766b0000786b00007a6b00007c6b00007e6b0000806b0000826b0000846b0000866b0000886b00008a6b00008c6b00008e6b0000906b0000926b0000946b0000966b0000986b00009a6b00009c6b00009e6b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
