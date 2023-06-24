@@ -10,7 +10,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 	private float yOffset = 0f;
 	private float dashForce;
 	private float dashDuration;
-	private float dashCooldown;
 	private float originalGravityScale;
 	private GameObject activeEffectClone;
 
@@ -45,7 +44,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		// Feet base gem
 		dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
 		dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
-		dashCooldown = skillController.GemController.GetBaseFeetGem().dashCooldown;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
 				break;
@@ -81,7 +79,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		skillController.StartStateCoroutine(StopDashAfterSeconds());
-		skillController.StartStateCoroutine(DashCooldown());
 	}
 
 	public override void UpdateState() {
@@ -162,11 +159,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		if (activeEffectClone != null) {
 			Object.Destroy(activeEffectClone);
 		}
-	}
-
-	private IEnumerator DashCooldown() {
-		yield return new WaitForSeconds(dashCooldown);
-		skillController.CanDash = true;
 	}
 
 	private IEnumerator InstantiateCorEffectWithDelay() {

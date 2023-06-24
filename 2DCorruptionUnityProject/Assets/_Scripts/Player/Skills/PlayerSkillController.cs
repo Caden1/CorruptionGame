@@ -95,6 +95,9 @@ public class PlayerSkillController : MonoBehaviour
 			if (!IsDashing && !IsUsingRightHandSkill && !IsUsingLeftHandSkill && !HasForceApplied) {
 				currentState?.UpdateState();
 			}
+			if (!CanDash && IsGrounded()) {
+				CanDash = true;
+			}
 		} else {
 			PlayerDeath();
 		}
