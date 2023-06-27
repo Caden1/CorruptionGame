@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
 {
-	public string startingAnimation;
-	public string breakAnimation;
+	public string animationName;
 	public float timeToPlayBreakAnimation;
 	public List<string> abilitiesRequired = new List<string>();
 
 	private Animator animator;
+	private ImageSwapperNoRandom imageSwapperNoRandom;
 
 	private void Start() {
 		animator = GetComponent<Animator>();
-		animator.Play(startingAnimation);
+		imageSwapperNoRandom = GetComponent<ImageSwapperNoRandom>();
+		animator.Play(animationName);
+		imageSwapperNoRandom.enabled = false;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -27,8 +29,13 @@ public class BreakableObject : MonoBehaviour
 
 	private IEnumerator TriggerBreak() {
 		GetComponent<BoxCollider2D>().enabled = false;
-		// animator.Play(breakAnimation);
+		if (animator != null) {
+			Destroy(animator);
+		}
+		imageSwapperNoRandom.enabled = true;
 		yield return new WaitForSeconds(timeToPlayBreakAnimation);
-		Destroy(gameObject);
+		if (gameObject != null) {
+			Destroy(gameObject);
+		}
 	}
 }
