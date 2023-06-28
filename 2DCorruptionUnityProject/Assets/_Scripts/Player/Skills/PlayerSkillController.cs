@@ -67,7 +67,7 @@ public class PlayerSkillController : MonoBehaviour
 		// Set the initial state
 		TransitionToState(
 			PlayerStateType.Idle,
-			HandsBaseGemState.Corruption,
+			HandsBaseGemState.None,
 			FeetBaseGemState.Purity,
 			RightHandElementalModifierGemState.None,
 			LeftHandElementalModifierGemState.None,

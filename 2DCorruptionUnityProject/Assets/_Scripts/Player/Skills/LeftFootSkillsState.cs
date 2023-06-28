@@ -48,11 +48,11 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityDashPart1Anim();
+				skillController.animationController.ExecutePurityOnlyDashPart1Anim();
 				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Corruption:
-				skillController.animationController.ExecuteDashAnim();
+				skillController.animationController.ExecuteCorOnlyDashAnim();
 				xOffset = 1.15f;
 				yOffset = -0.05f;
 				skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
@@ -169,6 +169,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 	private IEnumerator ExecutePurityAnimPart2WithDelay() {
 		yield return new WaitForSeconds(executePurityAnimPart2Delay);
-		skillController.animationController.ExecutePurityDashPart2Anim();
+		skillController.animationController.ExecutePurityOnlyDashPart2Anim();
 	}
 }
