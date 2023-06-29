@@ -40,6 +40,7 @@ public class PlayerSkillController : MonoBehaviour
 	public bool IsUsingLeftHandSkill { get; set; } = false;
 	public bool IsDying { get; set; } = false;
 	public bool HasForceApplied { get; set; } = false;
+	public bool CanSwap { get; set; } = false;
 
 	private void Awake() {
 		GemController = GetComponent<GemController>();

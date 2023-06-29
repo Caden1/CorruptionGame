@@ -94,7 +94,9 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	public override void UpdateState() {
 		// AFTER RightHand player can Swap, Idle, Run, Fall, RightFoot, LeftFoot, LeftHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				gemController.SwapGems();
+			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Idle,

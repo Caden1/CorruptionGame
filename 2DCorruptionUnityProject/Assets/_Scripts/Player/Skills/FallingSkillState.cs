@@ -34,7 +34,9 @@ public class FallingSkillState : PlayerSkillStateBase
 		// From Running player can Swap, Idle, Run, RightFoot (if more than 1 jump available),
 		//		LeftFoot, RightHand, LeftHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				gemController.SwapGems();
+			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Idle,

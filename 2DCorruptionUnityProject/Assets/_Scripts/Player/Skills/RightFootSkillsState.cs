@@ -100,8 +100,10 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		// From Jumping player can Swap, Fall, LeftFoot, RightHand, LeftHand
 		//		NOTE: Double Jump is handled in FallingSkillState class
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			DestroyActiveCorEffect();
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				DestroyActiveCorEffect();
+				gemController.SwapGems();
+			}
 		} else if (skillController.Rb.velocity.y < 0f) {
 			DestroyActiveCorEffect();
 			skillController.TransitionToState(
