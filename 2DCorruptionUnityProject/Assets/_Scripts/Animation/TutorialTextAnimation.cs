@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.U2D.Path;
 using UnityEngine;
 
 public class TutorialTextAnimation : MonoBehaviour
 {
-	public Sprite[] KeyboardSprites;
-	public Sprite[] ControllerSprites;
-	public float[] SwapIntervals;
+	public Sprite[] keyboardSprites;
+	public Sprite[] controllerSprites;
+	public float[] swapIntervals;
 
-	private Sprite[] Sprites;
+	private Sprite[] sprites;
 	private SpriteRenderer spriteRenderer;
 	private int currentIndex = 0;
 	private float swapTimer = 0;
@@ -36,10 +33,10 @@ public class TutorialTextAnimation : MonoBehaviour
 				isSwapping = true;
 			}
 			if (isSwapping) {
-				if (swapTimer >= SwapIntervals[currentIndex]) {
+				if (swapTimer >= swapIntervals[currentIndex]) {
 					swapTimer = 0;
-					currentIndex = (currentIndex + 1) % Sprites.Length;
-					spriteRenderer.sprite = Sprites[currentIndex];
+					currentIndex = (currentIndex + 1) % sprites.Length;
+					spriteRenderer.sprite = sprites[currentIndex];
 				}
 				swapTimer += Time.deltaTime;
 			}
@@ -48,18 +45,18 @@ public class TutorialTextAnimation : MonoBehaviour
 
 	private void UpdateSprites(InputManager.InputDevice device) {
 		if (device == InputManager.InputDevice.Controller) {
-			Sprites = ControllerSprites;
+			sprites = controllerSprites;
 		} else {
-			Sprites = KeyboardSprites;
+			sprites = keyboardSprites;
 		}
 		currentIndex = 0;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.tag == "Player") {
-			if (Sprites.Length > 0) {
+			if (sprites.Length > 0) {
 				currentIndex = 0;
-				spriteRenderer.sprite = Sprites[currentIndex];
+				spriteRenderer.sprite = sprites[currentIndex];
 				canSwap = true;
 			}
 		}
