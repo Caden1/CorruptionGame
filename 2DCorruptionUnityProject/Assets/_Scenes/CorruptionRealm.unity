@@ -3065,9 +3065,9 @@ GameObject:
   - component: {fileID: 608535154}
   - component: {fileID: 608535157}
   - component: {fileID: 608535156}
-  - component: {fileID: 608535155}
+  - component: {fileID: 608535158}
   m_Layer: 0
-  m_Name: SwapText
+  m_Name: SwapThenPushText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3088,27 +3088,6 @@ Transform:
   m_Father: {fileID: 1607812085}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &608535155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608535153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c108be99ad945b0b803a8898cd6f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyboardSprites:
-  - {fileID: 21300000, guid: 0f98b4c41ce174a199266a6d317c98f2, type: 3}
-  - {fileID: 21300000, guid: 6c75e978f21be489c852f57bafe794ac, type: 3}
-  controllerSprites:
-  - {fileID: 21300000, guid: 0077d3a329efc4549b6857150d892357, type: 3}
-  - {fileID: 21300000, guid: 49e9964697c1f4b08ba7382ffd8f6344, type: 3}
-  swapIntervals:
-  - 0.75
-  - 0.25
 --- !u!61 &608535156
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3187,6 +3166,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &608535158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608535153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5da6a24c7f749cb81620a4f9e67fca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstKeyboardSprites:
+  - {fileID: 21300000, guid: 0f98b4c41ce174a199266a6d317c98f2, type: 3}
+  - {fileID: 21300000, guid: 6c75e978f21be489c852f57bafe794ac, type: 3}
+  secondKeyboardSprites:
+  - {fileID: 21300000, guid: 6585a7b50859a41178dd0e785027e0f4, type: 3}
+  - {fileID: 21300000, guid: f7c159d566d414e4b94ef8dad786ba55, type: 3}
+  firstControllerSprites:
+  - {fileID: 21300000, guid: 0077d3a329efc4549b6857150d892357, type: 3}
+  - {fileID: 21300000, guid: 49e9964697c1f4b08ba7382ffd8f6344, type: 3}
+  secondControllerSprites: []
+  swapIntervals:
+  - 0.75
+  - 0.25
+  timeUntilSwap: 2
 --- !u!1001 &637008171
 PrefabInstance:
   m_ObjectHideFlags: 0
