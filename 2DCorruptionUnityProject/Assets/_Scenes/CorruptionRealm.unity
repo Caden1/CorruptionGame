@@ -3191,7 +3191,7 @@ MonoBehaviour:
   swapIntervals:
   - 0.75
   - 0.25
-  timeUntilSwap: 2
+  timeUntilSwap: 3
 --- !u!1001 &637008171
 PrefabInstance:
   m_ObjectHideFlags: 0
