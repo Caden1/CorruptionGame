@@ -11,6 +11,7 @@ public class TutorialTextAnimWithSwap : MonoBehaviour
 	public float[] swapIntervals;
 	public float timeUntilSwap = 2f;
 
+	private Coroutine swapCoroutine;
 	private Sprite[] sprites;
 	private SpriteRenderer spriteRenderer;
 	private int currentIndex = 0;
@@ -21,13 +22,9 @@ public class TutorialTextAnimWithSwap : MonoBehaviour
 
 	private void Start() {
 		spriteRenderer = GetComponent<SpriteRenderer>();
-
 		// Subscribe to InputManager event
 		InputManager.instance.OnInputDeviceChanged += UpdateSprites;
-
 		UpdateSprites(InputManager.instance.currentDevice);
-
-		StartCoroutine(SwapSpritesAfterDelay(timeUntilSwap));
 	}
 
 	private void OnDestroy() {
@@ -75,17 +72,24 @@ public class TutorialTextAnimWithSwap : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.tag == "Player") {
 			if (sprites.Length > 0) {
+				usingFirstSprites = true;
+				UpdateSprites(InputManager.instance.currentDevice);
 				currentIndex = 0;
 				spriteRenderer.sprite = sprites[currentIndex];
 				canSwap = true;
+				if (swapCoroutine != null) {
+					StopCoroutine(swapCoroutine);
+				}
+				swapCoroutine = StartCoroutine(SwapSpritesAfterDelay(timeUntilSwap));
 			}
 		}
 	}
 
 	private void OnTriggerExit2D(Collider2D collision) {
 		if (collision.tag == "Player") {
-			canSwap = false;
 			spriteRenderer.sprite = null;
+			canSwap = false;
+			StopCoroutine(swapCoroutine);
 		}
 	}
 
