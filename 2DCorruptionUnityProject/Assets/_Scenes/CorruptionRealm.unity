@@ -2606,7 +2606,7 @@ GameObject:
   - component: {fileID: 559693154}
   - component: {fileID: 559693153}
   m_Layer: 0
-  m_Name: NoPurityInFeetText
+  m_Name: SwapExplanation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2640,14 +2640,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyboardSprites:
-  - {fileID: 21300000, guid: 12d09138c13ab49389dcd54fc644e738, type: 3}
-  - {fileID: 21300000, guid: 9359f4140314545a6bc9fd7b4c2f485e, type: 3}
+  - {fileID: 21300000, guid: f98b960aa1cae497bbe1930eb011e1df, type: 3}
+  - {fileID: 21300000, guid: 24a99580bbdf74d51ba010d4a193b514, type: 3}
   controllerSprites:
-  - {fileID: 21300000, guid: e83481528aa14415b818e3346785588f, type: 3}
-  - {fileID: 21300000, guid: ad5e1799b46a7470bb448be8c744ceb1, type: 3}
+  - {fileID: 21300000, guid: f98b960aa1cae497bbe1930eb011e1df, type: 3}
+  - {fileID: 21300000, guid: 24a99580bbdf74d51ba010d4a193b514, type: 3}
   swapIntervals:
-  - 0.75
-  - 0.25
+  - 5
+  - 5
 --- !u!61 &559693154
 BoxCollider2D:
   m_ObjectHideFlags: 0
