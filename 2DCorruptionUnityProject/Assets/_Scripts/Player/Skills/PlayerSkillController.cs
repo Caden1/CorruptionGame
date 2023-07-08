@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class PlayerSkillController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerSkillController : MonoBehaviour
 	private Dictionary<PlayerStateType, PlayerSkillStateBase> states
 		= new Dictionary<PlayerStateType, PlayerSkillStateBase>();
 	private PlayerSkillStateBase currentState;
+	private SwapUI swapUI;
 
 	public LayerMask groundLayer;
 	public float deathSeconds = 1.0f;
@@ -42,7 +44,16 @@ public class PlayerSkillController : MonoBehaviour
 	public bool HasForceApplied { get; set; } = false;
 	public bool CanSwap { get; set; } = false;
 
+	private UIDocument swapUIDoc;
+	private SwapUISprites swapUISprites;
+
 	private void Awake() {
+		GameObject swapUIDocGO = GameObject.FindWithTag("SwapUIDocument");
+		if (swapUIDocGO != null) {
+			swapUIDoc = swapUIDocGO.GetComponent<UIDocument>();
+			swapUISprites = swapUIDocGO.GetComponent<SwapUISprites>();
+		}
+		swapUI = new SwapUI(swapUIDoc);
 		GemController = GetComponent<GemController>();
 		GemController.OnGemsChanged += HandleGemChange;
 		Rb = GetComponent<Rigidbody2D>();
@@ -148,10 +159,7 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	private void HandleGemChange() {
-		UpdatePlayerAbilities();
-	}
-
-	private void UpdatePlayerAbilities() {
+		Sprite newSilhouette = null;
 		BaseGem handsBaseGem = GemController.GetBaseHandsGem();
 		BaseGem feetbaseGem = GemController.GetBaseFeetGem();
 		ModifierGem rightHandModifierGem = GemController.GetRightHandModifierGem();
@@ -169,6 +177,7 @@ public class PlayerSkillController : MonoBehaviour
 				break;
 			case "Purity":
 				CurrentHandsBaseGemState = HandsBaseGemState.Purity;
+				newSilhouette = swapUISprites.GetPurityHandsSilhouette();
 				break;
 		}
 
@@ -181,7 +190,14 @@ public class PlayerSkillController : MonoBehaviour
 				break;
 			case "Purity":
 				CurrentFeetBaseGemState = FeetBaseGemState.Purity;
+				newSilhouette = swapUISprites.GetPurityFeetSilhouette();
 				break;
+		}
+
+		if (newSilhouette != null) {
+			swapUI.SetSilhouette(newSilhouette);
+		} else {
+			swapUI.RemoveSilhouette();
 		}
 	}
 

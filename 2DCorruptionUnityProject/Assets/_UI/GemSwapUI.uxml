@@ -1,13 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/_UI/GemSwapStylesheet.uss?fileID=7433441132597879392&amp;guid=658f1d547c7a74ef28fa4c27d96e417b&amp;type=3#GemSwapStylesheet" />
-    <ui:VisualElement name="MainContainer" style="height: 100%; width: 100%;">
-        <ui:VisualElement name="GlovesContainer" style="transform-origin: top; height: 50%; width: 100%; align-items: flex-start; flex-direction: row; justify-content: space-between;">
-            <ui:VisualElement name="LeftGlove" style="width: 128px; height: 128px; background-image: url(&apos;project://database/Assets/_Sprites/Player/Corruption/SwapUI/CorOnlyGlove%201.png?fileID=21300000&amp;guid=97cdd49ae4d2b486e93a9bba14bc3512&amp;type=3#CorOnlyGlove 1&apos;); left: auto; justify-content: center; transform-origin: center; align-items: center; flex-direction: column;" />
-            <ui:VisualElement name="RightGlove" style="height: 128px; width: 128px; background-image: url(&apos;project://database/Assets/_Sprites/Player/Corruption/SwapUI/CorOnlyGlove%201.png?fileID=21300000&amp;guid=97cdd49ae4d2b486e93a9bba14bc3512&amp;type=3#CorOnlyGlove 1&apos;); flex-direction: column; transform-origin: center; align-items: center; justify-content: center;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="BootsContainer" style="flex-direction: row; height: 50%; justify-content: space-between; width: 100%; align-items: flex-end;">
-            <ui:VisualElement name="LeftBoot" style="width: 128px; transform-origin: left top; height: 128px; background-image: url(&apos;project://database/Assets/_Sprites/Player/Purity/SwapUI/PureOnlyBoot%201.png?fileID=21300000&amp;guid=4874b012a704d470cb7a565ccbcf7f53&amp;type=3#PureOnlyBoot 1&apos;);" />
-            <ui:VisualElement name="RightBoot" style="width: 128px; transform-origin: right top; height: 128px; background-image: url(&apos;project://database/Assets/_Sprites/Player/Purity/SwapUI/PureOnlyBoot%201.png?fileID=21300000&amp;guid=4874b012a704d470cb7a565ccbcf7f53&amp;type=3#PureOnlyBoot 1&apos;);" />
-        </ui:VisualElement>
+    <ui:VisualElement style="flex-direction: row-reverse; width: 100%; height: 12%; align-items: flex-start; justify-content: flex-start; right: 12%; top: 2%;">
+        <ui:VisualElement name="PlayerSilhouette" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/Silhouettes/SilhouettePurityFeet.png?fileID=21300000&amp;guid=4382690c50ec84f0f9337228f48451e2&amp;type=3#SilhouettePurityFeet&apos;); width: 12%; height: 100%; -unity-background-scale-mode: stretch-to-fill; left: auto; top: auto; flex-direction: column; right: auto; flex-wrap: nowrap;" />
     </ui:VisualElement>
 </ui:UXML>
