@@ -160,6 +160,10 @@ public class PlayerSkillController : MonoBehaviour
 
 	private void HandleGemChange() {
 		Sprite newSilhouette = null;
+		Sprite newRightHandIcon = null;
+		Sprite newLeftHandIcon = null;
+		Sprite newRightFootIcon = null;
+		Sprite newLeftFootIcon = null;
 		BaseGem handsBaseGem = GemController.GetBaseHandsGem();
 		BaseGem feetbaseGem = GemController.GetBaseFeetGem();
 		ModifierGem rightHandModifierGem = GemController.GetRightHandModifierGem();
@@ -178,12 +182,15 @@ public class PlayerSkillController : MonoBehaviour
 			case "Purity":
 				CurrentHandsBaseGemState = HandsBaseGemState.Purity;
 				newSilhouette = swapUISprites.GetPurityHandsSilhouette();
+				newRightHandIcon = swapUISprites.GetPurityPushIcon();
+				newLeftHandIcon = swapUISprites.GetPurityPullIcon();
 				break;
 		}
 
 		switch (feetbaseGem.gemName) {
 			case "None":
 				CurrentFeetBaseGemState = FeetBaseGemState.None;
+				newRightFootIcon = swapUISprites.GetNoGemJumpIcon();
 				break;
 			case "Corruption":
 				CurrentFeetBaseGemState = FeetBaseGemState.Corruption;
@@ -191,6 +198,8 @@ public class PlayerSkillController : MonoBehaviour
 			case "Purity":
 				CurrentFeetBaseGemState = FeetBaseGemState.Purity;
 				newSilhouette = swapUISprites.GetPurityFeetSilhouette();
+				newRightFootIcon = swapUISprites.GetPurityJumpIcon();
+				newLeftFootIcon = swapUISprites.GetPurityDashIcon();
 				break;
 		}
 
@@ -198,6 +207,26 @@ public class PlayerSkillController : MonoBehaviour
 			swapUI.SetSilhouette(newSilhouette);
 		} else {
 			swapUI.RemoveSilhouette();
+		}
+		if (newRightHandIcon != null) {
+			swapUI.SetRightHandIcon(newRightHandIcon);
+		} else {
+			swapUI.RemoveRightHandIcon();
+		}
+		if (newLeftHandIcon != null) {
+			swapUI.SetLeftHandIcon(newLeftHandIcon);
+		} else {
+			swapUI.RemoveLeftHandIcon();
+		}
+		if (newRightFootIcon != null) {
+			swapUI.SetRightFootIcon(newRightFootIcon);
+		} else {
+			swapUI.RemoveRightFootIcon();
+		}
+		if (newLeftFootIcon != null) {
+			swapUI.SetLeftFootIcon(newLeftFootIcon);
+		} else {
+			swapUI.RemoveLeftFootIcon();
 		}
 	}
 

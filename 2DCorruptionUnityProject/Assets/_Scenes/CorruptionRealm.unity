@@ -4439,6 +4439,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   purityFeetSilhouette: {fileID: 21300000, guid: 4382690c50ec84f0f9337228f48451e2, type: 3}
   purityHandsSilhouette: {fileID: 21300000, guid: 6e4dedc0fa6554b7ea7f0122835a5a36, type: 3}
+  noGemJumpIcon: {fileID: 21300000, guid: e30ead85f38244aa39acac3770a047b7, type: 3}
+  purityPushIcon: {fileID: 21300000, guid: 4d392efa885fa45f19d7c3f6389136ef, type: 3}
+  purityPullIcon: {fileID: 21300000, guid: ea286c6f76e704892a6f131a7c2bed09, type: 3}
+  purityJumpIcon: {fileID: 21300000, guid: 1cd9cadc0d1504a1eb94121f37c040dd, type: 3}
+  purityDashIcon: {fileID: 21300000, guid: e90864f089ffa4d8baa26ad2ee0f6127, type: 3}
 --- !u!1001 &858646159
 PrefabInstance:
   m_ObjectHideFlags: 0
