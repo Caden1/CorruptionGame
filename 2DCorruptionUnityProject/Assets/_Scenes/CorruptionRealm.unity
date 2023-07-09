@@ -2642,10 +2642,13 @@ MonoBehaviour:
   keyboardSprites:
   - {fileID: 21300000, guid: f98b960aa1cae497bbe1930eb011e1df, type: 3}
   - {fileID: 21300000, guid: 24a99580bbdf74d51ba010d4a193b514, type: 3}
+  - {fileID: 21300000, guid: 265fdb666e0e14953b97fdd8a4324478, type: 3}
   controllerSprites:
   - {fileID: 21300000, guid: f98b960aa1cae497bbe1930eb011e1df, type: 3}
   - {fileID: 21300000, guid: 24a99580bbdf74d51ba010d4a193b514, type: 3}
+  - {fileID: 21300000, guid: 265fdb666e0e14953b97fdd8a4324478, type: 3}
   swapIntervals:
+  - 5
   - 5
   - 5
 --- !u!61 &559693154
@@ -5937,7 +5940,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208835178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.45, y: -37.082, z: 0}
+  m_LocalPosition: {x: -16.78, y: -27.786, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
