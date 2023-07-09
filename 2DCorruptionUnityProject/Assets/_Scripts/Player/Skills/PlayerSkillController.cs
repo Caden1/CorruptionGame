@@ -54,6 +54,13 @@ public class PlayerSkillController : MonoBehaviour
 			swapUISprites = swapUIDocGO.GetComponent<SwapUISprites>();
 		}
 		swapUI = new SwapUI(swapUIDoc);
+
+		swapUI.SetSilhouette(swapUISprites.GetPurityFeetSilhouette());
+		swapUI.RemoveRightHandIcon();
+		swapUI.RemoveLeftHandIcon();
+		swapUI.SetRightFootIcon(swapUISprites.GetPurityJumpIcon());
+		swapUI.SetLeftFootIcon(swapUISprites.GetPurityDashIcon());
+
 		GemController = GetComponent<GemController>();
 		GemController.OnGemsChanged += HandleGemChange;
 		Rb = GetComponent<Rigidbody2D>();
