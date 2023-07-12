@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class PlayerSkillController : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class PlayerSkillController : MonoBehaviour
 	private Dictionary<PlayerStateType, PlayerSkillStateBase> states
 		= new Dictionary<PlayerStateType, PlayerSkillStateBase>();
 	private PlayerSkillStateBase currentState;
+	private SwapUI swapUI;
 
 	public LayerMask groundLayer;
 	public float deathSeconds = 1.0f;
@@ -24,10 +27,13 @@ public class PlayerSkillController : MonoBehaviour
 	public PlayerEffectController effectController { get; set; }
 	public GemController GemController { get; private set; }
 	public Rigidbody2D Rb { get; private set; }
+	public SpriteRenderer SpriteRend { get; private set; }
 	public GroundCheck GroundCheck { get; private set; }
 
-	public int numberOfJumps { get; set; } = 0;
+	public float OriginalGravity { get; private set; }
+	public int NumberOfJumps { get; set; } = 0;
 	public float LastFacingDirection { get; set; } = 1;
+	public bool IsImmune { get; set; } = false;
 	public bool CanDash { get; set; } = true;
 	public bool IsDashing { get; set; } = false;
 	public bool CanUseRightHandSkill { get; set; } = true;
@@ -35,11 +41,31 @@ public class PlayerSkillController : MonoBehaviour
 	public bool CanUseLeftHandSkill { get; set; } = true;
 	public bool IsUsingLeftHandSkill { get; set; } = false;
 	public bool IsDying { get; set; } = false;
+	public bool HasForceApplied { get; set; } = false;
+	public bool CanSwap { get; set; } = false;
+
+	private UIDocument swapUIDoc;
+	private SwapUISprites swapUISprites;
 
 	private void Awake() {
+		GameObject swapUIDocGO = GameObject.FindWithTag("SwapUIDocument");
+		if (swapUIDocGO != null) {
+			swapUIDoc = swapUIDocGO.GetComponent<UIDocument>();
+			swapUISprites = swapUIDocGO.GetComponent<SwapUISprites>();
+		}
+		swapUI = new SwapUI(swapUIDoc);
+
+		swapUI.SetSilhouette(swapUISprites.GetPurityFeetSilhouette());
+		swapUI.RemoveRightHandIcon();
+		swapUI.RemoveLeftHandIcon();
+		swapUI.SetRightFootIcon(swapUISprites.GetPurityJumpIcon());
+		swapUI.SetLeftFootIcon(swapUISprites.GetPurityDashIcon());
+
 		GemController = GetComponent<GemController>();
 		GemController.OnGemsChanged += HandleGemChange;
 		Rb = GetComponent<Rigidbody2D>();
+		SpriteRend = GetComponent<SpriteRenderer>();
+		OriginalGravity = GetComponent<Rigidbody2D>().gravityScale;
 		animationController = GetComponent<PlayerAnimationController>();
 		effectController = GetComponent<PlayerEffectController>();
 		GroundCheck = GetComponent<GroundCheck>();
@@ -60,7 +86,7 @@ public class PlayerSkillController : MonoBehaviour
 		// Set the initial state
 		TransitionToState(
 			PlayerStateType.Idle,
-			HandsBaseGemState.Corruption,
+			HandsBaseGemState.None,
 			FeetBaseGemState.Purity,
 			RightHandElementalModifierGemState.None,
 			LeftHandElementalModifierGemState.None,
@@ -85,8 +111,11 @@ public class PlayerSkillController : MonoBehaviour
 
 	private void Update() {
 		if (!IsDying) {
-			if (!IsDashing && !IsUsingRightHandSkill && !IsUsingLeftHandSkill) {
+			if (!IsDashing && !IsUsingRightHandSkill && !IsUsingLeftHandSkill && !HasForceApplied) {
 				currentState?.UpdateState();
+			}
+			if (!CanDash && IsGrounded()) {
+				CanDash = true;
 			}
 		} else {
 			PlayerDeath();
@@ -137,10 +166,11 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	private void HandleGemChange() {
-		UpdatePlayerAbilities();
-	}
-
-	private void UpdatePlayerAbilities() {
+		Sprite newSilhouette = null;
+		Sprite newRightHandIcon = null;
+		Sprite newLeftHandIcon = null;
+		Sprite newRightFootIcon = null;
+		Sprite newLeftFootIcon = null;
 		BaseGem handsBaseGem = GemController.GetBaseHandsGem();
 		BaseGem feetbaseGem = GemController.GetBaseFeetGem();
 		ModifierGem rightHandModifierGem = GemController.GetRightHandModifierGem();
@@ -158,32 +188,65 @@ public class PlayerSkillController : MonoBehaviour
 				break;
 			case "Purity":
 				CurrentHandsBaseGemState = HandsBaseGemState.Purity;
+				newSilhouette = swapUISprites.GetPurityHandsSilhouette();
+				newRightHandIcon = swapUISprites.GetPurityPushIcon();
+				newLeftHandIcon = swapUISprites.GetPurityPullIcon();
 				break;
 		}
 
 		switch (feetbaseGem.gemName) {
 			case "None":
 				CurrentFeetBaseGemState = FeetBaseGemState.None;
+				newRightFootIcon = swapUISprites.GetNoGemJumpIcon();
 				break;
 			case "Corruption":
 				CurrentFeetBaseGemState = FeetBaseGemState.Corruption;
 				break;
 			case "Purity":
 				CurrentFeetBaseGemState = FeetBaseGemState.Purity;
+				newSilhouette = swapUISprites.GetPurityFeetSilhouette();
+				newRightFootIcon = swapUISprites.GetPurityJumpIcon();
+				newLeftFootIcon = swapUISprites.GetPurityDashIcon();
 				break;
+		}
+
+		if (newSilhouette != null) {
+			swapUI.SetSilhouette(newSilhouette);
+		} else {
+			swapUI.RemoveSilhouette();
+		}
+		if (newRightHandIcon != null) {
+			swapUI.SetRightHandIcon(newRightHandIcon);
+		} else {
+			swapUI.RemoveRightHandIcon();
+		}
+		if (newLeftHandIcon != null) {
+			swapUI.SetLeftHandIcon(newLeftHandIcon);
+		} else {
+			swapUI.RemoveLeftHandIcon();
+		}
+		if (newRightFootIcon != null) {
+			swapUI.SetRightFootIcon(newRightFootIcon);
+		} else {
+			swapUI.RemoveRightFootIcon();
+		}
+		if (newLeftFootIcon != null) {
+			swapUI.SetLeftFootIcon(newLeftFootIcon);
+		} else {
+			swapUI.RemoveLeftFootIcon();
 		}
 	}
 
 	public void ResetNumberOfJumps() {
 		switch (CurrentFeetBaseGemState) {
 			case FeetBaseGemState.None:
-				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
+				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
 			case FeetBaseGemState.Purity:
-				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
+				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
 			case FeetBaseGemState.Corruption:
-				numberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
+				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
 				break;
 		}
 
@@ -197,19 +260,6 @@ public class PlayerSkillController : MonoBehaviour
 			case RightFootElementalModifierGemState.Water:
 				break;
 			case RightFootElementalModifierGemState.Earth:
-				break;
-		}
-
-		switch (CurrentLeftFootElementalModifierGemState) {
-			case LeftFootElementalModifierGemState.None:
-				break;
-			case LeftFootElementalModifierGemState.Air:
-				break;
-			case LeftFootElementalModifierGemState.Fire:
-				break;
-			case LeftFootElementalModifierGemState.Water:
-				break;
-			case LeftFootElementalModifierGemState.Earth:
 				break;
 		}
 	}

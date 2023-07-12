@@ -31,9 +31,14 @@ public class RunningSkillState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
-		// From Running player can Swap, Idle, Fall, RightFoot, LeftFoot, RightHand, LeftHand
-		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			gemController.SwapGems();
+		// From Running player can Swap, Idle, Fall, RightFoot, LeftFoot,
+		//     RightHand, LeftHand, HasForceApplied, Immune
+		if (skillController.HasForceApplied) {
+
+		} else if (inputActions.Player.Swap.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.SwapGems();
+			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Idle,
@@ -56,6 +61,7 @@ public class RunningSkillState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (skillController.Rb.velocity.y < 0f) {
+			skillController.ResetNumberOfJumps();
 			skillController.TransitionToState(
 				PlayerStateType.Falling,
 				skillController.CurrentHandsBaseGemState,

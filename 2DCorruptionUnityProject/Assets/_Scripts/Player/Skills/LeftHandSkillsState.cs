@@ -52,13 +52,13 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				xOffset = 1.4f;
 				yOffset = -0.06f;
 				instantiatePurityPullEffect = true;
-				skillController.animationController.ExecutePullAnim();
+				skillController.animationController.ExecutePurityOnlyPullAnim();
 				break;
 			case HandsBaseGemState.Corruption:
 				xOffset = 0.7f;
 				yOffset = 0.21f;
 				instantiateCorProjectileEffect = true;
-				skillController.animationController.ExecuteCorruptionOnlyRangedAnim();
+				skillController.animationController.ExecuteCorOnlyRangedAnim();
 				break;
 		}
 
@@ -96,7 +96,9 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 	public override void UpdateState() {
 		// AFTER LeftHand player can Swap, Idle, Run, Fall, RightFoot, LeftFoot, RightHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				gemController.SwapGems();
+			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Idle,

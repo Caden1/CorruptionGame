@@ -53,13 +53,13 @@ public class RightHandSkillsState : PlayerSkillStateBase
 				xOffset = 0.87f;
 				yOffset = -0.06f;
 				instantiatePurityPushEffect = true;
-				skillController.animationController.ExecutePushAnim();
+				skillController.animationController.ExecutePurityOnlyPushAnim();
 				break;
 			case HandsBaseGemState.Corruption:
 				xOffset = 0.5f;
 				yOffset = 0.2f;
 				instantiateCorMeleeEffect = true;
-				skillController.animationController.ExecuteCorruptionOnlyMeleeAnim();
+				skillController.animationController.ExecuteCorOnlyMeleeAnim();
 				break;
 		}
 
@@ -94,7 +94,9 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	public override void UpdateState() {
 		// AFTER RightHand player can Swap, Idle, Run, Fall, RightFoot, LeftFoot, LeftHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				gemController.SwapGems();
+			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Idle,

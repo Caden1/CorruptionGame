@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class RightFootSkillsState : PlayerSkillStateBase
 {
+	private float executeNoGemAnimPart2Delay = 0.3f;
 	private float executePurityAnimPart2Delay = 0.3f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
@@ -41,9 +42,11 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		float jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
+				skillController.animationController.ExecuteNoGemJumpPart1Anim();
+				skillController.StartStateCoroutine(ExecuteNoGemAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityJumpPart1Anim();
+				skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
 				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 				xOffset = 0f;
 				yOffset = -0.8f;
@@ -52,7 +55,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 					skillController.transform.position.y + yOffset);
 				break;
 			case FeetBaseGemState.Corruption:
-				skillController.animationController.ExecuteJumpAnim();
+				skillController.animationController.ExecuteCorOnlyJumpAnim();
 				xOffset = 0.4f;
 				yOffset = 0.12f;
 				jumpFacingDirection = skillController.LastFacingDirection;
@@ -97,8 +100,10 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		// From Jumping player can Swap, Fall, LeftFoot, RightHand, LeftHand
 		//		NOTE: Double Jump is handled in FallingSkillState class
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			DestroyActiveCorEffect();
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				DestroyActiveCorEffect();
+				gemController.SwapGems();
+			}
 		} else if (skillController.Rb.velocity.y < 0f) {
 			DestroyActiveCorEffect();
 			skillController.TransitionToState(
@@ -156,6 +161,11 @@ public class RightFootSkillsState : PlayerSkillStateBase
 
 	private IEnumerator ExecutePurityAnimPart2WithDelay() {
 		yield return new WaitForSeconds(executePurityAnimPart2Delay);
-		skillController.animationController.ExecutePurityJumpPart2Anim();
+		skillController.animationController.ExecutePurityOnlyJumpPart2Anim();
+	}
+
+	private IEnumerator ExecuteNoGemAnimPart2WithDelay() {
+		yield return new WaitForSeconds(executeNoGemAnimPart2Delay);
+		skillController.animationController.ExecuteNoGemJumpPart2Anim();
 	}
 }

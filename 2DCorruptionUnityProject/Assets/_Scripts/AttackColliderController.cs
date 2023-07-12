@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,11 +11,11 @@ public class AttackColliderController : MonoBehaviour
 	public float force = 5.0f;
 	public float lifeTime = 1.0f;
 
-	private SpriteRenderer playerSpriteRenderer;
 	private GameObject playerGO;
+	private PlayerSkillController playerSkillController;
 	private HealthBarUI healthBarUI;
 	private UIDocument healthBarUIDoc;
-	private PlayerSkillController playerSkillController;
+	private float playerForceTimer;
 
 	private void Awake() {
 		GameObject healthBarDocGO = GameObject.FindWithTag("HealthBarUIDocument");
@@ -24,15 +25,15 @@ public class AttackColliderController : MonoBehaviour
 
 		playerGO = GameObject.FindWithTag("Player");
 		if (playerGO != null) {
-			playerSpriteRenderer = playerGO.GetComponent<SpriteRenderer>();
+			playerSkillController = playerGO.GetComponent<PlayerSkillController>();
 		}
-
-		playerSkillController = playerGO.GetComponent<PlayerSkillController>();
 	}
 
 	private void Start() {
 		healthBarUI = new HealthBarUI(healthBarUIDoc);
-		Destroy(gameObject, lifeTime);
+		if (lifeTime > 0f) {
+			Destroy(gameObject, lifeTime);
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
@@ -40,11 +41,11 @@ public class AttackColliderController : MonoBehaviour
 			EnemyController enemyController = other.GetComponent<EnemyController>();
 			Health health = other.GetComponent<Health>();
 			Transform healthBar = null;
-				
+			float forceDirectionX = playerSkillController.SpriteRend.flipX ? 1f : -1f;
+
 			if (health != null) {
-				health.TakeDamage(damage);
 				if (compareTag == "Enemy") {
-					float forceDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
+					health.TakeDamage(damage);
 					healthBar = other.transform.GetChild(0).GetChild(1);
 
 					if (enemyController != null) {
@@ -70,12 +71,56 @@ public class AttackColliderController : MonoBehaviour
 						enemyController.SetEnemyStateToDying();
 					}
 				} else if (compareTag == "Player") {
-					healthBarUI.DecreaseHealthBarSize(health.GetHealthPercentage());
-					if (health.IsDead()) {
-						playerSkillController.IsDying = true;
+					if (tag != "CorDamagingCrystal" && !playerSkillController.IsImmune) {
+						health.TakeDamage(damage);
+						healthBarUI.DecreaseHealthBarSize(health.GetHealthPercentage());
+						if (health.IsDead()) {
+							playerSkillController.IsDying = true;
+						}
 					}
 				}
 			}
 		}
+	}
+
+	private void OnTriggerStay2D(Collider2D other) {
+		if (compareTag != null && other.CompareTag(compareTag)) {
+			Health health = other.GetComponent<Health>();
+
+			if (health != null) {
+				if (compareTag == "Enemy") {
+
+				} else if (compareTag == "Player") {
+					if (tag == "CorDamagingCrystal" && !playerSkillController.IsImmune) {
+						health.TakeDamage(damage);
+						healthBarUI.DecreaseHealthBarSize(health.GetHealthPercentage());
+						if (health.IsDead()) {
+							playerSkillController.IsDying = true;
+						}
+						playerForceTimer = 0.4f;
+						playerSkillController.animationController.ExecuteHasForceAppliedAnim();
+						playerSkillController.HasForceApplied = true;
+						playerSkillController.IsImmune = true;
+						playerSkillController.Rb.velocity = new Vector2(0f, 0f);
+						float horizontalForce = 0f;
+						float verticalForce = force;
+						playerSkillController.Rb.AddForce(
+							new Vector2(horizontalForce, verticalForce), ForceMode2D.Impulse);
+						StartCoroutine(StopForceAppliedToPlayer());
+						StartCoroutine(StopPlayerImmunity());
+					}
+				}
+			}
+		}
+	}
+
+	private IEnumerator StopPlayerImmunity() {
+		yield return new WaitForSeconds(1f);
+		playerSkillController.IsImmune = false;
+	}
+
+	private IEnumerator StopForceAppliedToPlayer() {
+		yield return new WaitForSeconds(playerForceTimer);
+		playerSkillController.HasForceApplied = false;
 	}
 }

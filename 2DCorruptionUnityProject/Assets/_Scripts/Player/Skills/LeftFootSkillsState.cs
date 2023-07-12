@@ -10,7 +10,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 	private float yOffset = 0f;
 	private float dashForce;
 	private float dashDuration;
-	private float dashCooldown;
 	private float originalGravityScale;
 	private GameObject activeEffectClone;
 
@@ -45,16 +44,15 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		// Feet base gem
 		dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
 		dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
-		dashCooldown = skillController.GemController.GetBaseFeetGem().dashCooldown;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityDashPart1Anim();
+				skillController.animationController.ExecutePurityOnlyDashPart1Anim();
 				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Corruption:
-				skillController.animationController.ExecuteDashAnim();
+				skillController.animationController.ExecuteCorOnlyDashAnim();
 				xOffset = 1.15f;
 				yOffset = -0.05f;
 				skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
@@ -81,13 +79,14 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		skillController.StartStateCoroutine(StopDashAfterSeconds());
-		skillController.StartStateCoroutine(DashCooldown());
 	}
 
 	public override void UpdateState() {
 		// AFTER Dash player can Swap, Idle, Run, Fall, RightFoot, RightHand, LeftHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				gemController.SwapGems();
+			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Idle,
@@ -109,6 +108,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (skillController.Rb.velocity.y < 0f) {
+			skillController.ResetNumberOfJumps();
 			skillController.TransitionToState(
 				PlayerStateType.Falling,
 				skillController.CurrentHandsBaseGemState,
@@ -163,11 +163,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		}
 	}
 
-	private IEnumerator DashCooldown() {
-		yield return new WaitForSeconds(dashCooldown);
-		skillController.CanDash = true;
-	}
-
 	private IEnumerator InstantiateCorEffectWithDelay() {
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
 		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
@@ -176,6 +171,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 	private IEnumerator ExecutePurityAnimPart2WithDelay() {
 		yield return new WaitForSeconds(executePurityAnimPart2Delay);
-		skillController.animationController.ExecutePurityDashPart2Anim();
+		skillController.animationController.ExecutePurityOnlyDashPart2Anim();
 	}
 }
