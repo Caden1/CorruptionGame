@@ -42,7 +42,8 @@ public class PlayerSkillController : MonoBehaviour
 	public bool IsUsingLeftHandSkill { get; set; } = false;
 	public bool IsDying { get; set; } = false;
 	public bool HasForceApplied { get; set; } = false;
-	public bool CanSwap { get; set; } = false;
+	// SET TO TRUE FOR SANDBOX
+	public bool CanSwap { get; set; } = true; // = false;
 
 	private UIDocument swapUIDoc;
 	private SwapUISprites swapUISprites;
@@ -69,13 +70,6 @@ public class PlayerSkillController : MonoBehaviour
 		animationController = GetComponent<PlayerAnimationController>();
 		effectController = GetComponent<PlayerEffectController>();
 		GroundCheck = GetComponent<GroundCheck>();
-		states.Add(PlayerStateType.Idle, new IdleSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.Running, new RunningSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.Falling, new FallingSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.RightFoot, new RightFootSkillsState(this, inputActions, GemController));
-		states.Add(PlayerStateType.LeftFoot, new LeftFootSkillsState(this, inputActions, GemController));
-		states.Add(PlayerStateType.RightHand, new RightHandSkillsState(this, inputActions, GemController));
-		states.Add(PlayerStateType.LeftHand, new LeftHandSkillsState(this, inputActions, GemController));
 	}
 
 	private void OnDestroy() {
@@ -83,6 +77,14 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	private void Start() {
+		states.Add(PlayerStateType.Idle, new IdleSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Running, new RunningSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Falling, new FallingSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.RightFoot, new RightFootSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.LeftFoot, new LeftFootSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.RightHand, new RightHandSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.LeftHand, new LeftHandSkillsState(this, inputActions, GemController));
+
 		// Set the initial state
 		TransitionToState(
 			PlayerStateType.Idle,

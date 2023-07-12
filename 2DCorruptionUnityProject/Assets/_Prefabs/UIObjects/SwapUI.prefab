@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5782756638394249056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5782756638394249062}
+  - component: {fileID: 5782756638394249057}
+  - component: {fileID: 5782756638394249063}
+  m_Layer: 5
+  m_Name: SwapUI
+  m_TagString: SwapUIDocument
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5782756638394249062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5782756638394249056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5782756638394249057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5782756638394249056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 2daafd2b4f5df4fc9a385946959aeb06, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 01a04f1b301754ab5a0feed7ce124946, type: 3}
+  m_SortingOrder: 0
+--- !u!114 &5782756638394249063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5782756638394249056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffb403eb9b0a243abb722b981d97b38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  purityFeetSilhouette: {fileID: 21300000, guid: 4382690c50ec84f0f9337228f48451e2, type: 3}
+  purityHandsSilhouette: {fileID: 21300000, guid: 6e4dedc0fa6554b7ea7f0122835a5a36, type: 3}
+  noGemJumpIcon: {fileID: 21300000, guid: e30ead85f38244aa39acac3770a047b7, type: 3}
+  purityPushIcon: {fileID: 21300000, guid: 4d392efa885fa45f19d7c3f6389136ef, type: 3}
+  purityPullIcon: {fileID: 21300000, guid: ea286c6f76e704892a6f131a7c2bed09, type: 3}
+  purityJumpIcon: {fileID: 21300000, guid: 1cd9cadc0d1504a1eb94121f37c040dd, type: 3}
+  purityDashIcon: {fileID: 21300000, guid: e90864f089ffa4d8baa26ad2ee0f6127, type: 3}
