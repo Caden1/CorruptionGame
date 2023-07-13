@@ -70,7 +70,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		}
 
 		// Right foot mod gem
-		jumpForce += skillController.GemController.GetRightFootModifierGem().jumpForce;
+		//jumpForce += skillController.GemController.GetRightFootModifierGem().jumpForce;
 		switch (rightFootElementalModifierGemState) {
 			case RightFootElementalModifierGemState.None:
 				break;

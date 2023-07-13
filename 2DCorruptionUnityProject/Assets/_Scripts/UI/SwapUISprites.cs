@@ -6,10 +6,20 @@ public class SwapUISprites : MonoBehaviour
 {
 	public Sprite noGemJumpIcon;
 
-	public Sprite purityFeetSilhouette;
-	public Sprite purityHandsSilhouette;
+	public Sprite purOnlyFeetSilhouette;
+	public Sprite purOnlyHandsSilhouette;
 	public Sprite purFeetCorHandsSilhouette;
 	public Sprite purHandsCorFeetSilhouette;
+
+	public Sprite purFeetAllMods1Silhouette;
+	public Sprite purFeetAllMods2Silhouette;
+	public Sprite purFeetAllMods3Silhouette;
+	public Sprite purFeetAllMods4Silhouette;
+
+	public Sprite purHandsAllMods1Silhouette;
+	public Sprite purHandsAllMods2Silhouette;
+	public Sprite purHandsAllMods3Silhouette;
+	public Sprite purHandsAllMods4Silhouette;
 
 	public Sprite purityPushIcon;
 	public Sprite purityPullIcon;
@@ -20,56 +30,4 @@ public class SwapUISprites : MonoBehaviour
 	public Sprite corruptionRangedIcon;
 	public Sprite corruptionJumpIcon;
 	public Sprite corruptionDashIcon;
-
-	public Sprite GetNoGemJumpIcon() {
-		return noGemJumpIcon;
-	}
-
-	public Sprite GetPurityFeetSilhouette() {
-		return purityFeetSilhouette;
-	}
-
-	public Sprite GetPurityHandsSilhouette() {
-		return purityHandsSilhouette;
-	}
-
-	public Sprite GetPurFeetCorHandsSilhouette() {
-		return purFeetCorHandsSilhouette;
-	}
-
-	public Sprite GetPurHandsCorFeetSilhouette() {
-		return purHandsCorFeetSilhouette;
-	}
-
-	public Sprite GetPurityPushIcon() {
-		return purityPushIcon;
-	}
-
-	public Sprite GetPurityPullIcon() {
-		return purityPullIcon;
-	}
-
-	public Sprite GetPurityJumpIcon() {
-		return purityJumpIcon;
-	}
-
-	public Sprite GetPurityDashIcon() {
-		return purityDashIcon;
-	}
-
-	public Sprite GetCorruptionMeleeIcon() {
-		return corruptionMeleeIcon;
-	}
-
-	public Sprite GetCorruptionRangedIcon() {
-		return corruptionRangedIcon;
-	}
-
-	public Sprite GetCorruptionJumpIcon() {
-		return corruptionJumpIcon;
-	}
-
-	public Sprite GetCorruptionDashIcon() {
-		return corruptionDashIcon;
-	}
 }

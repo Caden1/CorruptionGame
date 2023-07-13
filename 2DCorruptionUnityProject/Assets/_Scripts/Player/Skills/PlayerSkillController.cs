@@ -56,11 +56,11 @@ public class PlayerSkillController : MonoBehaviour
 		}
 		swapUI = new SwapUI(swapUIDoc);
 
-		swapUI.SetSilhouette(swapUISprites.GetPurFeetCorHandsSilhouette());
-		swapUI.SetRightHandIcon(swapUISprites.GetCorruptionMeleeIcon());
-		swapUI.SetLeftHandIcon(swapUISprites.GetCorruptionRangedIcon());
-		swapUI.SetRightFootIcon(swapUISprites.GetPurityJumpIcon());
-		swapUI.SetLeftFootIcon(swapUISprites.GetPurityDashIcon());
+		swapUI.SetSilhouette(swapUISprites.purFeetCorHandsSilhouette);
+		swapUI.SetRightHandIcon(swapUISprites.corruptionMeleeIcon);
+		swapUI.SetLeftHandIcon(swapUISprites.corruptionRangedIcon);
+		swapUI.SetRightFootIcon(swapUISprites.purityJumpIcon);
+		swapUI.SetLeftFootIcon(swapUISprites.purityDashIcon);
 
 		GemController = GetComponent<GemController>();
 		GemController.OnGemsChanged += HandleGemChange;
@@ -184,35 +184,50 @@ public class PlayerSkillController : MonoBehaviour
 		switch (handsBaseGem.gemName) {
 			case "None":
 				CurrentHandsBaseGemState = HandsBaseGemState.None;
+				newSilhouette = swapUISprites.purOnlyFeetSilhouette;
 				break;
 			case "Corruption":
 				CurrentHandsBaseGemState = HandsBaseGemState.Corruption;
-				newSilhouette = swapUISprites.GetPurFeetCorHandsSilhouette();
-				newRightHandIcon = swapUISprites.GetCorruptionMeleeIcon();
-				newLeftHandIcon = swapUISprites.GetCorruptionRangedIcon();
+				switch (rightHandModifierGem.gemName) {
+					case null:
+						CurrentRightHandElementalModifierGemState = RightHandElementalModifierGemState.None;
+						newSilhouette = swapUISprites.purFeetCorHandsSilhouette;
+						newRightHandIcon = swapUISprites.corruptionMeleeIcon;
+						newLeftHandIcon = swapUISprites.corruptionRangedIcon;
+						break;
+					case "AirModifier":
+						break;
+					case "FireModifier":
+						break;
+					case "WaterModifier":
+						break;
+					case "EarthModifier":
+						break;
+				}
 				break;
 			case "Purity":
 				CurrentHandsBaseGemState = HandsBaseGemState.Purity;
-				newSilhouette = swapUISprites.GetPurHandsCorFeetSilhouette();
-				newRightHandIcon = swapUISprites.GetPurityPushIcon();
-				newLeftHandIcon = swapUISprites.GetPurityPullIcon();
+				newSilhouette = swapUISprites.purHandsCorFeetSilhouette;
+				newRightHandIcon = swapUISprites.purityDashIcon;
+				newLeftHandIcon = swapUISprites.purityPullIcon;
 				break;
 		}
 
 		switch (feetbaseGem.gemName) {
 			case "None":
 				CurrentFeetBaseGemState = FeetBaseGemState.None;
-				newRightFootIcon = swapUISprites.GetNoGemJumpIcon();
+				newSilhouette = swapUISprites.purOnlyHandsSilhouette;
+				newRightFootIcon = swapUISprites.noGemJumpIcon;
 				break;
 			case "Corruption":
 				CurrentFeetBaseGemState = FeetBaseGemState.Corruption;
-				newRightFootIcon = swapUISprites.GetCorruptionJumpIcon();
-				newLeftFootIcon = swapUISprites.GetCorruptionDashIcon();
+				newRightFootIcon = swapUISprites.corruptionJumpIcon;
+				newLeftFootIcon = swapUISprites.corruptionDashIcon;
 				break;
 			case "Purity":
 				CurrentFeetBaseGemState = FeetBaseGemState.Purity;
-				newRightFootIcon = swapUISprites.GetPurityJumpIcon();
-				newLeftFootIcon = swapUISprites.GetPurityDashIcon();
+				newRightFootIcon = swapUISprites.purityJumpIcon;
+				newLeftFootIcon = swapUISprites.purityDashIcon;
 				break;
 		}
 
