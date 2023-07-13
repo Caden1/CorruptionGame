@@ -2,12 +2,12 @@
     <Style src="project://database/Assets/_UI/GemSwapStylesheet.uss?fileID=7433441132597879392&amp;guid=658f1d547c7a74ef28fa4c27d96e417b&amp;type=3#GemSwapStylesheet" />
     <ui:VisualElement style="flex-direction: row-reverse; width: 100%; height: 12%; align-items: flex-start; justify-content: flex-start; right: 1%; top: 1%;">
         <ui:VisualElement name="LeftSideSkills" style="width: 5%; height: 100%;">
-            <ui:VisualElement name="LeftHandIcon" style="width: 100%; height: 50%; background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/PullIcon.png?fileID=21300000&amp;guid=ea286c6f76e704892a6f131a7c2bed09&amp;type=3#PullIcon&apos;);" />
+            <ui:VisualElement name="LeftHandIcon" style="width: 100%; height: 50%; background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/RangedCorruptionIcon.png?fileID=21300000&amp;guid=368becc05b2fd4cac8aa38ef8e78f9ce&amp;type=3#RangedCorruptionIcon&apos;);" />
             <ui:VisualElement name="LeftFootIcon" style="width: 100%; height: 50%; background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/DashPurityIcon.png?fileID=21300000&amp;guid=e90864f089ffa4d8baa26ad2ee0f6127&amp;type=3#DashPurityIcon&apos;);" />
         </ui:VisualElement>
-        <ui:VisualElement name="PlayerSilhouette" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/Silhouettes/SilhouettePurityFeet.png?fileID=21300000&amp;guid=4382690c50ec84f0f9337228f48451e2&amp;type=3#SilhouettePurityFeet&apos;); width: 10%; height: 100%; -unity-background-scale-mode: stretch-to-fill; left: auto; top: auto; flex-direction: column; right: auto; flex-wrap: nowrap;" />
+        <ui:VisualElement name="PlayerSilhouette" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/Silhouettes/SilhPurFeetCorHands.png?fileID=21300000&amp;guid=0975df44d0d3644558cb630dfbe5f07a&amp;type=3#SilhPurFeetCorHands&apos;); width: 10%; height: 100%; -unity-background-scale-mode: stretch-to-fill; left: auto; top: auto; flex-direction: column; right: auto; flex-wrap: nowrap;" />
         <ui:VisualElement name="RightSideSkills" style="width: 5%; height: 100%;">
-            <ui:VisualElement name="RightHandIcon" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/PushIcon.png?fileID=21300000&amp;guid=4d392efa885fa45f19d7c3f6389136ef&amp;type=3#PushIcon&apos;); width: 100%; height: 50%;" />
+            <ui:VisualElement name="RightHandIcon" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/MeleeCorruptionIcon.png?fileID=21300000&amp;guid=015a9cf58e85a4c22b0584129890af12&amp;type=3#MeleeCorruptionIcon&apos;); width: 100%; height: 50%;" />
             <ui:VisualElement name="RightFootIcon" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/JumpPurityIcon.png?fileID=21300000&amp;guid=1cd9cadc0d1504a1eb94121f37c040dd&amp;type=3#JumpPurityIcon&apos;); width: 100%; height: 50%; top: auto;" />
         </ui:VisualElement>
     </ui:VisualElement>

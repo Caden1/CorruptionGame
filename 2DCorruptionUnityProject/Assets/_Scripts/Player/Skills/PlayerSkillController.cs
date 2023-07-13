@@ -56,9 +56,9 @@ public class PlayerSkillController : MonoBehaviour
 		}
 		swapUI = new SwapUI(swapUIDoc);
 
-		swapUI.SetSilhouette(swapUISprites.GetPurityFeetSilhouette());
-		swapUI.RemoveRightHandIcon();
-		swapUI.RemoveLeftHandIcon();
+		swapUI.SetSilhouette(swapUISprites.GetPurFeetCorHandsSilhouette());
+		swapUI.SetRightHandIcon(swapUISprites.GetCorruptionMeleeIcon());
+		swapUI.SetLeftHandIcon(swapUISprites.GetCorruptionRangedIcon());
 		swapUI.SetRightFootIcon(swapUISprites.GetPurityJumpIcon());
 		swapUI.SetLeftFootIcon(swapUISprites.GetPurityDashIcon());
 
@@ -88,12 +88,12 @@ public class PlayerSkillController : MonoBehaviour
 		// Set the initial state
 		TransitionToState(
 			PlayerStateType.Idle,
-			HandsBaseGemState.None,
+			HandsBaseGemState.Corruption,
 			FeetBaseGemState.Purity,
-			RightHandElementalModifierGemState.None,
-			LeftHandElementalModifierGemState.None,
-			RightFootElementalModifierGemState.None,
-			LeftFootElementalModifierGemState.None
+			RightHandElementalModifierGemState.Air,
+			LeftHandElementalModifierGemState.Fire,
+			RightFootElementalModifierGemState.Water,
+			LeftFootElementalModifierGemState.Earth
 			);
 	}
 
@@ -187,10 +187,13 @@ public class PlayerSkillController : MonoBehaviour
 				break;
 			case "Corruption":
 				CurrentHandsBaseGemState = HandsBaseGemState.Corruption;
+				newSilhouette = swapUISprites.GetPurFeetCorHandsSilhouette();
+				newRightHandIcon = swapUISprites.GetCorruptionMeleeIcon();
+				newLeftHandIcon = swapUISprites.GetCorruptionRangedIcon();
 				break;
 			case "Purity":
 				CurrentHandsBaseGemState = HandsBaseGemState.Purity;
-				newSilhouette = swapUISprites.GetPurityHandsSilhouette();
+				newSilhouette = swapUISprites.GetPurHandsCorFeetSilhouette();
 				newRightHandIcon = swapUISprites.GetPurityPushIcon();
 				newLeftHandIcon = swapUISprites.GetPurityPullIcon();
 				break;
@@ -203,10 +206,11 @@ public class PlayerSkillController : MonoBehaviour
 				break;
 			case "Corruption":
 				CurrentFeetBaseGemState = FeetBaseGemState.Corruption;
+				newRightFootIcon = swapUISprites.GetCorruptionJumpIcon();
+				newLeftFootIcon = swapUISprites.GetCorruptionDashIcon();
 				break;
 			case "Purity":
 				CurrentFeetBaseGemState = FeetBaseGemState.Purity;
-				newSilhouette = swapUISprites.GetPurityFeetSilhouette();
 				newRightFootIcon = swapUISprites.GetPurityJumpIcon();
 				newLeftFootIcon = swapUISprites.GetPurityDashIcon();
 				break;

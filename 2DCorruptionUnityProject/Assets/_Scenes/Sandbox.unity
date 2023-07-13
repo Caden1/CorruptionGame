@@ -539,6 +539,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
+      propertyPath: corruptionDashIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 37d192d88fad44a4fb77a66a965d4e0e, type: 3}
+    - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
+      propertyPath: corruptionJumpIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: deb9c8b1d01c14d0b844e07a1d74703b, type: 3}
+    - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
+      propertyPath: corruptionMeleeIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 015a9cf58e85a4c22b0584129890af12, type: 3}
+    - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
+      propertyPath: corruptionRangedIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 368becc05b2fd4cac8aa38ef8e78f9ce, type: 3}
+    - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
+      propertyPath: purFeetCorHandsSilhouette
+      value: 
+      objectReference: {fileID: 21300000, guid: 0975df44d0d3644558cb630dfbe5f07a, type: 3}
+    - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
+      propertyPath: purHandsCorFeetSilhouette
+      value: 
+      objectReference: {fileID: 21300000, guid: 2900445f05df54e24930b718800feb72, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
 --- !u!1001 &609339064
@@ -1230,6 +1254,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 420851424486640876, guid: 6c5d2776ab7154f28aecd82dfd3d4a67, type: 3}
+      propertyPath: airGem
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bade05cde73b41f9bbe4f7a0b8f0588, type: 2}
     - target: {fileID: 420851424486640883, guid: 6c5d2776ab7154f28aecd82dfd3d4a67, type: 3}
       propertyPath: m_Name
       value: Player
