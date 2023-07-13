@@ -556,6 +556,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 368becc05b2fd4cac8aa38ef8e78f9ce, type: 3}
     - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
+      propertyPath: purOnlyFeetSilhouette
+      value: 
+      objectReference: {fileID: 21300000, guid: 4382690c50ec84f0f9337228f48451e2, type: 3}
+    - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
+      propertyPath: purOnlyHandsSilhouette
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e4dedc0fa6554b7ea7f0122835a5a36, type: 3}
+    - target: {fileID: 5782756638394249063, guid: 9910ea246475b416c9acd5b2b13e01dc, type: 3}
       propertyPath: purFeetAllMods1Silhouette
       value: 
       objectReference: {fileID: 21300000, guid: 78700f143fc7040dcaaf4bea2c122768, type: 3}
@@ -1290,6 +1298,18 @@ PrefabInstance:
       propertyPath: airGem
       value: 
       objectReference: {fileID: 11400000, guid: 4bade05cde73b41f9bbe4f7a0b8f0588, type: 2}
+    - target: {fileID: 420851424486640876, guid: 6c5d2776ab7154f28aecd82dfd3d4a67, type: 3}
+      propertyPath: fireGem
+      value: 
+      objectReference: {fileID: 11400000, guid: 722136bee64f94dcc8ad070cb5f2ade4, type: 2}
+    - target: {fileID: 420851424486640876, guid: 6c5d2776ab7154f28aecd82dfd3d4a67, type: 3}
+      propertyPath: earthGem
+      value: 
+      objectReference: {fileID: 11400000, guid: 029b56e2815eb42bf97344311bd2b04b, type: 2}
+    - target: {fileID: 420851424486640876, guid: 6c5d2776ab7154f28aecd82dfd3d4a67, type: 3}
+      propertyPath: waterGem
+      value: 
+      objectReference: {fileID: 11400000, guid: d4275b40566a94c2282c3079aa45d7d0, type: 2}
     - target: {fileID: 420851424486640883, guid: 6c5d2776ab7154f28aecd82dfd3d4a67, type: 3}
       propertyPath: m_Name
       value: Player

@@ -42,8 +42,8 @@ public class GemController : MonoBehaviour
 		currentBaseGemConfiguration.baseFeetGem = purityGem;
 
 		// Initialize the starting configuration for Modifier Gems
-		currentModifierGemConfiguration.rightHandGem = airGem;
-		currentModifierGemConfiguration.leftHandGem = fireGem;
+		currentModifierGemConfiguration.rightHandGem = fireGem;
+		currentModifierGemConfiguration.leftHandGem = airGem;
 		currentModifierGemConfiguration.rightFootGem = waterGem;
 		currentModifierGemConfiguration.leftFootGem = earthGem;
 	}
