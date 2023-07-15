@@ -38,14 +38,14 @@ public class GemController : MonoBehaviour
 
 	private void Start() {
 		// Initialize the starting configuration for Base Gems
-		currentBaseGemConfiguration.baseHandsGem = corruptionGem;
+		currentBaseGemConfiguration.baseHandsGem = noGem;
 		currentBaseGemConfiguration.baseFeetGem = purityGem;
 
 		// Initialize the starting configuration for Modifier Gems
-		currentModifierGemConfiguration.rightHandGem = fireGem;
-		currentModifierGemConfiguration.leftHandGem = airGem;
-		currentModifierGemConfiguration.rightFootGem = waterGem;
-		currentModifierGemConfiguration.leftFootGem = earthGem;
+		currentModifierGemConfiguration.rightHandGem = null;
+		currentModifierGemConfiguration.leftHandGem = null;
+		currentModifierGemConfiguration.rightFootGem = null;
+		currentModifierGemConfiguration.leftFootGem = null;
 	}
 
 	public BaseGem GetBaseHandsGem() {

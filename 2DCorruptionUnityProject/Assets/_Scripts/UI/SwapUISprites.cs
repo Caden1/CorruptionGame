@@ -1,33 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SwapUISprites : MonoBehaviour
 {
-	public Sprite noGemJumpIcon;
-
 	public Sprite purOnlyFeetSilhouette;
 	public Sprite purOnlyHandsSilhouette;
 	public Sprite purFeetCorHandsSilhouette;
 	public Sprite purHandsCorFeetSilhouette;
 
-	public Sprite purFeetAllMods1Silhouette;
-	public Sprite purFeetAllMods2Silhouette;
-	public Sprite purFeetAllMods3Silhouette;
-	public Sprite purFeetAllMods4Silhouette;
+	// feet: purity, hands: corruption
+	public Sprite purFeetAllMods1Silhouette; // left hand: air, right hand: fire, right foot: water, left foot: earth
+	public Sprite purFeetAllMods2Silhouette; // left hand: earth, right hand: air, right foot: fire, left foot: water
+	public Sprite purFeetAllMods3Silhouette; // left hand: water, right hand: earth, right foot: air, left foot: fire
+	public Sprite purFeetAllMods4Silhouette; // left hand: fire, right hand: water, right foot: earth, left foot: air
 
-	public Sprite purHandsAllMods1Silhouette;
-	public Sprite purHandsAllMods2Silhouette;
-	public Sprite purHandsAllMods3Silhouette;
-	public Sprite purHandsAllMods4Silhouette;
+	// feet: corruption, hands: purity
+	public Sprite purHandsAllMods1Silhouette; // left hand: air, right hand: fire, right foot: water, left foot: earth
+	public Sprite purHandsAllMods2Silhouette; // left hand: earth, right hand: air, right foot: fire, left foot: water
+	public Sprite purHandsAllMods3Silhouette; // left hand: water, right hand: earth, right foot: air, left foot: fire
+	public Sprite purHandsAllMods4Silhouette; // left hand: fire, right hand: water, right foot: earth, left foot: air
 
-	public Sprite purityPushIcon;
-	public Sprite purityPullIcon;
-	public Sprite purityJumpIcon;
-	public Sprite purityDashIcon;
+	public Sprite noGemRightHandIcon;
+	public Sprite noGemLeftHandIcon;
+	public Sprite noGemRightFootIcon;
+	public Sprite noGemLeftFootIcon;
 
-	public Sprite corruptionMeleeIcon;
-	public Sprite corruptionRangedIcon;
-	public Sprite corruptionJumpIcon;
-	public Sprite corruptionDashIcon;
+	public Sprite purityOnlyRightHandIcon;
+	public Sprite purityOnlyLeftHandIcon;
+	public Sprite purityOnlyRightFootIcon;
+	public Sprite purityOnlyLeftFootIcon;
+
+	public Sprite corruptionRightHandIcon;
+	public Sprite corruptionLeftHandIcon;
+	public Sprite corruptionRightFootIcon;
+	public Sprite corruptionLeftFootIcon;
 }
