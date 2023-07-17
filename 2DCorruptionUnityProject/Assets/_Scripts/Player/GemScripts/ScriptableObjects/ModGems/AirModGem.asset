@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gemName: AirModifier
   moveSpeed: 0
-  jumpForce: 4
+  jumpForce: 2
   numberOfJumps: 1
   dashForce: 5
-  dashCooldown: 0
   dashDuration: 0
   rightHandSkillDuration: 0
   rightHandSkillCooldown: 0

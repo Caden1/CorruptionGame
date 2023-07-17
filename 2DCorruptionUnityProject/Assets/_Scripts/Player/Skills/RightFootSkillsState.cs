@@ -70,7 +70,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		}
 
 		// Right foot mod gem
-		//jumpForce += skillController.GemController.GetRightFootModifierGem().jumpForce;
+		jumpForce += skillController.GemController.GetRightFootModifierGem().jumpForce;
 		switch (rightFootElementalModifierGemState) {
 			case RightFootElementalModifierGemState.None:
 				break;
@@ -104,6 +104,14 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			if (skillController.CanSwap) {
 				DestroyActiveCorEffect();
 				gemController.SwapGems();
+			}
+		} else if (inputActions.Player.RotateClockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsClockwise();
+			}
+		} else if (inputActions.Player.RotateCounterclockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsCounterClockwise();
 			}
 		} else if (skillController.Rb.velocity.y < 0f) {
 			DestroyActiveCorEffect();

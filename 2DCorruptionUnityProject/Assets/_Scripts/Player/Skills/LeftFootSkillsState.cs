@@ -60,7 +60,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		}
 
 		// Left foot mod gem
-		//dashForce += skillController.GemController.GetLeftFootModifierGem().dashForce;
+		dashForce += skillController.GemController.GetLeftFootModifierGem().dashForce;
 		switch (leftFootElementalModifierGemState) {
 			case LeftFootElementalModifierGemState.None:
 				break;
@@ -87,6 +87,14 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			if (skillController.CanSwap) {
 				gemController.SwapGems();
+			}
+		} else if (inputActions.Player.RotateClockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsClockwise();
+			}
+		} else if (inputActions.Player.RotateCounterclockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsCounterClockwise();
 			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(

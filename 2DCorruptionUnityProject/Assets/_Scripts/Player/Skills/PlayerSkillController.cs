@@ -43,10 +43,11 @@ public class PlayerSkillController : MonoBehaviour
 	public bool IsUsingLeftHandSkill { get; set; } = false;
 	public bool IsDying { get; set; } = false;
 	public bool HasForceApplied { get; set; } = false;
-	public bool CanSwap { get; set; } = false; // SET THIS TO TRUE FOR THE SANDBOX
+	public bool CanSwap { get; set; } = true; // SET THIS TO TRUE FOR THE SANDBOX
 
 	private UIDocument swapUIDoc;
 	private SwapUISprites swapUISprites;
+	private PlayerSkillControllerHelper playerSkillControllerHelper;
 
 	private Dictionary<(string, string, string, string, string, string),
 		(Sprite, Sprite, Sprite, Sprite, Sprite,
@@ -94,64 +95,23 @@ public class PlayerSkillController : MonoBehaviour
 		states.Add(PlayerStateType.RightHand, new RightHandSkillsState(this, inputActions, GemController));
 		states.Add(PlayerStateType.LeftHand, new LeftHandSkillsState(this, inputActions, GemController));
 
+		playerSkillControllerHelper = new PlayerSkillControllerHelper();
 		SetupStateSpriteDictionary();
 
 		// Set the initial state
 		TransitionToState(
 			PlayerStateType.Idle,
-			HandsBaseGemState.None,
+			HandsBaseGemState.Corruption,
 			FeetBaseGemState.Purity,
-			RightHandElementalModifierGemState.None,
-			LeftHandElementalModifierGemState.None,
-			RightFootElementalModifierGemState.None,
-			LeftFootElementalModifierGemState.None
+			RightHandElementalModifierGemState.Fire,
+			LeftHandElementalModifierGemState.Air,
+			RightFootElementalModifierGemState.Water,
+			LeftFootElementalModifierGemState.Earth
 			);
 	}
 
 	private void SetupStateSpriteDictionary() {
-		// Order (circular): Hands, Feet, Left Hand, Right Hand, Right Foot, Left Foot
-		stateSpriteMapping = new Dictionary<(string, string, string, string, string, string),
-			(Sprite, // silhouette
-			Sprite, // left hand
-			Sprite, // right hand
-			Sprite, // right foot
-			Sprite, // left foot
-			HandsBaseGemState,
-			FeetBaseGemState,
-			LeftHandElementalModifierGemState,
-			RightHandElementalModifierGemState,
-			RightFootElementalModifierGemState,
-			LeftFootElementalModifierGemState)>
-		{
-			{
-				("Purity", "None", "None", "None", "None", "None"),
-				(swapUISprites.purOnlyHandsSilhouette,
-				swapUISprites.purityOnlyLeftHandIcon,
-				swapUISprites.purityOnlyRightHandIcon,
-				swapUISprites.noGemRightFootIcon,
-				swapUISprites.noGemLeftFootIcon,
-				HandsBaseGemState.Purity,
-				FeetBaseGemState.None,
-				LeftHandElementalModifierGemState.None,
-				RightHandElementalModifierGemState.None,
-				RightFootElementalModifierGemState.None,
-				LeftFootElementalModifierGemState.None)
-			},
-			{
-				("None", "Purity", "None", "None", "None", "None"),
-				(swapUISprites.purOnlyFeetSilhouette,
-				swapUISprites.noGemLeftHandIcon,
-				swapUISprites.noGemRightHandIcon,
-				swapUISprites.purityOnlyRightFootIcon,
-				swapUISprites.purityOnlyLeftFootIcon,
-				HandsBaseGemState.None,
-				FeetBaseGemState.Purity,
-				LeftHandElementalModifierGemState.None,
-				RightHandElementalModifierGemState.None,
-				RightFootElementalModifierGemState.None,
-				LeftFootElementalModifierGemState.None)
-			}
-		};
+		stateSpriteMapping = playerSkillControllerHelper.PopulateStateSpriteDictionary();
 	}
 
 	public void SetInputActionsInitializeStateClasses(PlayerInputActions inputActions) {
@@ -263,29 +223,8 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	public void ResetNumberOfJumps() {
-		switch (CurrentFeetBaseGemState) {
-			case FeetBaseGemState.None:
-				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
-				break;
-			case FeetBaseGemState.Purity:
-				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
-				break;
-			case FeetBaseGemState.Corruption:
-				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
-				break;
-		}
-
-		switch (CurrentRightFootElementalModifierGemState) {
-			case RightFootElementalModifierGemState.None:
-				break;
-			case RightFootElementalModifierGemState.Air:
-				break;
-			case RightFootElementalModifierGemState.Fire:
-				break;
-			case RightFootElementalModifierGemState.Water:
-				break;
-			case RightFootElementalModifierGemState.Earth:
-				break;
-		}
+		NumberOfJumps =
+			GemController.GetBaseFeetGem().numberOfJumps
+			+ GemController.GetRightFootModifierGem().numberOfJumps;
 	}
 }
