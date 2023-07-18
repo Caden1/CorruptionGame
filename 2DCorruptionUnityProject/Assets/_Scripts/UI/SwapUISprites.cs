@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SwapUISprites : MonoBehaviour
 {
+	// silhouettes
 	public Sprite purOnlyFeetSilhouette;
 	public Sprite purOnlyHandsSilhouette;
 	public Sprite purFeetCorHandsSilhouette;
@@ -19,18 +20,27 @@ public class SwapUISprites : MonoBehaviour
 	public Sprite purHandsAllMods3Silhouette; // left hand: water, right hand: earth, right foot: air, left foot: fire
 	public Sprite purHandsAllMods4Silhouette; // left hand: fire, right hand: water, right foot: earth, left foot: air
 
+	// no gems
 	public Sprite noGemRightHandIcon;
 	public Sprite noGemLeftHandIcon;
 	public Sprite noGemRightFootIcon;
 	public Sprite noGemLeftFootIcon;
 
+	// purity only
 	public Sprite purityOnlyRightHandIcon;
 	public Sprite purityOnlyLeftHandIcon;
 	public Sprite purityOnlyRightFootIcon;
 	public Sprite purityOnlyLeftFootIcon;
 
-	public Sprite corruptionRightHandIcon;
-	public Sprite corruptionLeftHandIcon;
-	public Sprite corruptionRightFootIcon;
-	public Sprite corruptionLeftFootIcon;
+	// corruption only
+	public Sprite corruptionOnlyRightHandIcon;
+	public Sprite corruptionOnlyLeftHandIcon;
+	public Sprite corruptionOnlyRightFootIcon;
+	public Sprite corruptionOnlyLeftFootIcon;
+
+	// purity air
+	public Sprite purityAirRightHandIcon;
+	public Sprite purityAirLeftHandIcon;
+	public Sprite purityAirRightFootIcon;
+	public Sprite purityAirLeftFootIcon;
 }
