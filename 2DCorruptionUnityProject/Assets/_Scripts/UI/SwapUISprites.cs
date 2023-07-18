@@ -43,4 +43,10 @@ public class SwapUISprites : MonoBehaviour
 	public Sprite purityAirLeftHandIcon;
 	public Sprite purityAirRightFootIcon;
 	public Sprite purityAirLeftFootIcon;
+
+	// corruption air
+	public Sprite corruptionAirRightHandIcon;
+	public Sprite corruptionAirLeftHandIcon;
+	public Sprite corruptionAirRightFootIcon;
+	public Sprite corruptionAirLeftFootIcon;
 }
