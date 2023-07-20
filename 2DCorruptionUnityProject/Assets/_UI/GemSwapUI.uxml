@@ -1,14 +1,22 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/_UI/GemSwapStylesheet.uss?fileID=7433441132597879392&amp;guid=658f1d547c7a74ef28fa4c27d96e417b&amp;type=3#GemSwapStylesheet" />
-    <ui:VisualElement style="flex-direction: row-reverse; width: 100%; height: 12%; align-items: flex-start; justify-content: flex-start; right: 1%; top: 1%;">
-        <ui:VisualElement name="RightSideSkills" style="width: 5%; height: 100%;">
-            <ui:VisualElement name="RightHandIcon" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/BaseGems/NoGemNoSkillIcon.png?fileID=21300000&amp;guid=1d17cb9a48d8844ffb8160a9db68c047&amp;type=3#NoGemNoSkillIcon&apos;); width: 100%; height: 50%;" />
-            <ui:VisualElement name="RightFootIcon" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/BaseGems/JumpPurityIcon.png?fileID=21300000&amp;guid=1cd9cadc0d1504a1eb94121f37c040dd&amp;type=3#JumpPurityIcon&apos;); width: 100%; height: 50%; top: auto;" />
+    <ui:VisualElement name="TopContainer" style="width: 100%; height: 100%; left: auto; flex-direction: row; align-items: flex-start; justify-content: flex-start; top: auto;">
+        <ui:VisualElement name="LeftHandContainer" style="width: 20%; height: 30%; position: absolute; left: -2%; top: auto;">
+            <ui:VisualElement name="LeftHandIcon" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/BaseGems/NoGemNoSkillIcon.png?fileID=21300000&amp;guid=1d17cb9a48d8844ffb8160a9db68c047&amp;type=3#NoGemNoSkillIcon&apos;); left: auto; flex-direction: column;" />
         </ui:VisualElement>
-        <ui:VisualElement name="PlayerSilhouette" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/Silhouettes/PurityOnly/SilhouettePurityFeet.png?fileID=21300000&amp;guid=4382690c50ec84f0f9337228f48451e2&amp;type=3#SilhouettePurityFeet&apos;); width: 10%; height: 100%; -unity-background-scale-mode: stretch-to-fill; left: auto; top: auto; flex-direction: column; right: auto; flex-wrap: nowrap;" />
-        <ui:VisualElement name="LeftSideSkills" style="width: 5%; height: 100%;">
-            <ui:VisualElement name="LeftHandIcon" style="width: 100%; height: 50%; background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/BaseGems/NoGemNoSkillIcon.png?fileID=21300000&amp;guid=1d17cb9a48d8844ffb8160a9db68c047&amp;type=3#NoGemNoSkillIcon&apos;);" />
-            <ui:VisualElement name="LeftFootIcon" style="width: 100%; height: 50%; background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/BaseGems/DashPurityIcon.png?fileID=21300000&amp;guid=e90864f089ffa4d8baa26ad2ee0f6127&amp;type=3#DashPurityIcon&apos;);" />
+        <ui:VisualElement name="SilhouetteContainer" style="width: 15%; height: 28%; left: 55%; top: 2%; position: absolute;">
+            <ui:VisualElement name="PlayerSilhouette" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/Silhouettes/PurityOnly/SilhouettePurityFeet.png?fileID=21300000&amp;guid=4382690c50ec84f0f9337228f48451e2&amp;type=3#SilhouettePurityFeet&apos;); width: 100%; height: 100%; -unity-background-scale-mode: stretch-to-fill; left: auto; top: auto; flex-direction: column; right: auto; flex-wrap: nowrap; position: relative;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RightHandContainer" style="width: 20%; height: 30%; left: 82%; position: absolute;">
+            <ui:VisualElement name="RightHandIcon" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/BaseGems/NoGemNoSkillIcon.png?fileID=21300000&amp;guid=1d17cb9a48d8844ffb8160a9db68c047&amp;type=3#NoGemNoSkillIcon&apos;); width: 100%; height: 100%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="BottomContainer" style="width: 100%; height: 100%; align-items: flex-end; flex-direction: row; justify-content: flex-start;">
+        <ui:VisualElement name="LeftFootContainer" style="width: 20%; height: 30%; position: absolute; left: -2%;">
+            <ui:VisualElement name="LeftFootIcon" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/BaseGems/DashPurityIcon.png?fileID=21300000&amp;guid=e90864f089ffa4d8baa26ad2ee0f6127&amp;type=3#DashPurityIcon&apos;);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RightFootContainer" style="width: 20%; height: 30%; left: 82%; position: absolute;">
+            <ui:VisualElement name="RightFootIcon" style="background-image: url(&apos;project://database/Assets/_Sprites/UIElements/SkillsIcons/BaseGems/JumpPurityIcon.png?fileID=21300000&amp;guid=1cd9cadc0d1504a1eb94121f37c040dd&amp;type=3#JumpPurityIcon&apos;); width: 100%; height: 100%; top: auto;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

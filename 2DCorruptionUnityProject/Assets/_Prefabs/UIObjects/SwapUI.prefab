@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7273795528020538702
+--- !u!1 &2377662990250801642
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7273795528020538696}
-  - component: {fileID: 7273795528020538703}
-  - component: {fileID: 7273795528020538697}
+  - component: {fileID: 2377662990250801644}
+  - component: {fileID: 2377662990250801643}
+  - component: {fileID: 2377662990250801645}
   m_Layer: 5
   m_Name: SwapUI
   m_TagString: SwapUIDocument
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7273795528020538696
+--- !u!4 &2377662990250801644
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7273795528020538702}
+  m_GameObject: {fileID: 2377662990250801642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7273795528020538703
+--- !u!114 &2377662990250801643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7273795528020538702}
+  m_GameObject: {fileID: 2377662990250801642}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
@@ -49,13 +49,13 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 01a04f1b301754ab5a0feed7ce124946, type: 3}
   m_SortingOrder: 0
---- !u!114 &7273795528020538697
+--- !u!114 &2377662990250801645
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7273795528020538702}
+  m_GameObject: {fileID: 2377662990250801642}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffb403eb9b0a243abb722b981d97b38b, type: 3}
@@ -81,7 +81,15 @@ MonoBehaviour:
   purityOnlyLeftHandIcon: {fileID: 21300000, guid: ea286c6f76e704892a6f131a7c2bed09, type: 3}
   purityOnlyRightFootIcon: {fileID: 21300000, guid: 1cd9cadc0d1504a1eb94121f37c040dd, type: 3}
   purityOnlyLeftFootIcon: {fileID: 21300000, guid: e90864f089ffa4d8baa26ad2ee0f6127, type: 3}
-  corruptionRightHandIcon: {fileID: 21300000, guid: 015a9cf58e85a4c22b0584129890af12, type: 3}
-  corruptionLeftHandIcon: {fileID: 21300000, guid: 368becc05b2fd4cac8aa38ef8e78f9ce, type: 3}
-  corruptionRightFootIcon: {fileID: 21300000, guid: deb9c8b1d01c14d0b844e07a1d74703b, type: 3}
-  corruptionLeftFootIcon: {fileID: 21300000, guid: 37d192d88fad44a4fb77a66a965d4e0e, type: 3}
+  corruptionOnlyRightHandIcon: {fileID: 21300000, guid: 015a9cf58e85a4c22b0584129890af12, type: 3}
+  corruptionOnlyLeftHandIcon: {fileID: 21300000, guid: 368becc05b2fd4cac8aa38ef8e78f9ce, type: 3}
+  corruptionOnlyRightFootIcon: {fileID: 21300000, guid: deb9c8b1d01c14d0b844e07a1d74703b, type: 3}
+  corruptionOnlyLeftFootIcon: {fileID: 21300000, guid: 37d192d88fad44a4fb77a66a965d4e0e, type: 3}
+  purityAirRightHandIcon: {fileID: 21300000, guid: 0e4c87b2ce3d44e3d8db2466e52a48ac, type: 3}
+  purityAirLeftHandIcon: {fileID: 21300000, guid: 119e87939ddd74d388d04b6358e6d77a, type: 3}
+  purityAirRightFootIcon: {fileID: 21300000, guid: 54869329e5c5f408aaea65ef31076e1b, type: 3}
+  purityAirLeftFootIcon: {fileID: 21300000, guid: 254a966a87afa44d79954adc678d07f1, type: 3}
+  corruptionAirRightHandIcon: {fileID: 21300000, guid: 57216ee7b00f64f19a0c4631cd8994f9, type: 3}
+  corruptionAirLeftHandIcon: {fileID: 21300000, guid: 2983091e702d74b21933ac7cdcc67119, type: 3}
+  corruptionAirRightFootIcon: {fileID: 21300000, guid: ef3ffa682a4d94edda62917c6eae7171, type: 3}
+  corruptionAirLeftFootIcon: {fileID: 21300000, guid: 18340c5b3946b4dac9d41b8eeb6a5457, type: 3}
