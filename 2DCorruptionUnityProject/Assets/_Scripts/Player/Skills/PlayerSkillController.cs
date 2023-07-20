@@ -206,7 +206,8 @@ public class PlayerSkillController : MonoBehaviour
 			rightHandModifierGemName,
 			rightFootModifierGemName,
 			leftFootModifierGemName), out var tupleValue)) {
-			swapUI.SetSilhouette(tupleValue.Item1);
+			// RemoveSilhouette() to see what it's like without the silhouette
+			swapUI.RemoveSilhouette(); // swapUI.SetSilhouette(tupleValue.Item1);
 			swapUI.SetLeftHandIcon(tupleValue.Item2);
 			swapUI.SetRightHandIcon(tupleValue.Item3);
 			swapUI.SetRightFootIcon(tupleValue.Item4);

@@ -1422,6 +1422,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityFireLeftFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: db317867915bf45d6a2d733c0b17b20e, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityFireLeftHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 0c8c07de49a054073b189b0c1a117405, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityOnlyLeftFootIcon
       value: 
       objectReference: {fileID: 21300000, guid: e90864f089ffa4d8baa26ad2ee0f6127, type: 3}
@@ -1430,8 +1438,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: ebe4ffe92e1524d27977dfc0211b85bb, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityFireRightFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 00662fde3f2504b64b75c7a30431fb2e, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityFireRightHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 9345faf96c8d446bbac363e56068fb19, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityOnlyRightHandIcon
       value: 
       objectReference: {fileID: 21300000, guid: 8ed59fc3bb0b6498fbe3137bf36da6b6, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionFireLeftFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 1e328990e4d9b488db37b2b207583ae2, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionFireLeftHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 9dcfeb69dea4140a28a654e1b706072c, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionFireRightFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: b64d3b0d23a23449898d6e7a3da35dd6, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionFireRightHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 007ca615d1f6044c7897407e79ad6ef8, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c81d188fc4193436ea7715a752df8765, type: 3}
