@@ -1450,6 +1450,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 8ed59fc3bb0b6498fbe3137bf36da6b6, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityWaterLeftFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 909b3694ad3c74fd4bab4b3c91723fb0, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityWaterLeftHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4839b4bc4a5364ac2b0ba689054c3611, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityWaterRightFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 5edc75c2b062240b991ff7d88a2242a3, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityWaterRightHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: c11edbf1ce534472eb587aeec357923d, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionFireLeftFootIcon
       value: 
       objectReference: {fileID: 21300000, guid: 1e328990e4d9b488db37b2b207583ae2, type: 3}
@@ -1465,5 +1481,21 @@ PrefabInstance:
       propertyPath: corruptionFireRightHandIcon
       value: 
       objectReference: {fileID: 21300000, guid: 007ca615d1f6044c7897407e79ad6ef8, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionWaterLeftFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: fd93926895c9b4875813a77ef32fd309, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionWaterLeftHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 06181a4150a9c4a08a65fd10d1a01850, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionWaterRightFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: a5687898e00e94678b3d7ee13354b5fb, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionWaterRightHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 5fb5640dc31d74641977341f9aa04f16, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c81d188fc4193436ea7715a752df8765, type: 3}
