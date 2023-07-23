@@ -1422,13 +1422,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityAirLeftFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 3d2764fb2ec234b3faed78897513e959, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityAirLeftHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 1b0ec6ba82495468e8ebd3076893ca19, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityAirRightFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: a2696c0fbc1ad48b38f28ccb1af846fa, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityAirRightHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 87f4017b831ec4638b1d1c004b9a074e, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityFireLeftFootIcon
       value: 
-      objectReference: {fileID: 21300000, guid: db317867915bf45d6a2d733c0b17b20e, type: 3}
+      objectReference: {fileID: 21300000, guid: 33c2f2caa0bfb48349e5a0b06551d2dc, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityFireLeftHandIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 0c8c07de49a054073b189b0c1a117405, type: 3}
+      objectReference: {fileID: 21300000, guid: ba622cd172ea24d48a37518d60aa75e2, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityOnlyLeftFootIcon
       value: 
@@ -1438,13 +1454,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: ebe4ffe92e1524d27977dfc0211b85bb, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityEarthLeftFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: d24b14ef34c044c82ba84001ed8c5c6f, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityEarthLeftHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 44368ff8de9ef4667883a8653efef83e, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityFireRightFootIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 00662fde3f2504b64b75c7a30431fb2e, type: 3}
+      objectReference: {fileID: 21300000, guid: ef3f56065791d48b281f507dca284441, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityFireRightHandIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 9345faf96c8d446bbac363e56068fb19, type: 3}
+      objectReference: {fileID: 21300000, guid: bb3ddbb4260bc4bc8a957c1ae64ebc68, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityOnlyRightHandIcon
       value: 
@@ -1452,50 +1476,90 @@ PrefabInstance:
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityWaterLeftFootIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 909b3694ad3c74fd4bab4b3c91723fb0, type: 3}
+      objectReference: {fileID: 21300000, guid: 0f4b02574542945409c3c2acbc1120c6, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityWaterLeftHandIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 4839b4bc4a5364ac2b0ba689054c3611, type: 3}
+      objectReference: {fileID: 21300000, guid: 3e27608638daf43e7addae012f0383d1, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityEarthRightFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 0e1d69d85dea047a79bfb68fbf868369, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: purityEarthRightHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 0e2208c3f33574b3b9323261ef151614, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityWaterRightFootIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 5edc75c2b062240b991ff7d88a2242a3, type: 3}
+      objectReference: {fileID: 21300000, guid: 4c1ba45060b7346a29f41c33611c2979, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: purityWaterRightHandIcon
       value: 
-      objectReference: {fileID: 21300000, guid: c11edbf1ce534472eb587aeec357923d, type: 3}
+      objectReference: {fileID: 21300000, guid: d2dd6199f16534f94a3ece6003bddf08, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionAirLeftFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 531b0886ee7f04951b12fff24e57ddbe, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionAirLeftHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 059c8ee2723c74ebcae569d293120e50, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionAirRightFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: fd83632133f4a459589cf530ff2594ce, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionAirRightHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 2d359dbc5d48f474b9df30c4c031ed35, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionFireLeftFootIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 1e328990e4d9b488db37b2b207583ae2, type: 3}
+      objectReference: {fileID: 21300000, guid: 587d5c2ea14184cb4a05a36babddb1ae, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionFireLeftHandIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 9dcfeb69dea4140a28a654e1b706072c, type: 3}
+      objectReference: {fileID: 21300000, guid: 50082a77894ee4e50af02a6ee57049bc, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionEarthLeftFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 352a7e292a5ef4df9b038314ef3fafa9, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionEarthLeftHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 5ce8bea5906bf4636be44ab77cafb3a3, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionFireRightFootIcon
       value: 
-      objectReference: {fileID: 21300000, guid: b64d3b0d23a23449898d6e7a3da35dd6, type: 3}
+      objectReference: {fileID: 21300000, guid: 88094a441054c4313a1e0a220d9fe14e, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionFireRightHandIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 007ca615d1f6044c7897407e79ad6ef8, type: 3}
+      objectReference: {fileID: 21300000, guid: e86a5edef99904675b10a541bbe99ca9, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionWaterLeftFootIcon
       value: 
-      objectReference: {fileID: 21300000, guid: fd93926895c9b4875813a77ef32fd309, type: 3}
+      objectReference: {fileID: 21300000, guid: 04af2349353b044e382112357b615a07, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionWaterLeftHandIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 06181a4150a9c4a08a65fd10d1a01850, type: 3}
+      objectReference: {fileID: 21300000, guid: 07f01b8798b404870b1c095caeaf96fd, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionEarthRightFootIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: c57436c5059114af0b0eb9320889795d, type: 3}
+    - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
+      propertyPath: corruptionEarthRightHandIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 756e1ea78e7da4036945a3eedaef7c62, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionWaterRightFootIcon
       value: 
-      objectReference: {fileID: 21300000, guid: a5687898e00e94678b3d7ee13354b5fb, type: 3}
+      objectReference: {fileID: 21300000, guid: 0fc46365f25c54ac5b7595589eecd6e8, type: 3}
     - target: {fileID: 2377662990250801645, guid: c81d188fc4193436ea7715a752df8765, type: 3}
       propertyPath: corruptionWaterRightHandIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 5fb5640dc31d74641977341f9aa04f16, type: 3}
+      objectReference: {fileID: 21300000, guid: c2f091b0c3bff4a37a23ac4e3de2661d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c81d188fc4193436ea7715a752df8765, type: 3}

@@ -73,4 +73,16 @@ public class SwapUISprites : MonoBehaviour
 	public Sprite corruptionWaterLeftHandIcon;
 	public Sprite corruptionWaterRightFootIcon;
 	public Sprite corruptionWaterLeftFootIcon;
+
+	// purity earth
+	public Sprite purityEarthRightHandIcon;
+	public Sprite purityEarthLeftHandIcon;
+	public Sprite purityEarthRightFootIcon;
+	public Sprite purityEarthLeftFootIcon;
+
+	// corruption earth
+	public Sprite corruptionEarthRightHandIcon;
+	public Sprite corruptionEarthLeftHandIcon;
+	public Sprite corruptionEarthRightFootIcon;
+	public Sprite corruptionEarthLeftFootIcon;
 }
