@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compareTag: Enemy
   damage: 0
-  force: 7
+  force: 5
   lifeTime: 0.5
 --- !u!61 &2750129355746689584
 BoxCollider2D:

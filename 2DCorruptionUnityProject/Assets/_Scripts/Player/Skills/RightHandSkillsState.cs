@@ -68,6 +68,8 @@ public class RightHandSkillsState : PlayerSkillStateBase
 			case RightHandElementalModifierGemState.None:
 				break;
 			case RightHandElementalModifierGemState.Air:
+				xOffset = 1.12f;
+				yOffset = -0.06f;
 				break;
 			case RightHandElementalModifierGemState.Fire:
 				break;
@@ -85,7 +87,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		skillController.StartStateCoroutine(StopAnimAfterSeconds());
 		skillController.StartStateCoroutine(Cooldown());
 		if (instantiatePurityPushEffect) {
-			skillController.StartStateCoroutine(InstantiatePurityEffectWithDelay());
+			skillController.StartStateCoroutine(InstantiatePurityEffectWithDelay(rightHandElementalModifierGemState));
 		} else if (instantiateCorMeleeEffect) {
 			skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
 		}
@@ -185,10 +187,29 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		skillController.CanUseRightHandSkill = true;
 	}
 
-	private IEnumerator InstantiatePurityEffectWithDelay() {
+	private IEnumerator InstantiatePurityEffectWithDelay(RightHandElementalModifierGemState rightHandElementalModifierGemState) {
 		yield return new WaitForSeconds(instantiatePurityEffectDelay);
 		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
-		activeEffectClone = skillController.effectController.GetPurityPushEffectClone(effectPosition);
+		switch (rightHandElementalModifierGemState) {
+			case RightHandElementalModifierGemState.None:
+				activeEffectClone = skillController.effectController.GetPurityPushEffectClone(effectPosition);
+				break;
+			case RightHandElementalModifierGemState.Air:
+				activeEffectClone = skillController.effectController.GetPurityAirPushEffectClone(effectPosition);
+				break;
+			case RightHandElementalModifierGemState.Fire:
+				// Placeholder
+				activeEffectClone = skillController.effectController.GetPurityPushEffectClone(effectPosition);
+				break;
+			case RightHandElementalModifierGemState.Water:
+				// Placeholder
+				activeEffectClone = skillController.effectController.GetPurityPushEffectClone(effectPosition);
+				break;
+			case RightHandElementalModifierGemState.Earth:
+				// Placeholder
+				activeEffectClone = skillController.effectController.GetPurityPushEffectClone(effectPosition);
+				break;
+		}
 	}
 
 	private IEnumerator InstantiateCorEffectWithDelay() {

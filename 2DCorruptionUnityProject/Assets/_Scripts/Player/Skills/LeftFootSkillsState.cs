@@ -61,6 +61,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 		// Left foot mod gem
 		dashForce += skillController.GemController.GetLeftFootModifierGem().dashForce;
+		dashDuration += skillController.GemController.GetLeftFootModifierGem().dashDuration;
 		switch (leftFootElementalModifierGemState) {
 			case LeftFootElementalModifierGemState.None:
 				break;
