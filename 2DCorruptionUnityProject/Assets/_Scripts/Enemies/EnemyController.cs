@@ -144,7 +144,7 @@ public class EnemyController : MonoBehaviour
 				animator.Play("Death");
 				break;
 			case AnimationState.Dizzy:
-				animator.Play("Idle"); // CADEN, change to dizzy anim
+				animator.Play("Dizzy");
 				break;
 		}
 	}
