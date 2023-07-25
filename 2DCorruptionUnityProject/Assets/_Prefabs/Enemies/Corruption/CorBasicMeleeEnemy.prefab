@@ -173,10 +173,12 @@ MonoBehaviour:
   runSpeed: 2
   roamDistance: 5
   detectionRange: 3
+  aggroingDetectionRange: 5
+  aggroDetectionDuration: 5
   verticalDetectionLimit: 1
   attackRange: 0.8
   attackCooldown: 2
-  takeDamageDuration: 0.5
+  takeDamageDurationResistance: 0
   deathSeconds: 1
   player: {fileID: 0}
   attackEffectPrefab: {fileID: 0}

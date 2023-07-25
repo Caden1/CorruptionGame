@@ -2,14 +2,20 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static EnemyController;
 
 public class AttackColliderController : MonoBehaviour
 {
 	// These can be set in the Inspector
 	public string compareTag;
 	public float damage = 10.0f;
+	public float takeDamageDuration = 0.5f;
 	public float force = 5.0f;
 	public float lifeTime = 1.0f;
+	public bool isAirModded = false;
+	public bool isFireModded = false;
+	public bool isWaterModded = false;
+	public bool isEarthModded = false;
 
 	private GameObject playerGO;
 	private PlayerSkillController playerSkillController;
@@ -48,8 +54,9 @@ public class AttackColliderController : MonoBehaviour
 					health.TakeDamage(damage);
 					healthBar = other.transform.GetChild(0).GetChild(1);
 
+
 					if (enemyController != null) {
-						enemyController.SetEnemyStateToTakeDamage();
+						enemyController.SetEnemyStateToTakeDamage(takeDamageDuration);
 					}
 
 					if (healthBar != null) {
@@ -59,12 +66,27 @@ public class AttackColliderController : MonoBehaviour
 					if (tag == "CorJumpKnee") {
 						other.GetComponent<Rigidbody2D>().AddForce(
 							new Vector2(0f, force), ForceMode2D.Impulse);
+					} else if (tag == "CorRangedEffect") {
+
+					} else if (tag == "CorMeleeEffect") {
+
+					} else if (tag == "CorKickDash") {
+
 					} else if (tag == "PullEffect") {
 						other.GetComponent<Rigidbody2D>().AddForce(
 							new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
-					} else {
-						other.GetComponent<Rigidbody2D>().AddForce(
-							new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+					} else if (tag == "PushEffect") {
+							other.GetComponent<Rigidbody2D>().AddForce(
+								new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						if (isAirModded) {
+							enemyController.ApplyEffect(EffectState.Dizzy);
+						} else if (isFireModded) {
+
+						} else if (isWaterModded) {
+
+						} else if (isEarthModded) {
+
+						}
 					}
 
 					if (health.IsDead()) {

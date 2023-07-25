@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+	[HideInInspector] public enum EffectState { None, Dizzy }
+	private List<EffectState> currentEffects = new List<EffectState>();
 	private enum EnemyState { Roam, ChasePlayer, AttackPlayer, TakeDamage, Dying }
-
-	private enum AnimationState { Moving, Chasing, Attacking, Idle, TakeDamage, Death }
+	private enum AnimationState { Moving, Chasing, Attacking, Idle, TakeDamage, Death, Dizzy }
 
 	public float walkSpeed = 1.5f;
 	public float runSpeed = 2f;
@@ -18,11 +19,13 @@ public class EnemyController : MonoBehaviour
 	public float verticalDetectionLimit = 1.0f;
 	public float attackRange = 1.0f;
 	public float attackCooldown = 2.0f;
-	public float takeDamageDuration = 0.5f;
+	public float takeDamageDurationResistance = 0.5f;
+	public float dizzyDuration = 1f;
 	public float deathSeconds = 1f;
 	public Transform player;
 	public GameObject attackEffectPrefab;
 
+	private float takeDamageDuration = 0.5f;
 	private PlayerSkillController playerSkillController;
 	private EnemyState currentState;
 	private Vector2 startPoint;
@@ -101,8 +104,16 @@ public class EnemyController : MonoBehaviour
 	}
 
 	// Called from the AttackColliderController script
-	public void SetEnemyStateToTakeDamage() {
+	public void SetEnemyStateToTakeDamage(float takeDamageDuration) {
+		this.takeDamageDuration = (takeDamageDuration - takeDamageDurationResistance > 0f)
+			? takeDamageDuration - takeDamageDurationResistance : 0f;
 		currentState = EnemyState.TakeDamage;
+	}
+
+	// Called from the AttackColliderController script
+	public void ApplyEffect(EffectState effect) {
+		if (!currentEffects.Contains(effect))
+			currentEffects.Add(effect);
 	}
 
 	// Called from the AttackColliderController script
@@ -131,6 +142,9 @@ public class EnemyController : MonoBehaviour
 				break;
 			case AnimationState.Death:
 				animator.Play("Death");
+				break;
+			case AnimationState.Dizzy:
+				animator.Play("Idle"); // CADEN, change to dizzy anim
 				break;
 		}
 	}
@@ -225,6 +239,11 @@ public class EnemyController : MonoBehaviour
 	IEnumerator TakeDamage() {
 		isTakingDamage = true;
 		yield return new WaitForSeconds(takeDamageDuration);
+		if (HasEffect(EffectState.Dizzy)) {
+			UpdateAnimationState(AnimationState.Dizzy);
+			yield return new WaitForSeconds(dizzyDuration);
+			RemoveEffect(EffectState.Dizzy);
+		}
 		isTakingDamage = false;
 		ExecuteNextState();
 	}
@@ -257,5 +276,14 @@ public class EnemyController : MonoBehaviour
 	IEnumerator DestroyAfterSec() {
 		yield return new WaitForSeconds(deathSeconds);
 		Destroy(gameObject);
+	}
+
+	private bool HasEffect(EffectState effect) {
+		return currentEffects.Contains(effect);
+	}
+
+	private void RemoveEffect(EffectState effect) {
+		if (currentEffects.Contains(effect))
+			currentEffects.Remove(effect);
 	}
 }

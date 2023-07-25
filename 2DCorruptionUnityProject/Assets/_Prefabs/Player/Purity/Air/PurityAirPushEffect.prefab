@@ -102,6 +102,10 @@ MonoBehaviour:
   damage: 0
   force: 7
   lifeTime: 0.5
+  isAirModded: 1
+  isFireModded: 0
+  isWaterModded: 0
+  isEarthModded: 0
 --- !u!61 &5491216346245374670
 BoxCollider2D:
   m_ObjectHideFlags: 0
