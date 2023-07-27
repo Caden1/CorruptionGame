@@ -12,7 +12,9 @@ public class PlayerEffectController : MonoBehaviour
 	[SerializeField] private GameObject purityPullEffectPrefab;
 
 	// Air Mod Gem Effects
+	[SerializeField] private GameObject corAirDashKickEffectPrefab;
 	[SerializeField] private GameObject purityAirPushEffectPrefab;
+	[SerializeField] private GameObject purityAirPullEffectPrefab;
 
 	public GameObject GetCorJumpKneeEffectClone(Vector2 position) {
 		GameObject effectInstance = Instantiate(corJumpKneeEffectPrefab, position, Quaternion.identity);
@@ -73,8 +75,28 @@ public class PlayerEffectController : MonoBehaviour
 		return effectInstance;
 	}
 
+	public GameObject GetCorAirDashKickEffectClone(Vector2 position) {
+		GameObject effectInstance = Instantiate(corAirDashKickEffectPrefab, position, Quaternion.identity);
+		if (GetComponent<SpriteRenderer>().flipX) {
+			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
+		}
+		effectInstance.transform.parent = transform;
+
+		return effectInstance;
+	}
+
 	public GameObject GetPurityAirPushEffectClone(Vector2 position) {
 		GameObject effectInstance = Instantiate(purityAirPushEffectPrefab, position, Quaternion.identity);
+		if (GetComponent<SpriteRenderer>().flipX) {
+			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
+		}
+		effectInstance.transform.parent = transform;
+
+		return effectInstance;
+	}
+
+	public GameObject GetPurityAirPullEffectClone(Vector2 position) {
+		GameObject effectInstance = Instantiate(purityAirPullEffectPrefab, position, Quaternion.identity);
 		if (GetComponent<SpriteRenderer>().flipX) {
 			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
 		}

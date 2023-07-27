@@ -71,10 +71,30 @@ public class AttackColliderController : MonoBehaviour
 					} else if (tag == "CorMeleeEffect") {
 
 					} else if (tag == "CorKickDash") {
+						other.GetComponent<Rigidbody2D>().AddForce(
+								new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						if (isAirModded) {
+							
+						} else if (isFireModded) {
+
+						} else if (isWaterModded) {
+
+						} else if (isEarthModded) {
+
+						}
 
 					} else if (tag == "PullEffect") {
 						other.GetComponent<Rigidbody2D>().AddForce(
 							new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						if (isAirModded) {
+							enemyController.ApplyEffect(EffectState.Dizzy);
+						} else if (isFireModded) {
+
+						} else if (isWaterModded) {
+
+						} else if (isEarthModded) {
+
+						}
 					} else if (tag == "PushEffect") {
 							other.GetComponent<Rigidbody2D>().AddForce(
 								new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);

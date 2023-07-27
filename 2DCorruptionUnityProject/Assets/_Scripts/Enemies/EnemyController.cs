@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
 	public float attackCooldown = 2.0f;
 	public float takeDamageDurationResistance = 0.5f;
 	public float dizzyDuration = 1f;
+	public float suctionDuration = 0.5f;
 	public float deathSeconds = 1f;
 	public Transform player;
 	public GameObject attackEffectPrefab;

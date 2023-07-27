@@ -1364,9 +1364,17 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 322509411633897310, guid: cb873d62bb847407c813449ec802afc2, type: 3}
+      propertyPath: purityAirPullEffectPrefab
+      value: 
+      objectReference: {fileID: 7818755356241528333, guid: cc9e02dc44c144fcb806da2b0bc115ca, type: 3}
+    - target: {fileID: 322509411633897310, guid: cb873d62bb847407c813449ec802afc2, type: 3}
       propertyPath: purityAirPushEffectPrefab
       value: 
       objectReference: {fileID: 5491216346245374666, guid: a0ce241d1b889453e8ebd6c39bf0757f, type: 3}
+    - target: {fileID: 322509411633897310, guid: cb873d62bb847407c813449ec802afc2, type: 3}
+      propertyPath: corAirDashKickEffectPrefab
+      value: 
+      objectReference: {fileID: 5963360844804026945, guid: 9d4d295233173452ebfcbf8ba02d8d2d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb873d62bb847407c813449ec802afc2, type: 3}
 --- !u!4 &420851426208513161 stripped
