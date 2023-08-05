@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-	[HideInInspector] public enum EffectState { None, Dizzy }
+	[HideInInspector] public enum EffectState { None, Dizzy, Suctioned }
 	private List<EffectState> currentEffects = new List<EffectState>();
 	private enum EnemyState { Roam, ChasePlayer, AttackPlayer, TakeDamage, Dying }
-	private enum AnimationState { Moving, Chasing, Attacking, Idle, TakeDamage, Death, Dizzy }
+	private enum AnimationState {
+		Moving,
+		Chasing,
+		Attacking,
+		Idle,
+		TakeDamage,
+		Death,
+		Dizzy,
+		Suctioned
+	}
 
 	public float walkSpeed = 1.5f;
 	public float runSpeed = 2f;
@@ -21,7 +30,9 @@ public class EnemyController : MonoBehaviour
 	public float attackCooldown = 2.0f;
 	public float takeDamageDurationResistance = 0.5f;
 	public float dizzyDuration = 1f;
-	public float suctionDuration = 0.5f;
+	public float suctionedDuration = 1f;
+	public float suctionForce = 5f;
+	public float pushAfterSuctionForce = 5f;
 	public float deathSeconds = 1f;
 	public Transform player;
 	public GameObject attackEffectPrefab;
@@ -86,9 +97,9 @@ public class EnemyController : MonoBehaviour
 							}
 							break;
 						case EnemyState.TakeDamage:
+							UpdateAnimationState(AnimationState.TakeDamage);
 							StartCoroutine(TakeDamage());
 							StartCoroutine(TempAggroDetectionRange());
-							UpdateAnimationState(AnimationState.TakeDamage);
 							break;
 					}
 
@@ -146,6 +157,9 @@ public class EnemyController : MonoBehaviour
 				break;
 			case AnimationState.Dizzy:
 				animator.Play("Dizzy");
+				break;
+			case AnimationState.Suctioned:
+				animator.Play("Idle");
 				break;
 		}
 	}
@@ -245,8 +259,22 @@ public class EnemyController : MonoBehaviour
 			yield return new WaitForSeconds(dizzyDuration);
 			RemoveEffect(EffectState.Dizzy);
 		}
+		if (HasEffect(EffectState.Suctioned)) {
+			UpdateAnimationState(AnimationState.Suctioned);
+			float direction = playerSkillController.SpriteRend.flipX ? 1f : -1f;
+			Vector2 suctionTarget = player.position + new Vector3(direction, 0, 0);
+			rb.position = Vector2.MoveTowards(rb.position, suctionTarget, suctionForce * Time.deltaTime);
+			yield return new WaitForSeconds(suctionedDuration);
+			EndSuctionAndPush();
+		}
 		isTakingDamage = false;
 		ExecuteNextState();
+	}
+
+	private void EndSuctionAndPush() {
+		RemoveEffect(EffectState.Suctioned);
+		float direction = playerSkillController.SpriteRend.flipX ? 1f : -1f;
+		rb.AddForce(new Vector2(direction * pushAfterSuctionForce, 0), ForceMode2D.Impulse);
 	}
 
 	IEnumerator TempAggroDetectionRange() {

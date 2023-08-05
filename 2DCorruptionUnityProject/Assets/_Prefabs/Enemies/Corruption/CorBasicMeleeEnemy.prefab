@@ -172,13 +172,17 @@ MonoBehaviour:
   walkSpeed: 1.5
   runSpeed: 2
   roamDistance: 5
-  detectionRange: 3
-  aggroingDetectionRange: 5
+  detectionRange: 5
+  aggroingDetectionRange: 10
   aggroDetectionDuration: 5
   verticalDetectionLimit: 1
   attackRange: 0.8
   attackCooldown: 2
   takeDamageDurationResistance: 0
+  dizzyDuration: 3
+  suctionedDuration: 1.5
+  suctionForce: 10
+  pushAfterSuctionForce: 10
   deathSeconds: 1
   player: {fileID: 0}
   attackEffectPrefab: {fileID: 0}

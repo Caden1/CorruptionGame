@@ -46,14 +46,13 @@ public class AttackColliderController : MonoBehaviour
 		if (compareTag != null && other.CompareTag(compareTag)) {
 			EnemyController enemyController = other.GetComponent<EnemyController>();
 			Health health = other.GetComponent<Health>();
-			Transform healthBar = null;
 			float forceDirectionX = playerSkillController.SpriteRend.flipX ? 1f : -1f;
 
 			if (health != null) {
+				string tagVar = tag;
 				if (compareTag == "Enemy") {
 					health.TakeDamage(damage);
-					healthBar = other.transform.GetChild(0).GetChild(1);
-
+					Transform healthBar = other.transform.GetChild(0).GetChild(1);
 
 					if (enemyController != null) {
 						enemyController.SetEnemyStateToTakeDamage(takeDamageDuration);
@@ -63,49 +62,30 @@ public class AttackColliderController : MonoBehaviour
 						healthBar.localScale = new Vector2(health.GetHealthPercentage(), 1f);
 					}
 
-					if (tag == "CorJumpKnee") {
+					if (tagVar == "CorJumpKnee") {
 						other.GetComponent<Rigidbody2D>().AddForce(
 							new Vector2(0f, force), ForceMode2D.Impulse);
-					} else if (tag == "CorRangedEffect") {
+					} else if (tagVar == "CorRangedEffect") {
 
-					} else if (tag == "CorMeleeEffect") {
+					} else if (tagVar == "CorMeleeEffect") {
 
-					} else if (tag == "CorKickDash") {
+					} else if (tagVar == "CorKickDash") {
 						other.GetComponent<Rigidbody2D>().AddForce(
 								new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 						if (isAirModded) {
-							
-						} else if (isFireModded) {
-
-						} else if (isWaterModded) {
-
-						} else if (isEarthModded) {
-
+							enemyController.ApplyEffect(EffectState.Suctioned);
 						}
-
-					} else if (tag == "PullEffect") {
+					} else if (tagVar == "PullEffect") {
 						other.GetComponent<Rigidbody2D>().AddForce(
 							new Vector2(-forceDirectionX * force, 0f), ForceMode2D.Impulse);
 						if (isAirModded) {
 							enemyController.ApplyEffect(EffectState.Dizzy);
-						} else if (isFireModded) {
-
-						} else if (isWaterModded) {
-
-						} else if (isEarthModded) {
-
 						}
-					} else if (tag == "PushEffect") {
+					} else if (tagVar == "PushEffect") {
 							other.GetComponent<Rigidbody2D>().AddForce(
 								new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 						if (isAirModded) {
 							enemyController.ApplyEffect(EffectState.Dizzy);
-						} else if (isFireModded) {
-
-						} else if (isWaterModded) {
-
-						} else if (isEarthModded) {
-
 						}
 					}
 
@@ -113,7 +93,7 @@ public class AttackColliderController : MonoBehaviour
 						enemyController.SetEnemyStateToDying();
 					}
 				} else if (compareTag == "Player") {
-					if (tag != "CorDamagingCrystal" && !playerSkillController.IsImmune) {
+					if (tagVar != "CorDamagingCrystal" && !playerSkillController.IsImmune) {
 						health.TakeDamage(damage);
 						healthBarUI.DecreaseHealthBarSize(health.GetHealthPercentage());
 						if (health.IsDead()) {

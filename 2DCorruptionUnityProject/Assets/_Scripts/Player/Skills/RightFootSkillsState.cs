@@ -10,7 +10,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 	private float xOffset = 0f;
 	private float yOffset = 0f;
 	private float jumpFacingDirection;
-	private GameObject activeCorEffect;
+	private GameObject activeEffectClone;
 
 	public RightFootSkillsState(
 		PlayerSkillController playerSkillController,
@@ -35,8 +35,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		Vector2 effectPosition = new Vector2();
-		activeCorEffect = null;
+		activeEffectClone = null;
 
 		// Feet base gem
 		float jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
@@ -50,22 +49,11 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 				xOffset = 0f;
 				yOffset = -0.8f;
-				effectPosition = new Vector2(
-					skillController.transform.position.x + xOffset,
-					skillController.transform.position.y + yOffset);
 				break;
 			case FeetBaseGemState.Corruption:
 				skillController.animationController.ExecuteCorOnlyJumpAnim();
 				xOffset = 0.4f;
 				yOffset = 0.12f;
-				jumpFacingDirection = skillController.LastFacingDirection;
-				if (jumpFacingDirection < 0) {
-					xOffset *= -1;
-				}
-				effectPosition = new Vector2(
-					skillController.transform.position.x + xOffset,
-					skillController.transform.position.y + yOffset);
-				activeCorEffect = skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
 				break;
 		}
 
@@ -75,6 +63,8 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			case RightFootElementalModifierGemState.None:
 				break;
 			case RightFootElementalModifierGemState.Air:
+				xOffset = 0.48f;
+				yOffset = 0.23f;
 				break;
 			case RightFootElementalModifierGemState.Fire:
 				break;
@@ -82,6 +72,15 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				break;
 			case RightFootElementalModifierGemState.Earth:
 				break;
+		}
+
+		jumpFacingDirection = skillController.LastFacingDirection;
+		if (jumpFacingDirection < 0) {
+			xOffset *= -1;
+		}
+
+		if (feetBaseGemState == FeetBaseGemState.Corruption) {
+			InstantiateCorEffect(rightFootElementalModifierGemState);
 		}
 
 		skillController.Rb.velocity = new Vector2(0, jumpForce);
@@ -163,8 +162,40 @@ public class RightFootSkillsState : PlayerSkillStateBase
 	public override void ExitState() { }
 
 	private void DestroyActiveCorEffect() {
-		if (activeCorEffect != null) {
-			Object.Destroy(activeCorEffect);
+		if (activeEffectClone != null) {
+			Object.Destroy(activeEffectClone);
+		}
+	}
+
+	private void InstantiateCorEffect(RightFootElementalModifierGemState rightFootElementalModifierGemState) {
+		Vector2 effectPosition = new Vector2(
+			skillController.transform.position.x + xOffset,
+			skillController.transform.position.y + yOffset
+			);
+		switch (rightFootElementalModifierGemState) {
+			case RightFootElementalModifierGemState.None:
+				activeEffectClone =
+					skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				break;
+			case RightFootElementalModifierGemState.Air:
+				activeEffectClone =
+					skillController.effectController.GetCorAirJumpKneeEffectClone(effectPosition);
+				break;
+			case RightFootElementalModifierGemState.Fire:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				break;
+			case RightFootElementalModifierGemState.Water:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				break;
+			case RightFootElementalModifierGemState.Earth:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				break;
 		}
 	}
 

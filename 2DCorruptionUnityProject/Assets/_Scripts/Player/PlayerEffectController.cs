@@ -12,6 +12,7 @@ public class PlayerEffectController : MonoBehaviour
 	[SerializeField] private GameObject purityPullEffectPrefab;
 
 	// Air Mod Gem Effects
+	[SerializeField] private GameObject corAirJumpKneeEffectPrefab;
 	[SerializeField] private GameObject corAirDashKickEffectPrefab;
 	[SerializeField] private GameObject purityAirPushEffectPrefab;
 	[SerializeField] private GameObject purityAirPullEffectPrefab;
@@ -67,6 +68,16 @@ public class PlayerEffectController : MonoBehaviour
 
 	public GameObject GetPurityPullEffectClone(Vector2 position) {
 		GameObject effectInstance = Instantiate(purityPullEffectPrefab, position, Quaternion.identity);
+		if (GetComponent<SpriteRenderer>().flipX) {
+			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
+		}
+		effectInstance.transform.parent = transform;
+
+		return effectInstance;
+	}
+
+	public GameObject GetCorAirJumpKneeEffectClone(Vector2 position) {
+		GameObject effectInstance = Instantiate(corAirJumpKneeEffectPrefab, position, Quaternion.identity);
 		if (GetComponent<SpriteRenderer>().flipX) {
 			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
 		}
