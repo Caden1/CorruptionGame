@@ -54,6 +54,7 @@ public class EnemyController : MonoBehaviour
 	private bool isIdle = false;
 	private bool isSuctioned = false;
 	private Coroutine attackEffectCoroutine;
+	private float takingDamageDirection = 0f;
 
 	private void Start() {
 		Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
@@ -130,6 +131,8 @@ public class EnemyController : MonoBehaviour
 	public void SetEnemyStateToTakeDamage(float takeDamageDuration) {
 		this.takeDamageDuration = (takeDamageDuration - takeDamageDurationResistance > 0f)
 			? takeDamageDuration - takeDamageDurationResistance : 0f;
+
+		takingDamageDirection = playerSkillController.SpriteRend.flipX ? 1f : -1f;
 
 		// Interrupt enemy attack with player attack
 		if (isAttacking && attackEffectCoroutine != null) {
@@ -292,8 +295,7 @@ public class EnemyController : MonoBehaviour
 
 	private void PushAfterSuction() {
 		float pushAfterSuctionForce = Random.Range(pushAfterSuctionForceMin, pushAfterSuctionForceMax);
-		float direction = playerSkillController.SpriteRend.flipX ? 1f : -1f;
-		rb.AddForce(new Vector2(direction * pushAfterSuctionForce, 0), ForceMode2D.Impulse);
+		rb.AddForce(new Vector2(takingDamageDirection * pushAfterSuctionForce, 0), ForceMode2D.Impulse);
 	}
 
 	IEnumerator TempAggroDetectionRange() {
