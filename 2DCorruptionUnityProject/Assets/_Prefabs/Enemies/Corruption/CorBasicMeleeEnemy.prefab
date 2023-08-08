@@ -180,9 +180,11 @@ MonoBehaviour:
   attackCooldown: 2
   takeDamageDurationResistance: 0
   dizzyDuration: 3
-  suctionedDuration: 1.5
-  suctionForce: 10
-  pushAfterSuctionForce: 10
+  suctionedDuration: 0.45
+  suctionForce: 12
+  pushAfterSuctionDuration: 1
+  pushAfterSuctionForceMin: 1
+  pushAfterSuctionForceMax: 5
   deathSeconds: 1
   player: {fileID: 0}
   attackEffectPrefab: {fileID: 0}

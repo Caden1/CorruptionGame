@@ -16,8 +16,8 @@ MonoBehaviour:
   moveSpeed: 0
   jumpForce: 0
   numberOfJumps: 1
-  dashForce: 2
-  dashDuration: 1
+  dashForce: 5
+  dashDuration: 0
   rightHandSkillDuration: 0
   rightHandSkillCooldown: 0
   leftHandSkillDuration: 0

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -32,7 +31,9 @@ public class EnemyController : MonoBehaviour
 	public float dizzyDuration = 1f;
 	public float suctionedDuration = 1f;
 	public float suctionForce = 5f;
-	public float pushAfterSuctionForce = 5f;
+	public float pushAfterSuctionDuration = 1f;
+	public float pushAfterSuctionForceMin = 1f;
+	public float pushAfterSuctionForceMax = 5f;
 	public float deathSeconds = 1f;
 	public Transform player;
 	public GameObject attackEffectPrefab;
@@ -51,8 +52,10 @@ public class EnemyController : MonoBehaviour
 	private bool isTakingDamage = false;
 	private bool isInAttackCooldown = false;
 	private bool isIdle = false;
+	private bool isSuctioned = false;
+	private Coroutine attackEffectCoroutine;
 
-	void Start() {
+	private void Start() {
 		Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
@@ -65,7 +68,7 @@ public class EnemyController : MonoBehaviour
 		playerSkillController = player.GetComponent<PlayerSkillController>();
 	}
 
-	void Update() {
+	private void Update() {
 		if (!playerSkillController.IsDying) {
 			if (currentState != EnemyState.Dying) {
 				if (!isTakingDamage && !isAttacking) {
@@ -115,10 +118,25 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
+	private void FixedUpdate() {
+		if (isSuctioned) {
+			float direction = playerSkillController.SpriteRend.flipX ? 1f : -1f;
+			Vector2 suctionTarget = player.position + new Vector3(direction, 0, 0);
+			rb.position = Vector2.MoveTowards(rb.position, suctionTarget, suctionForce * Time.fixedDeltaTime);
+		}
+	}
+
 	// Called from the AttackColliderController script
 	public void SetEnemyStateToTakeDamage(float takeDamageDuration) {
 		this.takeDamageDuration = (takeDamageDuration - takeDamageDurationResistance > 0f)
 			? takeDamageDuration - takeDamageDurationResistance : 0f;
+
+		// Interrupt enemy attack with player attack
+		if (isAttacking && attackEffectCoroutine != null) {
+			StopCoroutine(attackEffectCoroutine);
+			isAttacking = false;
+		}
+
 		currentState = EnemyState.TakeDamage;
 	}
 
@@ -159,7 +177,7 @@ public class EnemyController : MonoBehaviour
 				animator.Play("Dizzy");
 				break;
 			case AnimationState.Suctioned:
-				animator.Play("Idle");
+				animator.Play("TakingDamage");
 				break;
 		}
 	}
@@ -212,7 +230,7 @@ public class EnemyController : MonoBehaviour
 		if (!isInAttackCooldown) {
 			UpdateDirectionBeforeAttack();
 			UpdateAnimationState(AnimationState.Attacking);
-			StartCoroutine(InstantiateAttackEffect());
+			attackEffectCoroutine = StartCoroutine(InstantiateAttackEffect());
 			StartCoroutine(AttackCooldown());
 		}
 	}
@@ -261,18 +279,19 @@ public class EnemyController : MonoBehaviour
 		}
 		if (HasEffect(EffectState.Suctioned)) {
 			UpdateAnimationState(AnimationState.Suctioned);
-			float direction = playerSkillController.SpriteRend.flipX ? 1f : -1f;
-			Vector2 suctionTarget = player.position + new Vector3(direction, 0, 0);
-			rb.position = Vector2.MoveTowards(rb.position, suctionTarget, suctionForce * Time.deltaTime);
+			isSuctioned = true;
 			yield return new WaitForSeconds(suctionedDuration);
-			EndSuctionAndPush();
+			isSuctioned = false;
+			PushAfterSuction();
+			yield return new WaitForSeconds(pushAfterSuctionDuration);
+			RemoveEffect(EffectState.Suctioned);
 		}
 		isTakingDamage = false;
 		ExecuteNextState();
 	}
 
-	private void EndSuctionAndPush() {
-		RemoveEffect(EffectState.Suctioned);
+	private void PushAfterSuction() {
+		float pushAfterSuctionForce = Random.Range(pushAfterSuctionForceMin, pushAfterSuctionForceMax);
 		float direction = playerSkillController.SpriteRend.flipX ? 1f : -1f;
 		rb.AddForce(new Vector2(direction * pushAfterSuctionForce, 0), ForceMode2D.Impulse);
 	}
