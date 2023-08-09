@@ -38,44 +38,89 @@ public class RightHandSkillsState : PlayerSkillStateBase
 			);
 		bool instantiatePurityPushEffect = false;
 		bool instantiateCorMeleeEffect = false;
+		bool instantiateCorAirMeleeEffect = false;
 		skillController.IsUsingRightHandSkill = true;
 		skillController.CanUseRightHandSkill = false;
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
-		// Hands base gem
 		rightHandSkillDuration = skillController.GemController.GetBaseHandsGem().rightHandSkillDuration;
 		rightHandSkillCooldown = skillController.GemController.GetBaseHandsGem().rightHandSkillCooldown;
+
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
 				break;
 			case HandsBaseGemState.Purity:
-				xOffset = 0.87f;
-				yOffset = -0.06f;
 				instantiatePurityPushEffect = true;
-				skillController.animationController.ExecutePurityOnlyPushAnim();
+				switch (rightHandElementalModifierGemState) {
+					case RightHandElementalModifierGemState.None:
+						xOffset = 0.87f;
+						yOffset = -0.06f;
+						skillController.animationController.ExecutePurityOnlyPushAnim();
+						break;
+					case RightHandElementalModifierGemState.Air:
+						xOffset = 1.12f;
+						yOffset = -0.06f;
+						// Placeholder
+						skillController.animationController.ExecutePurityOnlyPushAnim();
+						break;
+					case RightHandElementalModifierGemState.Fire:
+						// Placeholder
+						xOffset = 0.87f;
+						yOffset = -0.06f;
+						skillController.animationController.ExecutePurityOnlyPushAnim();
+						break;
+					case RightHandElementalModifierGemState.Water:
+						// Placeholder
+						xOffset = 0.87f;
+						yOffset = -0.06f;
+						skillController.animationController.ExecutePurityOnlyPushAnim();
+						break;
+					case RightHandElementalModifierGemState.Earth:
+						// Placeholder
+						xOffset = 0.87f;
+						yOffset = -0.06f;
+						skillController.animationController.ExecutePurityOnlyPushAnim();
+						break;
+				}
 				break;
 			case HandsBaseGemState.Corruption:
-				xOffset = 0.5f;
-				yOffset = 0.2f;
 				instantiateCorMeleeEffect = true;
-				skillController.animationController.ExecuteCorOnlyMeleeAnim();
-				break;
-		}
-
-		// Right hand mod gem
-		switch (rightHandElementalModifierGemState) {
-			case RightHandElementalModifierGemState.None:
-				break;
-			case RightHandElementalModifierGemState.Air:
-				xOffset = 1.12f;
-				yOffset = -0.06f;
-				break;
-			case RightHandElementalModifierGemState.Fire:
-				break;
-			case RightHandElementalModifierGemState.Water:
-				break;
-			case RightHandElementalModifierGemState.Earth:
+				switch (rightHandElementalModifierGemState) {
+					case RightHandElementalModifierGemState.None:
+						xOffset = 0.5f;
+						yOffset = 0.2f;
+						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						break;
+					case RightHandElementalModifierGemState.Air:
+						// Placeholder
+						xOffset = 0.5f;
+						yOffset = 0.2f;
+						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						if (inputActions.Player.Melee.IsInProgress()) {
+							instantiateCorMeleeEffect = false;
+							instantiateCorAirMeleeEffect = true;
+						}
+						break;
+					case RightHandElementalModifierGemState.Fire:
+						// Placeholder
+						xOffset = 0.5f;
+						yOffset = 0.2f;
+						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						break;
+					case RightHandElementalModifierGemState.Water:
+						// Placeholder
+						xOffset = 0.5f;
+						yOffset = 0.2f;
+						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						break;
+					case RightHandElementalModifierGemState.Earth:
+						// Placeholder
+						xOffset = 0.5f;
+						yOffset = 0.2f;
+						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						break;
+				}
 				break;
 		}
 
@@ -90,6 +135,8 @@ public class RightHandSkillsState : PlayerSkillStateBase
 			skillController.StartStateCoroutine(InstantiatePurityEffectWithDelay(rightHandElementalModifierGemState));
 		} else if (instantiateCorMeleeEffect) {
 			skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
+		} else if (instantiateCorAirMeleeEffect) { // Special Case
+			skillController.StartCoroutine(InstantiateCorAirEffectWithDelay());
 		}
 	}
 
@@ -216,5 +263,19 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
 		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
 		activeEffectClone = skillController.effectController.GetCorMeleeEffectClone(effectPosition);
+	}
+
+	private IEnumerator InstantiateCorAirEffectWithDelay() {
+		yield return new WaitForSeconds(instantiateCorEffectDelay);
+		Vector2 effectPosition = new Vector2(
+				skillController.transform.position.x + xOffset,
+				skillController.transform.position.y + yOffset);
+		// Placeholder
+		activeEffectClone = skillController.effectController.GetCorMeleeEffectClone(effectPosition);
+		while (inputActions.Player.Melee.IsInProgress()) {
+			// Placeholder
+			activeEffectClone = skillController.effectController.GetCorMeleeEffectClone(effectPosition);
+			yield return new WaitForSeconds(0.1f);
+		}
 	}
 }
