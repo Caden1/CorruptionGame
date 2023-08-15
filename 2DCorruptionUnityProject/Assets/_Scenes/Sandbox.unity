@@ -1672,6 +1672,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 322509411633897310, guid: cb873d62bb847407c813449ec802afc2, type: 3}
+      propertyPath: corAirMeleeEffectPrefab
+      value: 
+      objectReference: {fileID: 5047753638064703375, guid: b2de53dff2a7849a98fa82664818c0fe, type: 3}
+    - target: {fileID: 322509411633897310, guid: cb873d62bb847407c813449ec802afc2, type: 3}
       propertyPath: purityAirPullEffectPrefab
       value: 
       objectReference: {fileID: 7818755356241528333, guid: cc9e02dc44c144fcb806da2b0bc115ca, type: 3}

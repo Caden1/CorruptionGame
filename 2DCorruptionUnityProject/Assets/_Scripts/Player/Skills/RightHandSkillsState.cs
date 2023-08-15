@@ -93,9 +93,8 @@ public class RightHandSkillsState : PlayerSkillStateBase
 						skillController.animationController.ExecuteCorOnlyMeleeAnim();
 						break;
 					case RightHandElementalModifierGemState.Air:
-						// Placeholder
-						xOffset = 0.5f;
-						yOffset = 0.2f;
+						xOffset = 0.66f;
+						yOffset = 0.17f;
 						skillController.animationController.ExecuteCorOnlyMeleeAnim();
 						if (inputActions.Player.Melee.IsInProgress()) {
 							instantiateCorMeleeEffect = false;
@@ -129,8 +128,10 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		}
 
 		skillController.Rb.velocity = new Vector2(0f, 0f);
-		skillController.StartStateCoroutine(StopAnimAfterSeconds());
-		skillController.StartStateCoroutine(Cooldown());
+		if (!instantiateCorAirMeleeEffect) {
+			skillController.StartStateCoroutine(StopAnimAfterSeconds());
+			skillController.StartStateCoroutine(Cooldown());
+		}
 		if (instantiatePurityPushEffect) {
 			skillController.StartStateCoroutine(InstantiatePurityEffectWithDelay(rightHandElementalModifierGemState));
 		} else if (instantiateCorMeleeEffect) {
@@ -266,16 +267,32 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	}
 
 	private IEnumerator InstantiateCorAirEffectWithDelay() {
+		float minXRandValue = -0.25f;
+		float maxXRandValue = 0.25f;
+		float airAttackSpeed = 0.1f;
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
 		Vector2 effectPosition = new Vector2(
 				skillController.transform.position.x + xOffset,
 				skillController.transform.position.y + yOffset);
-		// Placeholder
-		activeEffectClone = skillController.effectController.GetCorMeleeEffectClone(effectPosition);
-		while (inputActions.Player.Melee.IsInProgress()) {
-			// Placeholder
-			activeEffectClone = skillController.effectController.GetCorMeleeEffectClone(effectPosition);
-			yield return new WaitForSeconds(0.1f);
+		skillController.animationController.ExecuteCorAirMeleeAnim();
+		GameObject initialActiveEffectClone =
+			skillController.effectController.GetCorAirMeleeEffectClone(effectPosition);
+		if (initialActiveEffectClone != null) {
+			yield return new WaitForSeconds(airAttackSpeed);
+			Object.Destroy(initialActiveEffectClone);
 		}
+		while (inputActions.Player.Melee.IsInProgress()) {
+			activeEffectClone =
+				skillController.effectController.GetCorAirMeleeEffectClone(
+					new Vector2(effectPosition.x, effectPosition.y + Random.Range(minXRandValue, maxXRandValue))
+					);
+			yield return new WaitForSeconds(airAttackSpeed);
+			if (activeEffectClone != null) {
+				Object.Destroy(activeEffectClone);
+			}
+		}
+		skillController.Rb.gravityScale = originalGravityScale;
+		skillController.IsUsingRightHandSkill = false;
+		skillController.CanUseRightHandSkill = true;
 	}
 }
