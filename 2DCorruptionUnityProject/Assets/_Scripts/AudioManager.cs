@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
 
 	private void Start() {
 		// For Testing:
-		//PlayMusic(0, true);
+		//PlayMusic(1, true);
 	}
 
 	public void PlayMusic(int trackIndex, bool loop = true) {

@@ -728,6 +728,7 @@ MonoBehaviour:
   musicSource: {fileID: 691692587}
   musicTracks:
   - {fileID: 8300000, guid: 1860a3db4c12d46a6ba8af0f72e8a695, type: 3}
+  - {fileID: 8300000, guid: 385ccced61dcd4f1b85f88719805276b, type: 3}
   sfxSource: {fileID: 691692586}
   soundFX: []
 --- !u!82 &691692586
