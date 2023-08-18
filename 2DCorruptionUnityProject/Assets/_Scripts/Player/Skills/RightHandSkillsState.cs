@@ -8,6 +8,9 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	private float instantiateCorEffectDelay = 0.25f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
+	private float airMeleeDuration = 2f;
+	private float airMeleeCooldown = 3f;
+	private bool isInAirMeleeCooldown = false;
 	private float rightHandSkillDuration;
 	private float rightHandSkillCooldown;
 	private float originalGravityScale;
@@ -267,10 +270,13 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	}
 
 	private IEnumerator InstantiateCorAirEffectWithDelay() {
-		float minXRandValue = -0.25f;
-		float maxXRandValue = 0.25f;
-		float airAttackSpeed = 0.1f;
+		float minXRandValue = -0.05f;
+		float maxXRandValue = 0.05f;
+		float timeBetweenAttacks = 0.1f;
+		float airMeleeStartTime = Time.time;
+
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
+
 		Vector2 effectPosition = new Vector2(
 				skillController.transform.position.x + xOffset,
 				skillController.transform.position.y + yOffset);
@@ -278,21 +284,32 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		GameObject initialActiveEffectClone =
 			skillController.effectController.GetCorAirMeleeEffectClone(effectPosition);
 		if (initialActiveEffectClone != null) {
-			yield return new WaitForSeconds(airAttackSpeed);
+			yield return new WaitForSeconds(timeBetweenAttacks);
 			Object.Destroy(initialActiveEffectClone);
 		}
-		while (inputActions.Player.Melee.IsInProgress()) {
+		while (inputActions.Player.Melee.IsInProgress()
+			&& Time.time - airMeleeStartTime < airMeleeDuration
+			&& !isInAirMeleeCooldown) {
 			activeEffectClone =
 				skillController.effectController.GetCorAirMeleeEffectClone(
 					new Vector2(effectPosition.x, effectPosition.y + Random.Range(minXRandValue, maxXRandValue))
 					);
-			yield return new WaitForSeconds(airAttackSpeed);
+
+			yield return new WaitForSeconds(timeBetweenAttacks);
+
 			if (activeEffectClone != null) {
 				Object.Destroy(activeEffectClone);
 			}
 		}
 		skillController.Rb.gravityScale = originalGravityScale;
 		skillController.IsUsingRightHandSkill = false;
+		isInAirMeleeCooldown = true;
+		skillController.StartCoroutine(AirMeleeCooldown());
+	}
+
+	private IEnumerator AirMeleeCooldown() {
+		yield return new WaitForSeconds(airMeleeCooldown);
 		skillController.CanUseRightHandSkill = true;
+		isInAirMeleeCooldown = false;
 	}
 }
