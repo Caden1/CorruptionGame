@@ -42,10 +42,10 @@ public class GemController : MonoBehaviour
 		currentBaseGemConfiguration.baseFeetGem = purityGem;
 
 		// Initialize the starting configuration for Modifier Gems
-		currentModifierGemConfiguration.rightHandGem = null;
-		currentModifierGemConfiguration.leftHandGem = null;
-		currentModifierGemConfiguration.rightFootGem = null;
-		currentModifierGemConfiguration.leftFootGem = null;
+		currentModifierGemConfiguration.rightHandGem = fireGem;
+		currentModifierGemConfiguration.leftHandGem = airGem;
+		currentModifierGemConfiguration.rightFootGem = waterGem;
+		currentModifierGemConfiguration.leftFootGem = earthGem;
 	}
 
 	public BaseGem GetBaseHandsGem() {
@@ -80,14 +80,20 @@ public class GemController : MonoBehaviour
 	}
 
 	public void RotateModifierGemsClockwise() {
-		// Rotate logic for the modifier gems clockwise
-
+		ModifierGem tempRightHandGem = currentModifierGemConfiguration.rightHandGem;
+		currentModifierGemConfiguration.rightHandGem = currentModifierGemConfiguration.leftHandGem;
+		currentModifierGemConfiguration.leftHandGem = currentModifierGemConfiguration.leftFootGem;
+		currentModifierGemConfiguration.leftFootGem = currentModifierGemConfiguration.rightFootGem;
+		currentModifierGemConfiguration.rightFootGem = tempRightHandGem;
 		InvokeOnGemsChanged();
 	}
 
 	public void RotateModifierGemsCounterClockwise() {
-		// Rotate logic for the modifier gems counterclockwise
-
+		ModifierGem tempRightHandGem = currentModifierGemConfiguration.rightHandGem;
+		currentModifierGemConfiguration.rightHandGem = currentModifierGemConfiguration.rightFootGem;
+		currentModifierGemConfiguration.rightFootGem = currentModifierGemConfiguration.leftFootGem;
+		currentModifierGemConfiguration.leftFootGem = currentModifierGemConfiguration.leftHandGem;
+		currentModifierGemConfiguration.leftHandGem = tempRightHandGem;
 		InvokeOnGemsChanged();
 	}
 

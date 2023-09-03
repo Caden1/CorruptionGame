@@ -10,7 +10,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 	private float yOffset = 0f;
 	private float dashForce;
 	private float dashDuration;
-	private float dashCooldown;
 	private float originalGravityScale;
 	private GameObject activeEffectClone;
 
@@ -45,27 +44,30 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		// Feet base gem
 		dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
 		dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
-		dashCooldown = skillController.GemController.GetBaseFeetGem().dashCooldown;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityDashPart1Anim();
+				skillController.animationController.ExecutePurityOnlyDashPart1Anim();
 				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Corruption:
-				skillController.animationController.ExecuteDashAnim();
+				skillController.animationController.ExecuteCorOnlyDashAnim();
 				xOffset = 1.15f;
 				yOffset = -0.05f;
-				skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
+				skillController.StartStateCoroutine(InstantiateCorEffectWithDelay(leftFootElementalModifierGemState));
 				break;
 		}
 
 		// Left foot mod gem
+		dashForce += skillController.GemController.GetLeftFootModifierGem().dashForce;
+		dashDuration += skillController.GemController.GetLeftFootModifierGem().dashDuration;
 		switch (leftFootElementalModifierGemState) {
 			case LeftFootElementalModifierGemState.None:
 				break;
 			case LeftFootElementalModifierGemState.Air:
+				xOffset = 1.2f;
+				yOffset = -0.05f;
 				break;
 			case LeftFootElementalModifierGemState.Fire:
 				break;
@@ -81,13 +83,22 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		skillController.StartStateCoroutine(StopDashAfterSeconds());
-		skillController.StartStateCoroutine(DashCooldown());
 	}
 
 	public override void UpdateState() {
 		// AFTER Dash player can Swap, Idle, Run, Fall, RightFoot, RightHand, LeftHand
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				gemController.SwapGems();
+			}
+		} else if (inputActions.Player.RotateClockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsClockwise();
+			}
+		} else if (inputActions.Player.RotateCounterclockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsCounterClockwise();
+			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Idle,
@@ -109,6 +120,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 				skillController.CurrentLeftFootElementalModifierGemState
 				);
 		} else if (skillController.Rb.velocity.y < 0f) {
+			skillController.ResetNumberOfJumps();
 			skillController.TransitionToState(
 				PlayerStateType.Falling,
 				skillController.CurrentHandsBaseGemState,
@@ -163,19 +175,41 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		}
 	}
 
-	private IEnumerator DashCooldown() {
-		yield return new WaitForSeconds(dashCooldown);
-		skillController.CanDash = true;
-	}
-
-	private IEnumerator InstantiateCorEffectWithDelay() {
+	private IEnumerator InstantiateCorEffectWithDelay(LeftFootElementalModifierGemState leftFootElementalModifierGemState) {
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
-		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
-		activeEffectClone = skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+		Vector2 effectPosition = new Vector2(
+			skillController.transform.position.x + xOffset,
+			skillController.transform.position.y + yOffset
+			);
+		switch (leftFootElementalModifierGemState) {
+			case LeftFootElementalModifierGemState.None:
+				activeEffectClone =
+					skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+				break;
+			case LeftFootElementalModifierGemState.Air:
+				activeEffectClone =
+					skillController.effectController.GetCorAirDashKickEffectClone(effectPosition);
+				break;
+			case LeftFootElementalModifierGemState.Fire:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+				break;
+			case LeftFootElementalModifierGemState.Water:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+				break;
+			case LeftFootElementalModifierGemState.Earth:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+				break;
+		}
 	}
 
 	private IEnumerator ExecutePurityAnimPart2WithDelay() {
 		yield return new WaitForSeconds(executePurityAnimPart2Delay);
-		skillController.animationController.ExecutePurityDashPart2Anim();
+		skillController.animationController.ExecutePurityOnlyDashPart2Anim();
 	}
 }

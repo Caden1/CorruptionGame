@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2377662990250801642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2377662990250801644}
+  - component: {fileID: 2377662990250801643}
+  - component: {fileID: 2377662990250801645}
+  m_Layer: 5
+  m_Name: SwapUI
+  m_TagString: SwapUIDocument
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2377662990250801644
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377662990250801642}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2377662990250801643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377662990250801642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 2daafd2b4f5df4fc9a385946959aeb06, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 01a04f1b301754ab5a0feed7ce124946, type: 3}
+  m_SortingOrder: 0
+--- !u!114 &2377662990250801645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377662990250801642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffb403eb9b0a243abb722b981d97b38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  purOnlyFeetSilhouette: {fileID: 21300000, guid: 4382690c50ec84f0f9337228f48451e2, type: 3}
+  purOnlyHandsSilhouette: {fileID: 21300000, guid: 6e4dedc0fa6554b7ea7f0122835a5a36, type: 3}
+  purFeetCorHandsSilhouette: {fileID: 21300000, guid: 0975df44d0d3644558cb630dfbe5f07a, type: 3}
+  purHandsCorFeetSilhouette: {fileID: 21300000, guid: 2900445f05df54e24930b718800feb72, type: 3}
+  purFeetAllMods1Silhouette: {fileID: 21300000, guid: 78700f143fc7040dcaaf4bea2c122768, type: 3}
+  purFeetAllMods2Silhouette: {fileID: 21300000, guid: 05172079daa1a4d6c8575bf50ae70c60, type: 3}
+  purFeetAllMods3Silhouette: {fileID: 21300000, guid: fa45db107aad14c4d8372a25d29e3452, type: 3}
+  purFeetAllMods4Silhouette: {fileID: 21300000, guid: 12d65b9acac14488095ea6e39441ea39, type: 3}
+  purHandsAllMods1Silhouette: {fileID: 21300000, guid: 15588dfc955a54f97888dcc9fd5b6dc2, type: 3}
+  purHandsAllMods2Silhouette: {fileID: 21300000, guid: 8802ab2808ab9497287eb9dc4f3e4f67, type: 3}
+  purHandsAllMods3Silhouette: {fileID: 21300000, guid: 32501cd5943c444d8a4799fed79e9fb3, type: 3}
+  purHandsAllMods4Silhouette: {fileID: 21300000, guid: ad62a033c84de421e8567b85b2b9f43e, type: 3}
+  noGemRightHandIcon: {fileID: 21300000, guid: 1d17cb9a48d8844ffb8160a9db68c047, type: 3}
+  noGemLeftHandIcon: {fileID: 21300000, guid: 1d17cb9a48d8844ffb8160a9db68c047, type: 3}
+  noGemRightFootIcon: {fileID: 21300000, guid: e30ead85f38244aa39acac3770a047b7, type: 3}
+  noGemLeftFootIcon: {fileID: 21300000, guid: 1d17cb9a48d8844ffb8160a9db68c047, type: 3}
+  purityOnlyRightHandIcon: {fileID: 21300000, guid: 4d392efa885fa45f19d7c3f6389136ef, type: 3}
+  purityOnlyLeftHandIcon: {fileID: 21300000, guid: ea286c6f76e704892a6f131a7c2bed09, type: 3}
+  purityOnlyRightFootIcon: {fileID: 21300000, guid: 1cd9cadc0d1504a1eb94121f37c040dd, type: 3}
+  purityOnlyLeftFootIcon: {fileID: 21300000, guid: e90864f089ffa4d8baa26ad2ee0f6127, type: 3}
+  corruptionOnlyRightHandIcon: {fileID: 21300000, guid: 015a9cf58e85a4c22b0584129890af12, type: 3}
+  corruptionOnlyLeftHandIcon: {fileID: 21300000, guid: 368becc05b2fd4cac8aa38ef8e78f9ce, type: 3}
+  corruptionOnlyRightFootIcon: {fileID: 21300000, guid: deb9c8b1d01c14d0b844e07a1d74703b, type: 3}
+  corruptionOnlyLeftFootIcon: {fileID: 21300000, guid: 37d192d88fad44a4fb77a66a965d4e0e, type: 3}
+  purityAirRightHandIcon: {fileID: 21300000, guid: 0e4c87b2ce3d44e3d8db2466e52a48ac, type: 3}
+  purityAirLeftHandIcon: {fileID: 21300000, guid: 119e87939ddd74d388d04b6358e6d77a, type: 3}
+  purityAirRightFootIcon: {fileID: 21300000, guid: 54869329e5c5f408aaea65ef31076e1b, type: 3}
+  purityAirLeftFootIcon: {fileID: 21300000, guid: 254a966a87afa44d79954adc678d07f1, type: 3}
+  corruptionAirRightHandIcon: {fileID: 21300000, guid: 57216ee7b00f64f19a0c4631cd8994f9, type: 3}
+  corruptionAirLeftHandIcon: {fileID: 21300000, guid: 2983091e702d74b21933ac7cdcc67119, type: 3}
+  corruptionAirRightFootIcon: {fileID: 21300000, guid: ef3ffa682a4d94edda62917c6eae7171, type: 3}
+  corruptionAirLeftFootIcon: {fileID: 21300000, guid: 18340c5b3946b4dac9d41b8eeb6a5457, type: 3}

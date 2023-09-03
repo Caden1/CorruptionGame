@@ -5,11 +5,12 @@ using UnityEngine.InputSystem;
 
 public class RightFootSkillsState : PlayerSkillStateBase
 {
+	private float executeNoGemAnimPart2Delay = 0.3f;
 	private float executePurityAnimPart2Delay = 0.3f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
 	private float jumpFacingDirection;
-	private GameObject activeCorEffect;
+	private GameObject activeEffectClone;
 
 	public RightFootSkillsState(
 		PlayerSkillController playerSkillController,
@@ -34,43 +35,36 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		Vector2 effectPosition = new Vector2();
-		activeCorEffect = null;
+		activeEffectClone = null;
 
 		// Feet base gem
 		float jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
+				skillController.animationController.ExecuteNoGemJumpPart1Anim();
+				skillController.StartStateCoroutine(ExecuteNoGemAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityJumpPart1Anim();
+				skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
 				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 				xOffset = 0f;
 				yOffset = -0.8f;
-				effectPosition = new Vector2(
-					skillController.transform.position.x + xOffset,
-					skillController.transform.position.y + yOffset);
 				break;
 			case FeetBaseGemState.Corruption:
-				skillController.animationController.ExecuteJumpAnim();
+				skillController.animationController.ExecuteCorOnlyJumpAnim();
 				xOffset = 0.4f;
 				yOffset = 0.12f;
-				jumpFacingDirection = skillController.LastFacingDirection;
-				if (jumpFacingDirection < 0) {
-					xOffset *= -1;
-				}
-				effectPosition = new Vector2(
-					skillController.transform.position.x + xOffset,
-					skillController.transform.position.y + yOffset);
-				activeCorEffect = skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
 				break;
 		}
 
 		// Right foot mod gem
+		jumpForce += skillController.GemController.GetRightFootModifierGem().jumpForce;
 		switch (rightFootElementalModifierGemState) {
 			case RightFootElementalModifierGemState.None:
 				break;
 			case RightFootElementalModifierGemState.Air:
+				xOffset = 0.48f;
+				yOffset = 0.23f;
 				break;
 			case RightFootElementalModifierGemState.Fire:
 				break;
@@ -78,6 +72,15 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				break;
 			case RightFootElementalModifierGemState.Earth:
 				break;
+		}
+
+		jumpFacingDirection = skillController.LastFacingDirection;
+		if (jumpFacingDirection < 0) {
+			xOffset *= -1;
+		}
+
+		if (feetBaseGemState == FeetBaseGemState.Corruption) {
+			InstantiateCorEffect(rightFootElementalModifierGemState);
 		}
 
 		skillController.Rb.velocity = new Vector2(0, jumpForce);
@@ -97,8 +100,18 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		// From Jumping player can Swap, Fall, LeftFoot, RightHand, LeftHand
 		//		NOTE: Double Jump is handled in FallingSkillState class
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
-			DestroyActiveCorEffect();
-			gemController.SwapGems();
+			if (skillController.CanSwap) {
+				DestroyActiveCorEffect();
+				gemController.SwapGems();
+			}
+		} else if (inputActions.Player.RotateClockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsClockwise();
+			}
+		} else if (inputActions.Player.RotateCounterclockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsCounterClockwise();
+			}
 		} else if (skillController.Rb.velocity.y < 0f) {
 			DestroyActiveCorEffect();
 			skillController.TransitionToState(
@@ -149,13 +162,50 @@ public class RightFootSkillsState : PlayerSkillStateBase
 	public override void ExitState() { }
 
 	private void DestroyActiveCorEffect() {
-		if (activeCorEffect != null) {
-			Object.Destroy(activeCorEffect);
+		if (activeEffectClone != null) {
+			Object.Destroy(activeEffectClone);
+		}
+	}
+
+	private void InstantiateCorEffect(RightFootElementalModifierGemState rightFootElementalModifierGemState) {
+		Vector2 effectPosition = new Vector2(
+			skillController.transform.position.x + xOffset,
+			skillController.transform.position.y + yOffset
+			);
+		switch (rightFootElementalModifierGemState) {
+			case RightFootElementalModifierGemState.None:
+				activeEffectClone =
+					skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				break;
+			case RightFootElementalModifierGemState.Air:
+				activeEffectClone =
+					skillController.effectController.GetCorAirJumpKneeEffectClone(effectPosition);
+				break;
+			case RightFootElementalModifierGemState.Fire:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				break;
+			case RightFootElementalModifierGemState.Water:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				break;
+			case RightFootElementalModifierGemState.Earth:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorJumpKneeEffectClone(effectPosition);
+				break;
 		}
 	}
 
 	private IEnumerator ExecutePurityAnimPart2WithDelay() {
 		yield return new WaitForSeconds(executePurityAnimPart2Delay);
-		skillController.animationController.ExecutePurityJumpPart2Anim();
+		skillController.animationController.ExecutePurityOnlyJumpPart2Anim();
+	}
+
+	private IEnumerator ExecuteNoGemAnimPart2WithDelay() {
+		yield return new WaitForSeconds(executeNoGemAnimPart2Delay);
+		skillController.animationController.ExecuteNoGemJumpPart2Anim();
 	}
 }

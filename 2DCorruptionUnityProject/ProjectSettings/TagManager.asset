@@ -20,6 +20,8 @@ TagManager:
   - PullEffect
   - CorMeleeEffect
   - CoreRangedEffect
+  - CorDamagingCrystal
+  - SwapUIDocument
   layers:
   - Default
   - TransparentFX

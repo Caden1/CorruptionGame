@@ -8,7 +8,6 @@ public class Gem : ScriptableObject
 	public float jumpForce;
 	public int numberOfJumps;
 	public float dashForce;
-	public float dashCooldown;
 	public float dashDuration;
 	public float rightHandSkillDuration;
 	public float rightHandSkillCooldown;
