@@ -55,15 +55,19 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 				skillController.animationController.ExecuteCorOnlyDashAnim();
 				xOffset = 1.15f;
 				yOffset = -0.05f;
-				skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
+				skillController.StartStateCoroutine(InstantiateCorEffectWithDelay(leftFootElementalModifierGemState));
 				break;
 		}
 
 		// Left foot mod gem
+		dashForce += skillController.GemController.GetLeftFootModifierGem().dashForce;
+		dashDuration += skillController.GemController.GetLeftFootModifierGem().dashDuration;
 		switch (leftFootElementalModifierGemState) {
 			case LeftFootElementalModifierGemState.None:
 				break;
 			case LeftFootElementalModifierGemState.Air:
+				xOffset = 1.2f;
+				yOffset = -0.05f;
 				break;
 			case LeftFootElementalModifierGemState.Fire:
 				break;
@@ -86,6 +90,14 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			if (skillController.CanSwap) {
 				gemController.SwapGems();
+			}
+		} else if (inputActions.Player.RotateClockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsClockwise();
+			}
+		} else if (inputActions.Player.RotateCounterclockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsCounterClockwise();
 			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
@@ -163,10 +175,37 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		}
 	}
 
-	private IEnumerator InstantiateCorEffectWithDelay() {
+	private IEnumerator InstantiateCorEffectWithDelay(LeftFootElementalModifierGemState leftFootElementalModifierGemState) {
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
-		Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
-		activeEffectClone = skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+		Vector2 effectPosition = new Vector2(
+			skillController.transform.position.x + xOffset,
+			skillController.transform.position.y + yOffset
+			);
+		switch (leftFootElementalModifierGemState) {
+			case LeftFootElementalModifierGemState.None:
+				activeEffectClone =
+					skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+				break;
+			case LeftFootElementalModifierGemState.Air:
+				activeEffectClone =
+					skillController.effectController.GetCorAirDashKickEffectClone(effectPosition);
+				break;
+			case LeftFootElementalModifierGemState.Fire:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+				break;
+			case LeftFootElementalModifierGemState.Water:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+				break;
+			case LeftFootElementalModifierGemState.Earth:
+				// Place Holder
+				activeEffectClone =
+					skillController.effectController.GetCorDashKickEffectClone(effectPosition);
+				break;
+		}
 	}
 
 	private IEnumerator ExecutePurityAnimPart2WithDelay() {

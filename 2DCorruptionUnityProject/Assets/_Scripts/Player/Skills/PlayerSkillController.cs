@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -42,10 +43,20 @@ public class PlayerSkillController : MonoBehaviour
 	public bool IsUsingLeftHandSkill { get; set; } = false;
 	public bool IsDying { get; set; } = false;
 	public bool HasForceApplied { get; set; } = false;
-	public bool CanSwap { get; set; } = false;
+	public bool CanSwap { get; set; } = true; // SET THIS TO TRUE FOR THE SANDBOX
 
 	private UIDocument swapUIDoc;
 	private SwapUISprites swapUISprites;
+	private PlayerSkillControllerHelper playerSkillControllerHelper;
+
+	private Dictionary<(string, string, string, string, string, string),
+		(Sprite, Sprite, Sprite, Sprite, Sprite,
+		HandsBaseGemState,
+		FeetBaseGemState,
+		LeftHandElementalModifierGemState,
+		RightHandElementalModifierGemState,
+		RightFootElementalModifierGemState,
+		LeftFootElementalModifierGemState)> stateSpriteMapping;
 
 	private void Awake() {
 		GameObject swapUIDocGO = GameObject.FindWithTag("SwapUIDocument");
@@ -55,11 +66,11 @@ public class PlayerSkillController : MonoBehaviour
 		}
 		swapUI = new SwapUI(swapUIDoc);
 
-		swapUI.SetSilhouette(swapUISprites.GetPurityFeetSilhouette());
-		swapUI.RemoveRightHandIcon();
-		swapUI.RemoveLeftHandIcon();
-		swapUI.SetRightFootIcon(swapUISprites.GetPurityJumpIcon());
-		swapUI.SetLeftFootIcon(swapUISprites.GetPurityDashIcon());
+		swapUI.SetSilhouette(swapUISprites.purOnlyFeetSilhouette);
+		swapUI.SetRightHandIcon(swapUISprites.noGemRightHandIcon);
+		swapUI.SetLeftHandIcon(swapUISprites.noGemLeftHandIcon);
+		swapUI.SetRightFootIcon(swapUISprites.purityOnlyRightFootIcon);
+		swapUI.SetLeftFootIcon(swapUISprites.purityOnlyLeftFootIcon);
 
 		GemController = GetComponent<GemController>();
 		GemController.OnGemsChanged += HandleGemChange;
@@ -69,13 +80,6 @@ public class PlayerSkillController : MonoBehaviour
 		animationController = GetComponent<PlayerAnimationController>();
 		effectController = GetComponent<PlayerEffectController>();
 		GroundCheck = GetComponent<GroundCheck>();
-		states.Add(PlayerStateType.Idle, new IdleSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.Running, new RunningSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.Falling, new FallingSkillState(this, inputActions, GemController));
-		states.Add(PlayerStateType.RightFoot, new RightFootSkillsState(this, inputActions, GemController));
-		states.Add(PlayerStateType.LeftFoot, new LeftFootSkillsState(this, inputActions, GemController));
-		states.Add(PlayerStateType.RightHand, new RightHandSkillsState(this, inputActions, GemController));
-		states.Add(PlayerStateType.LeftHand, new LeftHandSkillsState(this, inputActions, GemController));
 	}
 
 	private void OnDestroy() {
@@ -83,16 +87,31 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	private void Start() {
+		states.Add(PlayerStateType.Idle, new IdleSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Running, new RunningSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.Falling, new FallingSkillState(this, inputActions, GemController));
+		states.Add(PlayerStateType.RightFoot, new RightFootSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.LeftFoot, new LeftFootSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.RightHand, new RightHandSkillsState(this, inputActions, GemController));
+		states.Add(PlayerStateType.LeftHand, new LeftHandSkillsState(this, inputActions, GemController));
+
+		playerSkillControllerHelper = new PlayerSkillControllerHelper();
+		SetupStateSpriteDictionary();
+
 		// Set the initial state
 		TransitionToState(
 			PlayerStateType.Idle,
-			HandsBaseGemState.None,
+			HandsBaseGemState.Corruption,
 			FeetBaseGemState.Purity,
-			RightHandElementalModifierGemState.None,
-			LeftHandElementalModifierGemState.None,
-			RightFootElementalModifierGemState.None,
-			LeftFootElementalModifierGemState.None
+			RightHandElementalModifierGemState.Fire,
+			LeftHandElementalModifierGemState.Air,
+			RightFootElementalModifierGemState.Water,
+			LeftFootElementalModifierGemState.Earth
 			);
+	}
+
+	private void SetupStateSpriteDictionary() {
+		stateSpriteMapping = playerSkillControllerHelper.PopulateStateSpriteDictionary();
 	}
 
 	public void SetInputActionsInitializeStateClasses(PlayerInputActions inputActions) {
@@ -166,101 +185,47 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	private void HandleGemChange() {
-		Sprite newSilhouette = null;
-		Sprite newRightHandIcon = null;
-		Sprite newLeftHandIcon = null;
-		Sprite newRightFootIcon = null;
-		Sprite newLeftFootIcon = null;
 		BaseGem handsBaseGem = GemController.GetBaseHandsGem();
-		BaseGem feetbaseGem = GemController.GetBaseFeetGem();
+		BaseGem feetBaseGem = GemController.GetBaseFeetGem();
 		ModifierGem rightHandModifierGem = GemController.GetRightHandModifierGem();
 		ModifierGem leftHandModifierGem = GemController.GetLeftHandModifierGem();
 		ModifierGem rightFootModifierGem = GemController.GetRightFootModifierGem();
 		ModifierGem leftFootModifierGem = GemController.GetLeftFootModifierGem();
 
-		// Here, use the properties of the Gems to modify the player's abilities.
-		switch (handsBaseGem.gemName) {
-			case "None":
-				CurrentHandsBaseGemState = HandsBaseGemState.None;
-				break;
-			case "Corruption":
-				CurrentHandsBaseGemState = HandsBaseGemState.Corruption;
-				break;
-			case "Purity":
-				CurrentHandsBaseGemState = HandsBaseGemState.Purity;
-				newSilhouette = swapUISprites.GetPurityHandsSilhouette();
-				newRightHandIcon = swapUISprites.GetPurityPushIcon();
-				newLeftHandIcon = swapUISprites.GetPurityPullIcon();
-				break;
-		}
+		string handsBaseGemName = handsBaseGem != null ? handsBaseGem.gemName : "None";
+		string feetBaseGemName = feetBaseGem != null ? feetBaseGem.gemName : "None";
+		string rightHandModifierGemName = rightHandModifierGem != null ? rightHandModifierGem.gemName : "None";
+		string leftHandModifierGemName = leftHandModifierGem != null ? leftHandModifierGem.gemName : "None";
+		string rightFootModifierGemName = rightFootModifierGem != null ? rightFootModifierGem.gemName : "None";
+		string leftFootModifierGemName = leftFootModifierGem != null ? leftFootModifierGem.gemName : "None";
 
-		switch (feetbaseGem.gemName) {
-			case "None":
-				CurrentFeetBaseGemState = FeetBaseGemState.None;
-				newRightFootIcon = swapUISprites.GetNoGemJumpIcon();
-				break;
-			case "Corruption":
-				CurrentFeetBaseGemState = FeetBaseGemState.Corruption;
-				break;
-			case "Purity":
-				CurrentFeetBaseGemState = FeetBaseGemState.Purity;
-				newSilhouette = swapUISprites.GetPurityFeetSilhouette();
-				newRightFootIcon = swapUISprites.GetPurityJumpIcon();
-				newLeftFootIcon = swapUISprites.GetPurityDashIcon();
-				break;
-		}
-
-		if (newSilhouette != null) {
-			swapUI.SetSilhouette(newSilhouette);
+		if (stateSpriteMapping.TryGetValue(
+			(handsBaseGemName,
+			feetBaseGemName,
+			leftHandModifierGemName,
+			rightHandModifierGemName,
+			rightFootModifierGemName,
+			leftFootModifierGemName), out var tupleValue)) {
+			// RemoveSilhouette() to see what it's like without the silhouette
+			swapUI.RemoveSilhouette(); // swapUI.SetSilhouette(tupleValue.Item1);
+			swapUI.SetLeftHandIcon(tupleValue.Item2);
+			swapUI.SetRightHandIcon(tupleValue.Item3);
+			swapUI.SetRightFootIcon(tupleValue.Item4);
+			swapUI.SetLeftFootIcon(tupleValue.Item5);
+			CurrentHandsBaseGemState = tupleValue.Item6;
+			CurrentFeetBaseGemState = tupleValue.Item7;
+			CurrentLeftHandElementalModifierGemState = tupleValue.Item8;
+			CurrentRightHandElementalModifierGemState = tupleValue.Item9;
+			CurrentRightFootElementalModifierGemState = tupleValue.Item10;
+			CurrentLeftFootElementalModifierGemState = tupleValue.Item11;
 		} else {
-			swapUI.RemoveSilhouette();
-		}
-		if (newRightHandIcon != null) {
-			swapUI.SetRightHandIcon(newRightHandIcon);
-		} else {
-			swapUI.RemoveRightHandIcon();
-		}
-		if (newLeftHandIcon != null) {
-			swapUI.SetLeftHandIcon(newLeftHandIcon);
-		} else {
-			swapUI.RemoveLeftHandIcon();
-		}
-		if (newRightFootIcon != null) {
-			swapUI.SetRightFootIcon(newRightFootIcon);
-		} else {
-			swapUI.RemoveRightFootIcon();
-		}
-		if (newLeftFootIcon != null) {
-			swapUI.SetLeftFootIcon(newLeftFootIcon);
-		} else {
-			swapUI.RemoveLeftFootIcon();
+			// Handle the case when the key does not exist.
 		}
 	}
 
 	public void ResetNumberOfJumps() {
-		switch (CurrentFeetBaseGemState) {
-			case FeetBaseGemState.None:
-				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
-				break;
-			case FeetBaseGemState.Purity:
-				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
-				break;
-			case FeetBaseGemState.Corruption:
-				NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
-				break;
-		}
-
-		switch (CurrentRightFootElementalModifierGemState) {
-			case RightFootElementalModifierGemState.None:
-				break;
-			case RightFootElementalModifierGemState.Air:
-				break;
-			case RightFootElementalModifierGemState.Fire:
-				break;
-			case RightFootElementalModifierGemState.Water:
-				break;
-			case RightFootElementalModifierGemState.Earth:
-				break;
-		}
+		NumberOfJumps =
+			GemController.GetBaseFeetGem().numberOfJumps
+			+ GemController.GetRightFootModifierGem().numberOfJumps;
 	}
 }

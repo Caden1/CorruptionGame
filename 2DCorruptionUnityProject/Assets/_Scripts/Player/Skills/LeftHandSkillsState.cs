@@ -67,6 +67,8 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			case LeftHandElementalModifierGemState.None:
 				break;
 			case LeftHandElementalModifierGemState.Air:
+				xOffset = 1.4f;
+				yOffset = -0.06f;
 				break;
 			case LeftHandElementalModifierGemState.Fire:
 				break;
@@ -84,8 +86,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 		skillController.StartStateCoroutine(StopPullAnimAfterSeconds());
 		skillController.StartStateCoroutine(PullCooldown());
 		if (instantiatePurityPullEffect) {
-			Vector2 effectPosition = new Vector2(skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
-			activePurityEffectClone = skillController.effectController.GetPurityPullEffectClone(effectPosition);
+			InstantiatePurityEffect(leftHandElementalModifierGemState);
 			skillController.StartStateCoroutine(DestroyPurityEffectAfterSeconds());
 		}
 		if (instantiateCorProjectileEffect) {
@@ -98,6 +99,14 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 		if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			if (skillController.CanSwap) {
 				gemController.SwapGems();
+			}
+		} else if (inputActions.Player.RotateClockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsClockwise();
+			}
+		} else if (inputActions.Player.RotateCounterclockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsCounterClockwise();
 			}
 		} else if (skillController.Rb.velocity.x == 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
@@ -164,6 +173,38 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 	}
 
 	public override void ExitState() { }
+
+	private void InstantiatePurityEffect(LeftHandElementalModifierGemState leftHandElementalModifierGemState) {
+		Vector2 effectPosition = new Vector2(
+			skillController.transform.position.x + xOffset,
+			skillController.transform.position.y + yOffset
+			);
+		switch (leftHandElementalModifierGemState) {
+			case LeftHandElementalModifierGemState.None:
+				activePurityEffectClone =
+					skillController.effectController.GetPurityPullEffectClone(effectPosition);
+				break;
+			case LeftHandElementalModifierGemState.Air:
+				activePurityEffectClone =
+					skillController.effectController.GetPurityAirPullEffectClone(effectPosition);
+				break;
+			case LeftHandElementalModifierGemState.Fire:
+				// Placeholder
+				activePurityEffectClone =
+					skillController.effectController.GetPurityPullEffectClone(effectPosition);
+				break;
+			case LeftHandElementalModifierGemState.Water:
+				// Placeholder
+				activePurityEffectClone =
+					skillController.effectController.GetPurityPullEffectClone(effectPosition);
+				break;
+			case LeftHandElementalModifierGemState.Earth:
+				// Placeholder
+				activePurityEffectClone =
+					skillController.effectController.GetPurityPullEffectClone(effectPosition);
+				break;
+		}
+	}
 
 	private IEnumerator StopPullAnimAfterSeconds() {
 		yield return new WaitForSeconds(leftHandSkillDuration);

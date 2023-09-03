@@ -36,6 +36,14 @@ public class IdleSkillState : PlayerSkillStateBase
 			if (skillController.CanSwap) {
 				gemController.SwapGems();
 			}
+		} else if (inputActions.Player.RotateClockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsClockwise();
+			}
+		} else if (inputActions.Player.RotateCounterclockwise.WasPressedThisFrame()) {
+			if (skillController.CanSwap) {
+				gemController.RotateModifierGemsCounterClockwise();
+			}
 		} else if (Mathf.Abs(skillController.Rb.velocity.x) > 0f && skillController.IsGrounded()) {
 			skillController.TransitionToState(
 				PlayerStateType.Running,
