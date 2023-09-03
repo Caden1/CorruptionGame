@@ -18,7 +18,7 @@ MonoBehaviour:
   numberOfJumps: 0
   dashForce: 0
   dashDuration: 0
-  rightHandSkillDuration: 0
-  rightHandSkillCooldown: 0
+  rightHandSkillDuration: 0.35
+  rightHandSkillCooldown: 0.36
   leftHandSkillDuration: 0
   leftHandSkillCooldown: 0

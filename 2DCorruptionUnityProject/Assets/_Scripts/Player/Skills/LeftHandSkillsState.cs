@@ -42,39 +42,60 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
-		// Hands base gem
-		leftHandSkillDuration = skillController.GemController.GetBaseHandsGem().leftHandSkillDuration;
-		leftHandSkillCooldown = skillController.GemController.GetBaseHandsGem().leftHandSkillCooldown;
+		leftHandSkillDuration =
+				skillController.GemController.GetBaseHandsGem().leftHandSkillDuration;
+		leftHandSkillCooldown =
+			skillController.GemController.GetBaseHandsGem().leftHandSkillCooldown;
+
+		if (leftHandElementalModifierGemState != LeftHandElementalModifierGemState.None) {
+			leftHandSkillDuration +=
+				skillController.GemController.GetLeftHandModifierGem().addedLeftHandSkillDuration;
+			leftHandSkillCooldown +=
+				skillController.GemController.GetLeftHandModifierGem().addedLeftHandSkillCooldown;
+		}
+		
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
 				break;
 			case HandsBaseGemState.Purity:
-				xOffset = 1.4f;
-				yOffset = -0.06f;
 				instantiatePurityPullEffect = true;
-				skillController.animationController.ExecutePurityOnlyPullAnim();
+				switch (leftHandElementalModifierGemState) {
+					case LeftHandElementalModifierGemState.None:
+						xOffset = 1.4f;
+						yOffset = -0.06f;
+						skillController.animationController.ExecutePurityOnlyPullAnim();
+						break;
+					case LeftHandElementalModifierGemState.Air:
+						xOffset = 1.4f;
+						yOffset = -0.06f;
+						break;
+					case LeftHandElementalModifierGemState.Fire:
+						break;
+					case LeftHandElementalModifierGemState.Water:
+						break;
+					case LeftHandElementalModifierGemState.Earth:
+						break;
+				}
 				break;
 			case HandsBaseGemState.Corruption:
-				xOffset = 0.7f;
-				yOffset = 0.21f;
 				instantiateCorProjectileEffect = true;
-				skillController.animationController.ExecuteCorOnlyRangedAnim();
-				break;
-		}
-
-		// Left hand mod gem
-		switch (leftHandElementalModifierGemState) {
-			case LeftHandElementalModifierGemState.None:
-				break;
-			case LeftHandElementalModifierGemState.Air:
-				xOffset = 1.4f;
-				yOffset = -0.06f;
-				break;
-			case LeftHandElementalModifierGemState.Fire:
-				break;
-			case LeftHandElementalModifierGemState.Water:
-				break;
-			case LeftHandElementalModifierGemState.Earth:
+				switch (leftHandElementalModifierGemState) {
+					case LeftHandElementalModifierGemState.None:
+						xOffset = 0.7f;
+						yOffset = 0.21f;
+						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						break;
+					case LeftHandElementalModifierGemState.Air:
+						xOffset = 1.4f;
+						yOffset = -0.06f;
+						break;
+					case LeftHandElementalModifierGemState.Fire:
+						break;
+					case LeftHandElementalModifierGemState.Water:
+						break;
+					case LeftHandElementalModifierGemState.Earth:
+						break;
+				}
 				break;
 		}
 

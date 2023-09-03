@@ -17,7 +17,6 @@ MonoBehaviour:
   jumpForce: 8
   numberOfJumps: 1
   dashForce: 6
-  dashCooldown: 2
   dashDuration: 0.5
   rightHandSkillDuration: 0.35
   rightHandSkillCooldown: 0.36
