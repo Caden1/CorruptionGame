@@ -8,8 +8,6 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	private float instantiateCorEffectDelay = 0.25f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
-	private float airMeleeDuration = 2f;
-	private float airMeleeCooldown = 3f;
 	private bool isInAirMeleeCooldown = false;
 	private float rightHandSkillDuration;
 	private float rightHandSkillCooldown;
@@ -47,8 +45,17 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
-		rightHandSkillDuration = skillController.GemController.GetBaseHandsGem().rightHandSkillDuration;
-		rightHandSkillCooldown = skillController.GemController.GetBaseHandsGem().rightHandSkillCooldown;
+		rightHandSkillDuration =
+				skillController.GemController.GetBaseHandsGem().rightHandSkillDuration;
+		rightHandSkillCooldown =
+			skillController.GemController.GetBaseHandsGem().rightHandSkillCooldown;
+
+		if (rightHandElementalModifierGemState != RightHandElementalModifierGemState.None) {
+			rightHandSkillDuration +=
+				skillController.GemController.GetRightHandModifierGem().addedRightHandSkillDuration;
+			rightHandSkillCooldown +=
+				skillController.GemController.GetRightHandModifierGem().addedRightHandSkillCooldown;
+		}
 
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
@@ -288,7 +295,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 			Object.Destroy(initialActiveEffectClone);
 		}
 		while (inputActions.Player.Melee.IsInProgress()
-			&& Time.time - airMeleeStartTime < airMeleeDuration
+			&& Time.time - airMeleeStartTime < rightHandSkillDuration
 			&& !isInAirMeleeCooldown) {
 			activeEffectClone =
 				skillController.effectController.GetCorAirMeleeEffectClone(
@@ -308,7 +315,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 	}
 
 	private IEnumerator AirMeleeCooldown() {
-		yield return new WaitForSeconds(airMeleeCooldown);
+		yield return new WaitForSeconds(rightHandSkillCooldown);
 		skillController.CanUseRightHandSkill = true;
 		isInAirMeleeCooldown = false;
 	}

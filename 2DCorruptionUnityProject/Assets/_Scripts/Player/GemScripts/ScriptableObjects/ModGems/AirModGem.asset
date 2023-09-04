@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: AirModGem
   m_EditorClassIdentifier: 
   gemName: AirModifier
-  moveSpeed: 0
-  jumpForce: 0
-  numberOfJumps: 1
-  dashForce: 5
-  dashDuration: 0
-  rightHandSkillDuration: 0
-  rightHandSkillCooldown: 0
-  leftHandSkillDuration: 0
-  leftHandSkillCooldown: 0
+  addedMoveSpeed: 0
+  addedJumpForce: 0
+  addedNumberOfJumps: 1
+  addedDashForce: 5
+  addedDashDuration: 0
+  addedRightHandSkillDuration: 1.65
+  addedRightHandSkillCooldown: 2.64
+  addedLeftHandSkillDuration: 0
+  addedLeftHandSkillCooldown: 0
