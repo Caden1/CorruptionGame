@@ -37,40 +37,79 @@ public class RightFootSkillsState : PlayerSkillStateBase
 			);
 		activeEffectClone = null;
 
-		// Feet base gem
 		float jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
+
+		if (rightFootElementalModifierGemState != RightFootElementalModifierGemState.None) {
+			jumpForce += skillController.GemController.GetRightFootModifierGem().addedJumpForce;
+		}
+
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
 				skillController.animationController.ExecuteNoGemJumpPart1Anim();
 				skillController.StartStateCoroutine(ExecuteNoGemAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
-				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
-				xOffset = 0f;
-				yOffset = -0.8f;
+				switch (rightFootElementalModifierGemState) {
+					case RightFootElementalModifierGemState.None:
+						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 0f;
+						yOffset = -0.8f;
+						break;
+					case RightFootElementalModifierGemState.Air:
+						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 0.48f;
+						yOffset = 0.23f;
+						break;
+					case RightFootElementalModifierGemState.Fire:
+						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 0f;
+						yOffset = -0.8f;
+						break;
+					case RightFootElementalModifierGemState.Water:
+						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 0f;
+						yOffset = -0.8f;
+						break;
+					case RightFootElementalModifierGemState.Earth:
+						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 0f;
+						yOffset = -0.8f;
+						break;
+				}
 				break;
 			case FeetBaseGemState.Corruption:
-				skillController.animationController.ExecuteCorOnlyJumpAnim();
-				xOffset = 0.4f;
-				yOffset = 0.12f;
-				break;
-		}
-
-		// Right foot mod gem
-		jumpForce += skillController.GemController.GetRightFootModifierGem().addedJumpForce;
-		switch (rightFootElementalModifierGemState) {
-			case RightFootElementalModifierGemState.None:
-				break;
-			case RightFootElementalModifierGemState.Air:
-				xOffset = 0.48f;
-				yOffset = 0.23f;
-				break;
-			case RightFootElementalModifierGemState.Fire:
-				break;
-			case RightFootElementalModifierGemState.Water:
-				break;
-			case RightFootElementalModifierGemState.Earth:
+				switch (rightFootElementalModifierGemState) {
+					case RightFootElementalModifierGemState.None:
+						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						xOffset = 0.4f;
+						yOffset = 0.12f;
+						break;
+					case RightFootElementalModifierGemState.Air:
+						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						xOffset = 0.48f;
+						yOffset = 0.23f;
+						break;
+					case RightFootElementalModifierGemState.Fire:
+						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						xOffset = 0.4f;
+						yOffset = 0.12f;
+						break;
+					case RightFootElementalModifierGemState.Water:
+						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						xOffset = 0.4f;
+						yOffset = 0.12f;
+						break;
+					case RightFootElementalModifierGemState.Earth:
+						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						xOffset = 0.4f;
+						yOffset = 0.12f;
+						break;
+				}
 				break;
 		}
 

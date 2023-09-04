@@ -45,14 +45,12 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
-		// Always set base
 		rightHandSkillDuration =
 				skillController.GemController.GetBaseHandsGem().rightHandSkillDuration;
 		rightHandSkillCooldown =
 			skillController.GemController.GetBaseHandsGem().rightHandSkillCooldown;
 
 		if (rightHandElementalModifierGemState != RightHandElementalModifierGemState.None) {
-			// Add modifier if one exists
 			rightHandSkillDuration +=
 				skillController.GemController.GetRightHandModifierGem().addedRightHandSkillDuration;
 			rightHandSkillCooldown +=

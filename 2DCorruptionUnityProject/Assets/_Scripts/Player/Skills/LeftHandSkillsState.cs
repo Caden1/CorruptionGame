@@ -61,19 +61,29 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				instantiatePurityPullEffect = true;
 				switch (leftHandElementalModifierGemState) {
 					case LeftHandElementalModifierGemState.None:
+						skillController.animationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
-						skillController.animationController.ExecutePurityOnlyPullAnim();
 						break;
 					case LeftHandElementalModifierGemState.Air:
-						xOffset = 1.4f;
+						skillController.animationController.ExecutePurityOnlyPullAnim();
+						xOffset = 1.8f;
 						yOffset = -0.06f;
 						break;
 					case LeftHandElementalModifierGemState.Fire:
+						skillController.animationController.ExecutePurityOnlyPullAnim();
+						xOffset = 1.4f;
+						yOffset = -0.06f;
 						break;
 					case LeftHandElementalModifierGemState.Water:
+						skillController.animationController.ExecutePurityOnlyPullAnim();
+						xOffset = 1.4f;
+						yOffset = -0.06f;
 						break;
 					case LeftHandElementalModifierGemState.Earth:
+						skillController.animationController.ExecutePurityOnlyPullAnim();
+						xOffset = 1.4f;
+						yOffset = -0.06f;
 						break;
 				}
 				break;
@@ -81,19 +91,29 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				instantiateCorProjectileEffect = true;
 				switch (leftHandElementalModifierGemState) {
 					case LeftHandElementalModifierGemState.None:
+						skillController.animationController.ExecuteCorOnlyRangedAnim();
 						xOffset = 0.7f;
 						yOffset = 0.21f;
-						skillController.animationController.ExecuteCorOnlyRangedAnim();
 						break;
 					case LeftHandElementalModifierGemState.Air:
-						xOffset = 1.4f;
-						yOffset = -0.06f;
+						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						xOffset = 0.7f;
+						yOffset = 0.21f;
 						break;
 					case LeftHandElementalModifierGemState.Fire:
+						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						xOffset = 0.7f;
+						yOffset = 0.21f;
 						break;
 					case LeftHandElementalModifierGemState.Water:
+						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						xOffset = 0.7f;
+						yOffset = 0.21f;
 						break;
 					case LeftHandElementalModifierGemState.Earth:
+						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						xOffset = 0.7f;
+						yOffset = 0.21f;
 						break;
 				}
 				break;

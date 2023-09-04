@@ -41,39 +41,81 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		originalGravityScale = skillController.Rb.gravityScale;
 		skillController.Rb.gravityScale = 0f;
 
-		// Feet base gem
 		dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
 		dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
+
+		if (leftFootElementalModifierGemState != LeftFootElementalModifierGemState.None) {
+			dashForce += skillController.GemController.GetLeftFootModifierGem().addedDashForce;
+			dashDuration += skillController.GemController.GetLeftFootModifierGem().addedDashDuration;
+		}
+
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
-				skillController.animationController.ExecutePurityOnlyDashPart1Anim();
-				skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+				switch (leftFootElementalModifierGemState) {
+					case LeftFootElementalModifierGemState.None:
+						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 1.2f;
+						yOffset = -0.05f;
+						break;
+					case LeftFootElementalModifierGemState.Air:
+						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 1.2f;
+						yOffset = -0.05f;
+						break;
+					case LeftFootElementalModifierGemState.Fire:
+						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 1.2f;
+						yOffset = -0.05f;
+						break;
+					case LeftFootElementalModifierGemState.Water:
+						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 1.2f;
+						yOffset = -0.05f;
+						break;
+					case LeftFootElementalModifierGemState.Earth:
+						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
+						xOffset = 1.2f;
+						yOffset = -0.05f;
+						break;
+				}
 				break;
 			case FeetBaseGemState.Corruption:
-				skillController.animationController.ExecuteCorOnlyDashAnim();
-				xOffset = 1.15f;
-				yOffset = -0.05f;
-				skillController.StartStateCoroutine(InstantiateCorEffectWithDelay(leftFootElementalModifierGemState));
-				break;
-		}
-
-		// Left foot mod gem
-		dashForce += skillController.GemController.GetLeftFootModifierGem().addedDashForce;
-		dashDuration += skillController.GemController.GetLeftFootModifierGem().addedDashDuration;
-		switch (leftFootElementalModifierGemState) {
-			case LeftFootElementalModifierGemState.None:
-				break;
-			case LeftFootElementalModifierGemState.Air:
-				xOffset = 1.2f;
-				yOffset = -0.05f;
-				break;
-			case LeftFootElementalModifierGemState.Fire:
-				break;
-			case LeftFootElementalModifierGemState.Water:
-				break;
-			case LeftFootElementalModifierGemState.Earth:
+				skillController.StartStateCoroutine(
+							InstantiateCorEffectWithDelay(leftFootElementalModifierGemState));
+				switch (leftFootElementalModifierGemState) {
+					case LeftFootElementalModifierGemState.None:
+						skillController.animationController.ExecuteCorOnlyDashAnim();
+						xOffset = 1.15f;
+						yOffset = -0.05f;
+						break;
+					case LeftFootElementalModifierGemState.Air:
+						skillController.animationController.ExecuteCorOnlyDashAnim();
+						xOffset = 1.2f;
+						yOffset = -0.05f;
+						break;
+					case LeftFootElementalModifierGemState.Fire:
+						skillController.animationController.ExecuteCorOnlyDashAnim();
+						xOffset = 1.15f;
+						yOffset = -0.05f;
+						break;
+					case LeftFootElementalModifierGemState.Water:
+						skillController.animationController.ExecuteCorOnlyDashAnim();
+						xOffset = 1.15f;
+						yOffset = -0.05f;
+						break;
+					case LeftFootElementalModifierGemState.Earth:
+						skillController.animationController.ExecuteCorOnlyDashAnim();
+						xOffset = 1.15f;
+						yOffset = -0.05f;
+						break;
+				}
 				break;
 		}
 
