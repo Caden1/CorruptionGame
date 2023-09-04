@@ -293,11 +293,11 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				skillController.transform.position.x + xOffset,
 				skillController.transform.position.y + yOffset);
 		skillController.animationController.ExecuteCorOnlyRangedAnim();
-		skillController.effectController.GetCorRangedEffectClone(effectPosition);
+		skillController.effectController.GetCorAirRangedEffectClone(effectPosition);
 		while (inputActions.Player.Ranged.IsInProgress()
 			&& Time.time - airRangedStartTime < leftHandSkillDuration
 			&& !isInAirRangedCooldown) {
-				skillController.effectController.GetCorRangedEffectClone(
+				skillController.effectController.GetCorAirRangedEffectClone(
 					new Vector2(effectPosition.x, effectPosition.y + Random.Range(minXRandValue, maxXRandValue))
 					);
 			yield return new WaitForSeconds(timeBetweenAttacks);
