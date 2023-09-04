@@ -18,7 +18,7 @@ MonoBehaviour:
   addedNumberOfJumps: 1
   addedDashForce: 5
   addedDashDuration: 0
-  addedRightHandSkillDuration: 1.65
-  addedRightHandSkillCooldown: 2.64
-  addedLeftHandSkillDuration: 0
-  addedLeftHandSkillCooldown: 0
+  addedRightHandSkillDuration: 1.5
+  addedRightHandSkillCooldown: 2.5
+  addedLeftHandSkillDuration: 1.5
+  addedLeftHandSkillCooldown: 2.5

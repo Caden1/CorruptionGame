@@ -65,8 +65,11 @@ public class AttackColliderController : MonoBehaviour
 					if (tagVar == "CorJumpKnee") {
 						other.GetComponent<Rigidbody2D>().AddForce(
 							new Vector2(0f, force), ForceMode2D.Impulse);
-					} else if (tagVar == "CorRangedEffect") {
-
+					} else if (tagVar == "CoreRangedEffect") {
+						if (isAirModded) {
+							other.GetComponent<Rigidbody2D>().AddForce(
+								new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						}
 					} else if (tagVar == "CorMeleeEffect") {
 
 					} else if (tagVar == "CorKickDash") {
@@ -82,13 +85,12 @@ public class AttackColliderController : MonoBehaviour
 							enemyController.ApplyEffect(EffectState.Dizzy);
 						}
 					} else if (tagVar == "PushEffect") {
-							other.GetComponent<Rigidbody2D>().AddForce(
-								new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
+						other.GetComponent<Rigidbody2D>().AddForce(
+							new Vector2(forceDirectionX * force, 0f), ForceMode2D.Impulse);
 						if (isAirModded) {
 							enemyController.ApplyEffect(EffectState.Dizzy);
 						}
 					}
-
 					if (health.IsDead()) {
 						enemyController.SetEnemyStateToDying();
 					}
