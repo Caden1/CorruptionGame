@@ -226,6 +226,6 @@ public class PlayerSkillController : MonoBehaviour
 	public void ResetNumberOfJumps() {
 		NumberOfJumps =
 			GemController.GetBaseFeetGem().numberOfJumps
-			+ GemController.GetRightFootModifierGem().numberOfJumps;
+			+ GemController.GetRightFootModifierGem().addedNumberOfJumps;
 	}
 }
