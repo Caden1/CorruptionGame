@@ -15,6 +15,7 @@ public class PlayerEffectController : MonoBehaviour
 	[SerializeField] private GameObject corAirJumpKneeEffectPrefab;
 	[SerializeField] private GameObject corAirDashKickEffectPrefab;
 	[SerializeField] private GameObject corAirMeleeEffectPrefab;
+	[SerializeField] private GameObject corAirRangedEffectPrefab;
 	[SerializeField] private GameObject purityAirPushEffectPrefab;
 	[SerializeField] private GameObject purityAirPullEffectPrefab;
 
@@ -103,6 +104,15 @@ public class PlayerEffectController : MonoBehaviour
 			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
 		}
 		effectInstance.transform.parent = transform;
+
+		return effectInstance;
+	}
+
+	public GameObject GetCorAirRangedEffectClone(Vector2 position) {
+		GameObject effectInstance = Instantiate(corAirRangedEffectPrefab, position, Quaternion.identity);
+		if (GetComponent<SpriteRenderer>().flipX) {
+			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
+		}
 
 		return effectInstance;
 	}
