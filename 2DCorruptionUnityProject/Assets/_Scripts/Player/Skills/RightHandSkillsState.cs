@@ -143,7 +143,8 @@ public class RightHandSkillsState : PlayerSkillStateBase
 			skillController.StartStateCoroutine(Cooldown());
 		}
 		if (instantiatePurityPushEffect) {
-			skillController.StartStateCoroutine(InstantiatePurityEffectWithDelay(rightHandElementalModifierGemState));
+			skillController.StartStateCoroutine(
+				InstantiatePurityEffectWithDelay(rightHandElementalModifierGemState));
 		} else if (instantiateCorMeleeEffect) {
 			skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
 		} else if (instantiateCorAirMeleeEffect) { // Special Case

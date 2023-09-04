@@ -8,6 +8,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 	private float instantiateCorEffectDelay = 0.26f;
 	private float xOffset = 0f;
 	private float yOffset = 0f;
+	private bool isInAirRangedCooldown = false;
 	private float leftHandSkillDuration;
 	private float leftHandSkillCooldown;
 	private float originalGravityScale;
@@ -37,6 +38,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			);
 		bool instantiatePurityPullEffect = false;
 		bool instantiateCorProjectileEffect = false;
+		bool instantiateCorAirProjectileEffect = false;
 		skillController.IsUsingLeftHandSkill = true;
 		skillController.CanUseLeftHandSkill = false;
 		originalGravityScale = skillController.Rb.gravityScale;
@@ -96,6 +98,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 						yOffset = 0.21f;
 						break;
 					case LeftHandElementalModifierGemState.Air:
+						instantiateCorAirProjectileEffect = true;
 						skillController.animationController.ExecuteCorOnlyRangedAnim();
 						xOffset = 0.7f;
 						yOffset = 0.21f;
@@ -124,13 +127,19 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 		}
 
 		skillController.Rb.velocity = new Vector2(0f, 0f);
-		skillController.StartStateCoroutine(StopPullAnimAfterSeconds());
-		skillController.StartStateCoroutine(PullCooldown());
+
+		if (!instantiateCorAirProjectileEffect) {
+			skillController.StartStateCoroutine(StopPullAnimAfterSeconds());
+			skillController.StartStateCoroutine(PullCooldown());
+		}
 		if (instantiatePurityPullEffect) {
 			InstantiatePurityEffect(leftHandElementalModifierGemState);
 			skillController.StartStateCoroutine(DestroyPurityEffectAfterSeconds());
 		}
-		if (instantiateCorProjectileEffect) {
+		else if (instantiateCorAirProjectileEffect) {
+			skillController.StartCoroutine(InstantiateCorAirEffectWithDelay());
+		}
+		else if (instantiateCorProjectileEffect) {
 			skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
 		}
 	}
@@ -270,5 +279,38 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 		Vector2 effectPosition = new Vector2(
 			skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
 		skillController.effectController.GetCorRangedEffectClone(effectPosition);
+	}
+
+	private IEnumerator InstantiateCorAirEffectWithDelay() {
+		float minXRandValue = -0.5f;
+		float maxXRandValue = 0.5f;
+		float timeBetweenAttacks = 0.1f;
+		float airRangedStartTime = Time.time;
+
+		yield return new WaitForSeconds(instantiateCorEffectDelay);
+
+		Vector2 effectPosition = new Vector2(
+				skillController.transform.position.x + xOffset,
+				skillController.transform.position.y + yOffset);
+		skillController.animationController.ExecuteCorOnlyRangedAnim();
+		skillController.effectController.GetCorRangedEffectClone(effectPosition);
+		while (inputActions.Player.Ranged.IsInProgress()
+			&& Time.time - airRangedStartTime < leftHandSkillDuration
+			&& !isInAirRangedCooldown) {
+				skillController.effectController.GetCorRangedEffectClone(
+					new Vector2(effectPosition.x, effectPosition.y + Random.Range(minXRandValue, maxXRandValue))
+					);
+			yield return new WaitForSeconds(timeBetweenAttacks);
+		}
+		skillController.Rb.gravityScale = originalGravityScale;
+		skillController.IsUsingLeftHandSkill = false;
+		isInAirRangedCooldown = true;
+		skillController.StartCoroutine(AirRangedCooldown());
+	}
+
+	private IEnumerator AirRangedCooldown() {
+		yield return new WaitForSeconds(leftHandSkillCooldown);
+		skillController.CanUseLeftHandSkill = true;
+		isInAirRangedCooldown = false;
 	}
 }
