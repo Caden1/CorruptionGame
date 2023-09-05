@@ -48,18 +48,15 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				skillController.GemController.GetBaseHandsGem().leftHandSkillDuration;
 		leftHandSkillCooldown =
 			skillController.GemController.GetBaseHandsGem().leftHandSkillCooldown;
-
-		if (leftHandElementalModifierGemState != LeftHandElementalModifierGemState.None) {
-			leftHandSkillDuration +=
-				skillController.GemController.GetLeftHandModifierGem().addedLeftHandSkillDuration;
-			leftHandSkillCooldown +=
-				skillController.GemController.GetLeftHandModifierGem().addedLeftHandSkillCooldown;
-		}
 		
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
 				break;
 			case HandsBaseGemState.Purity:
+				leftHandSkillDuration +=
+					skillController.GemController.GetLeftHandModifierGem().addedPurityLeftHandSkillDuration;
+				leftHandSkillCooldown +=
+					skillController.GemController.GetLeftHandModifierGem().addedPurityLeftHandSkillCooldown;
 				instantiatePurityPullEffect = true;
 				switch (leftHandElementalModifierGemState) {
 					case LeftHandElementalModifierGemState.None:
@@ -90,6 +87,10 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				}
 				break;
 			case HandsBaseGemState.Corruption:
+				leftHandSkillDuration +=
+					skillController.GemController.GetLeftHandModifierGem().addedCorruptionLeftHandSkillDuration;
+				leftHandSkillCooldown +=
+					skillController.GemController.GetLeftHandModifierGem().addedCorruptionLeftHandSkillCooldown;
 				instantiateCorProjectileEffect = true;
 				switch (leftHandElementalModifierGemState) {
 					case LeftHandElementalModifierGemState.None:

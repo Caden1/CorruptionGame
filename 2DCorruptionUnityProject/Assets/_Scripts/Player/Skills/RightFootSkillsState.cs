@@ -39,16 +39,13 @@ public class RightFootSkillsState : PlayerSkillStateBase
 
 		float jumpForce = skillController.GemController.GetBaseFeetGem().jumpForce;
 
-		if (rightFootElementalModifierGemState != RightFootElementalModifierGemState.None) {
-			jumpForce += skillController.GemController.GetRightFootModifierGem().addedJumpForce;
-		}
-
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
 				skillController.animationController.ExecuteNoGemJumpPart1Anim();
 				skillController.StartStateCoroutine(ExecuteNoGemAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Purity:
+				jumpForce += skillController.GemController.GetRightFootModifierGem().addedPurityJumpForce;
 				switch (rightFootElementalModifierGemState) {
 					case RightFootElementalModifierGemState.None:
 						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
@@ -83,6 +80,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				}
 				break;
 			case FeetBaseGemState.Corruption:
+				jumpForce += skillController.GemController.GetRightFootModifierGem().addedCorruptionJumpForce;
 				switch (rightFootElementalModifierGemState) {
 					case RightFootElementalModifierGemState.None:
 						skillController.animationController.ExecuteCorOnlyJumpAnim();

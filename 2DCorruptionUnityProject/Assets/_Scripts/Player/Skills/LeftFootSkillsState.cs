@@ -44,15 +44,12 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 		dashForce = skillController.GemController.GetBaseFeetGem().dashForce;
 		dashDuration = skillController.GemController.GetBaseFeetGem().dashDuration;
 
-		if (leftFootElementalModifierGemState != LeftFootElementalModifierGemState.None) {
-			dashForce += skillController.GemController.GetLeftFootModifierGem().addedDashForce;
-			dashDuration += skillController.GemController.GetLeftFootModifierGem().addedDashDuration;
-		}
-
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
 				break;
 			case FeetBaseGemState.Purity:
+				dashForce += skillController.GemController.GetLeftFootModifierGem().addedPurityDashForce;
+				dashDuration += skillController.GemController.GetLeftFootModifierGem().addedPurityDashDuration;
 				switch (leftFootElementalModifierGemState) {
 					case LeftFootElementalModifierGemState.None:
 						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
@@ -87,6 +84,8 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 				}
 				break;
 			case FeetBaseGemState.Corruption:
+				dashForce += skillController.GemController.GetLeftFootModifierGem().addedCorruptionDashForce;
+				dashDuration += skillController.GemController.GetLeftFootModifierGem().addedCorruptionDashDuration;
 				skillController.StartStateCoroutine(
 							InstantiateCorEffectWithDelay(leftFootElementalModifierGemState));
 				switch (leftFootElementalModifierGemState) {

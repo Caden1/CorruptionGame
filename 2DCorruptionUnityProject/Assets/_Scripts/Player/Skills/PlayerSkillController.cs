@@ -224,8 +224,17 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	public void ResetNumberOfJumps() {
-		NumberOfJumps =
-			GemController.GetBaseFeetGem().numberOfJumps
-			+ GemController.GetRightFootModifierGem().addedNumberOfJumps;
+		NumberOfJumps = GemController.GetBaseFeetGem().numberOfJumps;
+
+		switch (CurrentFeetBaseGemState) {
+			case FeetBaseGemState.None:
+				break;
+			case FeetBaseGemState.Purity:
+				NumberOfJumps += GemController.GetRightFootModifierGem().addedPurityNumberOfJumps;
+				break;
+			case FeetBaseGemState.Corruption:
+				NumberOfJumps += GemController.GetRightFootModifierGem().addedCorruptionNumberOfJumps;
+				break;
+		}
 	}
 }

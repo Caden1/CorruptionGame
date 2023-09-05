@@ -13,12 +13,21 @@ MonoBehaviour:
   m_Name: AirModGem
   m_EditorClassIdentifier: 
   gemName: AirModifier
-  addedMoveSpeed: 0
-  addedJumpForce: 0
-  addedNumberOfJumps: 1
-  addedDashForce: 5
-  addedDashDuration: 0
-  addedRightHandSkillDuration: 1.5
-  addedRightHandSkillCooldown: 2.5
-  addedLeftHandSkillDuration: 1.5
-  addedLeftHandSkillCooldown: 2.5
+  addedCorruptionMoveSpeed: 0
+  addedCorruptionJumpForce: 0
+  addedCorruptionNumberOfJumps: 1
+  addedCorruptionDashForce: 5
+  addedCorruptionDashDuration: 0
+  addedCorruptionRightHandSkillDuration: 1.5
+  addedCorruptionRightHandSkillCooldown: 2.5
+  addedCorruptionLeftHandSkillDuration: 1.5
+  addedCorruptionLeftHandSkillCooldown: 2.5
+  addedPurityMoveSpeed: 0
+  addedPurityJumpForce: 0
+  addedPurityNumberOfJumps: 1
+  addedPurityDashForce: 5
+  addedPurityDashDuration: 0
+  addedPurityRightHandSkillDuration: 0
+  addedPurityRightHandSkillCooldown: 0
+  addedPurityLeftHandSkillDuration: 0
+  addedPurityLeftHandSkillCooldown: 0

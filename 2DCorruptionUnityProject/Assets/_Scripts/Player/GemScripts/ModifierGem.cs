@@ -4,13 +4,24 @@ using UnityEngine;
 public class ModifierGem : ScriptableObject
 {
 	public string gemName;
-	public float addedMoveSpeed;
-	public float addedJumpForce;
-	public int addedNumberOfJumps;
-	public float addedDashForce;
-	public float addedDashDuration;
-	public float addedRightHandSkillDuration;
-	public float addedRightHandSkillCooldown;
-	public float addedLeftHandSkillDuration;
-	public float addedLeftHandSkillCooldown;
+
+	public float addedCorruptionMoveSpeed;
+	public float addedCorruptionJumpForce;
+	public int addedCorruptionNumberOfJumps;
+	public float addedCorruptionDashForce;
+	public float addedCorruptionDashDuration;
+	public float addedCorruptionRightHandSkillDuration;
+	public float addedCorruptionRightHandSkillCooldown;
+	public float addedCorruptionLeftHandSkillDuration;
+	public float addedCorruptionLeftHandSkillCooldown;
+
+	public float addedPurityMoveSpeed;
+	public float addedPurityJumpForce;
+	public int addedPurityNumberOfJumps;
+	public float addedPurityDashForce;
+	public float addedPurityDashDuration;
+	public float addedPurityRightHandSkillDuration;
+	public float addedPurityRightHandSkillCooldown;
+	public float addedPurityLeftHandSkillDuration;
+	public float addedPurityLeftHandSkillCooldown;
 }
