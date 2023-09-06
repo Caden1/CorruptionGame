@@ -50,17 +50,14 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		rightHandSkillCooldown =
 			skillController.GemController.GetBaseHandsGem().rightHandSkillCooldown;
 
-		if (rightHandElementalModifierGemState != RightHandElementalModifierGemState.None) {
-			rightHandSkillDuration +=
-				skillController.GemController.GetRightHandModifierGem().addedRightHandSkillDuration;
-			rightHandSkillCooldown +=
-				skillController.GemController.GetRightHandModifierGem().addedRightHandSkillCooldown;
-		}
-
 		switch (handsBaseGemState) {
 			case HandsBaseGemState.None:
 				break;
 			case HandsBaseGemState.Purity:
+				rightHandSkillDuration +=
+					skillController.GemController.GetRightHandModifierGem().addedPurityRightHandSkillDuration;
+				rightHandSkillCooldown +=
+					skillController.GemController.GetRightHandModifierGem().addedPurityRightHandSkillCooldown;
 				instantiatePurityPushEffect = true;
 				switch (rightHandElementalModifierGemState) {
 					case RightHandElementalModifierGemState.None:
@@ -95,6 +92,10 @@ public class RightHandSkillsState : PlayerSkillStateBase
 				}
 				break;
 			case HandsBaseGemState.Corruption:
+				rightHandSkillDuration +=
+					skillController.GemController.GetRightHandModifierGem().addedCorruptionRightHandSkillDuration;
+				rightHandSkillCooldown +=
+					skillController.GemController.GetRightHandModifierGem().addedCorruptionRightHandSkillCooldown;
 				instantiateCorMeleeEffect = true;
 				switch (rightHandElementalModifierGemState) {
 					case RightHandElementalModifierGemState.None:

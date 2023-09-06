@@ -22,6 +22,8 @@ public class AttackColliderController : MonoBehaviour
 	private HealthBarUI healthBarUI;
 	private UIDocument healthBarUIDoc;
 	private float playerForceTimer;
+	private float fireDotTimer = 0f;
+	private float fireDotInterval = 0.2f;
 
 	private void Awake() {
 		GameObject healthBarDocGO = GameObject.FindWithTag("HealthBarUIDocument");
@@ -112,8 +114,21 @@ public class AttackColliderController : MonoBehaviour
 			Health health = other.GetComponent<Health>();
 
 			if (health != null) {
+				string tagVar = tag;
 				if (compareTag == "Enemy") {
-
+					Transform healthBar = other.transform.GetChild(0).GetChild(1);
+					if (tagVar == "CoreRangedEffect") {
+						if (isFireModded) {
+							fireDotTimer += Time.deltaTime;
+							if (fireDotTimer >= fireDotInterval) {
+								health.TakeDamage(damage);
+								fireDotTimer = 0f;
+								if (healthBar != null) {
+									healthBar.localScale = new Vector2(health.GetHealthPercentage(), 1f);
+								}
+							}
+						}
+					}
 				} else if (compareTag == "Player") {
 					if (tag == "CorDamagingCrystal" && !playerSkillController.IsImmune) {
 						health.TakeDamage(damage);
@@ -146,5 +161,10 @@ public class AttackColliderController : MonoBehaviour
 	private IEnumerator StopForceAppliedToPlayer() {
 		yield return new WaitForSeconds(playerForceTimer);
 		playerSkillController.HasForceApplied = false;
+	}
+
+	private IEnumerator DealFireDot(Health health) {
+		yield return new WaitForSeconds(0.01f);
+		health.TakeDamage(3f);
 	}
 }
