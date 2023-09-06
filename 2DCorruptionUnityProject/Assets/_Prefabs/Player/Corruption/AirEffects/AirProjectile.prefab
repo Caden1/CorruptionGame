@@ -128,8 +128,8 @@ MonoBehaviour:
   compareTag: Enemy
   damage: 0.5
   takeDamageDuration: 0.5
-  force: 0.6
-  lifeTime: 0.8
+  force: 0.5
+  lifeTime: 0.9
   isAirModded: 1
   isFireModded: 0
   isWaterModded: 0
