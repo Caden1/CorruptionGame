@@ -19,6 +19,9 @@ public class PlayerEffectController : MonoBehaviour
 	[SerializeField] private GameObject purityAirPushEffectPrefab;
 	[SerializeField] private GameObject purityAirPullEffectPrefab;
 
+	// Fire Mod Gem Effects
+	[SerializeField] private GameObject corFireRangedEffectPrefab;
+
 	public GameObject GetCorJumpKneeEffectClone(Vector2 position) {
 		GameObject effectInstance = Instantiate(corJumpKneeEffectPrefab, position, Quaternion.identity);
 		if (GetComponent<SpriteRenderer>().flipX) {
@@ -133,6 +136,15 @@ public class PlayerEffectController : MonoBehaviour
 			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
 		}
 		effectInstance.transform.parent = transform;
+
+		return effectInstance;
+	}
+
+	public GameObject GetCorFireRangedEffectClone(Vector2 position) {
+		GameObject effectInstance = Instantiate(corFireRangedEffectPrefab, position, Quaternion.identity);
+		if (GetComponent<SpriteRenderer>().flipX) {
+			effectInstance.GetComponent<SpriteRenderer>().flipX = true;
+		}
 
 		return effectInstance;
 	}
