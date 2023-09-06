@@ -24,7 +24,6 @@ public class AttackColliderController : MonoBehaviour
 	private float playerForceTimer;
 	private float fireDotTimer = 0f;
 	private float fireDotInterval = 0.2f;
-	private float fireDotDamage = 1.4f;
 
 	private void Awake() {
 		GameObject healthBarDocGO = GameObject.FindWithTag("HealthBarUIDocument");
@@ -122,7 +121,7 @@ public class AttackColliderController : MonoBehaviour
 						if (isFireModded) {
 							fireDotTimer += Time.deltaTime;
 							if (fireDotTimer >= fireDotInterval) {
-								health.TakeDamage(fireDotDamage);
+								health.TakeDamage(damage);
 								fireDotTimer = 0f;
 								if (healthBar != null) {
 									healthBar.localScale = new Vector2(health.GetHealthPercentage(), 1f);
