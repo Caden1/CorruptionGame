@@ -36,9 +36,6 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		bool instantiatePurityPullEffect = false;
-		bool instantiateCorProjectileEffect = false;
-		bool instantiateCorAirProjectileEffect = false;
 		skillController.IsUsingLeftHandSkill = true;
 		skillController.CanUseLeftHandSkill = false;
 		originalGravityScale = skillController.Rb.gravityScale;
@@ -57,32 +54,44 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 					skillController.GemController.GetLeftHandModifierGem().addedPurityLeftHandSkillDuration;
 				leftHandSkillCooldown +=
 					skillController.GemController.GetLeftHandModifierGem().addedPurityLeftHandSkillCooldown;
-				instantiatePurityPullEffect = true;
+				skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
+				skillController.StartStateCoroutine(SkillCooldown());
+				skillController.StartStateCoroutine(DestroyPurityEffectAfterSeconds());
 				switch (leftHandElementalModifierGemState) {
 					case LeftHandElementalModifierGemState.None:
 						skillController.animationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
+						activePurityEffectClone =
+							skillController.effectController.GetPurityPullEffectClone(GetEffectPosition());
 						break;
 					case LeftHandElementalModifierGemState.Air:
 						skillController.animationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.8f;
 						yOffset = -0.06f;
+						activePurityEffectClone =
+							skillController.effectController.GetPurityAirPullEffectClone(GetEffectPosition());
 						break;
 					case LeftHandElementalModifierGemState.Fire:
 						skillController.animationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
+						activePurityEffectClone =
+							skillController.effectController.GetPurityPullEffectClone(GetEffectPosition());
 						break;
 					case LeftHandElementalModifierGemState.Water:
 						skillController.animationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
+						activePurityEffectClone =
+							skillController.effectController.GetPurityPullEffectClone(GetEffectPosition());
 						break;
 					case LeftHandElementalModifierGemState.Earth:
 						skillController.animationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
+						activePurityEffectClone =
+							skillController.effectController.GetPurityPullEffectClone(GetEffectPosition());
 						break;
 				}
 				break;
@@ -91,58 +100,55 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 					skillController.GemController.GetLeftHandModifierGem().addedCorruptionLeftHandSkillDuration;
 				leftHandSkillCooldown +=
 					skillController.GemController.GetLeftHandModifierGem().addedCorruptionLeftHandSkillCooldown;
-				instantiateCorProjectileEffect = true;
 				switch (leftHandElementalModifierGemState) {
 					case LeftHandElementalModifierGemState.None:
 						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
+						skillController.StartStateCoroutine(SkillCooldown());
 						xOffset = 0.7f;
 						yOffset = 0.21f;
+						skillController.StartStateCoroutine(
+							InstantiateCorEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Air:
-						instantiateCorAirProjectileEffect = true;
 						skillController.animationController.ExecuteCorOnlyRangedAnim();
 						xOffset = 0.7f;
 						yOffset = 0.21f;
+						skillController.StartCoroutine(
+							InstantiateCorAirEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Fire:
 						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
+						skillController.StartStateCoroutine(SkillCooldown());
 						xOffset = 0.7f;
 						yOffset = 0.21f;
+						skillController.StartStateCoroutine(
+							InstantiateCorFireEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Water:
 						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
+						skillController.StartStateCoroutine(SkillCooldown());
 						xOffset = 0.7f;
 						yOffset = 0.21f;
+						skillController.StartStateCoroutine(
+							InstantiateCorEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Earth:
 						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
+						skillController.StartStateCoroutine(SkillCooldown());
 						xOffset = 0.7f;
 						yOffset = 0.21f;
+						skillController.StartStateCoroutine(
+							InstantiateCorEffectWithDelay(GetEffectPosition()));
 						break;
 				}
 				break;
 		}
 
-		if (skillController.LastFacingDirection < 0) {
-			xOffset *= -1;
-		}
-
 		skillController.Rb.velocity = new Vector2(0f, 0f);
-
-		if (!instantiateCorAirProjectileEffect) {
-			skillController.StartStateCoroutine(StopPullAnimAfterSeconds());
-			skillController.StartStateCoroutine(PullCooldown());
-		}
-		if (instantiatePurityPullEffect) {
-			InstantiatePurityEffect(leftHandElementalModifierGemState);
-			skillController.StartStateCoroutine(DestroyPurityEffectAfterSeconds());
-		}
-		else if (instantiateCorAirProjectileEffect) {
-			skillController.StartCoroutine(InstantiateCorAirEffectWithDelay());
-		}
-		else if (instantiateCorProjectileEffect) {
-			skillController.StartStateCoroutine(InstantiateCorEffectWithDelay());
-		}
 	}
 
 	public override void UpdateState() {
@@ -225,45 +231,24 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 
 	public override void ExitState() { }
 
-	private void InstantiatePurityEffect(LeftHandElementalModifierGemState leftHandElementalModifierGemState) {
-		Vector2 effectPosition = new Vector2(
+	private Vector2 GetEffectPosition() {
+		if (skillController.LastFacingDirection < 0) {
+			xOffset *= -1;
+		}
+
+		return new Vector2(
 			skillController.transform.position.x + xOffset,
 			skillController.transform.position.y + yOffset
 			);
-		switch (leftHandElementalModifierGemState) {
-			case LeftHandElementalModifierGemState.None:
-				activePurityEffectClone =
-					skillController.effectController.GetPurityPullEffectClone(effectPosition);
-				break;
-			case LeftHandElementalModifierGemState.Air:
-				activePurityEffectClone =
-					skillController.effectController.GetPurityAirPullEffectClone(effectPosition);
-				break;
-			case LeftHandElementalModifierGemState.Fire:
-				// Placeholder
-				activePurityEffectClone =
-					skillController.effectController.GetPurityPullEffectClone(effectPosition);
-				break;
-			case LeftHandElementalModifierGemState.Water:
-				// Placeholder
-				activePurityEffectClone =
-					skillController.effectController.GetPurityPullEffectClone(effectPosition);
-				break;
-			case LeftHandElementalModifierGemState.Earth:
-				// Placeholder
-				activePurityEffectClone =
-					skillController.effectController.GetPurityPullEffectClone(effectPosition);
-				break;
-		}
 	}
 
-	private IEnumerator StopPullAnimAfterSeconds() {
+	private IEnumerator StopPlayerAnimAfterSeconds() {
 		yield return new WaitForSeconds(leftHandSkillDuration);
 		skillController.Rb.gravityScale = originalGravityScale;
 		skillController.IsUsingLeftHandSkill = false;
 	}
 
-	private IEnumerator PullCooldown() {
+	private IEnumerator SkillCooldown() {
 		yield return new WaitForSeconds(leftHandSkillCooldown);
 		skillController.CanUseLeftHandSkill = true;
 	}
@@ -275,14 +260,17 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 		}
 	}
 
-	private IEnumerator InstantiateCorEffectWithDelay() {
+	private IEnumerator InstantiateCorEffectWithDelay(Vector2 effectPosition) {
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
-		Vector2 effectPosition = new Vector2(
-			skillController.transform.position.x + xOffset, skillController.transform.position.y + yOffset);
 		skillController.effectController.GetCorRangedEffectClone(effectPosition);
 	}
 
-	private IEnumerator InstantiateCorAirEffectWithDelay() {
+	private IEnumerator InstantiateCorFireEffectWithDelay(Vector2 effectPosition) {
+		yield return new WaitForSeconds(instantiateCorEffectDelay);
+		skillController.effectController.GetCorFireRangedEffectClone(effectPosition);
+	}
+
+	private IEnumerator InstantiateCorAirEffectWithDelay(Vector2 effectPosition) {
 		float minXRandValue = -0.5f;
 		float maxXRandValue = 0.5f;
 		float timeBetweenAttacks = 0.1f;
@@ -290,9 +278,6 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
 
-		Vector2 effectPosition = new Vector2(
-				skillController.transform.position.x + xOffset,
-				skillController.transform.position.y + yOffset);
 		skillController.animationController.ExecuteCorOnlyRangedAnim();
 		skillController.effectController.GetCorAirRangedEffectClone(effectPosition);
 		while (inputActions.Player.Ranged.IsInProgress()
