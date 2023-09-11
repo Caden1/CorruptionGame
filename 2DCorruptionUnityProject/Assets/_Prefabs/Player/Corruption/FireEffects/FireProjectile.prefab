@@ -116,10 +116,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compareTag: Enemy
-  damage: 2
-  takeDamageDuration: 0.5
+  damage: 4
+  takeDamageDuration: 0
   force: 0.5
-  lifeTime: 4
+  lifeTime: 1.5
   isAirModded: 0
   isFireModded: 1
   isWaterModded: 0
@@ -136,4 +136,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 713cb7695f1aa401492d6fead588f414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 2
+  projectileSpeed: 4
