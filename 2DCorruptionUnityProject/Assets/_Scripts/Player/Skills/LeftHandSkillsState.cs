@@ -273,7 +273,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 	private IEnumerator InstantiateCorAirEffectWithDelay(Vector2 effectPosition) {
 		float minXRandValue = -0.5f;
 		float maxXRandValue = 0.5f;
-		float timeBetweenAttacks = 0.1f;
+		float timeBetweenAttacks = 0.2f;
 		float airRangedStartTime = Time.time;
 
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
