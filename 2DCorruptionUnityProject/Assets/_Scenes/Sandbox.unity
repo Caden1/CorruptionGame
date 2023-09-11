@@ -1679,7 +1679,7 @@ PrefabInstance:
     - target: {fileID: 322509411633897310, guid: cb873d62bb847407c813449ec802afc2, type: 3}
       propertyPath: corAirRangedEffectPrefab
       value: 
-      objectReference: {fileID: 1456585727023008217, guid: 4a3f9d5e1df1d4bd282d1357bbfc1b10, type: 3}
+      objectReference: {fileID: 6788254420807780047, guid: 4a3f9d5e1df1d4bd282d1357bbfc1b10, type: 3}
     - target: {fileID: 322509411633897310, guid: cb873d62bb847407c813449ec802afc2, type: 3}
       propertyPath: corFireRangedEffectPrefab
       value: 
