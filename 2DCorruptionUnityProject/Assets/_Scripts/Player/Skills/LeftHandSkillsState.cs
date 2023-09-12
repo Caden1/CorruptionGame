@@ -112,7 +112,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 						break;
 					case LeftHandElementalModifierGemState.Air:
 						skillController.animationController.ExecuteCorOnlyRangedAnim();
-						xOffset = 0.7f;
+						xOffset = 0.9f;
 						yOffset = 0.21f;
 						skillController.StartCoroutine(
 							InstantiateCorAirEffectWithDelay(GetEffectPosition()));
@@ -273,20 +273,20 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 	private IEnumerator InstantiateCorAirEffectWithDelay(Vector2 effectPosition) {
 		float minXRandValue = -0.5f;
 		float maxXRandValue = 0.5f;
-		float timeBetweenAttacks = 0.2f;
+		float timeBetweenAttacks = 0.1f;
 		float airRangedStartTime = Time.time;
 
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
 
-		skillController.animationController.ExecuteCorOnlyRangedAnim();
+		skillController.animationController.ExecuteCorAirRangedAnim();
 		skillController.effectController.GetCorAirRangedEffectClone(effectPosition);
 		while (inputActions.Player.Ranged.IsInProgress()
 			&& Time.time - airRangedStartTime < leftHandSkillDuration
 			&& !isInAirRangedCooldown) {
-				skillController.effectController.GetCorAirRangedEffectClone(
-					new Vector2(effectPosition.x, effectPosition.y + Random.Range(minXRandValue, maxXRandValue))
-					);
 			yield return new WaitForSeconds(timeBetweenAttacks);
+			skillController.effectController.GetCorAirRangedEffectClone(
+				new Vector2(effectPosition.x, effectPosition.y + Random.Range(minXRandValue, maxXRandValue))
+				);
 		}
 		skillController.Rb.gravityScale = originalGravityScale;
 		skillController.IsUsingLeftHandSkill = false;

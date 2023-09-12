@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eb29bf205a13b48559d639a627d04d48
+guid: eeddf690bacbc4f9881d3bf239542ea2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CorruptionAirMelee-Sheet_0
+      name: CorruptionAirRanged-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e931fd267e23a488faa70e59a416c112
-      internalID: -733036784
+      spriteID: 84b73c2748dc5477db54f7ded8e22c93
+      internalID: -1123266432
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CorruptionAirMelee-Sheet_1
+      name: CorruptionAirRanged-Sheet_1
       rect:
         serializedVersion: 2
         x: 320
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed36f2978c6494cd8a19896386ee79b8
-      internalID: 302254958
+      spriteID: 3693ed2cb9c45470abb782b6a2ac01a9
+      internalID: -1664513036
       vertices: []
       indices: 
       edges: []
@@ -169,8 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      CorruptionAirMelee-Sheet_1: 302254958
-      CorruptionAirMelee-Sheet_0: -733036784
+      CorruptionAirRanged-Sheet_1: -1664513036
+      CorruptionAirRanged-Sheet_0: -1123266432
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

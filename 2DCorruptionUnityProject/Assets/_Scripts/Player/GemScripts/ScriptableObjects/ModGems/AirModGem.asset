@@ -20,8 +20,8 @@ MonoBehaviour:
   addedCorruptionDashDuration: 0
   addedCorruptionRightHandSkillDuration: 1.5
   addedCorruptionRightHandSkillCooldown: 2.5
-  addedCorruptionLeftHandSkillDuration: 1.5
-  addedCorruptionLeftHandSkillCooldown: 2.5
+  addedCorruptionLeftHandSkillDuration: 0.6
+  addedCorruptionLeftHandSkillCooldown: 2
   addedPurityMoveSpeed: 0
   addedPurityJumpForce: 0
   addedPurityNumberOfJumps: 1
