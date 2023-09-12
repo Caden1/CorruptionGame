@@ -87,4 +87,8 @@ public class PlayerAnimationController : MonoBehaviour
 	public void ExecuteCorAirMeleeAnim() {
 		animator.Play("CorruptionAirMelee");
 	}
+
+	public void ExecuteCorAirRangedAnim() {
+		animator.Play("CorruptionAirRanged");
+	}
 }
