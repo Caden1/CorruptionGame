@@ -27,7 +27,8 @@ public class RunningSkillState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		skillController.animationController.ExecuteRunAnim();
+		skillController.AnimationController.ExecuteRunAnim();
+		AudioManager.Instance.PlayPlayerFootstepsSound();
 	}
 
 	public override void UpdateState() {

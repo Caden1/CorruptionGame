@@ -27,7 +27,7 @@ public class FallingSkillState : PlayerSkillStateBase
 			rightFootElementalModifierGemState,
 			leftFootElementalModifierGemState
 			);
-		skillController.animationController.ExecuteFallAnim();
+		skillController.AnimationController.ExecuteFallAnim();
 	}
 
 	public override void UpdateState() {

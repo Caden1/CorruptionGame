@@ -59,35 +59,35 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 				skillController.StartStateCoroutine(DestroyPurityEffectAfterSeconds());
 				switch (leftHandElementalModifierGemState) {
 					case LeftHandElementalModifierGemState.None:
-						skillController.animationController.ExecutePurityOnlyPullAnim();
+						skillController.AnimationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
 						activePurityEffectClone =
 							skillController.effectController.GetPurityPullEffectClone(GetEffectPosition());
 						break;
 					case LeftHandElementalModifierGemState.Air:
-						skillController.animationController.ExecutePurityOnlyPullAnim();
+						skillController.AnimationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.8f;
 						yOffset = -0.06f;
 						activePurityEffectClone =
 							skillController.effectController.GetPurityAirPullEffectClone(GetEffectPosition());
 						break;
 					case LeftHandElementalModifierGemState.Fire:
-						skillController.animationController.ExecutePurityOnlyPullAnim();
+						skillController.AnimationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
 						activePurityEffectClone =
 							skillController.effectController.GetPurityPullEffectClone(GetEffectPosition());
 						break;
 					case LeftHandElementalModifierGemState.Water:
-						skillController.animationController.ExecutePurityOnlyPullAnim();
+						skillController.AnimationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
 						activePurityEffectClone =
 							skillController.effectController.GetPurityPullEffectClone(GetEffectPosition());
 						break;
 					case LeftHandElementalModifierGemState.Earth:
-						skillController.animationController.ExecutePurityOnlyPullAnim();
+						skillController.AnimationController.ExecutePurityOnlyPullAnim();
 						xOffset = 1.4f;
 						yOffset = -0.06f;
 						activePurityEffectClone =
@@ -102,7 +102,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 					skillController.GemController.GetLeftHandModifierGem().addedCorruptionLeftHandSkillCooldown;
 				switch (leftHandElementalModifierGemState) {
 					case LeftHandElementalModifierGemState.None:
-						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.AnimationController.ExecuteCorOnlyRangedAnim();
 						skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
 						skillController.StartStateCoroutine(SkillCooldown());
 						xOffset = 0.7f;
@@ -111,14 +111,14 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 							InstantiateCorEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Air:
-						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.AnimationController.ExecuteCorOnlyRangedAnim();
 						xOffset = 0.9f;
 						yOffset = 0.21f;
 						skillController.StartCoroutine(
 							InstantiateCorAirEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Fire:
-						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.AnimationController.ExecuteCorOnlyRangedAnim();
 						skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
 						skillController.StartStateCoroutine(SkillCooldown());
 						xOffset = 0.7f;
@@ -127,7 +127,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 							InstantiateCorFireEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Water:
-						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.AnimationController.ExecuteCorOnlyRangedAnim();
 						skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
 						skillController.StartStateCoroutine(SkillCooldown());
 						xOffset = 0.7f;
@@ -136,7 +136,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 							InstantiateCorEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Earth:
-						skillController.animationController.ExecuteCorOnlyRangedAnim();
+						skillController.AnimationController.ExecuteCorOnlyRangedAnim();
 						skillController.StartStateCoroutine(StopPlayerAnimAfterSeconds());
 						skillController.StartStateCoroutine(SkillCooldown());
 						xOffset = 0.7f;
@@ -278,7 +278,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 
 		yield return new WaitForSeconds(instantiateCorEffectDelay);
 
-		skillController.animationController.ExecuteCorAirRangedAnim();
+		skillController.AnimationController.ExecuteCorAirRangedAnim();
 		skillController.effectController.GetCorAirRangedEffectClone(effectPosition);
 		while (inputActions.Player.Ranged.IsInProgress()
 			&& Time.time - airRangedStartTime < leftHandSkillDuration
