@@ -16,5 +16,6 @@ MonoBehaviour:
   pauseMenuNavigation: {fileID: 0}
   pauseMenuButtonPress: {fileID: 0}
   playerFootsteps: {fileID: 8300000, guid: d4af34ca15a314ec3a016832a09ef008, type: 3}
-  playerRangedAttack: {fileID: 0}
-  playerAirRangedAttack: {fileID: 0}
+  playerJump: {fileID: 8300000, guid: 86cb79e77acf14d5b8d651dd4ab99741, type: 3}
+  playerRangedAttack: {fileID: 8300000, guid: 4eda55a04ef2a426abf704d1717acd20, type: 3}
+  playerAirModSound: {fileID: 8300000, guid: 640d3e126ff4343689a536b79b0b3c47, type: 3}

@@ -151,6 +151,8 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		} else if (instantiateCorAirMeleeEffect) { // Special Case
 			skillController.StartCoroutine(InstantiateCorAirEffectWithDelay());
 		}
+
+		AudioManager.Instance.PlayPlayerMeleeSound();
 	}
 
 	public override void UpdateState() {

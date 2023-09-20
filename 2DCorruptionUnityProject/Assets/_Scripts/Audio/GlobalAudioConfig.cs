@@ -8,9 +8,13 @@ public class GlobalAudioConfig : ScriptableObject
 	public AudioClip pauseMenuTrack;
 
 	[Header("Global Sounds")]
+	// Pause Menu
 	public AudioClip pauseMenuNavigation;
 	public AudioClip pauseMenuButtonPress;
+
+	// Player
 	public AudioClip playerFootsteps;
+	public AudioClip playerJump;
 	public AudioClip playerRangedAttack;
-	public AudioClip playerAirRangedAttack;
+	public AudioClip playerAirModSound;
 }

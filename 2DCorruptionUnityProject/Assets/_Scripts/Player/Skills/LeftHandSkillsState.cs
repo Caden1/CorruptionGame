@@ -111,6 +111,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 							InstantiateCorEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Air:
+						AudioManager.Instance.PlayPlayerAirModSound();
 						skillController.AnimationController.ExecuteCorOnlyRangedAnim();
 						xOffset = 0.9f;
 						yOffset = 0.21f;
@@ -149,6 +150,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 		}
 
 		skillController.Rb.velocity = new Vector2(0f, 0f);
+		AudioManager.Instance.PlayPlayerRangedAttackSound();
 	}
 
 	public override void UpdateState() {
@@ -283,6 +285,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 		while (inputActions.Player.Ranged.IsInProgress()
 			&& Time.time - airRangedStartTime < leftHandSkillDuration
 			&& !isInAirRangedCooldown) {
+			AudioManager.Instance.PlayPlayerRangedAttackSound();
 			yield return new WaitForSeconds(timeBetweenAttacks);
 			skillController.effectController.GetCorAirRangedEffectClone(
 				new Vector2(effectPosition.x, effectPosition.y + Random.Range(minXRandValue, maxXRandValue))

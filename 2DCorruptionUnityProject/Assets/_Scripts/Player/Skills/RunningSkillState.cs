@@ -32,10 +32,15 @@ public class RunningSkillState : PlayerSkillStateBase
 	}
 
 	public override void UpdateState() {
+		CheckAndUpdateStates();
+	}
+
+	public override void ExitState() { }
+
+	private void CheckAndUpdateStates() {
 		// From Running player can Swap, Idle, Fall, RightFoot, LeftFoot,
 		//     RightHand, LeftHand, HasForceApplied, Immune
 		if (skillController.HasForceApplied) {
-
 		} else if (inputActions.Player.Swap.WasPressedThisFrame()) {
 			if (skillController.CanSwap) {
 				gemController.SwapGems();
@@ -112,6 +117,4 @@ public class RunningSkillState : PlayerSkillStateBase
 				);
 		}
 	}
-
-	public override void ExitState() { }
 }

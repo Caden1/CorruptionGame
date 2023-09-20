@@ -28,6 +28,7 @@ public class FallingSkillState : PlayerSkillStateBase
 			leftFootElementalModifierGemState
 			);
 		skillController.AnimationController.ExecuteFallAnim();
+		AudioManager.Instance.PlayPlayerFallingSound();
 	}
 
 	public override void UpdateState() {

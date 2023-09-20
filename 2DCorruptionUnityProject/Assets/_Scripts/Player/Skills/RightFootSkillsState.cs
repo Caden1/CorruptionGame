@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class RightFootSkillsState : PlayerSkillStateBase
 {
@@ -121,6 +119,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		}
 
 		skillController.Rb.velocity = new Vector2(0, jumpForce);
+		AudioManager.Instance.PlayPlayerJumpSound();
 	}
 
 	public override void UpdateState() {

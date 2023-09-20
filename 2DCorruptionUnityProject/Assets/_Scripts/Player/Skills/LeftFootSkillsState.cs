@@ -124,6 +124,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		skillController.StartStateCoroutine(StopDashAfterSeconds());
+		AudioManager.Instance.PlayPlayerDashSound();
 	}
 
 	public override void UpdateState() {

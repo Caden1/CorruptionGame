@@ -28,6 +28,7 @@ public class IdleSkillState : PlayerSkillStateBase
 			leftFootElementalModifierGemState
 			);
 		skillController.AnimationController.ExecuteIdleAnim();
+		AudioManager.Instance.PlayPlayerIdleSound();
 	}
 
 	public override void UpdateState() {

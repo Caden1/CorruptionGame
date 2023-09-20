@@ -24,14 +24,11 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	public void PlayPauseMenuTrack(float volume = 1f) {
+	public void PlayPauseMenuTrack() {
+		ResetAudioSource(musicSource);
 		musicSource.clip = activeConfig.pauseMenuTrack;
-		PlayTrackHelper(volume);
-	}
-
-	private void PlayTrackHelper(float volume) {
 		musicSource.loop = true;
-		musicSource.volume = volume;
+		musicSource.volume = 1f;
 		musicSource.Play();
 	}
 
@@ -47,35 +44,86 @@ public class AudioManager : MonoBehaviour
 		musicSource.Play();
 	}
 
-	public void PlayPauseMenuNavigationSound(float volume = 1f) {
-		soundSource.PlayOneShot(activeConfig.pauseMenuNavigation, volume);
+	public void PlayPauseMenuNavigationSound() {
+		ResetAudioSource(soundSource);
+		soundSource.PlayOneShot(activeConfig.pauseMenuNavigation);
 	}
 
-	public void PlayPauseMenuButtonPressSound(float volume = 1f) {
-		soundSource.PlayOneShot(activeConfig.pauseMenuButtonPress, volume);
+	public void PlayPauseMenuButtonPressSound() {
+		ResetAudioSource(soundSource);
+		soundSource.PlayOneShot(activeConfig.pauseMenuButtonPress);
 	}
 
-	public void PlayPlayerFootstepsSound(float volume = 1f) {
+	public void PlayPlayerFootstepsSound() {
+		ResetAudioSource(soundSource);
 		soundSource.clip = activeConfig.playerFootsteps;
-		soundSource.pitch = 0.9f;
-		PlayAndLoopSound(volume);
-	}
-
-	public void StopCurrentLoopingSound() {
-		soundSource.Stop();
-	}
-
-	public void PlayPlayerRangedAttackSound(float volume = 1f) {
-		soundSource.PlayOneShot(activeConfig.playerRangedAttack, volume);
-	}
-
-	public void PlayPlayerAirRangedAttackSound(float volume = 1f) {
-		soundSource.PlayOneShot(activeConfig.playerAirRangedAttack, volume);
-	}
-
-	private void PlayAndLoopSound(float volume) {
 		soundSource.loop = true;
-		soundSource.volume = volume;
+		soundSource.pitch = 0.9f;
 		soundSource.Play();
+	}
+
+	public void PlayPlayerIdleSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerFallingSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerJumpSound() {
+		ResetAudioSource(soundSource);
+		soundSource.PlayOneShot(activeConfig.playerJump);
+	}
+
+	public void PlayPlayerDashSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerMeleeSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerRangedAttackSound() {
+		ResetAudioSource(soundSource);
+		soundSource.PlayOneShot(activeConfig.playerRangedAttack);
+	}
+
+	public void PlayPlayerPushSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerPullSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerCorruptionSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerPuritySound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerAirModSound() {
+		ResetAudioSource(soundSource);
+		soundSource.PlayOneShot(activeConfig.playerAirModSound);
+	}
+
+	public void PlayPlayerFireModSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerWaterModSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayPlayerEarthModSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	private void ResetAudioSource(AudioSource source) {
+		source.loop = false;
+		source.volume = 1f;
+		source.pitch = 1f;
 	}
 }
