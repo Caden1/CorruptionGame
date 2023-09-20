@@ -67,6 +67,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 						break;
 					case LeftHandElementalModifierGemState.Air:
 						skillController.AnimationController.ExecutePurityOnlyPullAnim();
+						AudioManager.Instance.PlayPlayerAirModSound();
 						xOffset = 1.8f;
 						yOffset = -0.06f;
 						activePurityEffectClone =
@@ -111,8 +112,8 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 							InstantiateCorEffectWithDelay(GetEffectPosition()));
 						break;
 					case LeftHandElementalModifierGemState.Air:
-						AudioManager.Instance.PlayPlayerAirModSound();
 						skillController.AnimationController.ExecuteCorOnlyRangedAnim();
+						AudioManager.Instance.PlayPlayerAirModSound();
 						xOffset = 0.9f;
 						yOffset = 0.21f;
 						skillController.StartCoroutine(
@@ -286,6 +287,7 @@ public class LeftHandSkillsState : PlayerSkillStateBase
 			&& Time.time - airRangedStartTime < leftHandSkillDuration
 			&& !isInAirRangedCooldown) {
 			AudioManager.Instance.PlayPlayerRangedAttackSound();
+			AudioManager.Instance.PlayPlayerAirModSound();
 			yield return new WaitForSeconds(timeBetweenAttacks);
 			skillController.effectController.GetCorAirRangedEffectClone(
 				new Vector2(effectPosition.x, effectPosition.y + Random.Range(minXRandValue, maxXRandValue))
