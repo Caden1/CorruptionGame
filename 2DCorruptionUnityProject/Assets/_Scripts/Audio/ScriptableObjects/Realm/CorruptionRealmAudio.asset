@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainTrack: {fileID: 8300000, guid: 1b163bb77d4604c01b04c59ef96632d0, type: 3}
   bossFightTrack: {fileID: 0}
-  enemyTakeDamage: {fileID: 0}
-  enemyAttack: {fileID: 0}
-  enemyDying: {fileID: 0}
+  meleeEnemyFootsteps: {fileID: 8300000, guid: 01cec42c3fd2741ad999ae4bdc679b89, type: 3}
+  meleeEnemyTakeDamage: {fileID: 0}
+  meleeEnemyAttack: {fileID: 0}
+  meleeEnemyDying: {fileID: 0}

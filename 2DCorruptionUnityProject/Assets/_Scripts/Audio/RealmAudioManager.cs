@@ -16,19 +16,17 @@ public class RealmAudioManager : MonoBehaviour
 		PlayMainTrack();
 	}
 
-	public void PlayMainTrack(float volume = 1f) {
+	public void PlayMainTrack() {
+		ResetAudioSource(musicSource);
 		musicSource.clip = activeConfig.mainTrack;
-		PlayTrackHelper(volume);
-	}
-
-	public void PlayBossFightTrack(float volume = 1f) {
-		musicSource.clip = activeConfig.bossFightTrack;
-		PlayTrackHelper(volume);
-	}
-
-	private void PlayTrackHelper(float volume) {
 		musicSource.loop = true;
-		musicSource.volume = volume;
+		musicSource.Play();
+	}
+
+	public void PlayBossFightTrack() {
+		ResetAudioSource(musicSource);
+		musicSource.clip = activeConfig.bossFightTrack;
+		musicSource.loop = true;
 		musicSource.Play();
 	}
 
@@ -44,24 +42,43 @@ public class RealmAudioManager : MonoBehaviour
 		musicSource.Play();
 	}
 
-	public void PlayEnemyTakeDamageSound(float volume = 1f) {
-		soundSource.clip = activeConfig.enemyTakeDamage;
-		PlaySoundHelper(volume);
+	public void PlayMeleeEnemyIdleSound() {
+		ResetAudioSource(soundSource);
 	}
 
-	public void PlayEnemyAttackSound(float volume = 1f) {
-		soundSource.clip = activeConfig.enemyAttack;
-		PlaySoundHelper(volume);
-	}
-
-	public void PlayEnemyDyingSound(float volume = 1f) {
-		soundSource.clip = activeConfig.enemyDying;
-		PlaySoundHelper(volume);
-	}
-
-	private void PlaySoundHelper(float volume) {
-		soundSource.loop = false;
-		soundSource.volume = volume;
+	public void PlayMeleeEnemyFootstepsSound() {
+		ResetAudioSource(soundSource);
+		soundSource.clip = activeConfig.meleeEnemyFootsteps;
+		soundSource.loop = true;
 		soundSource.Play();
+	}
+
+	public void PlayMeleeEnemyAttackSound() {
+		ResetAudioSource(soundSource);
+		soundSource.PlayOneShot(activeConfig.meleeEnemyAttack);
+	}
+
+	public void PlayMeleeEnemyTakeDamageSound() {
+		ResetAudioSource(soundSource);
+		soundSource.PlayOneShot(activeConfig.meleeEnemyTakeDamage);
+	}
+
+	public void PlayMeleeEnemyDyingSound() {
+		ResetAudioSource(soundSource);
+		soundSource.PlayOneShot(activeConfig.meleeEnemyDying);
+	}
+
+	public void PlayMeleeEnemyDizzySound() {
+		ResetAudioSource(soundSource);
+	}
+
+	public void PlayMeleeEnemySuctionedSound() {
+		ResetAudioSource(soundSource);
+	}
+
+	private void ResetAudioSource(AudioSource source) {
+		source.loop = false;
+		source.volume = 1f;
+		source.pitch = 1f;
 	}
 }

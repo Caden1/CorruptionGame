@@ -9,7 +9,8 @@ public class RealmAudioConfig : ScriptableObject
 	public AudioClip bossFightTrack;
 
 	[Header("Realm Sounds")]
-	public AudioClip enemyTakeDamage;
-	public AudioClip enemyAttack;
-	public AudioClip enemyDying;
+	public AudioClip meleeEnemyFootsteps;
+	public AudioClip meleeEnemyTakeDamage;
+	public AudioClip meleeEnemyAttack;
+	public AudioClip meleeEnemyDying;
 }
