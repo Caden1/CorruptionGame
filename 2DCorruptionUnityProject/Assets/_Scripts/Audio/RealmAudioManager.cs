@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RealmAudioManager : MonoBehaviour
@@ -8,12 +9,24 @@ public class RealmAudioManager : MonoBehaviour
 	[Header("Realm Music Audio Source")]
 	public AudioSource musicSource;
 
-	[Header("Realm Sounds Audio Source")]
-	public AudioSource soundSource;
+	private List<AudioSource> audioSourcePoolSounds = new List<AudioSource>();
+	private List<AudioSource> audioSourcePoolFootsteps = new List<AudioSource>();
 
 	private void Start() {
 		// For testing
 		PlayMainTrack();
+
+		int maxSoundsAudioSources = 10;
+		for (int i = 0; i < maxSoundsAudioSources; i++) {
+			AudioSource newAudioSource = gameObject.AddComponent<AudioSource>();
+			audioSourcePoolSounds.Add(newAudioSource);
+		}
+
+		int maxFootstepsAudioSources = 4;
+		for (int i = 0; i < maxFootstepsAudioSources; i++) {
+			AudioSource newAudioSource = gameObject.AddComponent<AudioSource>();
+			audioSourcePoolFootsteps.Add(newAudioSource);
+		}
 	}
 
 	public void PlayMainTrack() {
@@ -43,37 +56,79 @@ public class RealmAudioManager : MonoBehaviour
 	}
 
 	public void PlayMeleeEnemyIdleSound() {
-		ResetAudioSource(soundSource);
+		AudioSource availableSource = GetAvailableSoundAudioSource();
+		if (availableSource != null) {
+
+		}
 	}
 
-	public void PlayMeleeEnemyFootstepsSound() {
-		ResetAudioSource(soundSource);
-		soundSource.clip = activeConfig.meleeEnemyFootsteps;
-		soundSource.loop = true;
-		soundSource.Play();
+	public AudioSource PlayMeleeEnemyFootstepsSound() {
+		AudioSource availableSource = GetAvailableFootstepAudioSource();
+		if (availableSource != null) {
+			availableSource.clip = activeConfig.meleeEnemyFootsteps;
+			availableSource.loop = true;
+			availableSource.Play();
+		}
+		return availableSource;
+	}
+
+	public void StopFootstepsSound(AudioSource source) {
+		source.Stop();
+		ResetAudioSource(source);
 	}
 
 	public void PlayMeleeEnemyAttackSound() {
-		ResetAudioSource(soundSource);
-		soundSource.PlayOneShot(activeConfig.meleeEnemyAttack);
+		AudioSource availableSource = GetAvailableSoundAudioSource();
+		if (availableSource != null) {
+			availableSource.PlayOneShot(activeConfig.meleeEnemyAttack);
+		}
 	}
 
 	public void PlayMeleeEnemyTakeDamageSound() {
-		ResetAudioSource(soundSource);
-		soundSource.PlayOneShot(activeConfig.meleeEnemyTakeDamage);
+		AudioSource availableSource = GetAvailableSoundAudioSource();
+		if (availableSource != null) {
+			availableSource.PlayOneShot(activeConfig.meleeEnemyTakeDamage);
+		}
 	}
 
 	public void PlayMeleeEnemyDyingSound() {
-		ResetAudioSource(soundSource);
-		soundSource.PlayOneShot(activeConfig.meleeEnemyDying);
+		AudioSource availableSource = GetAvailableSoundAudioSource();
+		if (availableSource != null) {
+			availableSource.PlayOneShot(activeConfig.meleeEnemyDying);
+		}
 	}
 
 	public void PlayMeleeEnemyDizzySound() {
-		ResetAudioSource(soundSource);
+		AudioSource availableSource = GetAvailableSoundAudioSource();
+		if (availableSource != null) {
+
+		}
 	}
 
 	public void PlayMeleeEnemySuctionedSound() {
-		ResetAudioSource(soundSource);
+		AudioSource availableSource = GetAvailableSoundAudioSource();
+		if (availableSource != null) {
+
+		}
+	}
+
+	private AudioSource GetAvailableSoundAudioSource() {
+		foreach (AudioSource source in audioSourcePoolSounds) {
+			if (!source.isPlaying) {
+				ResetAudioSource(source);
+				return source;
+			}
+		}
+		return null;
+	}
+
+	private AudioSource GetAvailableFootstepAudioSource() {
+		foreach (AudioSource source in audioSourcePoolFootsteps) {
+			if (!source.isPlaying) {
+				return source;
+			}
+		}
+		return null;
 	}
 
 	private void ResetAudioSource(AudioSource source) {

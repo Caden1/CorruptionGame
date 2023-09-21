@@ -57,6 +57,8 @@ public class EnemyController : MonoBehaviour
 	private Vector2 endPoint;
 	private Vector2 currentTarget;
 	private Vector2 previousPosition;
+	private AudioSource walkingAudioSource;
+	private AudioSource chasingAudioSource;
 
 	private void Start() {
 		Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
@@ -173,39 +175,55 @@ public class EnemyController : MonoBehaviour
 			switch (animationState) {
 				case AnimationState.Moving:
 					animator.Play("Walk");
-					realmAudioManager.PlayMeleeEnemyFootstepsSound();
-					lastAnimationState = animationState;
+					CheckForAndStopFootstepSounds();
+					walkingAudioSource = realmAudioManager.PlayMeleeEnemyFootstepsSound();
 					break;
 				case AnimationState.Chasing:
 					animator.Play("Walk");
-					realmAudioManager.PlayMeleeEnemyFootstepsSound();
+					CheckForAndStopFootstepSounds();
+					chasingAudioSource = realmAudioManager.PlayMeleeEnemyFootstepsSound();
 					break;
 				case AnimationState.Attacking:
 					animator.Play("Attack");
+					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyAttackSound();
 					break;
 				case AnimationState.Idle:
 					animator.Play("Idle");
+					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyIdleSound();
 					break;
 				case AnimationState.TakeDamage:
 					animator.Play("TakingDamage");
+					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyTakeDamageSound();
 					break;
 				case AnimationState.Death:
 					animator.Play("Death");
+					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyDyingSound();
 					break;
 				case AnimationState.Dizzy:
 					animator.Play("Dizzy");
+					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyDizzySound();
 					break;
 				case AnimationState.Suctioned:
 					animator.Play("TakingDamage");
+					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemySuctionedSound();
 					break;
 			}
 			lastAnimationState = animationState;
+		}
+	}
+
+	private void CheckForAndStopFootstepSounds() {
+		if (walkingAudioSource != null) {
+			realmAudioManager.StopFootstepsSound(walkingAudioSource);
+		}
+		if (chasingAudioSource != null) {
+			realmAudioManager.StopFootstepsSound(chasingAudioSource);
 		}
 	}
 
