@@ -10,7 +10,8 @@ public class RealmAudioManager : MonoBehaviour
 	public AudioSource musicSource;
 
 	private List<AudioSource> audioSourcePoolSounds = new List<AudioSource>();
-	private List<AudioSource> audioSourcePoolFootsteps = new List<AudioSource>();
+	private int currentlyPlayingFootsteps = 0;
+	private const int maxFootsteps = 4;
 
 	private void Start() {
 		// For testing
@@ -20,12 +21,6 @@ public class RealmAudioManager : MonoBehaviour
 		for (int i = 0; i < maxSoundsAudioSources; i++) {
 			AudioSource newAudioSource = gameObject.AddComponent<AudioSource>();
 			audioSourcePoolSounds.Add(newAudioSource);
-		}
-
-		int maxFootstepsAudioSources = 4;
-		for (int i = 0; i < maxFootstepsAudioSources; i++) {
-			AudioSource newAudioSource = gameObject.AddComponent<AudioSource>();
-			audioSourcePoolFootsteps.Add(newAudioSource);
 		}
 	}
 
@@ -63,18 +58,17 @@ public class RealmAudioManager : MonoBehaviour
 	}
 
 	public AudioSource PlayMeleeEnemyFootstepsSound() {
-		AudioSource availableSource = GetAvailableFootstepAudioSource();
+		if (currentlyPlayingFootsteps >= maxFootsteps) {
+			return null;
+		}
+		AudioSource availableSource = GetAvailableSoundAudioSource();
 		if (availableSource != null) {
+			currentlyPlayingFootsteps++;
 			availableSource.clip = activeConfig.meleeEnemyFootsteps;
 			availableSource.loop = true;
 			availableSource.Play();
 		}
 		return availableSource;
-	}
-
-	public void StopFootstepsSound(AudioSource source) {
-		source.Stop();
-		ResetAudioSource(source);
 	}
 
 	public void PlayMeleeEnemyAttackSound() {
@@ -112,19 +106,21 @@ public class RealmAudioManager : MonoBehaviour
 		}
 	}
 
+	// Called from EnemyController to stop footsteps
+	public void StopAndResetAudioSource(AudioSource source) {
+		if (source != null && source.isPlaying) {
+			if (source.clip == activeConfig.meleeEnemyFootsteps) {
+				currentlyPlayingFootsteps--;
+			}
+			source.Stop();
+			ResetAudioSource(source);
+		}
+	}
+
 	private AudioSource GetAvailableSoundAudioSource() {
 		foreach (AudioSource source in audioSourcePoolSounds) {
 			if (!source.isPlaying) {
 				ResetAudioSource(source);
-				return source;
-			}
-		}
-		return null;
-	}
-
-	private AudioSource GetAvailableFootstepAudioSource() {
-		foreach (AudioSource source in audioSourcePoolFootsteps) {
-			if (!source.isPlaying) {
 				return source;
 			}
 		}

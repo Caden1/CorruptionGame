@@ -57,8 +57,7 @@ public class EnemyController : MonoBehaviour
 	private Vector2 endPoint;
 	private Vector2 currentTarget;
 	private Vector2 previousPosition;
-	private AudioSource walkingAudioSource;
-	private AudioSource chasingAudioSource;
+	private AudioSource footstepsAudioSource;
 
 	private void Start() {
 		Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
@@ -174,43 +173,41 @@ public class EnemyController : MonoBehaviour
 		if (lastAnimationState != animationState) {
 			switch (animationState) {
 				case AnimationState.Moving:
-					animator.Play("Walk");
-					CheckForAndStopFootstepSounds();
-					walkingAudioSource = realmAudioManager.PlayMeleeEnemyFootstepsSound();
-					break;
+				// Right now Moving and Chasing use the same animation and sound
 				case AnimationState.Chasing:
 					animator.Play("Walk");
-					CheckForAndStopFootstepSounds();
-					chasingAudioSource = realmAudioManager.PlayMeleeEnemyFootstepsSound();
+					if (footstepsAudioSource == null || !footstepsAudioSource.isPlaying) {
+						footstepsAudioSource = realmAudioManager.PlayMeleeEnemyFootstepsSound();
+					}
 					break;
 				case AnimationState.Attacking:
+					StopFootstepsSound();
 					animator.Play("Attack");
-					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyAttackSound();
 					break;
 				case AnimationState.Idle:
+					StopFootstepsSound();
 					animator.Play("Idle");
-					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyIdleSound();
 					break;
 				case AnimationState.TakeDamage:
+					StopFootstepsSound();
 					animator.Play("TakingDamage");
-					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyTakeDamageSound();
 					break;
 				case AnimationState.Death:
+					StopFootstepsSound();
 					animator.Play("Death");
-					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyDyingSound();
 					break;
 				case AnimationState.Dizzy:
+					StopFootstepsSound();
 					animator.Play("Dizzy");
-					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemyDizzySound();
 					break;
 				case AnimationState.Suctioned:
+					StopFootstepsSound();
 					animator.Play("TakingDamage");
-					CheckForAndStopFootstepSounds();
 					realmAudioManager.PlayMeleeEnemySuctionedSound();
 					break;
 			}
@@ -218,12 +215,10 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
-	private void CheckForAndStopFootstepSounds() {
-		if (walkingAudioSource != null) {
-			realmAudioManager.StopFootstepsSound(walkingAudioSource);
-		}
-		if (chasingAudioSource != null) {
-			realmAudioManager.StopFootstepsSound(chasingAudioSource);
+	private void StopFootstepsSound() {
+		if (footstepsAudioSource != null && footstepsAudioSource.isPlaying) {
+			realmAudioManager.StopAndResetAudioSource(footstepsAudioSource);
+			footstepsAudioSource = null;
 		}
 	}
 
