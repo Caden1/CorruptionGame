@@ -52,31 +52,31 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 				dashDuration += skillController.GemController.GetLeftFootModifierGem().addedPurityDashDuration;
 				switch (leftFootElementalModifierGemState) {
 					case LeftFootElementalModifierGemState.None:
-						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyDashPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 1.2f;
 						yOffset = -0.05f;
 						break;
 					case LeftFootElementalModifierGemState.Air:
-						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyDashPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 1.2f;
 						yOffset = -0.05f;
 						break;
 					case LeftFootElementalModifierGemState.Fire:
-						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyDashPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 1.2f;
 						yOffset = -0.05f;
 						break;
 					case LeftFootElementalModifierGemState.Water:
-						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyDashPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 1.2f;
 						yOffset = -0.05f;
 						break;
 					case LeftFootElementalModifierGemState.Earth:
-						skillController.animationController.ExecutePurityOnlyDashPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyDashPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 1.2f;
 						yOffset = -0.05f;
@@ -90,27 +90,27 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 							InstantiateCorEffectWithDelay(leftFootElementalModifierGemState));
 				switch (leftFootElementalModifierGemState) {
 					case LeftFootElementalModifierGemState.None:
-						skillController.animationController.ExecuteCorOnlyDashAnim();
+						skillController.AnimationController.ExecuteCorOnlyDashAnim();
 						xOffset = 1.15f;
 						yOffset = -0.05f;
 						break;
 					case LeftFootElementalModifierGemState.Air:
-						skillController.animationController.ExecuteCorOnlyDashAnim();
+						skillController.AnimationController.ExecuteCorOnlyDashAnim();
 						xOffset = 1.2f;
 						yOffset = -0.05f;
 						break;
 					case LeftFootElementalModifierGemState.Fire:
-						skillController.animationController.ExecuteCorOnlyDashAnim();
+						skillController.AnimationController.ExecuteCorOnlyDashAnim();
 						xOffset = 1.15f;
 						yOffset = -0.05f;
 						break;
 					case LeftFootElementalModifierGemState.Water:
-						skillController.animationController.ExecuteCorOnlyDashAnim();
+						skillController.AnimationController.ExecuteCorOnlyDashAnim();
 						xOffset = 1.15f;
 						yOffset = -0.05f;
 						break;
 					case LeftFootElementalModifierGemState.Earth:
-						skillController.animationController.ExecuteCorOnlyDashAnim();
+						skillController.AnimationController.ExecuteCorOnlyDashAnim();
 						xOffset = 1.15f;
 						yOffset = -0.05f;
 						break;
@@ -124,6 +124,7 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 		skillController.Rb.velocity = new Vector2(skillController.LastFacingDirection * dashForce, 0f);
 		skillController.StartStateCoroutine(StopDashAfterSeconds());
+		AudioManager.Instance.PlayPlayerDashSound();
 	}
 
 	public override void UpdateState() {
@@ -251,6 +252,6 @@ public class LeftFootSkillsState : PlayerSkillStateBase
 
 	private IEnumerator ExecutePurityAnimPart2WithDelay() {
 		yield return new WaitForSeconds(executePurityAnimPart2Delay);
-		skillController.animationController.ExecutePurityOnlyDashPart2Anim();
+		skillController.AnimationController.ExecutePurityOnlyDashPart2Anim();
 	}
 }

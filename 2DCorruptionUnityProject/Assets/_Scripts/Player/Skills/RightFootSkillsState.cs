@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class RightFootSkillsState : PlayerSkillStateBase
 {
@@ -41,38 +39,38 @@ public class RightFootSkillsState : PlayerSkillStateBase
 
 		switch (feetBaseGemState) {
 			case FeetBaseGemState.None:
-				skillController.animationController.ExecuteNoGemJumpPart1Anim();
+				skillController.AnimationController.ExecuteNoGemJumpPart1Anim();
 				skillController.StartStateCoroutine(ExecuteNoGemAnimPart2WithDelay());
 				break;
 			case FeetBaseGemState.Purity:
 				jumpForce += skillController.GemController.GetRightFootModifierGem().addedPurityJumpForce;
 				switch (rightFootElementalModifierGemState) {
 					case RightFootElementalModifierGemState.None:
-						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyJumpPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 0f;
 						yOffset = -0.8f;
 						break;
 					case RightFootElementalModifierGemState.Air:
-						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyJumpPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 0.48f;
 						yOffset = 0.23f;
 						break;
 					case RightFootElementalModifierGemState.Fire:
-						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyJumpPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 0f;
 						yOffset = -0.8f;
 						break;
 					case RightFootElementalModifierGemState.Water:
-						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyJumpPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 0f;
 						yOffset = -0.8f;
 						break;
 					case RightFootElementalModifierGemState.Earth:
-						skillController.animationController.ExecutePurityOnlyJumpPart1Anim();
+						skillController.AnimationController.ExecutePurityOnlyJumpPart1Anim();
 						skillController.StartStateCoroutine(ExecutePurityAnimPart2WithDelay());
 						xOffset = 0f;
 						yOffset = -0.8f;
@@ -83,27 +81,27 @@ public class RightFootSkillsState : PlayerSkillStateBase
 				jumpForce += skillController.GemController.GetRightFootModifierGem().addedCorruptionJumpForce;
 				switch (rightFootElementalModifierGemState) {
 					case RightFootElementalModifierGemState.None:
-						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						skillController.AnimationController.ExecuteCorOnlyJumpAnim();
 						xOffset = 0.4f;
 						yOffset = 0.12f;
 						break;
 					case RightFootElementalModifierGemState.Air:
-						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						skillController.AnimationController.ExecuteCorOnlyJumpAnim();
 						xOffset = 0.48f;
 						yOffset = 0.23f;
 						break;
 					case RightFootElementalModifierGemState.Fire:
-						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						skillController.AnimationController.ExecuteCorOnlyJumpAnim();
 						xOffset = 0.4f;
 						yOffset = 0.12f;
 						break;
 					case RightFootElementalModifierGemState.Water:
-						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						skillController.AnimationController.ExecuteCorOnlyJumpAnim();
 						xOffset = 0.4f;
 						yOffset = 0.12f;
 						break;
 					case RightFootElementalModifierGemState.Earth:
-						skillController.animationController.ExecuteCorOnlyJumpAnim();
+						skillController.AnimationController.ExecuteCorOnlyJumpAnim();
 						xOffset = 0.4f;
 						yOffset = 0.12f;
 						break;
@@ -121,6 +119,7 @@ public class RightFootSkillsState : PlayerSkillStateBase
 		}
 
 		skillController.Rb.velocity = new Vector2(0, jumpForce);
+		AudioManager.Instance.PlayPlayerJumpSound();
 	}
 
 	public override void UpdateState() {
@@ -238,11 +237,11 @@ public class RightFootSkillsState : PlayerSkillStateBase
 
 	private IEnumerator ExecutePurityAnimPart2WithDelay() {
 		yield return new WaitForSeconds(executePurityAnimPart2Delay);
-		skillController.animationController.ExecutePurityOnlyJumpPart2Anim();
+		skillController.AnimationController.ExecutePurityOnlyJumpPart2Anim();
 	}
 
 	private IEnumerator ExecuteNoGemAnimPart2WithDelay() {
 		yield return new WaitForSeconds(executeNoGemAnimPart2Delay);
-		skillController.animationController.ExecuteNoGemJumpPart2Anim();
+		skillController.AnimationController.ExecuteNoGemJumpPart2Anim();
 	}
 }

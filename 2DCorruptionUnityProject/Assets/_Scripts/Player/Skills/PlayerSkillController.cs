@@ -24,7 +24,7 @@ public class PlayerSkillController : MonoBehaviour
 	public RightFootElementalModifierGemState CurrentRightFootElementalModifierGemState { get; set; }
 	public LeftFootElementalModifierGemState CurrentLeftFootElementalModifierGemState { get; set; }
 
-	public PlayerAnimationController animationController { get; set; }
+	public PlayerAnimationController AnimationController { get; set; }
 	public PlayerEffectController effectController { get; set; }
 	public GemController GemController { get; private set; }
 	public Rigidbody2D Rb { get; private set; }
@@ -77,7 +77,7 @@ public class PlayerSkillController : MonoBehaviour
 		Rb = GetComponent<Rigidbody2D>();
 		SpriteRend = GetComponent<SpriteRenderer>();
 		OriginalGravity = GetComponent<Rigidbody2D>().gravityScale;
-		animationController = GetComponent<PlayerAnimationController>();
+		AnimationController = GetComponent<PlayerAnimationController>();
 		effectController = GetComponent<PlayerEffectController>();
 		GroundCheck = GetComponent<GroundCheck>();
 	}
@@ -173,7 +173,7 @@ public class PlayerSkillController : MonoBehaviour
 	}
 
 	private void PlayerDeath() {
-		animationController.ExecuteDeathAnim();
+		AnimationController.ExecuteDeathAnim();
 		Rb.gravityScale = 0f;
 		GetComponent<BoxCollider2D>().enabled = false;
 		StartCoroutine(DestroyPlayerAfterSec());

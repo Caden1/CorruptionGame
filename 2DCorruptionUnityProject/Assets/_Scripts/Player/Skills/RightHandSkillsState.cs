@@ -63,31 +63,31 @@ public class RightHandSkillsState : PlayerSkillStateBase
 					case RightHandElementalModifierGemState.None:
 						xOffset = 0.87f;
 						yOffset = -0.06f;
-						skillController.animationController.ExecutePurityOnlyPushAnim();
+						skillController.AnimationController.ExecutePurityOnlyPushAnim();
 						break;
 					case RightHandElementalModifierGemState.Air:
 						xOffset = 1.12f;
 						yOffset = -0.06f;
 						// Placeholder
-						skillController.animationController.ExecutePurityOnlyPushAnim();
+						skillController.AnimationController.ExecutePurityOnlyPushAnim();
 						break;
 					case RightHandElementalModifierGemState.Fire:
 						// Placeholder
 						xOffset = 0.87f;
 						yOffset = -0.06f;
-						skillController.animationController.ExecutePurityOnlyPushAnim();
+						skillController.AnimationController.ExecutePurityOnlyPushAnim();
 						break;
 					case RightHandElementalModifierGemState.Water:
 						// Placeholder
 						xOffset = 0.87f;
 						yOffset = -0.06f;
-						skillController.animationController.ExecutePurityOnlyPushAnim();
+						skillController.AnimationController.ExecutePurityOnlyPushAnim();
 						break;
 					case RightHandElementalModifierGemState.Earth:
 						// Placeholder
 						xOffset = 0.87f;
 						yOffset = -0.06f;
-						skillController.animationController.ExecutePurityOnlyPushAnim();
+						skillController.AnimationController.ExecutePurityOnlyPushAnim();
 						break;
 				}
 				break;
@@ -101,12 +101,12 @@ public class RightHandSkillsState : PlayerSkillStateBase
 					case RightHandElementalModifierGemState.None:
 						xOffset = 0.5f;
 						yOffset = 0.2f;
-						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						skillController.AnimationController.ExecuteCorOnlyMeleeAnim();
 						break;
 					case RightHandElementalModifierGemState.Air:
 						xOffset = 0.66f;
 						yOffset = 0.17f;
-						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						skillController.AnimationController.ExecuteCorOnlyMeleeAnim();
 						if (inputActions.Player.Melee.IsInProgress()) {
 							instantiateCorMeleeEffect = false;
 							instantiateCorAirMeleeEffect = true;
@@ -116,19 +116,19 @@ public class RightHandSkillsState : PlayerSkillStateBase
 						// Placeholder
 						xOffset = 0.5f;
 						yOffset = 0.2f;
-						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						skillController.AnimationController.ExecuteCorOnlyMeleeAnim();
 						break;
 					case RightHandElementalModifierGemState.Water:
 						// Placeholder
 						xOffset = 0.5f;
 						yOffset = 0.2f;
-						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						skillController.AnimationController.ExecuteCorOnlyMeleeAnim();
 						break;
 					case RightHandElementalModifierGemState.Earth:
 						// Placeholder
 						xOffset = 0.5f;
 						yOffset = 0.2f;
-						skillController.animationController.ExecuteCorOnlyMeleeAnim();
+						skillController.AnimationController.ExecuteCorOnlyMeleeAnim();
 						break;
 				}
 				break;
@@ -151,6 +151,8 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		} else if (instantiateCorAirMeleeEffect) { // Special Case
 			skillController.StartCoroutine(InstantiateCorAirEffectWithDelay());
 		}
+
+		AudioManager.Instance.PlayPlayerMeleeSound();
 	}
 
 	public override void UpdateState() {
@@ -289,7 +291,7 @@ public class RightHandSkillsState : PlayerSkillStateBase
 		Vector2 effectPosition = new Vector2(
 				skillController.transform.position.x + xOffset,
 				skillController.transform.position.y + yOffset);
-		skillController.animationController.ExecuteCorAirMeleeAnim();
+		skillController.AnimationController.ExecuteCorAirMeleeAnim();
 		GameObject initialActiveEffectClone =
 			skillController.effectController.GetCorAirMeleeEffectClone(effectPosition);
 		if (initialActiveEffectClone != null) {
