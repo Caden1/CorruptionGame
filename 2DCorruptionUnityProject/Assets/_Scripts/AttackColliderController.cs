@@ -1,5 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static EnemyController;
@@ -21,6 +21,7 @@ public class AttackColliderController : MonoBehaviour
 	private PlayerSkillController playerSkillController;
 	private HealthBarUI healthBarUI;
 	private UIDocument healthBarUIDoc;
+	private UniversalEffectAnimator effectAnimator;
 	private float playerForceTimer;
 	private float fireDotTimer = 0f;
 	private float fireDotInterval = 0.2f;
@@ -35,10 +36,15 @@ public class AttackColliderController : MonoBehaviour
 		if (playerGO != null) {
 			playerSkillController = playerGO.GetComponent<PlayerSkillController>();
 		}
+		effectAnimator = GetComponent<UniversalEffectAnimator>();
 	}
 
 	private void Start() {
 		healthBarUI = new HealthBarUI(healthBarUIDoc);
+		if (effectAnimator != null && effectAnimator.animationDurations.Length - 1 > 0) {
+			// Uses this sum if the Attack Collider has timed animation stages
+			lifeTime = effectAnimator.animationDurations.Sum();
+		}
 		if (lifeTime > 0f) {
 			Destroy(gameObject, lifeTime);
 		}
