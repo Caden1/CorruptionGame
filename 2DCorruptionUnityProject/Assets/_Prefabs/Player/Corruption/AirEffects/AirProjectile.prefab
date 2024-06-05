@@ -130,7 +130,7 @@ MonoBehaviour:
   damage: 0.5
   takeDamageDuration: 0.5
   force: 0.5
-  lifeTime: 0.9
+  lifeTime: 0.7
   isAirModded: 1
   isFireModded: 0
   isWaterModded: 0

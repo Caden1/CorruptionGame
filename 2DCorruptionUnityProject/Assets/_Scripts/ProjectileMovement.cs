@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileMovement : MonoBehaviour
@@ -8,6 +6,7 @@ public class ProjectileMovement : MonoBehaviour
 	private GameObject playerGO;
 	private SpriteRenderer playerSpriteRenderer;
 	private float moveDirectionX;
+	private UniversalEffectAnimator effectAnimator;
 
 	private void Awake() {
 		playerGO = GameObject.FindWithTag("Player");
@@ -15,9 +14,12 @@ public class ProjectileMovement : MonoBehaviour
 			playerSpriteRenderer = playerGO.GetComponent<SpriteRenderer>();
 		}
 		moveDirectionX = playerSpriteRenderer.flipX ? 1f : -1f;
+		effectAnimator = GetComponent<UniversalEffectAnimator>();
 	}
 
 	private void Update() {
-		gameObject.transform.Translate(new Vector2(moveDirectionX * projectileSpeed, 0f) * Time.deltaTime);
+		if (effectAnimator == null || !effectAnimator.ShouldStopMoving()) {
+			gameObject.transform.Translate(new Vector2(moveDirectionX * projectileSpeed, 0f) * Time.deltaTime);
+		}
 	}
 }
